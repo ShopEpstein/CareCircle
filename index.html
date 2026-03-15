@@ -20,973 +20,792 @@
     --terracotta: #C4714A;
     --text-body: #3A4A3C;
     --text-muted: #7A8E7C;
-    --white: #FFFFFF;
-    --shadow-soft: 0 4px 24px rgba(28, 36, 25, 0.08);
-    --shadow-card: 0 2px 16px rgba(28, 36, 25, 0.06);
+    --shadow-soft: 0 4px 24px rgba(28,36,25,0.10);
+    --shadow-card: 0 2px 16px rgba(28,36,25,0.06);
     --radius: 12px;
     --radius-lg: 20px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--text-body);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
 
   /* ─── NAV ─── */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(250, 248, 244, 0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(92, 122, 95, 0.12);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(250,248,244,0.95);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(92,122,95,0.12);
     padding: 0 5%;
     display: flex; align-items: center; justify-content: space-between;
     height: 68px;
   }
-
   .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.35rem;
-    color: var(--warm-dark);
-    text-decoration: none;
+    font-family: 'Playfair Display', serif; font-size: 1.25rem;
+    color: var(--warm-dark); text-decoration: none;
     display: flex; align-items: center; gap: 10px;
   }
-
   .nav-logo-mark {
-    width: 34px; height: 34px;
-    background: var(--sage);
-    border-radius: 50%;
+    width: 34px; height: 34px; background: var(--sage); border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.85rem; color: white; font-weight: 600;
-    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; color: white; font-weight: 700;
+    font-family: 'DM Sans', sans-serif; flex-shrink: 0;
   }
-
-  .nav-links {
-    display: flex; align-items: center; gap: 32px;
-    list-style: none;
+  .nav-center { display: flex; align-items: center; gap: 28px; }
+  .nav-center a {
+    font-size: 0.875rem; font-weight: 500; color: var(--text-body);
+    text-decoration: none; transition: color 0.2s; white-space: nowrap;
   }
+  .nav-center a:hover { color: var(--sage); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-phone {
+    font-size: 0.875rem; font-weight: 600; color: var(--sage);
+    text-decoration: none; display: flex; align-items: center; gap: 6px;
+  }
+  .nav-phone:hover { color: var(--warm-mid); }
+  .nav-cta {
+    background: var(--sage); color: white !important;
+    padding: 10px 20px; border-radius: 100px;
+    font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; transition: background 0.2s; white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--warm-mid); }
 
-  .nav-links a {
-    font-size: 0.875rem; font-weight: 500;
+  /* Hamburger */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--warm-dark); border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  .mobile-menu {
+    display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 199;
+    background: rgba(250,248,244,0.98); backdrop-filter: blur(14px);
+    padding: 24px 5% 32px;
+    border-bottom: 1px solid rgba(92,122,95,0.12);
+    flex-direction: column; gap: 0;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    padding: 14px 0; font-size: 1rem; font-weight: 500;
     color: var(--text-body); text-decoration: none;
+    border-bottom: 1px solid rgba(92,122,95,0.08);
     transition: color 0.2s;
   }
-
-  .nav-links a:hover { color: var(--sage); }
-
-  .nav-cta {
-    background: var(--sage) !important;
-    color: white !important;
-    padding: 10px 22px;
-    border-radius: 100px;
-    font-weight: 600 !important;
-    transition: background 0.2s !important;
+  .mobile-menu a:hover { color: var(--sage); }
+  .mobile-menu .mobile-phone {
+    margin-top: 20px; font-size: 1.1rem; font-weight: 700;
+    color: var(--sage); border-bottom: none;
+    display: flex; align-items: center; gap: 8px;
   }
-
-  .nav-cta:hover { background: var(--warm-mid) !important; }
+  .mobile-menu .mobile-cta {
+    margin-top: 12px; background: var(--sage); color: white;
+    padding: 14px 24px; border-radius: 100px;
+    text-align: center; font-weight: 600; border-bottom: none;
+  }
 
   /* ─── HERO ─── */
   .hero {
-    min-height: 100vh;
-    display: grid;
+    min-height: 100vh; display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 100px 5% 60px;
-    gap: 60px;
-    position: relative;
-    overflow: hidden;
+    align-items: center; padding: 100px 5% 60px; gap: 60px;
+    position: relative; overflow: hidden;
   }
-
   .hero::before {
-    content: '';
-    position: absolute; top: -200px; right: -200px;
+    content: ''; position: absolute; top: -200px; right: -200px;
     width: 700px; height: 700px;
     background: radial-gradient(circle, rgba(92,122,95,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
+    border-radius: 50%; pointer-events: none;
   }
-
-  .hero::after {
-    content: '';
-    position: absolute; bottom: -100px; left: -100px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(200,169,110,0.1) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-
   .hero-content { position: relative; z-index: 1; }
-
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: var(--sage-pale);
-    border: 1px solid rgba(92, 122, 95, 0.25);
-    color: var(--sage);
-    font-size: 0.78rem; font-weight: 600;
+    background: var(--sage-pale); border: 1px solid rgba(92,122,95,0.25);
+    color: var(--sage); font-size: 0.78rem; font-weight: 600;
     letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 6px 14px; border-radius: 100px;
-    margin-bottom: 24px;
+    padding: 6px 14px; border-radius: 100px; margin-bottom: 24px;
     animation: fadeUp 0.6s ease both;
   }
-
   .hero-badge::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--sage);
-    border-radius: 50%;
+    content: ''; width: 6px; height: 6px;
+    background: var(--sage); border-radius: 50%;
     animation: pulse 2s infinite;
   }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
   h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.6rem, 4.5vw, 3.8rem);
-    line-height: 1.15;
-    color: var(--warm-dark);
-    margin-bottom: 20px;
+    font-size: clamp(2.4rem, 4vw, 3.6rem); line-height: 1.15;
+    color: var(--warm-dark); margin-bottom: 20px;
     animation: fadeUp 0.6s 0.1s ease both;
   }
-
-  h1 em {
-    font-style: italic;
-    color: var(--sage);
-  }
-
+  h1 em { font-style: italic; color: var(--sage); }
   .hero-sub {
-    font-size: 1.1rem; font-weight: 300;
-    color: var(--text-muted);
-    line-height: 1.7;
-    max-width: 480px;
-    margin-bottom: 36px;
+    font-size: 1.05rem; font-weight: 300; color: var(--text-muted);
+    line-height: 1.7; max-width: 480px; margin-bottom: 36px;
     animation: fadeUp 0.6s 0.2s ease both;
   }
-
   .hero-actions {
     display: flex; gap: 14px; flex-wrap: wrap;
     animation: fadeUp 0.6s 0.3s ease both;
   }
-
   .btn-primary {
-    background: var(--sage);
-    color: white;
-    padding: 15px 30px;
-    border-radius: 100px;
-    font-size: 0.95rem; font-weight: 600;
-    text-decoration: none;
-    border: none; cursor: pointer;
-    transition: all 0.25s;
-    display: inline-flex; align-items: center; gap: 8px;
-    box-shadow: 0 4px 16px rgba(92,122,95,0.3);
+    background: var(--sage); color: white; padding: 15px 30px;
+    border-radius: 100px; font-size: 0.95rem; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 16px rgba(92,122,95,0.3); font-family: 'DM Sans', sans-serif;
   }
-
-  .btn-primary:hover {
-    background: var(--warm-mid);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(92,122,95,0.35);
-  }
-
+  .btn-primary:hover { background: var(--warm-mid); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(92,122,95,0.35); }
   .btn-secondary {
-    background: transparent;
-    color: var(--warm-dark);
-    padding: 15px 30px;
-    border-radius: 100px;
-    font-size: 0.95rem; font-weight: 500;
-    text-decoration: none;
-    border: 1.5px solid rgba(28,36,25,0.2);
-    cursor: pointer;
-    transition: all 0.25s;
+    background: transparent; color: var(--warm-dark); padding: 15px 30px;
+    border-radius: 100px; font-size: 0.95rem; font-weight: 500;
+    text-decoration: none; border: 1.5px solid rgba(28,36,25,0.2);
+    cursor: pointer; transition: all 0.25s;
   }
-
-  .btn-secondary:hover {
-    border-color: var(--sage);
-    color: var(--sage);
-  }
-
+  .btn-secondary:hover { border-color: var(--sage); color: var(--sage); }
   .hero-trust {
-    display: flex; align-items: center; gap: 16px;
-    margin-top: 40px;
+    display: flex; align-items: center; gap: 16px; margin-top: 40px;
     animation: fadeUp 0.6s 0.4s ease both;
   }
-
-  .trust-avatars {
-    display: flex;
-  }
-
+  .trust-avatars { display: flex; }
   .trust-avatar {
     width: 36px; height: 36px; border-radius: 50%;
-    border: 2.5px solid var(--cream);
-    background: var(--sage-pale);
+    border: 2.5px solid var(--cream); background: var(--sage-pale);
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.75rem; font-weight: 600; color: var(--sage);
+    font-size: 0.72rem; font-weight: 700; color: var(--sage);
     margin-left: -8px;
   }
-
   .trust-avatar:first-child { margin-left: 0; }
-
-  .trust-text {
-    font-size: 0.82rem; color: var(--text-muted);
-    line-height: 1.4;
-  }
-
+  .trust-text { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; }
   .trust-text strong { color: var(--text-body); display: block; font-size: 0.88rem; }
+  .hero-phone-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 20px; animation: fadeUp 0.6s 0.5s ease both;
+  }
+  .hero-phone-label { font-size: 0.8rem; color: var(--text-muted); }
+  .hero-phone-link {
+    font-size: 1.1rem; font-weight: 700; color: var(--sage);
+    text-decoration: none; letter-spacing: 0.01em;
+  }
+  .hero-phone-link:hover { color: var(--warm-mid); }
 
   /* ─── HERO CARD ─── */
-  .hero-visual {
-    position: relative;
-    animation: fadeUp 0.8s 0.2s ease both;
-  }
-
+  .hero-visual { position: relative; animation: fadeUp 0.8s 0.2s ease both; }
   .care-finder-card {
-    background: white;
-    border-radius: var(--radius-lg);
-    padding: 32px;
+    background: white; border-radius: var(--radius-lg); padding: 32px;
     box-shadow: var(--shadow-soft), 0 0 0 1px rgba(92,122,95,0.08);
-    position: relative;
   }
-
   .care-finder-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--warm-dark);
-    margin-bottom: 6px;
+    font-family: 'Playfair Display', serif; font-size: 1.25rem;
+    color: var(--warm-dark); margin-bottom: 4px;
   }
-
-  .care-finder-card p {
-    font-size: 0.85rem; color: var(--text-muted);
-    margin-bottom: 24px;
-  }
-
-  .form-group {
-    margin-bottom: 16px;
-  }
-
+  .care-finder-card > p { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 22px; }
+  .form-group { margin-bottom: 14px; }
   .form-group label {
-    display: block;
-    font-size: 0.78rem; font-weight: 600;
+    display: block; font-size: 0.75rem; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.06em;
-    color: var(--text-muted);
-    margin-bottom: 7px;
+    color: var(--text-muted); margin-bottom: 6px;
   }
-
-  .form-group select,
-  .form-group input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1.5px solid rgba(92,122,95,0.2);
-    border-radius: 10px;
-    font-size: 0.92rem;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--warm-dark);
-    background: var(--cream);
-    transition: border-color 0.2s;
-    appearance: none;
-    outline: none;
+  .form-group select, .form-group input {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid rgba(92,122,95,0.2); border-radius: 10px;
+    font-size: 0.9rem; font-family: 'DM Sans', sans-serif;
+    color: var(--warm-dark); background: var(--cream);
+    transition: border-color 0.2s; appearance: none; outline: none;
   }
-
-  .form-group select:focus,
-  .form-group input:focus {
-    border-color: var(--sage);
-    background: white;
+  .form-group select:focus, .form-group input:focus {
+    border-color: var(--sage); background: white;
   }
-
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
   .find-care-btn {
-    width: 100%;
-    background: var(--sage);
-    color: white;
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 0.95rem; font-weight: 600;
-    border: none; cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.25s;
-    margin-top: 8px;
+    width: 100%; background: var(--sage); color: white;
+    padding: 14px; border-radius: 10px; font-size: 0.95rem; font-weight: 600;
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s; margin-top: 6px;
     display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-
   .find-care-btn:hover { background: var(--warm-mid); transform: translateY(-1px); }
-
   .card-note {
-    text-align: center;
-    font-size: 0.75rem; color: var(--text-muted);
-    margin-top: 14px;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
+    text-align: center; font-size: 0.74rem; color: var(--text-muted);
+    margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 6px;
   }
-
-  /* Memory Magnet floating badge */
+  /* MM badge — fixed positioning so it doesn't overflow on smaller screens */
   .mm-float-badge {
-    position: absolute;
-    bottom: -20px; right: -20px;
-    background: white;
-    border-radius: 14px;
-    padding: 14px 18px;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(200,169,110,0.25);
-    display: flex; align-items: center; gap: 12px;
-    min-width: 220px;
+    position: absolute; bottom: -18px; right: -16px;
+    background: white; border-radius: 14px; padding: 12px 16px;
+    box-shadow: var(--shadow-soft); border: 1px solid rgba(200,169,110,0.25);
+    display: flex; align-items: center; gap: 10px; min-width: 200px;
     animation: float 4s ease-in-out infinite;
+    max-width: calc(100% + 16px);
   }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
-
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
   .mm-badge-icon {
-    width: 40px; height: 40px;
+    width: 38px; height: 38px;
     background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem; flex-shrink: 0;
+    border-radius: 9px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
   }
-
-  .mm-badge-text { font-size: 0.78rem; line-height: 1.4; }
-  .mm-badge-text strong { display: block; color: var(--warm-dark); font-size: 0.85rem; }
+  .mm-badge-text { font-size: 0.76rem; line-height: 1.4; }
+  .mm-badge-text strong { display: block; color: var(--warm-dark); font-size: 0.82rem; }
   .mm-badge-text span { color: var(--text-muted); }
 
-  /* ─── STATS BAR ─── */
-  .stats-bar {
-    background: var(--warm-dark);
-    padding: 28px 5%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    text-align: center;
+  /* ─── MATCH RESULTS (hidden until form submit) ─── */
+  #match-results {
+    display: none; padding: 80px 5%; background: var(--sage-pale);
   }
-
-  .stat-item {}
-  .stat-num {
+  .match-results-inner { max-width: 860px; margin: 0 auto; }
+  .match-header { margin-bottom: 36px; }
+  .match-header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem; font-weight: 700;
-    color: var(--gold);
-    display: block;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem); color: var(--warm-dark); margin-bottom: 6px;
   }
-  .stat-label {
-    font-size: 0.8rem; color: rgba(255,255,255,0.6);
-    font-weight: 400; margin-top: 2px;
+  .match-header p { font-size: 0.9rem; color: var(--text-muted); }
+  .match-card {
+    background: white; border-radius: var(--radius-lg);
+    padding: 28px 32px; margin-bottom: 16px;
+    border: 1.5px solid rgba(92,122,95,0.1);
+    box-shadow: var(--shadow-card);
+    display: flex; gap: 24px; align-items: flex-start;
+    transition: all 0.2s;
+  }
+  .match-card:hover { box-shadow: var(--shadow-soft); transform: translateY(-2px); }
+  .match-card-logo {
+    width: 56px; height: 56px; background: var(--sage-pale);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; flex-shrink: 0;
+  }
+  .match-card-body { flex: 1; }
+  .match-card-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap; margin-bottom: 6px;
+  }
+  .match-card-name { font-size: 1.05rem; font-weight: 700; color: var(--warm-dark); }
+  .match-card-location { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; }
+  .match-services { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .service-tag {
+    font-size: 0.72rem; font-weight: 500; background: var(--sage-pale);
+    color: var(--sage); padding: 4px 10px; border-radius: 100px;
+  }
+  .match-stars { color: var(--gold); font-size: 0.85rem; }
+  .match-rating { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+  .match-card-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .btn-call {
+    background: var(--sage); color: white; padding: 10px 20px;
+    border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-call:hover { background: var(--warm-mid); }
+  .btn-learn {
+    background: transparent; color: var(--sage); padding: 10px 18px;
+    border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; border: 1.5px solid rgba(92,122,95,0.3);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-learn:hover { border-color: var(--sage); background: var(--sage-pale); }
+  .match-mm-pill {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; color: #A67C3A; background: rgba(200,169,110,0.1);
+    border: 1px solid rgba(200,169,110,0.2); padding: 5px 10px; border-radius: 8px;
+    margin-top: 10px; width: fit-content;
+  }
+  .provider-badge {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 4px 10px; border-radius: 100px;
+    white-space: nowrap;
+  }
+  .badge-featured { background: rgba(200,169,110,0.15); color: #A67C3A; }
+  .badge-verified { background: rgba(92,122,95,0.12); color: var(--sage); }
+  .badge-open { background: rgba(92,122,95,0.08); color: var(--text-muted); border: 1px dashed rgba(92,122,95,0.3); }
+
+  /* ─── STATS ─── */
+  .stats-bar {
+    background: var(--warm-dark); padding: 28px 5%;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 24px; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700;
+    color: var(--gold); display: block;
+  }
+  .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+  /* ─── SECTIONS ─── */
+  .section { padding: 90px 5%; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--sage); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--warm-dark);
+    line-height: 1.2; margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--text-muted); max-width: 540px;
+    line-height: 1.7; margin-bottom: 52px;
   }
 
   /* ─── HOW IT WORKS ─── */
-  .section { padding: 90px 5%; }
-
-  .section-label {
-    font-size: 0.75rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.12em;
-    color: var(--sage); margin-bottom: 12px;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    color: var(--warm-dark);
-    line-height: 1.2;
-    margin-bottom: 16px;
-  }
-
-  .section-sub {
-    font-size: 1rem; color: var(--text-muted);
-    max-width: 540px; line-height: 1.7;
-    margin-bottom: 56px;
-  }
-
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-  }
-
+  .steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
   .step-card {
-    background: white;
-    border-radius: var(--radius-lg);
-    padding: 32px;
-    position: relative;
-    box-shadow: var(--shadow-card);
-    border: 1px solid rgba(92,122,95,0.08);
+    background: white; border-radius: var(--radius-lg); padding: 30px;
+    box-shadow: var(--shadow-card); border: 1px solid rgba(92,122,95,0.08);
     transition: all 0.3s;
   }
-
-  .step-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .step-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem; font-weight: 700;
-    color: var(--sage-pale);
-    line-height: 1;
-    margin-bottom: 16px;
-    position: relative;
-  }
-
+  .step-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
   .step-icon {
-    width: 48px; height: 48px;
-    background: var(--sage-pale);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem;
-    margin-bottom: 20px;
+    width: 46px; height: 46px; background: var(--sage-pale);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 18px;
   }
-
-  .step-card h3 {
-    font-size: 1.1rem; font-weight: 600;
-    color: var(--warm-dark);
-    margin-bottom: 10px;
+  .step-num {
+    font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700;
+    color: var(--sage-pale); line-height: 1; margin-bottom: 14px;
   }
-
-  .step-card p {
-    font-size: 0.88rem; color: var(--text-muted);
-    line-height: 1.65;
-  }
-
+  .step-card h3 { font-size: 1.05rem; font-weight: 600; color: var(--warm-dark); margin-bottom: 10px; }
+  .step-card p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.65; }
   .step-tag {
-    display: inline-block;
-    margin-top: 16px;
-    font-size: 0.72rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.07em;
-    color: var(--sage);
-    background: var(--sage-pale);
-    padding: 4px 10px; border-radius: 100px;
+    display: inline-block; margin-top: 14px; font-size: 0.72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.07em; color: var(--sage);
+    background: var(--sage-pale); padding: 4px 10px; border-radius: 100px;
   }
 
-  /* ─── MEMORY MAGNET SECTION ─── */
+  /* ─── ABOUT / WHO WE ARE ─── */
+  .about-section {
+    padding: 80px 5%;
+    background: white;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .about-photo-placeholder {
+    background: var(--sage-pale); border-radius: var(--radius-lg);
+    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px;
+  }
+  .about-photo-placeholder span { font-size: 3rem; }
+  .about-photo-placeholder p { font-size: 0.8rem; color: var(--text-muted); text-align: center; max-width: 200px; line-height: 1.5; }
+  .about-name { font-size: 1.1rem; font-weight: 700; color: var(--warm-dark); margin-bottom: 2px; }
+  .about-title { font-size: 0.82rem; color: var(--sage); font-weight: 600; margin-bottom: 16px; }
+  .about-bio { font-size: 0.9rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; }
+  .about-contact-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .about-contact-item {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.85rem; font-weight: 600; color: var(--sage);
+    text-decoration: none;
+  }
+  .about-contact-item:hover { color: var(--warm-mid); }
+
+  /* ─── MEMORY MAGNET ─── */
   .mm-section {
-    padding: 90px 5%;
-    background: var(--warm-dark);
-    position: relative;
-    overflow: hidden;
+    padding: 90px 5%; background: var(--warm-dark);
+    position: relative; overflow: hidden;
   }
-
   .mm-section::before {
-    content: '';
-    position: absolute; top: -150px; right: -150px;
+    content: ''; position: absolute; top: -150px; right: -150px;
     width: 500px; height: 500px;
     background: radial-gradient(circle, rgba(200,169,110,0.12) 0%, transparent 70%);
     border-radius: 50%;
   }
-
   .mm-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 70px; align-items: center; position: relative; z-index: 1;
   }
-
   .mm-content .section-label { color: var(--gold); }
-
   .mm-content .section-title { color: white; }
-
-  .mm-content .section-sub { color: rgba(255,255,255,0.55); margin-bottom: 32px; }
-
-  .mm-features {
-    display: flex; flex-direction: column; gap: 20px;
-    margin-bottom: 36px;
+  .mm-content .section-sub { color: rgba(255,255,255,0.5); margin-bottom: 28px; }
+  .mm-context-note {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 14px 18px; margin-bottom: 28px;
+    font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.6;
   }
-
-  .mm-feature {
-    display: flex; gap: 16px; align-items: flex-start;
-  }
-
+  .mm-context-note strong { color: white; }
+  .mm-features { display: flex; flex-direction: column; gap: 18px; margin-bottom: 32px; }
+  .mm-feature { display: flex; gap: 14px; align-items: flex-start; }
   .mm-feature-icon {
-    width: 40px; height: 40px; flex-shrink: 0;
-    background: rgba(200,169,110,0.15);
-    border: 1px solid rgba(200,169,110,0.25);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem;
+    width: 38px; height: 38px; flex-shrink: 0;
+    background: rgba(200,169,110,0.15); border: 1px solid rgba(200,169,110,0.25);
+    border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1rem;
   }
-
-  .mm-feature-text h4 {
-    font-size: 0.95rem; font-weight: 600;
-    color: white; margin-bottom: 4px;
-  }
-
-  .mm-feature-text p {
-    font-size: 0.83rem; color: rgba(255,255,255,0.5);
-    line-height: 1.6;
-  }
-
+  .mm-feature-text h4 { font-size: 0.92rem; font-weight: 600; color: white; margin-bottom: 3px; }
+  .mm-feature-text p { font-size: 0.81rem; color: rgba(255,255,255,0.48); line-height: 1.6; }
   .btn-gold {
-    background: var(--gold);
-    color: var(--warm-dark);
-    padding: 14px 28px;
-    border-radius: 100px;
-    font-size: 0.92rem; font-weight: 700;
-    text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: all 0.25s;
-    border: none; cursor: pointer;
+    background: var(--gold); color: var(--warm-dark); padding: 13px 26px;
+    border-radius: 100px; font-size: 0.9rem; font-weight: 700;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.25s; border: none; cursor: pointer;
   }
-
-  .btn-gold:hover {
-    background: var(--gold-light);
-    transform: translateY(-2px);
-  }
-
-  /* MM Dashboard Mockup */
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
   .mm-mockup {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg); padding: 22px; backdrop-filter: blur(10px);
   }
-
   .mm-mockup-header {
     display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 20px;
-    padding-bottom: 16px;
+    margin-bottom: 18px; padding-bottom: 14px;
     border-bottom: 1px solid rgba(255,255,255,0.08);
   }
-
   .mm-mockup-title {
-    font-size: 0.85rem; font-weight: 600; color: white;
+    font-size: 0.83rem; font-weight: 600; color: white;
     display: flex; align-items: center; gap: 8px;
   }
-
   .mm-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; }
-
-  .mm-mockup-date { font-size: 0.75rem; color: rgba(255,255,255,0.35); }
-
+  .mm-mockup-date { font-size: 0.73rem; color: rgba(255,255,255,0.3); }
   .mm-log-entry {
-    display: flex; gap: 14px; align-items: flex-start;
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
   }
-
-  .mm-log-entry:last-child { border-bottom: none; }
-
+  .mm-log-entry:last-of-type { border-bottom: none; }
   .mm-log-avatar {
-    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; font-weight: 700;
+    font-size: 0.72rem; font-weight: 700;
   }
-
   .mm-log-body { flex: 1; }
-
-  .mm-log-name {
-    font-size: 0.8rem; font-weight: 600; color: white;
-    margin-bottom: 2px;
-  }
-
-  .mm-log-note {
-    font-size: 0.78rem; color: rgba(255,255,255,0.5);
-    line-height: 1.5;
-  }
-
-  .mm-log-time {
-    font-size: 0.7rem; color: rgba(255,255,255,0.25);
-    white-space: nowrap; margin-top: 2px;
-  }
-
+  .mm-log-name { font-size: 0.78rem; font-weight: 600; color: white; margin-bottom: 2px; }
+  .mm-log-note { font-size: 0.76rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+  .mm-log-time { font-size: 0.68rem; color: rgba(255,255,255,0.22); white-space: nowrap; margin-top: 2px; }
   .mm-alert {
-    background: rgba(196,113,74,0.15);
-    border: 1px solid rgba(196,113,74,0.3);
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-top: 16px;
-    display: flex; align-items: center; gap: 10px;
-    font-size: 0.8rem; color: rgba(255,255,255,0.7);
+    background: rgba(196,113,74,0.15); border: 1px solid rgba(196,113,74,0.3);
+    border-radius: 9px; padding: 11px 14px; margin-top: 14px;
+    display: flex; align-items: center; gap: 9px;
+    font-size: 0.78rem; color: rgba(255,255,255,0.65);
   }
 
   /* ─── PROVIDERS ─── */
-  .providers-section {
-    padding: 90px 5%;
-    background: var(--sage-pale);
-  }
-
+  .providers-section { padding: 90px 5%; background: var(--sage-pale); }
   .providers-header {
     display: flex; align-items: flex-end; justify-content: space-between;
-    margin-bottom: 48px;
-    flex-wrap: wrap; gap: 20px;
+    margin-bottom: 44px; flex-wrap: wrap; gap: 20px;
   }
-
-  .providers-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+  .providers-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 22px; }
+  .providers-grid .provider-card:first-child { grid-column: 1 / -1; }
+  @media (max-width: 700px) {
+    .providers-grid .provider-card:first-child { grid-template-columns: 1fr !important; }
   }
-
   .provider-card {
-    background: white;
-    border-radius: var(--radius-lg);
-    padding: 28px;
-    box-shadow: var(--shadow-card);
-    border: 1px solid rgba(92,122,95,0.08);
+    background: white; border-radius: var(--radius-lg); padding: 26px;
+    box-shadow: var(--shadow-card); border: 1px solid rgba(92,122,95,0.08);
     transition: all 0.3s;
   }
-
-  .provider-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-soft);
-  }
-
+  .provider-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
   .provider-card-top {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    margin-bottom: 16px;
+    display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px;
   }
-
   .provider-logo {
-    width: 52px; height: 52px;
-    background: var(--sage-pale);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem;
+    width: 50px; height: 50px; background: var(--sage-pale);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
   }
-
-  .provider-badge {
-    font-size: 0.7rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    padding: 4px 10px; border-radius: 100px;
-  }
-
-  .badge-verified {
-    background: rgba(92,122,95,0.12);
-    color: var(--sage);
-  }
-
-  .badge-featured {
-    background: rgba(200,169,110,0.15);
-    color: #A67C3A;
-  }
-
-  .provider-name {
-    font-size: 1rem; font-weight: 600;
-    color: var(--warm-dark); margin-bottom: 4px;
-  }
-
-  .provider-location {
-    font-size: 0.8rem; color: var(--text-muted);
-    margin-bottom: 14px;
-    display: flex; align-items: center; gap: 5px;
-  }
-
-  .provider-services {
-    display: flex; flex-wrap: wrap; gap: 6px;
-    margin-bottom: 18px;
-  }
-
-  .service-tag {
-    font-size: 0.72rem; font-weight: 500;
-    background: var(--sage-pale);
-    color: var(--sage);
-    padding: 4px 10px; border-radius: 100px;
-  }
-
-  .provider-stars {
-    color: var(--gold); font-size: 0.85rem; letter-spacing: 1px;
-  }
-
-  .provider-rating {
-    font-size: 0.8rem; color: var(--text-muted);
-    margin-top: 4px;
-  }
-
+  .provider-name { font-size: 1rem; font-weight: 600; color: var(--warm-dark); margin-bottom: 4px; }
+  .provider-location { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; }
+  .provider-services { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+  .provider-stars { color: var(--gold); font-size: 0.83rem; }
+  .provider-rating { font-size: 0.78rem; color: var(--text-muted); margin-top: 3px; }
   .provider-mm-badge {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 0.72rem; color: #A67C3A;
-    background: rgba(200,169,110,0.1);
-    border: 1px solid rgba(200,169,110,0.2);
-    padding: 6px 10px; border-radius: 8px;
-    margin-top: 14px;
+    display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #A67C3A;
+    background: rgba(200,169,110,0.1); border: 1px solid rgba(200,169,110,0.2);
+    padding: 5px 9px; border-radius: 7px; margin-top: 12px; width: fit-content;
   }
+  /* Open spot card */
+  .provider-card.open-spot {
+    border: 1.5px dashed rgba(92,122,95,0.25);
+    background: rgba(92,122,95,0.02);
+    display: flex; flex-direction: column; justify-content: center;
+    text-align: center; min-height: 200px;
+  }
+  .open-spot-icon { font-size: 2rem; margin-bottom: 10px; }
+  .open-spot-title { font-weight: 600; color: var(--text-muted); margin-bottom: 6px; font-size: 0.92rem; }
+  .open-spot-sub { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
 
   /* ─── FOR AGENCIES ─── */
   .agencies-section {
-    padding: 90px 5%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
+    padding: 90px 5%; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
   }
-
-  .agencies-visual {
-    background: var(--sage-pale);
-    border-radius: var(--radius-lg);
-    padding: 40px;
+  .check-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 18px; }
+  .check-circle {
+    width: 24px; height: 24px; background: var(--sage-pale); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem; color: var(--sage); font-weight: 700; flex-shrink: 0; margin-top: 2px;
   }
-
+  .check-title { font-weight: 600; color: var(--warm-dark); font-size: 0.92rem; margin-bottom: 3px; }
+  .check-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+  .lead-def-box {
+    background: var(--sage-pale); border: 1px solid rgba(92,122,95,0.2);
+    border-radius: 10px; padding: 16px 20px; margin: 20px 0;
+    font-size: 0.83rem; color: var(--text-body); line-height: 1.65;
+  }
+  .lead-def-box strong { color: var(--sage); }
+  .agencies-visual { background: var(--sage-pale); border-radius: var(--radius-lg); padding: 36px; }
   .pricing-card {
-    background: white;
-    border-radius: var(--radius);
-    padding: 28px;
-    box-shadow: var(--shadow-card);
-    margin-bottom: 16px;
-    border: 1.5px solid transparent;
-    transition: all 0.2s;
-    cursor: pointer;
+    background: white; border-radius: var(--radius); padding: 24px;
+    box-shadow: var(--shadow-card); margin-bottom: 14px;
+    border: 1.5px solid transparent; transition: all 0.2s; cursor: pointer;
   }
+  .pricing-card:hover, .pricing-card.active { border-color: var(--sage); }
+  .pricing-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .pricing-card-name { font-weight: 600; color: var(--warm-dark); font-size: 0.93rem; }
+  .pricing-card-price { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--sage); font-weight: 700; }
+  .pricing-card-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+  .pricing-note { text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 8px; }
 
-  .pricing-card:hover, .pricing-card.active {
-    border-color: var(--sage);
+  /* ─── AGENCY CONTACT FORM ─── */
+  #agency-contact {
+    padding: 80px 5%; background: white;
   }
-
-  .pricing-card-top {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 10px;
+  .agency-form-wrap {
+    max-width: 720px; margin: 0 auto;
+    background: var(--sage-pale); border-radius: var(--radius-lg); padding: 44px;
   }
-
-  .pricing-card-name {
-    font-weight: 600; color: var(--warm-dark);
-    font-size: 0.95rem;
+  .agency-form-wrap .section-title { margin-bottom: 8px; }
+  .agency-form-wrap > p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 32px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .agency-form-group { margin-bottom: 0; }
+  .agency-form-group label {
+    display: block; font-size: 0.76rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--text-muted); margin-bottom: 7px;
   }
-
-  .pricing-card-price {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem; color: var(--sage); font-weight: 700;
+  .agency-form-group input,
+  .agency-form-group select,
+  .agency-form-group textarea {
+    width: 100%; padding: 12px 15px;
+    border: 1.5px solid rgba(92,122,95,0.2); border-radius: 10px;
+    font-size: 0.9rem; font-family: 'DM Sans', sans-serif;
+    color: var(--warm-dark); background: white;
+    transition: border-color 0.2s; appearance: none; outline: none; resize: vertical;
   }
-
-  .pricing-card-desc {
-    font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
+  .agency-form-group input:focus,
+  .agency-form-group select:focus,
+  .agency-form-group textarea:focus { border-color: var(--sage); }
+  .agency-submit {
+    width: 100%; background: var(--sage); color: white; padding: 15px;
+    border-radius: 10px; font-size: 0.95rem; font-weight: 600;
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s; margin-top: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-
-  .pricing-note {
-    text-align: center;
-    font-size: 0.78rem; color: var(--text-muted);
-    margin-top: 10px;
+  .agency-submit:hover { background: var(--warm-mid); transform: translateY(-1px); }
+  .agency-form-note {
+    text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 12px;
   }
+  /* Success states */
+  .success-message {
+    display: none; background: var(--sage-pale); border: 1px solid rgba(92,122,95,0.3);
+    border-radius: var(--radius); padding: 20px 24px; margin-top: 16px;
+    text-align: center; color: var(--sage); font-weight: 600; font-size: 0.9rem;
+  }
+  .success-message.show { display: block; }
 
   /* ─── TESTIMONIALS ─── */
-  .testimonials-section {
-    padding: 90px 5%;
-    background: white;
-  }
-
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 48px;
-  }
-
+  .testimonials-section { padding: 90px 5%; background: white; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 22px; margin-top: 44px; }
   .testimonial-card {
-    background: var(--cream);
-    border-radius: var(--radius-lg);
-    padding: 28px;
+    background: var(--cream); border-radius: var(--radius-lg); padding: 26px;
     border: 1px solid rgba(92,122,95,0.08);
   }
-
-  .testimonial-stars {
-    color: var(--gold); font-size: 0.85rem;
-    letter-spacing: 2px; margin-bottom: 14px;
-  }
-
-  .testimonial-text {
-    font-size: 0.9rem; color: var(--text-body);
-    line-height: 1.7; margin-bottom: 20px;
-    font-style: italic;
-  }
-
-  .testimonial-author {
-    display: flex; align-items: center; gap: 12px;
-  }
-
+  .testimonial-stars { color: var(--gold); font-size: 0.83rem; letter-spacing: 2px; margin-bottom: 12px; }
+  .testimonial-text { font-size: 0.88rem; color: var(--text-body); line-height: 1.7; margin-bottom: 18px; font-style: italic; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
   .testimonial-avatar {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: var(--sage-pale);
+    width: 38px; height: 38px; border-radius: 50%; background: var(--sage-pale);
     display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 0.85rem; color: var(--sage);
+    font-weight: 700; font-size: 0.82rem; color: var(--sage); flex-shrink: 0;
   }
+  .testimonial-name { font-size: 0.86rem; font-weight: 600; color: var(--warm-dark); }
+  .testimonial-role { font-size: 0.76rem; color: var(--text-muted); }
+  .testimonial-source { font-size: 0.7rem; color: var(--sage); margin-top: 3px; font-weight: 600; }
 
-  .testimonial-name {
-    font-size: 0.88rem; font-weight: 600; color: var(--warm-dark);
+  /* ─── PRICING CONTEXT ─── */
+  .pricing-context {
+    padding: 70px 5%; background: var(--cream);
+    border-top: 1px solid rgba(92,122,95,0.1);
+    text-align: center;
   }
-
-  .testimonial-role { font-size: 0.78rem; color: var(--text-muted); }
+  .pricing-context .section-title { margin-bottom: 12px; }
+  .pricing-context > p { font-size: 0.92rem; color: var(--text-muted); max-width: 560px; margin: 0 auto 12px; }
+  .pricing-range {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--sage-pale); border: 1px solid rgba(92,122,95,0.2);
+    border-radius: 100px; padding: 10px 22px; margin-top: 8px;
+    font-weight: 600; color: var(--sage); font-size: 0.9rem;
+  }
 
   /* ─── CTA ─── */
   .cta-section {
-    padding: 90px 5%;
-    background: linear-gradient(135deg, var(--sage) 0%, var(--warm-mid) 100%);
-    text-align: center;
-    position: relative; overflow: hidden;
+    padding: 90px 5%; background: linear-gradient(135deg, var(--sage) 0%, var(--warm-mid) 100%);
+    text-align: center; position: relative; overflow: hidden;
   }
-
   .cta-section::before {
-    content: '';
-    position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+    content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
     width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
-    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%); border-radius: 50%;
   }
-
   .cta-section h2 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    color: white;
-    margin-bottom: 16px;
-    position: relative; z-index: 1;
+    font-size: clamp(2rem, 3.5vw, 3rem); color: white;
+    margin-bottom: 14px; position: relative; z-index: 1;
   }
-
-  .cta-section p {
-    font-size: 1rem; color: rgba(255,255,255,0.7);
-    margin-bottom: 36px; position: relative; z-index: 1;
+  .cta-section p { font-size: 1rem; color: rgba(255,255,255,0.7); margin-bottom: 32px; position: relative; z-index: 1; }
+  .cta-phone {
+    font-size: 1.4rem; font-weight: 700; color: var(--gold);
+    text-decoration: none; display: block; margin-bottom: 28px;
+    position: relative; z-index: 1; letter-spacing: 0.02em;
   }
-
-  .cta-buttons {
-    display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
-    position: relative; z-index: 1;
-  }
-
+  .cta-phone:hover { color: var(--gold-light); }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
   .btn-white {
-    background: white;
-    color: var(--sage);
-    padding: 14px 28px;
-    border-radius: 100px;
-    font-size: 0.92rem; font-weight: 700;
-    text-decoration: none;
-    transition: all 0.25s;
-    border: none; cursor: pointer;
+    background: white; color: var(--sage); padding: 14px 28px;
+    border-radius: 100px; font-size: 0.92rem; font-weight: 700;
+    text-decoration: none; transition: all 0.25s; border: none; cursor: pointer;
   }
-
   .btn-white:hover { background: var(--cream); transform: translateY(-2px); }
-
   .btn-outline-white {
-    background: transparent;
-    color: white;
-    padding: 14px 28px;
-    border-radius: 100px;
-    font-size: 0.92rem; font-weight: 600;
-    text-decoration: none;
-    border: 1.5px solid rgba(255,255,255,0.4);
-    transition: all 0.25s;
-    cursor: pointer;
+    background: transparent; color: white; padding: 14px 28px;
+    border-radius: 100px; font-size: 0.92rem; font-weight: 600;
+    text-decoration: none; border: 1.5px solid rgba(255,255,255,0.4);
+    transition: all 0.25s; cursor: pointer;
   }
-
   .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.1); }
 
   /* ─── FOOTER ─── */
-  footer {
-    background: var(--warm-dark);
-    padding: 56px 5% 32px;
-    color: rgba(255,255,255,0.5);
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 48px;
-    margin-bottom: 48px;
-  }
-
-  .footer-brand {}
-
-  .footer-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem; color: white;
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 14px;
-  }
-
-  .footer-desc {
-    font-size: 0.83rem; line-height: 1.7;
-    margin-bottom: 20px;
-  }
-
+  footer { background: var(--warm-dark); padding: 56px 5% 32px; color: rgba(255,255,255,0.5); }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: white; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .footer-desc { font-size: 0.82rem; line-height: 1.7; margin-bottom: 16px; }
+  .footer-phone { display: block; font-size: 0.95rem; font-weight: 700; color: var(--gold); text-decoration: none; margin-bottom: 12px; }
   .footer-mm-link {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(200,169,110,0.12);
-    border: 1px solid rgba(200,169,110,0.2);
-    color: var(--gold);
-    padding: 8px 14px; border-radius: 8px;
-    font-size: 0.78rem; font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s;
+    background: rgba(200,169,110,0.12); border: 1px solid rgba(200,169,110,0.2);
+    color: var(--gold); padding: 7px 13px; border-radius: 8px;
+    font-size: 0.76rem; font-weight: 600; text-decoration: none; transition: all 0.2s;
   }
-
   .footer-mm-link:hover { background: rgba(200,169,110,0.2); }
-
   .footer-col h4 {
-    font-size: 0.78rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 16px;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 14px;
   }
-
   .footer-col ul { list-style: none; }
-
-  .footer-col li { margin-bottom: 10px; }
-
-  .footer-col a {
-    font-size: 0.85rem; color: rgba(255,255,255,0.55);
-    text-decoration: none; transition: color 0.2s;
-  }
-
+  .footer-col li { margin-bottom: 9px; }
+  .footer-col a { font-size: 0.83rem; color: rgba(255,255,255,0.52); text-decoration: none; transition: color 0.2s; }
   .footer-col a:hover { color: white; }
-
   .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding-top: 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 12px;
-    font-size: 0.78rem;
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
   }
+  .footer-disclosure { font-size: 0.71rem; color: rgba(255,255,255,0.28); max-width: 580px; line-height: 1.65; }
+  .footer-legal-links { font-size: 0.75rem; color: rgba(255,255,255,0.35); white-space: nowrap; }
+  .footer-legal-links a { color: rgba(255,255,255,0.45); text-decoration: none; }
+  .footer-legal-links a:hover { color: white; }
 
-  .footer-disclosure {
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.3);
-    max-width: 580px;
-    line-height: 1.6;
+  /* ─── PRIVACY POLICY MODAL ─── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 20px;
   }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: white; border-radius: var(--radius-lg);
+    max-width: 680px; width: 100%; max-height: 80vh;
+    overflow-y: auto; padding: 40px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--sage-pale); border: none; cursor: pointer;
+    width: 32px; height: 32px; border-radius: 50%;
+    font-size: 1rem; color: var(--text-muted); display: flex;
+    align-items: center; justify-content: center; transition: all 0.2s;
+  }
+  .modal-close:hover { background: var(--sage); color: white; }
+  .modal-box h2 {
+    font-family: 'Playfair Display', serif; font-size: 1.6rem;
+    color: var(--warm-dark); margin-bottom: 6px;
+  }
+  .modal-box .modal-date { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 24px; }
+  .modal-box h3 { font-size: 0.95rem; font-weight: 700; color: var(--warm-dark); margin: 20px 0 8px; }
+  .modal-box p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 12px; }
+  .modal-box ul { margin: 8px 0 12px 18px; }
+  .modal-box li { font-size: 0.86rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 4px; }
 
   /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
   /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .nav-center { display: none; }
+    .hamburger { display: flex; }
+  }
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; padding-top: 100px; }
     .hero-visual { display: none; }
-    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .stats-bar { grid-template-columns: repeat(2,1fr); }
     .steps-grid, .providers-grid, .testimonials-grid { grid-template-columns: 1fr; }
-    .mm-inner, .agencies-section { grid-template-columns: 1fr; }
+    .mm-inner, .agencies-section, .about-section { grid-template-columns: 1fr; gap: 40px; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
-    .nav-links { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid .full { grid-column: 1; }
+    .match-card { flex-direction: column; }
+  }
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero-actions { flex-direction: column; }
+    .agency-form-wrap { padding: 28px 22px; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ═══ NAV ═══ -->
 <nav>
   <a href="#" class="nav-logo">
     <div class="nav-logo-mark">CC</div>
     CareCircle Network
   </a>
-  <ul class="nav-links">
-    <li><a href="#how-it-works">How It Works</a></li>
-    <li><a href="#providers">Find Care</a></li>
-    <li><a href="#memory-magnet">Care Coordination</a></li>
-    <li><a href="#for-agencies">For Agencies</a></li>
-    <li><a href="#find-care" class="nav-cta">Get Matched Free</a></li>
-  </ul>
+  <div class="nav-center">
+    <a href="#how-it-works">How It Works</a>
+    <a href="#providers">Find Care</a>
+    <a href="#memory-magnet">Care Coordination</a>
+    <a href="#for-agencies">For Agencies</a>
+  </div>
+  <div class="nav-right">
+    <a href="tel:8503414324" class="nav-phone">📞 (850) 341-4324</a>
+    <a href="#find-care" class="nav-cta">Get Matched Free</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
-<!-- HERO -->
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#how-it-works" onclick="closeMobile()">How It Works</a>
+  <a href="#providers" onclick="closeMobile()">Find Care</a>
+  <a href="#memory-magnet" onclick="closeMobile()">Care Coordination</a>
+  <a href="#for-agencies" onclick="closeMobile()">For Agencies</a>
+  <a href="#agency-contact" onclick="closeMobile()">List Your Agency</a>
+  <a href="tel:8503414324" class="mobile-phone">📞 (850) 341-4324</a>
+  <a href="#find-care" class="mobile-cta" onclick="closeMobile()">Get Matched Free →</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
 <section class="hero" id="find-care">
   <div class="hero-content">
     <div class="hero-badge">Northwest Florida's Senior Care Network</div>
     <h1>Find care you can <em>actually</em> trust for your loved one</h1>
     <p class="hero-sub">We connect Gulf Coast families with vetted, licensed senior home care providers — for free. No pressure, no hidden fees, real human guidance.</p>
     <div class="hero-actions">
-      <a href="#providers" class="btn-primary">
-        <span>Find a Caregiver</span>
-        <span>→</span>
-      </a>
+      <button onclick="scrollToForm()" class="btn-primary">Find a Caregiver →</button>
       <a href="#for-agencies" class="btn-secondary">For Agencies</a>
     </div>
     <div class="hero-trust">
@@ -1001,21 +820,24 @@
         Pensacola · Gulf Breeze · Milton · Pace · Navarre
       </div>
     </div>
+    <div class="hero-phone-row">
+      <span class="hero-phone-label">Prefer to talk?</span>
+      <a href="tel:8503414324" class="hero-phone-link">(850) 341-4324</a>
+    </div>
   </div>
 
   <div class="hero-visual">
-    <div class="care-finder-card">
+    <div class="care-finder-card" id="hero-form">
       <h3>Find Care Near You</h3>
       <p>Free matching — no commitment required</p>
-
       <div class="form-row">
         <div class="form-group">
           <label>City / Zip</label>
-          <input type="text" placeholder="Pensacola, 32501...">
+          <input type="text" id="hero-zip" placeholder="Pensacola, 32501…">
         </div>
         <div class="form-group">
           <label>Care Type</label>
-          <select>
+          <select id="hero-care-type">
             <option>Companion Care</option>
             <option>Homemaker Services</option>
             <option>Respite / Relief</option>
@@ -1024,301 +846,518 @@
           </select>
         </div>
       </div>
-
       <div class="form-group">
         <label>Who needs care?</label>
-        <select>
+        <select id="hero-who">
           <option>My parent or grandparent</option>
           <option>My spouse or partner</option>
           <option>Myself</option>
           <option>Another loved one</option>
         </select>
       </div>
-
       <div class="form-group">
         <label>When do you need care?</label>
-        <select>
+        <select id="hero-when">
           <option>As soon as possible</option>
           <option>Within 1–2 weeks</option>
           <option>Within a month</option>
           <option>Just exploring options</option>
         </select>
       </div>
-
-      <button class="find-care-btn">
-        <span>Show Matching Providers</span>
-        <span>→</span>
+      <button class="find-care-btn" onclick="showMatches()">
+        <span>Show Matching Providers</span><span>→</span>
       </button>
-
       <p class="card-note">🔒 Free service · No spam · We never sell your info</p>
     </div>
-
     <div class="mm-float-badge">
       <div class="mm-badge-icon">🧠</div>
       <div class="mm-badge-text">
-        <strong>Memory Magnet</strong>
-        <span>Keep your whole family coordinated</span>
+        <strong>Memory Magnet AI</strong>
+        <span>Care that improves after placement</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- STATS -->
+<!-- ═══ MATCH RESULTS ═══ -->
+<section id="match-results">
+  <div class="match-results-inner">
+    <div class="match-header">
+      <h2>Your matched providers</h2>
+      <p id="match-subtitle">Based on your needs, here are the best-fit licensed agencies in your area.</p>
+    </div>
+
+    <div class="match-card">
+      <div class="match-card-logo">🏠</div>
+      <div class="match-card-body">
+        <div class="match-card-top">
+          <div>
+            <div class="match-card-name">Assisting Seniors LLC</div>
+            <div class="match-card-location">📍 Pensacola · Escambia & Santa Rosa Counties · Serving since 2008</div>
+          </div>
+          <span class="provider-badge badge-featured">⭐ Featured</span>
+        </div>
+        <div class="match-services">
+          <span class="service-tag">Companion Care</span>
+          <span class="service-tag">Homemaking</span>
+          <span class="service-tag">Relief Care</span>
+          <span class="service-tag">Memory Care</span>
+          <span class="service-tag">ALF & Nursing Homes</span>
+        </div>
+        <div class="match-stars">★★★★★</div>
+        <div class="match-rating">5.0 · 47 verified reviews · FL Licensed, Bonded & Insured · Long-term insurance accepted</div>
+        <div class="match-mm-pill">✦ Memory Magnet Partner — Family portal included at no extra cost</div>
+        <div class="match-card-actions">
+          <a href="tel:8503414324" class="btn-call">📞 Call (850) 341-4324</a>
+          <a href="https://assistingseniors.biz" target="_blank" class="btn-learn">Visit Website →</a>
+        </div>
+        <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 8px;">📞 number is a CareCircle tracked line — connects directly to Assisting Seniors</p>
+      </div>
+    </div>
+
+    <div class="match-card" style="border: 1.5px dashed rgba(92,122,95,0.25); background: rgba(92,122,95,0.02);">
+      <div class="match-card-logo" style="background: rgba(92,122,95,0.06); font-size: 1.2rem;">📋</div>
+      <div class="match-card-body">
+        <div class="match-card-top">
+          <div>
+            <div class="match-card-name" style="color: var(--text-muted);">Partner Spot Available — Gulf Breeze / Navarre Area</div>
+            <div class="match-card-location">📍 Gulf Breeze · Navarre · Pensacola Beach</div>
+          </div>
+          <span class="provider-badge badge-open">Spot Open</span>
+        </div>
+        <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.6;">We're actively vetting licensed agencies for this service area. If you need care in Gulf Breeze or Navarre, call us — we'll connect you directly.</p>
+        <div class="match-card-actions">
+          <a href="tel:8503414324" class="btn-call">📞 Call for Referral</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="match-card" style="border: 1.5px dashed rgba(92,122,95,0.25); background: rgba(92,122,95,0.02);">
+      <div class="match-card-logo" style="background: rgba(92,122,95,0.06); font-size: 1.2rem;">📋</div>
+      <div class="match-card-body">
+        <div class="match-card-top">
+          <div>
+            <div class="match-card-name" style="color: var(--text-muted);">Partner Spot Available — Milton / Pace / Santa Rosa County</div>
+            <div class="match-card-location">📍 Milton · Pace · Jay · Navarre</div>
+          </div>
+          <span class="provider-badge badge-open">Spot Open</span>
+        </div>
+        <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.6;">We're building out our Santa Rosa County network. Call us and we'll help you find the right fit or get on the waitlist for new provider announcements.</p>
+        <div class="match-card-actions">
+          <a href="tel:8503414324" class="btn-call">📞 Call for Referral</a>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 20px; text-align: center;">
+      Not seeing what you need? Call us at <a href="tel:8503414324" style="color: var(--sage); font-weight: 600;">(850) 341-4324</a> and we'll help you personally.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ STATS ═══ -->
 <div class="stats-bar">
   <div class="stat-item">
     <span class="stat-num">17+</span>
-    <span class="stat-label">Years serving Gulf Coast families</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">50+</span>
-    <span class="stat-label">Vetted local care providers</span>
+    <span class="stat-label">Years our top partner has served Gulf Coast families</span>
   </div>
   <div class="stat-item">
     <span class="stat-num">Free</span>
-    <span class="stat-label">Matching service, always</span>
+    <span class="stat-label">Matching service — always, for families</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">FL</span>
+    <span class="stat-label">Licensed & verified agencies only</span>
   </div>
   <div class="stat-item">
     <span class="stat-num">4.9★</span>
-    <span class="stat-label">Average provider rating</span>
+    <span class="stat-label">Average partner rating</span>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
+<!-- ═══ HOW IT WORKS ═══ -->
 <section class="section" id="how-it-works">
   <div class="section-label">The Process</div>
   <h2 class="section-title">From search to caregiver<br>in 3 simple steps</h2>
-  <p class="section-sub">Finding the right caregiver shouldn't be a second job. We handle the vetting so you can focus on your family.</p>
+  <p class="section-sub">Finding the right caregiver shouldn't be a second job. We do the vetting so you can focus on your family.</p>
 
   <div class="steps-grid">
     <div class="step-card">
       <div class="step-icon">📋</div>
       <div class="step-num">01</div>
       <h3>Tell us what you need</h3>
-      <p>Fill out a quick form — location, care type, schedule, any special considerations. Takes under 2 minutes.</p>
+      <p>Fill out a quick form — location, care type, schedule, any special considerations. Or just call us. Takes under 2 minutes either way.</p>
       <span class="step-tag">Free · No account required</span>
     </div>
-
     <div class="step-card">
       <div class="step-icon">🤝</div>
       <div class="step-num">02</div>
       <h3>We match you with vetted agencies</h3>
-      <p>We surface the best-fit licensed, bonded providers in your area. Every agency is pre-screened. You get 2–3 matched options, not a wall of listings.</p>
+      <p>We surface the best-fit licensed, bonded providers in your area. Every agency on our network is pre-screened for licensure, insurance, and reputation. You get matched options, not a wall of listings.</p>
       <span class="step-tag">Licensed · Bonded · Insured</span>
     </div>
-
     <div class="step-card">
       <div class="step-icon">🧠</div>
       <div class="step-num">03</div>
-      <h3>Stay coordinated with Memory Magnet</h3>
-      <p>Once care starts, use Memory Magnet to keep your whole family on the same page — care logs, flags, and real-time updates, all in one place.</p>
-      <span class="step-tag">Powered by memoia.live</span>
+      <h3>Care that never stops improving</h3>
+      <p>Our partnership with Memory Magnet means placement is just the beginning. The AI monitors care quality in real time — flagging concerns, tracking outcomes, and continuously refining the match based on actual resident and family feedback. Your loved one's care gets better over time, not just better at the start.</p>
+      <span class="step-tag">AI-Powered · Resident-Driven · Ongoing</span>
     </div>
   </div>
 </section>
 
-<!-- MEMORY MAGNET SECTION -->
+<!-- ═══ ASSISTING SENIORS SPOTLIGHT ═══ -->
+<section style="padding: 90px 5%; background: white;" id="spotlight">
+  <div style="max-width: 1100px; margin: 0 auto;">
+
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 48px;">
+      <div>
+        <div class="section-label">Featured Partner Spotlight</div>
+        <h2 class="section-title" style="margin-bottom: 0;">Assisting Seniors LLC</h2>
+        <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 6px;">📍 Pensacola, FL · Licensed · Bonded · Insured · Serving since 2008</div>
+      </div>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="tel:8503414324" class="btn-primary" style="font-size:0.85rem;padding:11px 22px;">📞 (850) 341-4324</a>
+        <a href="https://assistingseniors.biz" target="_blank" class="btn-secondary" style="font-size:0.85rem;padding:11px 22px;">Visit Website →</a>
+      </div>
+    </div>
+
+    <!-- Credential bar -->
+    <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(92,122,95,0.12); border-radius: var(--radius); overflow: hidden; margin-bottom: 48px;">
+      <div style="background: var(--cream); padding: 20px; text-align: center;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--sage);">17+</div>
+        <div style="font-size:0.78rem; color:var(--text-muted); margin-top:3px;">Years in operation</div>
+      </div>
+      <div style="background: var(--cream); padding: 20px; text-align: center;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--sage);">5.0★</div>
+        <div style="font-size:0.78rem; color:var(--text-muted); margin-top:3px;">Google rating · 47+ reviews</div>
+      </div>
+      <div style="background: var(--cream); padding: 20px; text-align: center;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--sage);">FL</div>
+        <div style="font-size:0.78rem; color:var(--text-muted); margin-top:3px;">State licensed homemaker agency</div>
+      </div>
+      <div style="background: var(--cream); padding: 20px; text-align: center;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--sage);">LTI</div>
+        <div style="font-size:0.78rem; color:var(--text-muted); margin-top:3px;">Long-term insurance accepted</div>
+      </div>
+    </div>
+
+    <!-- Two-col: story + why they win -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-bottom: 48px;">
+      <div>
+        <div style="font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:14px;">The Story</div>
+        <p style="font-size:0.92rem; color:var(--text-body); line-height:1.8; margin-bottom:16px;">
+          Charles Lillo started Assisting Seniors in June 2008 — not as a franchise acquisition or a business pivot, but because he saw families in Pensacola struggling to find non-medical home care they could actually trust. Seventeen years later, that hasn't changed. Neither has his approach.
+        </p>
+        <p style="font-size:0.92rem; color:var(--text-body); line-height:1.8; margin-bottom:16px;">
+          He personally oversees the matching of every caregiver to every client. Not an algorithm, not an intake coordinator — him. Because he knows that the difference between a caregiver who works and one who becomes part of the family is compatibility, and compatibility isn't something you can process through a call center.
+        </p>
+        <p style="font-size:0.92rem; color:var(--text-body); line-height:1.8;">
+          Assisting Seniors serves clients in their homes, in assisted living facilities, in nursing homes, and in memory care units — from 3-hour shifts to 24/7 coverage. They accept most long-term care insurance policies. And their caregivers keep coming back. Some have been with the same clients for years.
+        </p>
+      </div>
+
+      <div>
+        <div style="font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:14px;">Why They Outperform the Chains</div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:36px;height:36px;background:var(--sage-pale);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🏆</div>
+            <div>
+              <div style="font-size:0.9rem;font-weight:600;color:var(--warm-dark);margin-bottom:3px;">Established before the competition arrived</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.6;">Visiting Angels, Home Helpers, and SYNERGY all opened Pensacola offices years after Assisting Seniors was already building its reputation. They had to buy market share. Assisting Seniors earned theirs.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:36px;height:36px;background:var(--sage-pale);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">💰</div>
+            <div>
+              <div style="font-size:0.9rem;font-weight:600;color:var(--warm-dark);margin-bottom:3px;">No franchise overhead passed to you</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.6;">National chains pay 5–8% royalties to corporate headquarters. That cost goes somewhere — usually into your hourly rate. Assisting Seniors is independently owned. Every dollar goes toward care.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:36px;height:36px;background:var(--sage-pale);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🔄</div>
+            <div>
+              <div style="font-size:0.9rem;font-weight:600;color:var(--warm-dark);margin-bottom:3px;">Caregiver continuity as a core value</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.6;">High caregiver turnover is the dirty secret of the home care industry. Assisting Seniors deliberately keeps the same caregiver with the same client. Caregivers become part of the family — and families notice.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:36px;height:36px;background:var(--sage-pale);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🧠</div>
+            <div>
+              <div style="font-size:0.9rem;font-weight:600;color:var(--warm-dark);margin-bottom:3px;">Memory Magnet AI keeps quality accountable</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.6;">As a CareCircle Featured Partner, every Assisting Seniors client gets Memory Magnet — real-time care logs, family portal, and AI-driven quality monitoring that no franchise chain offers their clients.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services offered -->
+    <div style="background:var(--sage-pale);border-radius:var(--radius-lg);padding:32px;">
+      <div style="font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:20px;">Services Offered</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+        <div style="background:white;border-radius:var(--radius);padding:16px;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:8px;">🤝</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--warm-dark);margin-bottom:4px;">Companion Care</div>
+          <div style="font-size:0.76rem;color:var(--text-muted);line-height:1.5;">In-home company, medication reminders, appointment coordination, safety monitoring</div>
+        </div>
+        <div style="background:white;border-radius:var(--radius);padding:16px;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:8px;">🏠</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--warm-dark);margin-bottom:4px;">Homemaking</div>
+          <div style="font-size:0.76rem;color:var(--text-muted);line-height:1.5;">Shopping, light cleaning, laundry, meal prep, errands, appointment transport</div>
+        </div>
+        <div style="background:white;border-radius:var(--radius);padding:16px;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:8px;">🔄</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--warm-dark);margin-bottom:4px;">Relief Care</div>
+          <div style="font-size:0.76rem;color:var(--text-muted);line-height:1.5;">Short-term coverage when the primary caregiver needs a break — scheduled or emergency</div>
+        </div>
+        <div style="background:white;border-radius:var(--radius);padding:16px;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:8px;">📞</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--warm-dark);margin-bottom:4px;">Telephone Reassurance</div>
+          <div style="font-size:0.76rem;color:var(--text-muted);line-height:1.5;">Scheduled check-in calls for safety, reducing isolation for clients who live alone</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:0.78rem;color:var(--text-muted);text-align:center;">Also serves clients in ALFs, Nursing Homes, and Memory Care Units · 3-hour minimum to 24/7 coverage</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ PRICING CONTEXT ═══ -->
+<div class="pricing-context">
+  <div class="section-label">What Does Senior Care Cost?</div>
+  <h2 class="section-title" style="margin-bottom: 12px;">Set your expectations before your first call</h2>
+  <p>Home care in the Pensacola area typically runs between <strong>$20–$28 per hour</strong> depending on the type of care and number of hours per week. Most families using part-time companion or homemaker services spend:</p>
+  <div class="pricing-range">💰 $1,200 – $4,800 per month depending on hours and care type</div>
+  <p style="margin-top: 16px; font-size: 0.82rem; color: var(--text-muted);">Long-term care insurance is accepted by most agencies in our network. Our matching service is always free for families — agencies pay us, not you.</p>
+</div>
+
+<!-- ═══ MEMORY MAGNET ═══ -->
 <section class="mm-section" id="memory-magnet">
   <div class="mm-inner">
     <div class="mm-content">
-      <div class="section-label">Care Coordination · Powered by Memory Magnet</div>
-      <h2 class="section-title">The whole family, finally on the same page</h2>
-      <p class="section-sub">Finding a caregiver is just step one. Memory Magnet keeps everyone — family members, caregivers, and agencies — connected and accountable from day one.</p>
+      <div class="section-label">Ongoing Care Intelligence · Powered by Memory Magnet AI</div>
+      <h2 class="section-title">Most networks hand you a name and disappear. <em>We don't.</em></h2>
+      <p class="section-sub">CareCircle's partnership with Memory Magnet means we stay in the picture long after placement — using AI to continuously evaluate care quality and match fit based on real resident and family feedback.</p>
+
+      <div class="mm-context-note">
+        <strong>What makes this different:</strong> Memory Magnet's AI doesn't just log care — it learns from it. Real feedback from residents and families feeds a continuous improvement loop that keeps match quality high long after day one. Unbiased. Resident-driven. Never stops working.
+      </div>
 
       <div class="mm-features">
+        <div class="mm-feature">
+          <div class="mm-feature-icon">🤖</div>
+          <div class="mm-feature-text">
+            <h4>AI-Powered Ongoing Matching</h4>
+            <p>As care progresses, the AI evaluates fit based on real outcomes — and flags when a better match may be available. The system learns. Your loved one's care improves.</p>
+          </div>
+        </div>
         <div class="mm-feature">
           <div class="mm-feature-icon">📝</div>
           <div class="mm-feature-text">
             <h4>Immutable Care Logs</h4>
-            <p>Every visit, every note, every medication reminder — logged and timestamped. No he-said-she-said. Just facts.</p>
+            <p>Every visit, every note, every medication reminder — logged and timestamped permanently. Accountability for everyone in the care circle.</p>
           </div>
         </div>
         <div class="mm-feature">
           <div class="mm-feature-icon">🚩</div>
           <div class="mm-feature-text">
-            <h4>Concern Flagging</h4>
-            <p>Anyone on the care team can flag a concern. Family gets notified instantly. Issues don't fall through the cracks.</p>
+            <h4>Resident & Family Concern Flagging</h4>
+            <p>Anyone on the care team — including the resident — can raise a flag. Family gets notified instantly. Concerns get addressed, not buried.</p>
           </div>
         </div>
         <div class="mm-feature">
           <div class="mm-feature-icon">👨‍👩‍👧</div>
           <div class="mm-feature-text">
-            <h4>Family Portal</h4>
-            <p>Out-of-state family members get read-only access. Everyone sees what's happening — no more phone-tag updates.</p>
-          </div>
-        </div>
-        <div class="mm-feature">
-          <div class="mm-feature-icon">🔔</div>
-          <div class="mm-feature-text">
-            <h4>Smart Notifications</h4>
-            <p>Real-time alerts when something important happens. Quiet when things are running smoothly.</p>
+            <h4>Family Portal — Anywhere, Anytime</h4>
+            <p>Out-of-state family gets real-time read-only access. No more weekly calls. No more wondering if everything's okay.</p>
           </div>
         </div>
       </div>
-
-      <a href="https://memoia.live" class="btn-gold" target="_blank">
-        <span>Try Memory Magnet Free</span>
-        <span>→</span>
-      </a>
+      <a href="https://memoia.live" class="btn-gold" target="_blank">See Memory Magnet in Action →</a>
     </div>
 
-    <!-- Mockup -->
     <div class="mm-mockup">
       <div class="mm-mockup-header">
-        <div class="mm-mockup-title">
-          <div class="mm-dot"></div>
-          Care Log — Dorothy M.
-        </div>
-        <div class="mm-mockup-date">Today, March 13</div>
+        <div class="mm-mockup-title"><div class="mm-dot"></div>Care Log — Dorothy M.</div>
+        <div class="mm-mockup-date">Today, Mar 15</div>
       </div>
-
       <div class="mm-log-entry">
-        <div class="mm-log-avatar" style="background: rgba(92,122,95,0.2); color: #5C7A5F;">SA</div>
+        <div class="mm-log-avatar" style="background:rgba(92,122,95,0.2);color:#5C7A5F;">SA</div>
         <div class="mm-log-body">
           <div class="mm-log-name">Sarah A. · Caregiver</div>
-          <div class="mm-log-note">Morning visit complete. Dorothy had breakfast, took all medications. Good mood today — talked about her garden for 20 minutes.</div>
+          <div class="mm-log-note">Morning visit complete. Dorothy had breakfast, took all medications. Good mood — talked about her garden for 20 minutes.</div>
         </div>
         <div class="mm-log-time">8:42 AM</div>
       </div>
-
       <div class="mm-log-entry">
-        <div class="mm-log-avatar" style="background: rgba(200,169,110,0.2); color: #A67C3A;">JM</div>
+        <div class="mm-log-avatar" style="background:rgba(200,169,110,0.2);color:#A67C3A;">JM</div>
         <div class="mm-log-body">
-          <div class="mm-log-name">James M. · Son (Out of State)</div>
-          <div class="mm-log-note">Thanks Sarah! Mom mentioned her knee was bothering her yesterday. Can you note if she seems uncomfortable?</div>
+          <div class="mm-log-name">James M. · Son (Chicago)</div>
+          <div class="mm-log-note">Thanks Sarah! Mom mentioned her knee was bothering her. Can you note if she seems uncomfortable today?</div>
         </div>
         <div class="mm-log-time">9:15 AM</div>
       </div>
-
       <div class="mm-log-entry">
-        <div class="mm-log-avatar" style="background: rgba(196,113,74,0.2); color: #C4714A;">SA</div>
+        <div class="mm-log-avatar" style="background:rgba(196,113,74,0.2);color:#C4714A;">SA</div>
         <div class="mm-log-body">
           <div class="mm-log-name">Sarah A. · Caregiver</div>
-          <div class="mm-log-note">🚩 Flagged: Dorothy mentioned knee pain twice during visit. Flagging for family review. Recommend scheduling doctor check.</div>
+          <div class="mm-log-note">🚩 Flagged: Dorothy mentioned knee pain twice during visit. Recommend family review and possible doctor check.</div>
         </div>
         <div class="mm-log-time">11:30 AM</div>
       </div>
-
-      <div class="mm-alert">
-        🔔 <span><strong style="color: rgba(255,255,255,0.8);">Family notified</strong> — 3 members received this flag</span>
+      <div class="mm-alert">🔔 <span><strong style="color:rgba(255,255,255,0.8);">3 family members notified</strong> — flag sent automatically</span></div>
+      <div style="margin-top:14px;background:rgba(92,122,95,0.12);border:1px solid rgba(92,122,95,0.25);border-radius:9px;padding:11px 14px;font-size:0.76rem;color:rgba(255,255,255,0.65);display:flex;gap:8px;align-items:flex-start;">
+        🤖 <span><strong style="color:rgba(255,255,255,0.8);">Memory Magnet AI:</strong> Care quality score trending down over 7 days. Reviewing match fit — family will be notified of any recommendation.</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROVIDERS -->
+<!-- ═══ PROVIDERS ═══ -->
 <section class="providers-section" id="providers">
   <div class="providers-header">
     <div>
       <div class="section-label">Our Network</div>
       <h2 class="section-title">Vetted providers across<br>Northwest Florida</h2>
     </div>
-    <a href="#find-care" class="btn-primary">Get Matched Free →</a>
+    <button onclick="scrollToForm()" class="btn-primary">Get Matched Free →</button>
   </div>
 
   <div class="providers-grid">
-    <div class="provider-card">
-      <div class="provider-card-top">
-        <div class="provider-logo">🏠</div>
-        <span class="provider-badge badge-featured">Featured</span>
+    <div class="provider-card" style="border:1.5px solid rgba(200,169,110,0.35); grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+      <div>
+        <div class="provider-card-top">
+          <div class="provider-logo">🏠</div>
+          <span class="provider-badge badge-featured">⭐ CareCircle Featured Partner</span>
+        </div>
+        <div class="provider-name" style="font-size:1.15rem;">Assisting Seniors LLC</div>
+        <div class="provider-location">📍 Pensacola · Escambia & Santa Rosa Counties · <strong style="color:var(--sage);">Serving since 2008</strong></div>
+        <div class="provider-services" style="margin-top:10px;">
+          <span class="service-tag">Companion Care</span>
+          <span class="service-tag">Homemaking</span>
+          <span class="service-tag">Relief Care</span>
+          <span class="service-tag">Memory Care</span>
+          <span class="service-tag">ALF Support</span>
+          <span class="service-tag">Nursing Home Support</span>
+          <span class="service-tag">Long-Term Insurance</span>
+        </div>
+        <div class="provider-stars" style="margin-top:12px; font-size:1rem;">★★★★★</div>
+        <div class="provider-rating">5.0 · 47+ verified Google reviews · FL Licensed, Bonded & Insured</div>
+        <div class="provider-mm-badge" style="margin-top:14px;">✦ Memory Magnet Partner — AI-powered ongoing care quality included</div>
+        <a href="tel:8503414324" class="btn-primary" style="margin-top:20px; font-size:0.85rem; padding:11px 22px; display:inline-flex;">📞 Call (850) 341-4324</a>
       </div>
-      <div class="provider-name">Assisting Seniors LLC</div>
-      <div class="provider-location">📍 Pensacola · Escambia & Santa Rosa Counties</div>
-      <div class="provider-services">
-        <span class="service-tag">Companion Care</span>
-        <span class="service-tag">Homemaking</span>
-        <span class="service-tag">Relief Care</span>
-        <span class="service-tag">Memory Care</span>
+      <div>
+        <div style="font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:14px;">Why Assisting Seniors stands apart</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:32px;height:32px;background:var(--sage-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🏆</div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:2px;">17+ Years of Proven Care</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.55;">Founded in 2008 — before most of their competitors even opened. That's not marketing. That's a track record built one family at a time.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:32px;height:32px;background:var(--sage-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">💛</div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:2px;">Locally Owned. Personally Matched.</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.55;">Not a national franchise. Charles Lillo personally oversees caregiver-to-client matching — because compatibility isn't something you can automate at a call center.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:32px;height:32px;background:var(--sage-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">💰</div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:2px;">More Affordable Than the Brand Names</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.55;">National franchise chains carry overhead you pay for. Assisting Seniors delivers equal or better care at rates that reflect a locally-run operation — not a corporate P&L.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:32px;height:32px;background:var(--sage-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🔄</div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:2px;">They Keep the Same Caregiver</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.55;">Continuity isn't a nice-to-have in senior care — it's everything. Assisting Seniors works to keep the same caregiver with the same client. They become family, not a rotation.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="provider-stars">★★★★★</div>
-      <div class="provider-rating">5.0 · 47 reviews · Serving since 2008</div>
-      <div class="provider-mm-badge">✦ Memory Magnet Partner — Family portal included</div>
     </div>
 
-    <div class="provider-card">
-      <div class="provider-card-top">
-        <div class="provider-logo">🤝</div>
-        <span class="provider-badge badge-verified">Verified</span>
-      </div>
-      <div class="provider-name">Gulf Coast Companion Care</div>
-      <div class="provider-location">📍 Gulf Breeze · Navarre · Pensacola Beach</div>
-      <div class="provider-services">
-        <span class="service-tag">Companion Care</span>
-        <span class="service-tag">Errands</span>
-        <span class="service-tag">Appointments</span>
-      </div>
-      <div class="provider-stars">★★★★★</div>
-      <div class="provider-rating">4.9 · 28 reviews</div>
+    <div class="provider-card open-spot">
+      <div class="open-spot-icon">📋</div>
+      <div class="open-spot-title">Gulf Breeze / Navarre Area</div>
+      <div class="open-spot-sub">We're vetting partners for this service area. Interested agencies can apply below.</div>
+      <a href="#agency-contact" class="btn-secondary" style="font-size:0.82rem; padding: 9px 18px;">Apply to Partner →</a>
     </div>
 
-    <div class="provider-card">
-      <div class="provider-card-top">
-        <div class="provider-logo">💛</div>
-        <span class="provider-badge badge-verified">Verified</span>
-      </div>
-      <div class="provider-name">Panhandle Home Helpers</div>
-      <div class="provider-location">📍 Milton · Pace · Jay</div>
-      <div class="provider-services">
-        <span class="service-tag">Homemaking</span>
-        <span class="service-tag">24/7 Care</span>
-        <span class="service-tag">Respite</span>
-      </div>
-      <div class="provider-stars">★★★★☆</div>
-      <div class="provider-rating">4.7 · 19 reviews</div>
+    <div class="provider-card open-spot">
+      <div class="open-spot-icon">📋</div>
+      <div class="open-spot-title">Milton / Pace / Santa Rosa County</div>
+      <div class="open-spot-sub">Partner spot available. FL licensed agencies with companion or homemaker services encouraged to apply.</div>
+      <a href="#agency-contact" class="btn-secondary" style="font-size:0.82rem; padding: 9px 18px;">Apply to Partner →</a>
     </div>
   </div>
 </section>
 
-<!-- FOR AGENCIES -->
+<!-- ═══ FOR AGENCIES ═══ -->
 <section class="agencies-section" id="for-agencies">
   <div>
     <div class="section-label">For Care Providers</div>
-    <h2 class="section-title">Get a steady stream of qualified leads</h2>
-    <p class="section-sub">We send you families who are actively looking for care — pre-qualified by location, care type, and timeline. No cold calls. No wasted budget.</p>
+    <h2 class="section-title">Get a steady stream of qualified families</h2>
+    <p class="section-sub">We send you families who are actively looking for care — pre-qualified by location, care type, and urgency. No cold calls. No wasted budget.</p>
 
-    <div style="margin-bottom: 28px;">
-      <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
-        <div style="width: 24px; height: 24px; background: var(--sage-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--sage); font-weight: 700; flex-shrink: 0; margin-top: 1px;">✓</div>
-        <div>
-          <div style="font-weight: 600; color: var(--warm-dark); font-size: 0.92rem;">Pay only for real results</div>
-          <div style="font-size: 0.82rem; color: var(--text-muted);">Per-lead or per-signed-client pricing. You know exactly what you're getting.</div>
-        </div>
+    <div class="check-item">
+      <div class="check-circle">✓</div>
+      <div>
+        <div class="check-title">Pay only for real results</div>
+        <div class="check-desc">Per-lead or flat monthly pricing. No setup fees, no long-term contracts.</div>
       </div>
-      <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
-        <div style="width: 24px; height: 24px; background: var(--sage-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--sage); font-weight: 700; flex-shrink: 0; margin-top: 1px;">✓</div>
-        <div>
-          <div style="font-weight: 600; color: var(--warm-dark); font-size: 0.92rem;">Memory Magnet platform included</div>
-          <div style="font-size: 0.82rem; color: var(--text-muted);">Featured partners get Memory Magnet at no extra cost — impress families with professional care coordination from day one.</div>
-        </div>
+    </div>
+    <div class="check-item">
+      <div class="check-circle">✓</div>
+      <div>
+        <div class="check-title">Memory Magnet included for Featured partners</div>
+        <div class="check-desc">Featured partners receive Memory Magnet care coordination platform — a $249/month value — at no extra cost. Give client families a professional portal from day one.</div>
       </div>
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
-        <div style="width: 24px; height: 24px; background: var(--sage-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--sage); font-weight: 700; flex-shrink: 0; margin-top: 1px;">✓</div>
-        <div>
-          <div style="font-weight: 600; color: var(--warm-dark); font-size: 0.92rem;">Service area exclusivity available</div>
-          <div style="font-size: 0.82rem; color: var(--text-muted);">Lock in your territory. Be the only agency we send leads to in your coverage area.</div>
-        </div>
+    </div>
+    <div class="check-item">
+      <div class="check-circle">✓</div>
+      <div>
+        <div class="check-title">Territory exclusivity available</div>
+        <div class="check-desc">Lock in your county or service area. While your exclusivity is active, all leads in your territory go to you — no competitors.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-circle">✓</div>
+      <div>
+        <div class="check-title">Month-to-month, cancel anytime</div>
+        <div class="check-desc">No annual commitments. Featured tier is month-to-month with 30-day notice to cancel.</div>
       </div>
     </div>
 
-    <a href="#agency-contact" class="btn-primary">Talk to Us About Listing →</a>
+    <div class="lead-def-box">
+      <strong>What counts as a qualified lead?</strong> A family in your licensed service area who has submitted their contact information, specified a care need, and indicated a start timeline of within 30 days. Leads include a verified name, phone number, and care type. You are only charged for leads meeting these criteria.
+    </div>
+
+    <a href="#agency-contact" class="btn-primary">Apply to Join the Network →</a>
   </div>
 
   <div class="agencies-visual">
-    <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 20px;">Partner Tiers</div>
+    <div style="font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:18px;">Partner Tiers</div>
 
     <div class="pricing-card active">
       <div class="pricing-card-top">
         <div class="pricing-card-name">⭐ Featured Partner</div>
-        <div class="pricing-card-price">$299<span style="font-size: 0.8rem; font-weight: 400; color: var(--text-muted)">/mo</span></div>
+        <div class="pricing-card-price">$299<span style="font-size:0.78rem;font-weight:400;color:var(--text-muted)">/mo</span></div>
       </div>
-      <div class="pricing-card-desc">Top placement, exclusive territory lock, Memory Magnet platform included, lead call tracking, monthly performance report.</div>
+      <div class="pricing-card-desc">Top placement in all match results. Exclusive territory lock (by county). Memory Magnet platform included ($249 value). Tracked phone number. Monthly lead report. Month-to-month, cancel anytime.</div>
     </div>
 
     <div class="pricing-card">
       <div class="pricing-card-top">
         <div class="pricing-card-name">✓ Verified Partner</div>
-        <div class="pricing-card-price">$49<span style="font-size: 0.8rem; font-weight: 400; color: var(--text-muted)">/lead</span></div>
+        <div class="pricing-card-price">$49<span style="font-size:0.78rem;font-weight:400;color:var(--text-muted)">/lead</span></div>
       </div>
-      <div class="pricing-card-desc">Pay per qualified lead. Verified badge, directory listing, and standard call tracking included.</div>
+      <div class="pricing-card-desc">Pay per qualified lead only. Verified badge, directory listing, call tracking. Billed monthly based on leads delivered. No minimums.</div>
     </div>
 
     <div class="pricing-card">
@@ -1326,68 +1365,145 @@
         <div class="pricing-card-name">📋 Basic Listing</div>
         <div class="pricing-card-price">Free</div>
       </div>
-      <div class="pricing-card-desc">Get listed in our directory. Leads go to Featured partners in your area first.</div>
+      <div class="pricing-card-desc">Directory listing only. Leads in your area go to Featured partners first. Good for agencies building reputation before upgrading.</div>
     </div>
 
-    <div class="pricing-note">All tiers include vetting review · Florida licensed agencies only</div>
+    <div class="pricing-note">FL licensed agencies only · Vetting required for all tiers · No Medicaid/Medicare compliance conflicts</div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials-section">
-  <div class="section-label">Real Families</div>
-  <h2 class="section-title">What Gulf Coast families say</h2>
+<!-- ═══ AGENCY CONTACT FORM ═══ -->
+<section id="agency-contact">
+  <div class="agency-form-wrap">
+    <div class="section-label">Join the Network</div>
+    <h2 class="section-title">Apply to become a CareCircle partner</h2>
+    <p>Tell us about your agency and we'll follow up within one business day to discuss the right tier for your service area.</p>
 
+    <div class="form-grid" id="agency-form">
+      <div class="agency-form-group">
+        <label>Agency Name *</label>
+        <input type="text" id="ag-name" placeholder="Assisting Seniors LLC" required>
+      </div>
+      <div class="agency-form-group">
+        <label>Your Name *</label>
+        <input type="text" id="ag-contact" placeholder="Your name" required>
+      </div>
+      <div class="agency-form-group">
+        <label>Phone *</label>
+        <input type="tel" id="ag-phone" placeholder="(850) 000-0000" required>
+      </div>
+      <div class="agency-form-group">
+        <label>Email *</label>
+        <input type="email" id="ag-email" placeholder="you@agency.com" required>
+      </div>
+      <div class="agency-form-group full">
+        <label>Service Area (counties / cities)</label>
+        <input type="text" id="ag-area" placeholder="Escambia County, Santa Rosa County…">
+      </div>
+      <div class="agency-form-group full">
+        <label>Florida License Number</label>
+        <input type="text" id="ag-license" placeholder="HCS-12345678">
+      </div>
+      <div class="agency-form-group full">
+        <label>Tier You're Interested In</label>
+        <select id="ag-tier">
+          <option>Featured Partner ($299/mo)</option>
+          <option>Verified Partner ($49/lead)</option>
+          <option>Basic Listing (Free)</option>
+          <option>Not sure — let's talk</option>
+        </select>
+      </div>
+      <div class="agency-form-group full">
+        <label>Anything else we should know?</label>
+        <textarea id="ag-notes" rows="3" placeholder="Services offered, years in operation, questions about the program…"></textarea>
+      </div>
+      <div class="full">
+        <button class="agency-submit" onclick="submitAgencyForm()">
+          <span>Submit Application</span><span>→</span>
+        </button>
+        <p class="agency-form-note">We respond within 1 business day · No spam · Your info is never sold</p>
+      </div>
+    </div>
+
+    <div class="success-message" id="agency-success">
+      ✅ Application received! We'll follow up at the phone or email you provided within one business day.
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="testimonials-section">
+  <div class="section-label">Real Families · Real Reviews</div>
+  <h2 class="section-title">17 years of families saying the same thing</h2>
+  <p style="font-size:0.9rem;color:var(--text-muted);max-width:540px;margin-top:8px;line-height:1.7;">These are real Google reviews from Assisting Seniors — our anchor partner and the reason CareCircle exists. When a locally-owned agency earns this kind of loyalty for this long, it speaks for itself.</p>
   <div class="testimonials-grid">
     <div class="testimonial-card">
       <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">"I cannot overstate the positive impact on our family. My parents' most ardent wish was to stay in their home to the end of their days — CareCircle made that possible."</p>
+      <p class="testimonial-text">"I cannot overstate the positive impact on our family. My parents' most ardent wish was to stay in their home to the end of their days — a wish made real with the help of amazing caregivers. Truly a God send when we needed it most."</p>
       <div class="testimonial-author">
         <div class="testimonial-avatar">JF</div>
         <div>
-          <div class="testimonial-name">Julia F.</div>
+          <div class="testimonial-name">Julia F.M.</div>
           <div class="testimonial-role">Pensacola, FL</div>
+          <div class="testimonial-source">⭐ Google Review — Assisting Seniors</div>
         </div>
       </div>
     </div>
-
     <div class="testimonial-card">
       <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">"As a daughter living out of state, the Memory Magnet family portal gave me real peace of mind. I can check in anytime and see exactly what's happening."</p>
+      <p class="testimonial-text">"Assisting Seniors is a wonderful company who tried their very best to fit a caregiver to my loved one. Their compassion and understanding of my mother's needs and our family has truly been a blessing."</p>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">MP</div>
+        <div class="testimonial-avatar">AV</div>
         <div>
-          <div class="testimonial-name">Michelle P.</div>
-          <div class="testimonial-role">Son/Daughter — Milton, FL family</div>
+          <div class="testimonial-name">Aleli V.</div>
+          <div class="testimonial-role">Pensacola, FL</div>
+          <div class="testimonial-source">⭐ Google Review — Assisting Seniors</div>
         </div>
       </div>
     </div>
-
     <div class="testimonial-card">
       <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">"They matched us in 24 hours. The agency they sent us has been with our dad for two years now. Without this service we never would have found them."</p>
+      <p class="testimonial-text">"Assisting Seniors has been invaluable. They gave us caregivers that met our specific needs and schedule. Without their efforts we would not have been able to keep our parents in their home with the love and care they deserve."</p>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">RK</div>
+        <div class="testimonial-avatar">PD</div>
         <div>
-          <div class="testimonial-name">Robert K.</div>
-          <div class="testimonial-role">Gulf Breeze, FL</div>
+          <div class="testimonial-name">Pete D.</div>
+          <div class="testimonial-role">Pensacola, FL</div>
+          <div class="testimonial-source">⭐ Google Review — Assisting Seniors</div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Comparison callout -->
+  <div style="margin-top:56px;background:var(--sage-pale);border:1px solid rgba(92,122,95,0.2);border-radius:var(--radius-lg);padding:40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;text-align:center;">
+    <div>
+      <div style="font-size:2rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--sage);margin-bottom:4px;">2008</div>
+      <div style="font-size:0.82rem;color:var(--text-muted);line-height:1.5;">Year Assisting Seniors opened — before Visiting Angels, Home Helpers, and most local competitors established their Pensacola offices</div>
+    </div>
+    <div>
+      <div style="font-size:2rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--sage);margin-bottom:4px;">5.0★</div>
+      <div style="font-size:0.82rem;color:var(--text-muted);line-height:1.5;">Google rating across 47+ reviews — the kind of score national franchise chains spend millions trying to match with advertising</div>
+    </div>
+    <div>
+      <div style="font-size:2rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--sage);margin-bottom:4px;">Local</div>
+      <div style="font-size:0.82rem;color:var(--text-muted);line-height:1.5;">Independently owned — your dollars stay in Pensacola and go toward caregiving, not a franchise royalty fee paid to a national HQ</div>
+    </div>
+  </div>
 </section>
 
-<!-- CTA -->
+<!-- ═══ CTA ═══ -->
 <section class="cta-section">
   <h2>Ready to find the right care?</h2>
-  <p>Free matching. No pressure. Real people helping real families across Northwest Florida.</p>
+  <p>Free matching. No pressure. Real people helping real Gulf Coast families.</p>
+  <a href="tel:8503414324" class="cta-phone">(850) 341-4324</a>
   <div class="cta-buttons">
-    <a href="#find-care" class="btn-white">Find Care — It's Free →</a>
-    <a href="#for-agencies" class="btn-outline-white">List Your Agency</a>
+    <button onclick="scrollToForm()" class="btn-white">Find Care — It's Free →</button>
+    <a href="#agency-contact" class="btn-outline-white">List Your Agency</a>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -1395,12 +1511,10 @@
         <div class="nav-logo-mark">CC</div>
         CareCircle Network
       </div>
-      <p class="footer-desc">Northwest Florida's independent senior care referral network. We connect families with vetted local care providers — free for families, transparent for agencies.</p>
-      <a href="https://memoia.live" class="footer-mm-link" target="_blank">
-        🧠 Powered by Memory Magnet
-      </a>
+      <p class="footer-desc">Northwest Florida's independent senior care referral network. Free for families. Transparent for agencies. Based in Pensacola, FL.</p>
+      <a href="tel:8503414324" class="footer-phone">📞 (850) 341-4324</a>
+      <a href="https://memoia.live" class="footer-mm-link" target="_blank">🧠 Powered by Memory Magnet</a>
     </div>
-
     <div class="footer-col">
       <h4>For Families</h4>
       <ul>
@@ -1408,38 +1522,176 @@
         <li><a href="#how-it-works">How It Works</a></li>
         <li><a href="#providers">Browse Providers</a></li>
         <li><a href="#memory-magnet">Care Coordination</a></li>
+        <li><a href="#about">About Us</a></li>
       </ul>
     </div>
-
     <div class="footer-col">
       <h4>For Agencies</h4>
       <ul>
-        <li><a href="#for-agencies">Get Listed</a></li>
+        <li><a href="#for-agencies">Why Join</a></li>
         <li><a href="#for-agencies">Partner Tiers</a></li>
-        <li><a href="https://memoia.live">Memory Magnet</a></li>
+        <li><a href="#agency-contact">Apply Now</a></li>
+        <li><a href="https://memoia.live" target="_blank">Memory Magnet</a></li>
       </ul>
     </div>
-
     <div class="footer-col">
       <h4>Service Areas</h4>
       <ul>
-        <li><a href="#">Pensacola, FL</a></li>
-        <li><a href="#">Gulf Breeze, FL</a></li>
-        <li><a href="#">Milton, FL</a></li>
-        <li><a href="#">Pace, FL</a></li>
-        <li><a href="#">Navarre, FL</a></li>
-        <li><a href="#">Fort Walton Beach, FL</a></li>
+        <li><a href="#find-care">Pensacola, FL</a></li>
+        <li><a href="#find-care">Gulf Breeze, FL</a></li>
+        <li><a href="#find-care">Milton, FL</a></li>
+        <li><a href="#find-care">Pace, FL</a></li>
+        <li><a href="#find-care">Navarre, FL</a></li>
+        <li><a href="#find-care">Fort Walton Beach, FL</a></li>
       </ul>
     </div>
   </div>
-
   <div class="footer-bottom">
     <div class="footer-disclosure">
-      CareCircle Network is an independent referral service. We are compensated by care providers for qualified referrals. We are not a licensed home care agency. All listed providers are independently licensed with the State of Florida. This service is not affiliated with Medicare or Medicaid.
+      CareCircle Network is an independent referral and marketing service. We are compensated by care providers for qualified referrals. We are not a licensed home care agency. All listed providers are independently licensed with the State of Florida. This service is not affiliated with Medicare, Medicaid, or any government program.
     </div>
-    <div>© 2026 CareCircle Network · Privacy Policy · Terms</div>
+    <div class="footer-legal-links">
+      © 2026 CareCircle Network &nbsp;·&nbsp;
+      <a href="#" onclick="openModal('privacy')">Privacy Policy</a> &nbsp;·&nbsp;
+      <a href="#" onclick="openModal('terms')">Terms of Use</a>
+    </div>
   </div>
 </footer>
 
+<!-- ═══ PRIVACY POLICY MODAL ═══ -->
+<div class="modal-overlay" id="modal-privacy">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('privacy')">✕</button>
+    <h2>Privacy Policy</h2>
+    <p class="modal-date">Effective: March 2026</p>
+    <h3>Who We Are</h3>
+    <p>CareCircle Network is a senior care referral service owned and operated by TransBid LLC (DBA CareCircle Network), based in Pensacola, Florida. CareCircle Network is an independent platform and is not owned by or affiliated with any care agency listed in our network.</p>
+    <h3>Information We Collect</h3>
+    <p>When you submit the care-finder form or the agency application form, we collect the information you provide — including name, phone number, email address, city/zip, and care preferences. We do not require account creation.</p>
+    <h3>How We Use Your Information</h3>
+    <ul>
+      <li>To match you with licensed senior care providers in your area</li>
+      <li>To contact you about your inquiry via phone or email</li>
+      <li>To share your contact information with matched partner agencies (families only)</li>
+      <li>To evaluate agency partner applications</li>
+    </ul>
+    <h3>How We Do NOT Use Your Information</h3>
+    <ul>
+      <li>We do not sell your personal information to third parties</li>
+      <li>We do not share your information with agencies outside your service area</li>
+      <li>We do not use your information for advertising or retargeting</li>
+    </ul>
+    <h3>Compensation Disclosure</h3>
+    <p>CareCircle Network is compensated by care provider partners for qualified referrals. Families are never charged. This compensation may influence which providers appear as "Featured" in our network.</p>
+    <h3>Contact</h3>
+    <p>Questions about your data: <a href="mailto:hello@carecirclenetwork.com" style="color:var(--sage);">hello@carecirclenetwork.com</a> or call (850) 341-4324.</p>
+  </div>
+</div>
+
+<!-- ═══ TERMS MODAL ═══ -->
+<div class="modal-overlay" id="modal-terms">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('terms')">✕</button>
+    <h2>Terms of Use</h2>
+    <p class="modal-date">Effective: March 2026</p>
+    <h3>Service Description</h3>
+    <p>CareCircle Network is an independent referral service that connects families with licensed Florida senior home care agencies. We are not a home care agency and do not employ caregivers directly.</p>
+    <h3>No Guarantee of Care Quality</h3>
+    <p>While we vet all partner agencies for Florida licensure and insurance, CareCircle Network does not guarantee the quality, safety, or outcomes of care provided by partner agencies. Families are encouraged to conduct their own due diligence before entering into a care agreement with any provider.</p>
+    <h3>Compensation</h3>
+    <p>Partner agencies compensate CareCircle Network for referrals and placement in our network. This is disclosed clearly on our site and in these terms. Families are never charged for our matching service.</p>
+    <h3>Limitation of Liability</h3>
+    <p>CareCircle Network is not liable for any damages arising from care provided by partner agencies, nor for any inaccuracies in provider information. Maximum liability to any party is limited to fees paid to CareCircle Network in the preceding 30 days.</p>
+    <h3>Florida Law</h3>
+    <p>These terms are governed by the laws of the State of Florida. Any disputes shall be resolved in Escambia County, Florida.</p>
+    <h3>Contact</h3>
+    <p><a href="mailto:hello@carecirclenetwork.com" style="color:var(--sage);">hello@carecirclenetwork.com</a> · (850) 341-4324</p>
+  </div>
+</div>
+
+<script>
+  // ─── HAMBURGER ───
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+
+  // ─── SCROLL TO FORM ───
+  function scrollToForm() {
+    document.getElementById('find-care').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ─── FORM → SHOW MATCHES ───
+  function showMatches() {
+    const zip = document.getElementById('hero-zip').value.trim();
+    const careType = document.getElementById('hero-care-type').value;
+    const who = document.getElementById('hero-who').value;
+    const when = document.getElementById('hero-when').value;
+
+    // Update subtitle dynamically
+    const subtitle = document.getElementById('match-subtitle');
+    const location = zip || 'your area';
+    subtitle.textContent = `Based on your need for ${careType.toLowerCase()} ${location !== 'your area' ? 'near ' + location : 'in your area'} — here are our best-fit licensed providers.`;
+
+    // Show results section
+    const results = document.getElementById('match-results');
+    results.style.display = 'block';
+
+    // Smooth scroll to results
+    setTimeout(() => {
+      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  // ─── AGENCY FORM SUBMIT ───
+  function submitAgencyForm() {
+    const name = document.getElementById('ag-name').value.trim();
+    const contact = document.getElementById('ag-contact').value.trim();
+    const phone = document.getElementById('ag-phone').value.trim();
+    const email = document.getElementById('ag-email').value.trim();
+
+    if (!name || !contact || !phone || !email) {
+      alert('Please fill in your agency name, contact name, phone, and email.');
+      return;
+    }
+
+    // In production: POST to your backend / Brevo / webhook here
+    // For now, show success state
+    document.getElementById('agency-form').style.display = 'none';
+    document.getElementById('agency-success').classList.add('show');
+  }
+
+  // ─── MODALS ───
+  function openModal(type) {
+    document.getElementById('modal-' + type).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(type) {
+    document.getElementById('modal-' + type).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Close on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+  // Close on ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+      document.body.style.overflow = '';
+    }
+  });
+</script>
 </body>
 </html>
