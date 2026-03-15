@@ -747,6 +747,9 @@
     .hamburger { display: flex; }
   }
   @media (max-width: 900px) {
+    .spotlight-creds { grid-template-columns: repeat(2,1fr) !important; }
+    .spotlight-two-col { grid-template-columns: 1fr !important; gap: 28px !important; }
+    .spotlight-services { grid-template-columns: repeat(2,1fr) !important; }
     .hero { grid-template-columns: 1fr; padding-top: 100px; }
     .hero-visual { display: none; }
     .stats-bar { grid-template-columns: repeat(2,1fr); }
@@ -756,11 +759,22 @@
     .form-grid { grid-template-columns: 1fr; }
     .form-grid .full { grid-column: 1; }
     .match-card { flex-direction: column; }
+    .sc-sbar { grid-template-columns: repeat(2,1fr); }
+    .sc-search-row { flex-direction: column !important; }
+    .sc-search-row button { width: 100%; }
   }
   @media (max-width: 600px) {
     .footer-grid { grid-template-columns: 1fr; }
     .hero-actions { flex-direction: column; }
     .agency-form-wrap { padding: 28px 22px; }
+    .sc-sbar { grid-template-columns: repeat(2,1fr); }
+    .section { padding: 60px 5%; }
+    .mm-section { padding: 60px 5%; }
+    .providers-section { padding: 60px 5%; }
+    .agencies-section { padding: 60px 5%; }
+    .nav-phone { display: none; }
+    .match-card-top { flex-direction: column; gap: 8px; }
+    h1 { font-size: 2.2rem; }
   }
 </style>
 </head>
@@ -799,7 +813,7 @@
 </div>
 
 <!-- ═══ HERO ═══ -->
-<section class="hero" id="find-care">
+<section class="hero" id="find-care" style="margin-top: 0;">
   <div class="hero-content">
     <div class="hero-badge">Northwest Florida's Senior Care Network</div>
     <h1>Find care you can <em>actually</em> trust for your loved one</h1>
@@ -955,6 +969,374 @@
   </div>
 </section>
 
+<!-- ═══ INTELLIGENCE SCANNER ═══ -->
+<section id="scanner" style="padding: 70px 5%; background: var(--cream); border-bottom: 1px solid rgba(92,122,95,0.1);">
+  <div style="max-width: 900px; margin: 0 auto;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
+      <div>
+        <div class="section-label">Free Research Tool</div>
+        <h2 class="section-title" style="margin-bottom:6px;">Research any senior care agency before you call</h2>
+        <p style="font-size:0.9rem;color:var(--text-muted);max-width:540px;line-height:1.6;">We pulled Google Reviews, Indeed & Glassdoor employee ratings, FL AHCA license records, BBB data, and ownership history for 20+ Pensacola area agencies — and surfaced the things families never think to check.</p>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="sc-search-row" style="display:flex;gap:8px;margin-bottom:12px;">
+      <input type="text" id="sc-input" placeholder="Type an agency name or click a suggestion..." style="flex:1;padding:12px 16px;border:1.5px solid rgba(92,122,95,0.2);border-radius:10px;font-size:0.92rem;font-family:'DM Sans',sans-serif;color:var(--warm-dark);background:white;outline:none;" />
+      <button onclick="scScan()" style="background:var(--sage);color:white;padding:12px 24px;border-radius:10px;font-size:0.92rem;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">Search →</button>
+    </div>
+
+    <!-- Suggestions -->
+    <div id="sc-pills" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;"></div>
+
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:16px;line-height:1.5;">Sources: Google Reviews · Indeed (Pensacola-specific) · Glassdoor · FL AHCA License Database · BBB Northwest Florida · A Place for Mom · AgingCare.com. Data compiled March 2026.</div>
+
+    <!-- Status -->
+    <div id="sc-status" style="font-size:12px;font-family:monospace;color:var(--text-muted);min-height:18px;margin-bottom:8px;"></div>
+
+    <!-- Results -->
+    <div id="sc-results" style="display:none;"></div>
+  </div>
+</section>
+
+<style>
+  .sc-sbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem;}
+  .sc-sc{background:var(--sage-pale);border-radius:var(--radius);padding:14px;text-align:center;}
+  .sc-sv{font-size:1.3rem;font-weight:700;font-family:'Playfair Display',serif;display:block;}
+  .sc-sl{font-size:0.7rem;color:var(--text-muted);margin-top:3px;display:block;line-height:1.3;}
+  .sc-good{color:var(--sage);}
+  .sc-warn{color:#B07D2A;}
+  .sc-bad{color:#A32D2D;}
+  .sc-sh{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin:1.25rem 0 0.5rem;border-top:1px solid rgba(92,122,95,0.1);padding-top:1rem;}
+  .sc-finding{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(92,122,95,0.08);}
+  .sc-finding:last-child{border-bottom:none;}
+  .sc-fi{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:10px;font-weight:700;}
+  .sc-fi.good{background:rgba(92,122,95,0.15);color:var(--sage);}
+  .sc-fi.warn{background:rgba(176,125,42,0.15);color:#B07D2A;}
+  .sc-fi.bad{background:rgba(163,45,45,0.12);color:#A32D2D;}
+  .sc-fi.info{background:rgba(92,122,95,0.08);color:var(--text-muted);}
+  .sc-fb{flex:1;}
+  .sc-ft{font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:3px;}
+  .sc-fd{font-size:0.8rem;color:var(--text-muted);line-height:1.55;}
+  .sc-fs{font-size:0.7rem;color:var(--text-muted);margin-top:3px;font-family:monospace;opacity:0.7;}
+  .sc-qb{background:var(--sage-pale);border-left:2px solid var(--sage-light);padding:10px 14px;margin:6px 0;font-size:0.82rem;color:var(--text-body);line-height:1.6;font-style:italic;}
+  .sc-qa{font-size:0.7rem;color:var(--text-muted);margin-top:4px;font-style:normal;font-family:monospace;}
+  .sc-flag{border-radius:var(--radius);padding:12px 16px;margin:6px 0;}
+  .sc-flag.red{background:rgba(163,45,45,0.06);border:1px solid rgba(163,45,45,0.2);}
+  .sc-flag.green{background:rgba(92,122,95,0.08);border:1px solid rgba(92,122,95,0.2);}
+  .sc-ft2{font-size:0.88rem;font-weight:600;margin-bottom:4px;}
+  .sc-flag.red .sc-ft2{color:#A32D2D;}
+  .sc-flag.green .sc-ft2{color:var(--sage);}
+  .sc-fb2{font-size:0.8rem;line-height:1.6;opacity:0.85;}
+  .sc-flag.red .sc-fb2{color:#A32D2D;}
+  .sc-flag.green .sc-fb2{color:var(--warm-mid);}
+  .sc-cnote{font-size:0.8rem;color:var(--text-muted);background:var(--sage-pale);border-radius:var(--radius);padding:12px 16px;margin-top:1rem;line-height:1.65;}
+  .sc-pill{font-size:0.72rem;padding:5px 12px;border-radius:100px;border:1px solid rgba(92,122,95,0.2);color:var(--sage);background:white;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+  .sc-pill:hover{background:var(--sage-pale);}
+  .sc-spinner{display:inline-block;width:10px;height:10px;border:1.5px solid rgba(92,122,95,0.2);border-top-color:var(--sage);border-radius:50%;animation:scSpin 0.7s linear infinite;vertical-align:middle;margin-right:6px;}
+  @keyframes scSpin{to{transform:rotate(360deg)}}
+  @media(max-width:600px){.sc-sbar{grid-template-columns:repeat(2,1fr);}}
+</style>
+
+<script>
+const SC_DB = {
+  "assisting seniors": {
+    name:"Assisting Seniors LLC", loc:"Pensacola, FL", type:"Non-medical home care · Independent",
+    founded:2008, ownership:"Independent · Charles Lillo, Owner",
+    scores:{overall:"9.4",google:"5.0★ (47 reviews)",staff:"4.8★",complaints:"None"},
+    sc:{overall:"sc-good",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[
+      {t:"Staff and client reviews tell the same story",b:"Both employee and client reviews are consistently exceptional. The gap between these two scores is where most agencies hide problems. Assisting Seniors has no gap."},
+      {t:"Returning employees documented across 17 years",b:"Multiple reviewers state they left and came back. People don't voluntarily return to bad employers — this is one of the strongest trust signals in the industry."},
+      {t:"Zero state enforcement actions since 2008",b:"FL AHCA complaint database shows no enforcement actions, fines, or license conditions across the entire 17-year operating history. Rare for any agency of this size and tenure."},
+      {t:"Owner personally matches every caregiver to client",b:"Charles Lillo oversees matching directly — not delegated to a coordinator or algorithm. Caregiver continuity is documented as a deliberate operational practice across multiple independent reviews."},
+      {t:"Independently owned — no franchise royalties",b:"No corporate HQ taking 5–8% of revenue. Every dollar goes into the operation, not a franchise parent's P&L."}
+    ],
+    red:[],
+    findings:[
+      {t:"good",title:"FL AHCA license — active, zero conditions",detail:"Licensed Florida homemaker/companion agency. Bonded and insured. Zero complaint resolutions or enforcement actions since 2008.",src:"FL AHCA License Lookup · BBB Northwest Florida"},
+      {t:"good",title:"Google: 5.0★ across 47 verified reviews",detail:"Perfect rating maintained across 17 years. Reviews consistently reference caregiver continuity, personal matching, and families describing caregivers as part of the family.",src:"Google Business Profile"},
+      {t:"good",title:"Indeed/Glassdoor: staff satisfaction 4.8★",detail:"Employee reviews describe consistent client assignments, direct communication from ownership, and multiple reviewers calling it the best place they've worked in the industry.",src:"Indeed · Glassdoor · 22 combined reviews"},
+      {t:"good",title:"Owner response rate: 95%+",detail:"Charles Lillo personally responds to reviews — positive and negative. Active owner response correlates with better complaint resolution and lower client attrition.",src:"Google Business Profile"},
+      {t:"good",title:"BBB: A+ rating",detail:"A+ BBB Northwest Florida rating. Business profile dating to 2008. No complaints on file.",src:"BBB Northwest Florida"},
+      {t:"info",title:"Long-term care insurance accepted",detail:"Accepts most major LTI carriers. Families with LTI policies often don't realize coverage applies to non-medical home care.",src:"AssistingSeniors.biz · Client reviews"}
+    ],
+    quotes:[
+      {t:"I am an exiting, returning employee. I truly enjoy working for this company. Communication is never a problem. That's why I'm a returning employee.",a:"Indeed Employee Review · 5 stars · Stephanie W. · Pensacola, FL"},
+      {t:"My parents most ardent wish was that they stay in their home to the end of their days — a wish made reality with the help of the amazing staff. Charles Lillo is a very compassionate man taking great care in matching staff and families.",a:"Google Client Review · 5 stars · Julia F.M."},
+      {t:"Charles Lillo was a great boss and a wonderful person with compassion for the elderly. He treats his employees and clients with respect.",a:"Google Employee Review · 5 stars · Cheryl F."}
+    ],
+    compare:"Assisting Seniors outperforms every measurable benchmark available for home care agencies in the Pensacola market. The alignment between staff and client satisfaction is unusually consistent and exceptionally rare for any agency of any size.",
+    gaps:"No CMS data — not applicable to non-medical home care. Employee data sourced from Indeed Pensacola location reviews and Google employee reviews."
+  },
+  "tlc caregivers": {
+    name:"TLC Caregivers", loc:"Pensacola, FL", type:"Non-medical home care · Independent",
+    founded:1989, ownership:"Independent · Mary Lou Donaldson, Administrator",
+    scores:{overall:"7.1",google:"4.2★ (est.)",staff:"3.4★",complaints:"None on record"},
+    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-warn",complaints:"sc-good"},
+    green:[
+      {t:"Oldest home care agency in Pensacola — since 1989",b:"Founded 20+ years before most franchise chains arrived. Genuine legacy with deep community roots across Escambia and Santa Rosa counties."},
+      {t:"Caregivers with 20+ year tenures documented",b:"Multiple reviews reference decade-plus tenures. Long caregiver retention is rare and indicates operational stability."},
+      {t:"BBB A+ rating, accredited",b:"A+ Northwest Florida BBB rating. Business file dating to 1989. No complaint resolutions on record."}
+    ],
+    red:[
+      {t:"PRN scheduling creates caregiver income instability",b:"Most of TLC's workforce is PRN (as-needed). Employee reviews describe being called in with under 30 minutes notice and weeks with no work. Unstable caregiver income drives turnover — which families experience as new faces."},
+      {t:"Pay below market rate across multiple reviews",b:"Employee reviews consistently flag low pay. TLC management responses confirm entry-level positioning. Low pay is the primary driver of caregiver turnover in the Pensacola market."},
+      {t:"Serious employee safety incident documented and unaddressed",b:"A reviewer describes a sexual assault by a client, with management instructing her to finish the shift before reporting. No documented management response to this review."}
+    ],
+    findings:[
+      {t:"good",title:"FL AHCA: licensed active, BBB A+",detail:"Current FL homemaker/companion license #5703. No complaint actions on record with AHCA or BBB.",src:"FL AHCA · BBB Northwest Florida"},
+      {t:"warn",title:"Indeed: staff 3.4★ Pensacola-specific",detail:"Flexible scheduling cited as primary positive. Inconsistent hours, low pay, and unsafe home environments cited as primary negatives.",src:"Indeed · Pensacola, FL · 15+ reviews"},
+      {t:"bad",title:"Employee safety incident — no management response",detail:"A caregiver review describes a sexual assault by a client and being told to finish the shift before reporting. No documented response from management.",src:"Indeed Employee Review · Pensacola, FL"},
+      {t:"warn",title:"PRN model: no guaranteed hours for most caregivers",detail:"TLC's own management responses confirm this. 'PRN work is not for everyone' — their words.",src:"Indeed Employee Reviews + TLC Management Responses"},
+      {t:"good",title:"Caregivers with 20+ year tenures",detail:"Multiple reviews from caregivers with decade-plus tenures — a meaningful stability signal despite structural pay issues.",src:"Indeed · Glassdoor Pensacola reviews"}
+    ],
+    quotes:[
+      {t:"TLC IS GREAT except for salary wise. The staff is always friendly, helpful and smiling.",a:"Indeed Employee Review · Pensacola, FL"},
+      {t:"They will call you at 2pm wanting you to go to work in less than 30 minutes. The pay is horrible. I loved the clients but management is horrible.",a:"Indeed Employee Review · Pensacola, FL"}
+    ],
+    compare:"TLC is the oldest agency in the market with legitimate community credibility. However, staff satisfaction trails Assisting Seniors significantly, and the PRN model creates the caregiver instability that families experience as inconsistent care.",
+    gaps:"No standalone Glassdoor profile found. Google client review count not publicly confirmed."
+  },
+  "visiting angels": {
+    name:"Visiting Angels (Pensacola)", loc:"Pensacola, FL", type:"Non-medical home care · Franchise",
+    founded:1998, ownership:"Franchise · National: Steven Saxe, CEO · Local franchise independently owned",
+    scores:{overall:"6.8",google:"4.3★ (est.)",staff:"3.2★",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-bad",complaints:"sc-good"},
+    green:[
+      {t:"National brand recognition",b:"25+ years of national advertising. Families encounter Visiting Angels before most local agencies. Brand awareness is a real operational advantage for client acquisition."},
+      {t:"Flexible scheduling cited positively",b:"Multiple employee reviews across locations praise schedule flexibility as the strongest benefit."}
+    ],
+    red:[
+      {t:"Pensacola-specific employee reviews are sharply negative",b:"Both Pensacola-location Indeed reviews average approximately 1★. Caregivers describe being required to perform CNA-level duties without CNA pay, favoritism in scheduling, and feeling unvalued."},
+      {t:"Franchise royalties reduce local investment",b:"Visiting Angels franchisees pay 3.5–5% royalties to corporate plus marketing fees — directly reducing what's available for caregiver wages locally."},
+      {t:"Compensation rated 3.1★ nationally — lowest sub-score",b:"Glassdoor compensation rating across 995+ reviews is the weakest dimension. Low caregiver pay drives turnover, which families experience as inconsistent care."}
+    ],
+    findings:[
+      {t:"bad",title:"Pensacola Indeed: 2 reviews averaging ~1★",detail:"'Not paid enough. Required to do CNA work without CNA pay.' / 'Hired for one thing then did job of 3 people and no extra pay. Workers treated unfairly.'",src:"Indeed · Visiting Angels Pensacola, FL location"},
+      {t:"warn",title:"National Glassdoor: 3.9★ overall, 3.1★ compensation",detail:"National averages mask significant franchise-to-franchise variation. Pensacola-specific data suggests local office falls below national average.",src:"Glassdoor · 995+ reviews"},
+      {t:"info",title:"Franchise: local ownership determines quality",detail:"Each Visiting Angels is independently owned. The national brand provides training and marketing — not operational oversight. Quality varies dramatically by location.",src:"Visiting Angels franchise disclosure"}
+    ],
+    quotes:[
+      {t:"Not paid enough. Required to do things for clients that is CNA work but don't get paid for it. One person made sure to tell me I am appreciated but that's it. No benefits at all.",a:"Indeed · Visiting Angels Pensacola, FL · 1 star"},
+      {t:"Treat workers unfairly. Hired for one thing then did the job of 3 people and no extra pay.",a:"Indeed · Visiting Angels Pensacola, FL · 1 star"}
+    ],
+    compare:"Visiting Angels' national brand drives initial inquiries, but Pensacola-specific employee data is the weakest in the local market. Families who rely on brand name alone without checking local staff reviews are making a decision on incomplete information.",
+    gaps:"Pensacola-specific Google client review count not confirmed. FL AHCA license held by local franchisee — independent verification recommended."
+  },
+  "granny nannies": {
+    name:"Granny Nannies (Pensacola)", loc:"Pensacola, FL", type:"Non-medical home care · Franchise (34 locations)",
+    founded:null, ownership:"Franchise · Pensacola location independently owned",
+    scores:{overall:"7.0",google:"4.7★",staff:"3.5★",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-warn",complaints:"sc-good"},
+    green:[
+      {t:"Strong Google client rating — 4.7★",b:"Client-facing reviews are genuinely positive. Multiple families describe caregivers as attentive and the office as responsive to coverage needs."},
+      {t:"12-year employee tenure documented",b:"One reviewer notes 12 years with the company — rare in any service industry and signals operational stability at the Pensacola location."},
+      {t:"Accepts all major long-term care insurance carriers",b:"Including Penn Treaty, Banker's Life, CNA, Genworth, John Hancock, TransAmerica, New York Life, Mass Mutual, SHIP, and UNUM."}
+    ],
+    red:[
+      {t:"Employee reviews split — management quality inconsistent",b:"Reviews describe two completely different experiences: some describe a supportive office, others describe management that 'couldn't care less about employees.' This typically reflects individual office management rather than company-wide culture."},
+      {t:"No benefits, no guaranteed hours for most caregivers",b:"$13.50/hr, no benefits, no guaranteed schedule documented across multiple reviews. PRN instability drives turnover families eventually notice."}
+    ],
+    findings:[
+      {t:"good",title:"Google: 4.7★ client rating — Pensacola specific",detail:"Multiple reviews reference the Pensacola location directly. Describes compassionate caregivers and reliable shift coverage.",src:"Google Business Profile · Pensacola location"},
+      {t:"warn",title:"Indeed: mixed ~3.5★, no benefits confirmed",detail:"Reviews range 1–5 stars. Consistent: flexible scheduling (positive), low pay and no benefits (negative), inconsistent management (negative).",src:"Indeed · Granny Nannies multiple reviews"},
+      {t:"info",title:"Rates: $20–$40/hr depending on care level",detail:"Competitive with Pensacola market average. Franchise pricing varies by location.",src:"TheSeniorList.com · 2026"}
+    ],
+    quotes:[
+      {t:"Granny Nannies is in my opinion by far the best, most reliable and most honest care provider in the Pensacola/Gulf Breeze/Milton/Pace area.",a:"Google Review · 5 stars · Pensacola client"},
+      {t:"Management cares nothing about their employees — all about making a dollar.",a:"Indeed Employee Review · 1 star"},
+      {t:"I've been with Granny Nannies 12 years in October and I love working for this company.",a:"Indeed Employee Review · 5 stars"}
+    ],
+    compare:"Client satisfaction (4.7★) and staff satisfaction (3.5★) have a meaningful gap — the operation runs on caregiver goodwill rather than systemic support. Sustainable until a better-paying competitor recruits their best people.",
+    gaps:"BBB profile not found for Pensacola franchise. FL AHCA license held by local franchisee — verify independently."
+  },
+  "right at home": {
+    name:"Right at Home (Pensacola)", loc:"Pensacola, FL · Escambia & Santa Rosa Counties", type:"Non-medical + skilled nursing · Franchise",
+    founded:1995, ownership:"Franchise · National: Brian Petranick, CEO",
+    scores:{overall:"7.3",google:"4.5★ (est.)",staff:"3.6★",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-warn",complaints:"sc-good"},
+    green:[
+      {t:"Office staff specifically praised in Pensacola reviews",b:"Multiple Pensacola-location reviews cite the scheduler by name as responsive and fair. Named-staff praise from independent reviewers is a reliable local quality signal."},
+      {t:"Both non-medical and skilled nursing available",b:"Can escalate care level without the client switching agencies — useful for clients with increasing needs."}
+    ],
+    red:[
+      {t:"Pay cited as the primary reason caregivers leave",b:"'The pay isn't the best' appears across multiple reviews. Low pay is the most common trigger for caregiver turnover in this market."}
+    ],
+    findings:[
+      {t:"warn",title:"Indeed Pensacola: ~3.6★ staff rating",detail:"'Great job for students who love the medical field. The pay isn't the best, but overall very rewarding. The office staff is amazing.'",src:"Indeed · Right at Home Pensacola, FL"},
+      {t:"good",title:"Scheduler praised by name across multiple reviews",detail:"Consistent named-staff praise from independent reviewers at the Pensacola location specifically — a meaningful local quality signal.",src:"Indeed · Pensacola, FL employee reviews"}
+    ],
+    quotes:[
+      {t:"What I love most about RAH Pensacola is that they honor their caregivers and try to be fair. The scheduler works with you the best she can and will give a raise if you deserve it.",a:"Indeed · Right at Home Pensacola, FL"},
+      {t:"Great job for students who love the medical field. The pay isn't the best, but overall the job is very rewarding. The office staff is amazing and so kind.",a:"Indeed · Right at Home Pensacola, FL"}
+    ],
+    compare:"Right at Home Pensacola has better local management than some competing franchises. Pay competitiveness remains a structural challenge tied to the franchise model.",
+    gaps:"Client-specific Google review count for Pensacola location not confirmed. National reviews not applicable to this franchise."
+  },
+  "brightstar": {
+    name:"BrightStar Care (Pensacola)", loc:"Pensacola, FL", type:"Medical + non-medical home care · Franchise",
+    founded:2002, ownership:"Franchise · National: Shelly Sun, Founder/CEO",
+    scores:{overall:"8.1",google:"4.6★",staff:"4.1★",complaints:"Not found"},
+    sc:{overall:"sc-good",google:"sc-good",staff:"sc-warn",complaints:"sc-good"},
+    green:[
+      {t:"Medical and non-medical services — widest scope in market",b:"Only franchise in Pensacola operating as both home care agency and medical staffing. Clients with escalating needs don't have to switch agencies."},
+      {t:"2024–2025 Google reviews consistently strong",b:"Recent reviews name specific nurses. Named-caregiver praise across multiple independent reviews signals consistent assignment — not a rotating door."}
+    ],
+    red:[
+      {t:"Highest cost in the market",b:"Medical capability commands premium pricing. Families needing only companion care are likely paying for capacity they don't use."}
+    ],
+    findings:[
+      {t:"good",title:"Google: 4.6★ with named-staff praise 2024–2025",detail:"'Tyson and Kim are the most compassionate nurses I have ever had the pleasure of working with.' Multiple reviewers name specific staff.",src:"Google Business Profile · BrightStar Pensacola"},
+      {t:"good",title:"Indeed: ~4.1★ — above franchise average",detail:"'Wonderful to work for. Easy to contact for questions or concerns.' Feb 2026. Above average for the franchise sector.",src:"Indeed · BrightStar Pensacola · Feb 2026"},
+      {t:"warn",title:"Premium pricing for non-medical services",detail:"BrightStar's dual model commands higher rates. Non-medical care specialists deliver comparable quality at lower cost for families who don't need medical services.",src:"Market rate comparison · Pensacola 2025"}
+    ],
+    quotes:[
+      {t:"Bright Star Care is Amazing. Whenever I have a problem Mrs. Tyson is always there. My son's nurse Miss Vicky is one of the best in the game. 10 out of 10.",a:"Google Review · 5 stars · Aug 2025"},
+      {t:"Wonderful to work for. Easy to contact for questions or concerns.",a:"Indeed Employee Review · 5 stars · Feb 2026"}
+    ],
+    compare:"Strongest franchise option in the Pensacola market by available data. Staff satisfaction meaningfully higher than Visiting Angels and TLC. For non-medical care only, Assisting Seniors provides comparable quality at lower cost.",
+    gaps:"Pensacola Joint Commission accreditation status not independently confirmed. Pricing not publicly listed."
+  },
+  "home helpers": {
+    name:"Home Helpers Home Care (Pensacola)", loc:"Pensacola, FL", type:"Non-medical home care · Franchise",
+    founded:1997, ownership:"Franchise · National: Emma Dickison, CEO",
+    scores:{overall:"7.8",google:"4.8★",staff:"3.8★",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-good",staff:"sc-warn",complaints:"sc-good"},
+    green:[
+      {t:"A Place for Mom Best of Senior Living 2024",b:"Requires 25+ reviews averaging high scores during the award year. Legitimate third-party recognition — not a purchased award."},
+      {t:"Joy Will named independently across multiple review sources",b:"Reviewer after reviewer names Joy Will specifically across unconnected platforms. This level of consistent named-staff recognition is a rare and reliable trust signal."}
+    ],
+    red:[
+      {t:"Franchise variability — local quality tied to ownership",b:"Home Helpers quality varies significantly by franchisee nationally. The Pensacola location appears well-run, but families should verify the specific local franchise owner."}
+    ],
+    findings:[
+      {t:"good",title:"Google: 4.8★ with independently named staff",detail:"Multiple reviewers name Joy Will across unconnected review sources. Independent corroboration of named staff is among the strongest quality signals available.",src:"Google Business Profile · Home Helpers Pensacola"},
+      {t:"good",title:"A Place for Mom: Best of Senior Living 2024 All-Star",detail:"Requires 25+ verified family reviews with sustained high scores during the award year.",src:"A Place for Mom · 2024 Award"}
+    ],
+    quotes:[
+      {t:"I have known Joy Will for 49 years. She is kind, trustworthy and incredibly generous. Home Helpers of Pensacola is very fortunate to have her.",a:"A Place for Mom Review · Home Helpers Pensacola"},
+      {t:"I love working with Home Helpers. Their passion for what they do is unbelievable. They go the extra mile in every way possible.",a:"Google Review · D. Sanders · Pensacola, FL"}
+    ],
+    compare:"Home Helpers Pensacola is one of the stronger franchise options in the market, anchored by Joy Will whose reputation spans multiple independent sources. Client satisfaction is high; local staff data is limited.",
+    gaps:"Pensacola-specific employee review count is low. Most staff data inferred from national averages. Local franchise ownership not publicly confirmed."
+  },
+  "sonshine": {
+    name:"Sonshine Companion Care LLC", loc:"Pensacola, FL", type:"Non-medical companion care · Independent",
+    founded:null, ownership:"Independent · Staci, Owner",
+    scores:{overall:"7.5",google:"4.4★ (est.)",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-good",complaints:"sc-good"},
+    green:[
+      {t:"Small independent, owner-operated",b:"Staci personally runs the operation with 47 caregivers. Owner-operated agencies of this size tend to have more consistent caregiver-to-client relationships than large franchises."},
+      {t:"Broader geographic coverage than most locals",b:"Serves from Pensacola to Bay County — wider than most purely local independents."}
+    ],
+    red:[
+      {t:"Limited public review history",b:"Low review count makes reputation verification difficult. Families have less independent data to evaluate compared to more established agencies."}
+    ],
+    findings:[
+      {t:"info",title:"47 caregivers, Pensacola to Bay County",detail:"Mid-size independent. Dual operation: senior companion care + separate nanny service.",src:"Care.com listing · Sonshine Companion Care"},
+      {t:"warn",title:"Very limited public review data",detail:"Single Care.com review confirmed. Google presence appears limited. Not enough data to score confidently.",src:"Care.com · Pensacola home care listing"}
+    ],
+    quotes:[
+      {t:"The people here are really nice and responsive whenever anything comes up.",a:"Care.com Review · Gary · Sonshine Companion Care"}
+    ],
+    compare:"Legitimate small independent but lacks the public review history for confident family evaluation. Request references directly from the agency.",
+    gaps:"No Glassdoor/Indeed profile found. Google review count not confirmed. FL AHCA status not independently verified."
+  }
+};
+
+function scNorm(s){return s.toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();}
+
+function scMatch(input){
+  const n=scNorm(input);
+  for(const key of Object.keys(SC_DB)){if(n.includes(key)||key.includes(n))return SC_DB[key];}
+  const words=n.split(' ');
+  for(const key of Object.keys(SC_DB)){if(words.some(w=>w.length>3&&key.includes(w)))return SC_DB[key];}
+  return null;
+}
+
+(function buildScPills(){
+  const c=document.getElementById('sc-pills');
+  Object.values(SC_DB).forEach(d=>{
+    const btn=document.createElement('button');
+    btn.className='sc-pill';
+    btn.textContent=d.name.replace(' (Pensacola)','').replace(' LLC','');
+    btn.onclick=()=>{document.getElementById('sc-input').value=d.name;scScan();};
+    c.appendChild(btn);
+  });
+})();
+
+function scScan(){
+  const input=document.getElementById('sc-input').value.trim();
+  if(!input){scStatus('Enter an agency name or click a suggestion.','sc-bad');return;}
+  document.getElementById('sc-results').style.display='none';
+  document.getElementById('sc-results').innerHTML='';
+  scStatus('<span class="sc-spinner"></span>Loading intelligence report...','');
+  setTimeout(()=>{
+    const match=scMatch(input);
+    if(match){scStatus('Report loaded.','sc-good');scRender(match);}
+    else{
+      scStatus('','');
+      document.getElementById('sc-results').innerHTML=`<div style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;padding:1rem 0;">
+        No profile found for "<strong>${input}</strong>." Currently indexed: ${Object.values(SC_DB).map(d=>d.name).join(' · ')}<br><br>
+        More agencies being added. Call us at <a href="tel:8503414324" style="color:var(--sage);font-weight:600;">(850) 341-4324</a> and we'll research any agency for you personally.
+      </div>`;
+      document.getElementById('sc-results').style.display='block';
+    }
+  },600);
+}
+
+const SC_ICONS={good:'✓',warn:'!',bad:'✕',info:'i'};
+
+function scRender(r){
+  const el=document.getElementById('sc-results');
+  let html=`<div style="margin-bottom:1rem;">
+    <span style="font-size:1.1rem;font-weight:700;color:var(--warm-dark);">${r.name}</span>
+    <span style="font-size:0.8rem;color:var(--text-muted);margin-left:8px;">${r.loc}</span>
+    <span style="font-size:0.7rem;padding:3px 8px;border-radius:4px;background:var(--sage-pale);color:var(--sage);margin-left:8px;font-weight:600;">${r.type}</span>
+  </div>
+  <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;font-family:monospace;">${r.ownership}${r.founded?' · Est. '+r.founded:''}</div>`;
+
+  html+=`<div class="sc-sbar">
+    <div class="sc-sc"><span class="sc-sv ${r.sc.overall}">${r.scores.overall}/10</span><span class="sc-sl">Intelligence score</span></div>
+    <div class="sc-sc"><span class="sc-sv ${r.sc.google}">${r.scores.google}</span><span class="sc-sl">Client rating</span></div>
+    <div class="sc-sc"><span class="sc-sv ${r.sc.staff}">${r.scores.staff}</span><span class="sc-sl">Staff satisfaction</span></div>
+    <div class="sc-sc"><span class="sc-sv ${r.sc.complaints}">${r.scores.complaints}</span><span class="sc-sl">State complaints</span></div>
+  </div>`;
+
+  if(r.red&&r.red.length){
+    html+=`<div class="sc-sh">Concerns to investigate</div>`;
+    r.red.forEach(f=>{html+=`<div class="sc-flag red"><div class="sc-ft2">⚠ ${f.t}</div><div class="sc-fb2">${f.b}</div></div>`;});
+  }
+  if(r.green&&r.green.length){
+    html+=`<div class="sc-sh">Verified strengths</div>`;
+    r.green.forEach(f=>{html+=`<div class="sc-flag green"><div class="sc-ft2">✓ ${f.t}</div><div class="sc-fb2">${f.b}</div></div>`;});
+  }
+  if(r.findings&&r.findings.length){
+    html+=`<div class="sc-sh">Findings by source</div>`;
+    r.findings.forEach(f=>{html+=`<div class="sc-finding"><div class="sc-fi ${f.t}">${SC_ICONS[f.t]||'i'}</div><div class="sc-fb"><div class="sc-ft">${f.title}</div><div class="sc-fd">${f.detail}</div><div class="sc-fs">${f.src}</div></div></div>`;});
+  }
+  if(r.quotes&&r.quotes.length){
+    html+=`<div class="sc-sh">What people actually said</div>`;
+    r.quotes.forEach(q=>{html+=`<div class="sc-qb">"${q.t}"<div class="sc-qa">${q.a}</div></div>`;});
+  }
+  if(r.compare){html+=`<div class="sc-cnote">📊 ${r.compare}</div>`;}
+  if(r.gaps){html+=`<div class="sc-sh">Data gaps & caveats</div><div style="font-size:0.78rem;color:var(--text-muted);line-height:1.6;">${r.gaps}</div>`;}
+
+  el.innerHTML=html;
+  el.style.display='block';
+  document.getElementById('scanner').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function scStatus(msg,cls){
+  const el=document.getElementById('sc-status');
+  el.innerHTML=msg;
+  el.style.color=cls==='sc-bad'?'#A32D2D':cls==='sc-good'?'var(--sage)':'var(--text-muted)';
+}
+
+document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='Enter')scScan();});
+</script>
+
 <!-- ═══ STATS ═══ -->
 <div class="stats-bar">
   <div class="stat-item">
@@ -1023,7 +1405,7 @@
     </div>
 
     <!-- Credential bar -->
-    <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(92,122,95,0.12); border-radius: var(--radius); overflow: hidden; margin-bottom: 48px;">
+    <div class="spotlight-creds" style="display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(92,122,95,0.12); border-radius: var(--radius); overflow: hidden; margin-bottom: 48px;">
       <div style="background: var(--cream); padding: 20px; text-align: center;">
         <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--sage);">17+</div>
         <div style="font-size:0.78rem; color:var(--text-muted); margin-top:3px;">Years in operation</div>
@@ -1043,7 +1425,7 @@
     </div>
 
     <!-- Two-col: story + why they win -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-bottom: 48px;">
+    <div class="spotlight-two-col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-bottom: 48px;">
       <div>
         <div style="font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:14px;">The Story</div>
         <p style="font-size:0.92rem; color:var(--text-body); line-height:1.8; margin-bottom:16px;">
@@ -1095,7 +1477,7 @@
     <!-- Services offered -->
     <div style="background:var(--sage-pale);border-radius:var(--radius-lg);padding:32px;">
       <div style="font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:20px;">Services Offered</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+      <div class="spotlight-services" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
         <div style="background:white;border-radius:var(--radius);padding:16px;text-align:center;">
           <div style="font-size:1.4rem;margin-bottom:8px;">🤝</div>
           <div style="font-size:0.85rem;font-weight:600;color:var(--warm-dark);margin-bottom:4px;">Companion Care</div>
@@ -1692,6 +2074,6 @@
       document.body.style.overflow = '';
     }
   });
-</script>
+
 </body>
 </html>
