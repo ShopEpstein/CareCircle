@@ -884,6 +884,16 @@
           <option>Just exploring options</option>
         </select>
       </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="hero-name" placeholder="First name">
+        </div>
+        <div class="form-group">
+          <label>Best Phone / Text</label>
+          <input type="tel" id="hero-contact-phone" placeholder="(850) 555-0100">
+        </div>
+      </div>
       <button class="find-care-btn" onclick="showMatches()">
         <span>Show Matching Providers</span><span>→</span>
       </button>
@@ -2350,41 +2360,120 @@ function scRender(r){
   const computedScore = calcScore(r);
   const storedScore = parseFloat((r.scores?.overall||'0').replace(/[^0-9.]/g,''));
   const displayScore = storedScore > 0 ? storedScore : computedScore;
+  const scoreColor = displayScore >= 8 ? '#2d6a4f' : displayScore >= 6.5 ? '#b5700a' : '#a32d2d';
+  const scoreBg    = displayScore >= 8 ? '#edf7f0' : displayScore >= 6.5 ? '#fef7ec' : '#fdf0f0';
+  const scoreLabel = displayScore >= 8.5 ? 'Excellent' : displayScore >= 7.5 ? 'Good' : displayScore >= 6 ? 'Mixed signals' : 'High concern';
+  const ownerType  = (r.ownership||'').includes('Independent')||(r.ownership||'').includes('family') ? '🟢 Independent' : (r.ownership||'').includes('Franchise') ? '🟡 Franchise' : (r.ownership||'').includes('Corporate')||(r.ownership||'').includes('chain') ? '🔴 Corporate chain' : '⚪ Unknown';
 
-  let html=`<div style="margin-bottom:1rem;flex-wrap:wrap;display:flex;align-items:baseline;gap:8px;">
-    <span style="font-size:1.1rem;font-weight:700;color:var(--warm-dark);">${r.name}</span>
-    <span style="font-size:0.8rem;color:var(--text-muted);">${r.loc}</span>
-    <span style="font-size:0.7rem;padding:3px 8px;border-radius:4px;background:var(--sage-pale);color:var(--sage);font-weight:600;">${r.type}</span>
-  </div>
-  <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:10px;font-family:monospace;">${r.ownership||''}${r.founded?' · Est. '+r.founded:''}</div>`;
+  let html = `
+  <div style="background:white;border-radius:16px;border:1.5px solid #e5e5e0;overflow:hidden;font-family:'DM Sans',sans-serif;">
 
-  html += scoreBar(displayScore);
+    <!-- HEADER -->
+    <div style="padding:24px 28px 20px;border-bottom:1px solid #f0ede8;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="font-size:1.25rem;font-weight:700;color:#2c2c2a;margin-bottom:4px;">${r.name}</div>
+          <div style="font-size:0.85rem;color:#888;margin-bottom:6px;">${r.loc} &nbsp;·&nbsp; ${r.type}</div>
+          <div style="font-size:0.8rem;color:#aaa;">${r.ownership||''}${r.founded?' &nbsp;·&nbsp; Est. '+r.founded:''}</div>
+        </div>
+        <div style="text-align:center;min-width:90px;padding:14px 20px;border-radius:12px;background:${scoreBg};border:1.5px solid ${scoreColor}22;">
+          <div style="font-size:2rem;font-weight:800;color:${scoreColor};line-height:1;">${displayScore.toFixed(1)}</div>
+          <div style="font-size:0.7rem;font-weight:600;color:${scoreColor};text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">${scoreLabel}</div>
+          <div style="font-size:0.65rem;color:#aaa;margin-top:2px;">out of 10</div>
+        </div>
+      </div>
+    </div>
 
-  html+=`<div class="sc-sbar">
-    <div class="sc-sc"><span class="sc-sv ${r.sc.google||''}">${r.scores.google}</span><span class="sc-sl">Client rating</span></div>
-    <div class="sc-sc"><span class="sc-sv ${r.sc.staff||''}">${r.scores.staff}</span><span class="sc-sl">Staff satisfaction</span></div>
-    <div class="sc-sc"><span class="sc-sv ${r.sc.complaints||''}">${r.scores.complaints}</span><span class="sc-sl">State complaints</span></div>
-    <div class="sc-sc"><span class="sc-sv" style="font-size:0.9rem;">${(r.ownership||'').includes('Independent')||((r.ownership||'').includes('family'))?'🟢 Indep.':(r.ownership||'').includes('Franchise')?'🟡 Franchise':'🔴 Corporate'}</span><span class="sc-sl">Ownership type</span></div>
-  </div>`;
+    <!-- SCORE GRID -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #f0ede8;">
+      ${[
+        {label:'Client Rating', val:r.scores.google, cls:r.sc.google},
+        {label:'Staff Satisfaction', val:r.scores.staff, cls:r.sc.staff},
+        {label:'State Complaints', val:r.scores.complaints, cls:r.sc.complaints},
+        {label:'Ownership', val:ownerType, cls:''}
+      ].map((s,i)=>`
+        <div style="padding:14px 16px;${i<3?'border-right:1px solid #f0ede8;':''}">
+          <div style="font-size:0.7rem;color:#aaa;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">${s.label}</div>
+          <div style="font-size:0.88rem;font-weight:600;color:${s.cls==='sc-bad'?'#a32d2d':s.cls==='sc-warn'?'#b5700a':'#2d6a4f'};">${s.val}</div>
+        </div>`).join('')}
+    </div>`;
 
+  // RED FLAGS
   if(r.red&&r.red.length){
-    html+=`<div class="sc-sh">Concerns to investigate</div>`;
-    r.red.forEach(f=>{html+=`<div class="sc-flag red"><div class="sc-ft2">⚠ ${f.t}</div><div class="sc-fb2">${f.b}</div></div>`;});
+    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#a32d2d;margin-bottom:12px;">⚠ Concerns</div>`;
+    r.red.forEach(f=>{html+=`
+      <div style="background:#fdf5f5;border-left:3px solid #a32d2d;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;">
+        <div style="font-size:0.88rem;font-weight:600;color:#a32d2d;margin-bottom:4px;">${f.t}</div>
+        <div style="font-size:0.82rem;color:#666;line-height:1.55;">${f.b}</div>
+      </div>`;});
+    html+=`</div>`;
   }
+
+  // GREEN FLAGS
   if(r.green&&r.green.length){
-    html+=`<div class="sc-sh">Verified strengths</div>`;
-    r.green.forEach(f=>{html+=`<div class="sc-flag green"><div class="sc-ft2">✓ ${f.t}</div><div class="sc-fb2">${f.b}</div></div>`;});
+    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#2d6a4f;margin-bottom:12px;">✓ Verified Strengths</div>`;
+    r.green.forEach(f=>{html+=`
+      <div style="background:#f0f7f2;border-left:3px solid #5C7A5F;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;">
+        <div style="font-size:0.88rem;font-weight:600;color:#2d6a4f;margin-bottom:4px;">${f.t}</div>
+        <div style="font-size:0.82rem;color:#555;line-height:1.55;">${f.b}</div>
+      </div>`;});
+    html+=`</div>`;
   }
+
+  // FINDINGS
   if(r.findings&&r.findings.length){
-    html+=`<div class="sc-sh">Findings by source</div>`;
-    r.findings.forEach(f=>{html+=`<div class="sc-finding"><div class="sc-fi ${f.t}">${SC_ICONS[f.t]||'i'}</div><div class="sc-fb"><div class="sc-ft">${f.title}</div><div class="sc-fd">${f.detail}</div><div class="sc-fs">${f.src}</div></div></div>`;});
+    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:12px;">📋 Findings by Source</div>`;
+    r.findings.forEach(f=>{
+      const ic = f.t==='bad'?'#a32d2d':f.t==='warn'?'#b5700a':f.t==='good'?'#2d6a4f':'#5C7A5F';
+      html+=`
+      <div style="display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;">
+        <div style="width:22px;height:22px;border-radius:50%;background:${ic};color:white;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${SC_ICONS[f.t]||'i'}</div>
+        <div>
+          <div style="font-size:0.88rem;font-weight:600;color:#2c2c2a;margin-bottom:2px;">${f.title}</div>
+          <div style="font-size:0.82rem;color:#555;line-height:1.5;margin-bottom:3px;">${f.detail}</div>
+          <div style="font-size:0.72rem;color:#aaa;">Source: ${f.src}</div>
+        </div>
+      </div>`;});
+    html+=`</div>`;
   }
+
+  // QUOTES
   if(r.quotes&&r.quotes.length){
-    html+=`<div class="sc-sh">What people actually said</div>`;
-    r.quotes.forEach(q=>{html+=`<div class="sc-qb">"${q.t}"<div class="sc-qa">${q.a}</div></div>`;});
+    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:12px;">💬 What Families Said</div>`;
+    r.quotes.forEach(q=>{html+=`
+      <div style="background:#fafaf8;border-radius:10px;padding:14px 18px;margin-bottom:10px;border:1px solid #ebe8e2;">
+        <div style="font-size:0.88rem;color:#444;line-height:1.6;font-style:italic;margin-bottom:8px;">"${q.t}"</div>
+        <div style="font-size:0.75rem;color:#aaa;">${q.a}</div>
+      </div>`;});
+    html+=`</div>`;
   }
-  if(r.compare){html+=`<div class="sc-cnote">📊 ${r.compare}</div>`;}
-  if(r.gaps){html+=`<div class="sc-sh">Data gaps & caveats</div><div style="font-size:0.78rem;color:var(--text-muted);line-height:1.6;">${r.gaps}</div>`;}
+
+  // BOTTOM ASSESSMENT
+  if(r.compare||r.gaps){
+    html+=`<div style="padding:20px 28px;">`;
+    if(r.compare){html+=`
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:8px;">📊 CareCircle Assessment</div>
+      <div style="font-size:0.86rem;color:#444;line-height:1.65;margin-bottom:16px;padding:14px 18px;background:#f5f3ef;border-radius:10px;">${r.compare}</div>`;}
+    if(r.gaps){html+=`
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#bbb;margin-bottom:6px;">Data Gaps</div>
+      <div style="font-size:0.78rem;color:#aaa;line-height:1.6;">${r.gaps}</div>`;}
+    html+=`</div>`;
+  }
+
+  html+=`</div>
+
+  <!-- CALL TO ACTION BELOW REPORT -->
+  <div style="margin-top:16px;padding:18px 20px;background:#edf4ee;border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div style="font-size:0.88rem;color:#2d6a4f;font-weight:600;">Need help evaluating this agency or finding a better match?</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="tel:8503414324" style="background:#5C7A5F;color:white;padding:9px 18px;border-radius:100px;font-size:0.82rem;font-weight:600;text-decoration:none;">📞 Call Now</a>
+      <a href="sms:8503414324" style="background:white;color:#5C7A5F;border:1.5px solid #5C7A5F;padding:9px 18px;border-radius:100px;font-size:0.82rem;font-weight:600;text-decoration:none;">💬 Text Us</a>
+    </div>
+  </div>`;
 
   el.innerHTML=html;
   el.style.display='block';
@@ -3092,6 +3181,14 @@ document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='E
     const careType = document.getElementById('hero-care-type').value;
     const who      = document.getElementById('hero-who').value;
     const when     = document.getElementById('hero-when').value;
+    const name     = document.getElementById('hero-name').value.trim();
+    const phone    = document.getElementById('hero-contact-phone').value.trim();
+
+    if (!name || !phone) {
+      document.getElementById('hero-name').style.border = name ? '' : '2px solid #A32D2D';
+      document.getElementById('hero-contact-phone').style.border = phone ? '' : '2px solid #A32D2D';
+      return;
+    }
 
     // Show match results UI
     const location = zip || 'your area';
@@ -3102,20 +3199,22 @@ document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='E
     setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
 
     // Fire Brevo notification
-    if (zip || careType) {
-      await brevoSend(
-        `New CareCircle Family Inquiry — ${zip || 'no zip'} · ${careType}`,
-        `<h2>New Family Care Inquiry</h2>
-         <table cellpadding="6" style="font-family:sans-serif;font-size:14px;">
-           <tr><td><b>Location:</b></td><td>${zip || 'Not provided'}</td></tr>
-           <tr><td><b>Care type:</b></td><td>${careType}</td></tr>
-           <tr><td><b>Who needs care:</b></td><td>${who}</td></tr>
-           <tr><td><b>Timeline:</b></td><td>${when}</td></tr>
-           <tr><td><b>Submitted:</b></td><td>${new Date().toLocaleString()}</td></tr>
-         </table>
-         <p style="margin-top:16px;font-size:13px;color:#666;">We'll be in touch — or <a href="tel:8503414324" style="color:var(--sage);">call</a> / <a href="sms:8503414324" style="color:var(--sage);">text</a> us directly.</p>`
-      );
-    }
+    await brevoSend(
+      `🔔 New Family Lead — ${name} · ${zip || 'no zip'} · ${careType}`,
+      `<div style="font-family:sans-serif;max-width:560px;">
+        <h2 style="color:#5C7A5F;margin-bottom:4px;">New Family Care Inquiry</h2>
+        <p style="color:#888;font-size:13px;margin-top:0;">CareCircle Network · ${new Date().toLocaleString()}</p>
+        <table cellpadding="8" style="font-size:14px;width:100%;border-collapse:collapse;">
+          <tr style="background:#f5f5f5;"><td style="color:#555;width:140px;"><b>Name</b></td><td>${name}</td></tr>
+          <tr><td style="color:#555;"><b>Phone / Text</b></td><td><a href="tel:${phone.replace(/\D/g,'')}">${phone}</a></td></tr>
+          <tr style="background:#f5f5f5;"><td style="color:#555;"><b>Location</b></td><td>${zip || 'Not provided'}</td></tr>
+          <tr><td style="color:#555;"><b>Care type</b></td><td>${careType}</td></tr>
+          <tr style="background:#f5f5f5;"><td style="color:#555;"><b>Who needs care</b></td><td>${who}</td></tr>
+          <tr><td style="color:#555;"><b>Timeline</b></td><td>${when}</td></tr>
+        </table>
+        <p style="margin-top:20px;padding:12px 16px;background:#edf4ee;border-radius:8px;font-size:13px;color:#5C7A5F;"><strong>Call or text ${name} back:</strong> <a href="tel:${phone.replace(/\D/g,'')}" style="color:#5C7A5F;">${phone}</a></p>
+       </div>`
+    );
   }
 
   // ─── AGENCY FORM → BREVO ───
