@@ -17,7 +17,10 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         sender: { name: 'CareCircle Network', email: 'campaigns@transbidlive.faith' },
-        to: [{ email: 'campaigns@transbidlive.faith', name: 'CareCircle Inbox' }],
+        to: [
+          { email: 'contactfire757@gmail.com', name: 'Chase Turnquest' },
+          { email: 'campaigns@transbidlive.faith', name: 'CareCircle Inbox' }
+        ],
         subject,
         htmlContent
       })
