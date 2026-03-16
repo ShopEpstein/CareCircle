@@ -776,6 +776,10 @@
     .match-card-top { flex-direction: column; gap: 8px; }
     h1 { font-size: 2.2rem; }
   }
+  @media (max-width: 800px) {
+    #spotlight-section .section-grid-2col,
+    #hospital-discharge .section-grid-2col { grid-template-columns: 1fr !important; }
+  }
 </style>
 </head>
 <body>
@@ -805,6 +809,8 @@
 <div class="mobile-menu" id="mobile-menu">
   <a href="#how-it-works" onclick="closeMobile()">How It Works</a>
   <a href="#providers" onclick="closeMobile()">Find Care</a>
+  <a href="#spotlight-section" onclick="closeMobile()">Hidden Gems & Dangers</a>
+  <a href="#hospital-discharge" onclick="closeMobile()">Hospital Discharge Guide</a>
   <a href="#memory-magnet" onclick="closeMobile()">Care Coordination</a>
   <a href="#for-agencies" onclick="closeMobile()">For Agencies</a>
   <a href="#agency-contact" onclick="closeMobile()">List Your Agency</a>
@@ -969,14 +975,131 @@
   </div>
 </section>
 
+<!-- ═══ HIDDEN GEMS & DANGERS ═══ -->
+<section style="padding: 70px 5%; background: var(--warm-dark);" id="spotlight-section">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <div class="section-label" style="color:var(--gold);">What Families Miss Most</div>
+    <h2 class="section-title" style="color:white;margin-bottom:8px;">Hidden gems. Hidden dangers.</h2>
+    <p style="font-size:0.9rem;color:rgba(255,255,255,0.5);max-width:560px;line-height:1.7;margin-bottom:40px;">The Pensacola senior care market has facilities most families never find — and dangers hiding behind professional websites. Both are documented below with real data.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+
+      <!-- HIDDEN GEMS -->
+      <div>
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--sage-light);margin-bottom:16px;">Hidden Gems — Outstanding quality most families miss</div>
+
+        <div style="background:rgba(92,122,95,0.12);border:1px solid rgba(92,122,95,0.3);border-radius:var(--radius-lg);padding:20px;margin-bottom:14px;cursor:pointer;" onclick="document.getElementById('sc-input').value='Azalea Trace';scScan();document.getElementById('scanner').scrollIntoView({behavior:'smooth'});">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:1rem;font-weight:700;color:var(--sage-light);">⭐ Azalea Trace</span>
+            <span style="font-size:0.68rem;padding:2px 8px;border-radius:100px;background:rgba(92,122,95,0.3);color:var(--sage-light);">CCRC · 9.1/10</span>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:8px;">The only CCRC in Escambia County. Non-profit. Newsweek's Best 2025. On-campus skilled nursing rated High Performing. 96% resident satisfaction. Most families searching for "assisted living" never find it because it's categorized differently.</p>
+          <div style="font-size:0.72rem;color:var(--sage-light);font-weight:600;">Tap to research →</div>
+        </div>
+
+        <div style="background:rgba(92,122,95,0.12);border:1px solid rgba(92,122,95,0.3);border-radius:var(--radius-lg);padding:20px;margin-bottom:14px;cursor:pointer;" onclick="document.getElementById('sc-input').value='Beehive Homes of Gulf Breeze';scScan();document.getElementById('scanner').scrollIntoView({behavior:'smooth'});">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:1rem;font-weight:700;color:var(--sage-light);">⭐ Beehive Homes of Gulf Breeze</span>
+            <span style="font-size:0.68rem;padding:2px 8px;border-radius:100px;background:rgba(92,122,95,0.3);color:var(--sage-light);">ALF · 8.5/10</span>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:8px;">16-resident maximum. 5.0★ on SeniorAdvisor — highest in Santa Rosa County. Small-home model means staff ratios no large facility can match. Multiple reviewers call it "superior to every other option." Most families never find it because it doesn't advertise.</p>
+          <div style="font-size:0.72rem;color:var(--sage-light);font-weight:600;">Tap to research →</div>
+        </div>
+
+        <div style="background:rgba(92,122,95,0.12);border:1px solid rgba(92,122,95,0.3);border-radius:var(--radius-lg);padding:20px;cursor:pointer;" onclick="document.getElementById('sc-input').value='Rosewood Healthcare';scScan();document.getElementById('scanner').scrollIntoView({behavior:'smooth'});">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:1rem;font-weight:700;color:var(--sage-light);">⭐ Rosewood Healthcare</span>
+            <span style="font-size:0.68rem;padding:2px 8px;border-radius:100px;background:rgba(92,122,95,0.3);color:var(--sage-light);">Skilled Nursing · 8.2/10</span>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:8px;">5-star Medicare rating — highest in the Pensacola skilled nursing market. Zero fines, zero complaints. In operation since 1991. Multiple independent reviewers call it the best facility they've ever seen. Families finding Coral Bay first are missing the better option.</p>
+          <div style="font-size:0.72rem;color:var(--sage-light);font-weight:600;">Tap to research →</div>
+        </div>
+      </div>
+
+      <!-- HIDDEN DANGERS -->
+      <div>
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(226,75,74,0.8);margin-bottom:16px;">Hidden Dangers — Serious concerns behind professional appearances</div>
+
+        <div style="background:rgba(163,45,45,0.1);border:1px solid rgba(163,45,45,0.3);border-radius:var(--radius-lg);padding:20px;margin-bottom:14px;cursor:pointer;" onclick="document.getElementById('sc-input').value='Windermere Memory Care';scScan();document.getElementById('scanner').scrollIntoView({behavior:'smooth'});">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:1rem;font-weight:700;color:rgba(240,120,120,1);">⚠ Windermere Memory Care</span>
+            <span style="font-size:0.68rem;padding:2px 8px;border-radius:100px;background:rgba(163,45,45,0.3);color:rgba(240,140,140,1);">Memory Care · 4.8/10</span>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:8px;">Professional website, experienced ownership, memory-care focused design. But: A Place for Mom score of 1/10. All three reviews are 1 star. Documented accounts of resident hospitalization from neglect, sustained hygiene failures, and BBB complaint unanswered. Memory care residents cannot self-advocate.</p>
+          <div style="font-size:0.72rem;color:rgba(240,120,120,1);font-weight:600;">Tap to see full report →</div>
+        </div>
+
+        <div style="background:rgba(163,45,45,0.1);border:1px solid rgba(163,45,45,0.3);border-radius:var(--radius-lg);padding:20px;margin-bottom:14px;cursor:pointer;" onclick="document.getElementById('sc-input').value='Bayside Health';scScan();document.getElementById('scanner').scrollIntoView({behavior:'smooth'});">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:1rem;font-weight:700;color:rgba(240,120,120,1);">⚠ Bayside Health & Rehab</span>
+            <span style="font-size:0.68rem;padding:2px 8px;border-radius:100px;background:rgba(163,45,45,0.3);color:rgba(240,140,140,1);">Nursing · 4.1/10</span>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:8px;">On Florida's official Nursing Home Watch List. Multiple CMS federal deficiencies. Families describe roaches, missing personal belongings, broken call buttons, phones that don't work for weeks. PE-owned through a chain of LLCs. 1★ on Yelp.</p>
+          <div style="font-size:0.72rem;color:rgba(240,120,120,1);font-weight:600;">Tap to see full report →</div>
+        </div>
+
+        <div style="background:rgba(163,45,45,0.1);border:1px solid rgba(163,45,45,0.3);border-radius:var(--radius-lg);padding:20px;cursor:pointer;" onclick="document.getElementById('sc-input').value='Endear Care';scScan();document.getElementById('scanner').scrollIntoView({behavior:'smooth'});">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:1rem;font-weight:700;color:rgba(240,120,120,1);">⚠ Endear Care Nursing & Rehab</span>
+            <span style="font-size:0.68rem;padding:2px 8px;border-radius:100px;background:rgba(163,45,45,0.3);color:rgba(240,140,140,1);">Nursing · 5.8/10</span>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:8px;">Legal actions section visible on the official FL AHCA profile — this section only appears when there are documented regulatory legal actions. Federal inspection records are filed. 118 beds. The content of those legal actions requires direct AHCA review before any family considers this facility.</p>
+          <div style="font-size:0.72rem;color:rgba(240,120,120,1);font-weight:600;">Tap to see full report →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOSPITAL DISCHARGE ═══ -->
+<section style="padding: 70px 5%; background: var(--sage-pale);" id="hospital-discharge">
+  <div style="max-width: 900px; margin: 0 auto;">
+    <div class="section-label">Critical Resource</div>
+    <h2 class="section-title" style="margin-bottom:10px;">Your parent is being discharged from the hospital. You have 24–48 hours. Here's what to do.</h2>
+    <p style="font-size:0.9rem;color:var(--text-muted);max-width:600px;line-height:1.7;margin-bottom:32px;">Post-hospitalization placement is the highest-pressure, lowest-information decision families make. The hospital gives you a list of approved facilities. That list is not unbiased. Here's how to navigate it.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px;">
+      <div style="background:white;border-radius:var(--radius-lg);padding:24px;border:1px solid rgba(92,122,95,0.1);">
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:12px;">Step 1 — Understand what you're choosing</div>
+        <p style="font-size:0.85rem;color:var(--text-body);line-height:1.7;margin-bottom:10px;"><strong>Skilled Nursing Facility (SNF):</strong> For short-term rehab after hospitalization. Medicare pays up to 100 days if medically necessary. Use the scanner below to check the CMS star rating before you agree.</p>
+        <p style="font-size:0.85rem;color:var(--text-body);line-height:1.7;"><strong>Home health:</strong> For continued medical care at home after discharge. Doctor must prescribe it. Medicare-certified agencies only — verify certification before assuming coverage.</p>
+      </div>
+      <div style="background:white;border-radius:var(--radius-lg);padding:24px;border:1px solid rgba(92,122,95,0.1);">
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:12px;">Step 2 — Check any facility in 60 seconds</div>
+        <p style="font-size:0.85rem;color:var(--text-body);line-height:1.7;margin-bottom:10px;">Use our scanner (below) to pull the Medicare star rating, CMS deficiency history, staffing data, and family reviews for any facility the hospital recommends. Do this before you agree.</p>
+        <p style="font-size:0.85rem;color:var(--text-body);line-height:1.7;"><strong>In the Pensacola market:</strong> Rosewood Healthcare (5★) and Coral Bay (4★, excellent rehab) are the two strongest documented options for post-hospitalization placement.</p>
+      </div>
+      <div style="background:white;border-radius:var(--radius-lg);padding:24px;border:1px solid rgba(92,122,95,0.1);">
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:12px;">Step 3 — Red flags on any hospital referral list</div>
+        <ul style="font-size:0.85rem;color:var(--text-body);line-height:1.8;padding-left:16px;">
+          <li>CMS 1 or 2 star overall rating</li>
+          <li>On the FL Nursing Home Watch List</li>
+          <li>Staffing below 3.5 hours/resident/day</li>
+          <li>Recent ownership change (within 2 years)</li>
+          <li>PE or LLC chain ownership</li>
+        </ul>
+      </div>
+      <div style="background:white;border-radius:var(--radius-lg);padding:24px;border:1px solid rgba(92,122,95,0.1);">
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:12px;">Step 4 — Call us. We'll help you decide.</div>
+        <p style="font-size:0.85rem;color:var(--text-body);line-height:1.7;margin-bottom:14px;">CareCircle exists for exactly this situation. We know the local facilities, we have the data, and we're a phone call away. Free service — agencies pay us, not you.</p>
+        <a href="tel:8503414324" style="display:inline-flex;align-items:center;gap:8px;background:var(--sage);color:white;padding:12px 20px;border-radius:100px;font-size:0.88rem;font-weight:600;text-decoration:none;">📞 (850) 341-4324</a>
+      </div>
+    </div>
+
+    <div style="background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.25);border-radius:var(--radius);padding:16px 20px;font-size:0.82rem;color:var(--text-body);line-height:1.65;">
+      <strong style="color:#A67C3A;">VA Aid & Attendance benefit:</strong> If your parent or their spouse is a veteran, this VA benefit can pay $1,000–$2,700/month toward home care, assisted living, or nursing home costs. Most families never know it exists. Call us and we'll point you to the right resource to apply.
+    </div>
+  </div>
+</section>
+
 <!-- ═══ INTELLIGENCE SCANNER ═══ -->
 <section id="scanner" style="padding: 70px 5%; background: var(--cream); border-bottom: 1px solid rgba(92,122,95,0.1);">
   <div style="max-width: 900px; margin: 0 auto;">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
       <div>
-        <div class="section-label">Free Research Tool</div>
-        <h2 class="section-title" style="margin-bottom:6px;">Research any senior care agency before you call</h2>
-        <p style="font-size:0.9rem;color:var(--text-muted);max-width:540px;line-height:1.6;">We pulled Google Reviews, Indeed & Glassdoor employee ratings, FL AHCA license records, BBB data, and ownership history for 20+ Pensacola area agencies — and surfaced the things families never think to check.</p>
+        <div class="section-label">Free Research Tool · 35 Providers Indexed</div>
+        <h2 class="section-title" style="margin-bottom:6px;">Research any senior care provider before you call</h2>
+        <p style="font-size:0.9rem;color:var(--text-muted);max-width:580px;line-height:1.6;">Google Reviews, employee ratings, FL AHCA records, CMS Medicare data, BBB complaints, ownership history, and ProPublica inspection records — for home care agencies, nursing homes, ALFs, memory care, hospice, and CCRCs across Northwest Florida. We surface what families never think to look for.</p>
       </div>
     </div>
 
@@ -989,7 +1112,7 @@
     <!-- Suggestions -->
     <div id="sc-pills" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;"></div>
 
-    <div style="font-size:11px;color:var(--text-muted);margin-bottom:16px;line-height:1.5;">Sources: Google Reviews · Indeed (Pensacola-specific) · Glassdoor · FL AHCA License Database · BBB Northwest Florida · A Place for Mom · AgingCare.com. Data compiled March 2026.</div>
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:16px;line-height:1.5;">Sources: Google Reviews · Indeed · Glassdoor · FL AHCA · CMS/Medicare · ProPublica Nursing Home Inspect · BBB Northwest Florida · A Place for Mom · Caring.com · SeniorAdvisor · Seniorly · US News. Data compiled March 2026. 35 providers indexed across home care, ALF, memory care, skilled nursing, hospice, and CCRC categories.</div>
 
     <!-- Status -->
     <div id="sc-status" style="font-size:12px;font-family:monospace;color:var(--text-muted);min-height:18px;margin-bottom:8px;"></div>
@@ -1702,6 +1825,132 @@ const SC_DB = {
     compare:"AHCA-verified independent covering Milton and Santa Rosa County — a gap in the current CareCircle network. Insufficient public data for quality assessment.",
     gaps:"All review sources show zero data. Direct agency inquiry required."
   }
+,
+  "windermere memory care": {
+    name:"Windermere Memory Care Inc", loc:"7901 Kipling St, Pensacola, FL 32514", type:"Memory Care · Assisted Living",
+    founded:2016, ownership:"Family-owned · Harris Family · Casie Harris, CEO · 60 beds",
+    scores:{overall:"4.8",google:"2.8★ (est.)",staff:"Not found",complaints:"BBB C+ · 1 unanswered complaint"},
+    sc:{overall:"sc-bad",google:"sc-bad",staff:"sc-good",complaints:"sc-bad"},
+    green:[
+      {t:"Harris family has 30+ years in ALF industry",b:"CEO Casie Harris has 25+ years of experience. The Harris family owns four Gulf Coast ALFs. Prior facility (Grandview) documented as passing AHCA inspections with zero deficiencies — legacy credibility."},
+      {t:"Named staff praised across some reviews",b:"Teresa, Tyrah, and Shevonne specifically named for exceptional care across independent reviews. Named staff is normally a positive signal."},
+      {t:"Starts at $3,800/mo — below Pensacola memory care average",b:"Seniorly estimates starting at $3,800/mo, below the Pensacola area average of $4,323/mo."}
+    ],
+    red:[
+      {t:"A Place for Mom: 1 out of 10 score · 3 reviews all 1-star",b:"A Place for Mom's proprietary score of 1/10 based on all available reviews. Three reviews available — all 1 star. This is the worst possible score on that platform."},
+      {t:"Documented neglect: bruising, dehydration, unchanged diapers",b:"A family reviewer describes their brother with Alzheimer's developing extensive arm bruises within 2 days, not being changed for the first 24 hours, and being hospitalized severely dehydrated with resulting muscle damage. Four contradictory explanations were offered."},
+      {t:"Ongoing hygiene neglect documented over two-year stay",b:"A second reviewer describes feces on their mother's shoes, feces left for days after photographic evidence was shared with the administrator, mattress covers removed and never replaced, no top sheets despite purchasing five separate sets."},
+      {t:"BBB: C+ rating · Failure to respond to complaint",b:"BBB Northwest Florida rates Windermere C+. The rating specifically cites failure to respond to a filed complaint. An unresponsive BBB complaint in memory care is a significant red flag."},
+      {t:"Sharply split review pattern — warrants investigation",b:"Positive reviews describe clean, caring facility. Negative reviews describe serious neglect. This split is not 'mixed feedback' — it is conflicting accounts of fundamental care standards. In memory care where residents cannot self-advocate, this pattern requires mandatory on-site investigation."}
+    ],
+    findings:[
+      {t:"bad",title:"A Place for Mom: 1/10 · 3 reviews all 1★",detail:"All three available A Place for Mom reviews are 1 star. Proprietary score of 1 out of 10.",src:"A Place for Mom · Windermere Memory Care"},
+      {t:"bad",title:"Documented neglect accounts — dehydration, bruising, hygiene",detail:"Independent family reviewers describe hospital-level neglect events including severe dehydration, unexplained bruising, and sustained hygiene failures with photographic evidence ignored.",src:"A Place for Mom · Caring.com · 2022–2024"},
+      {t:"bad",title:"BBB: C+ · Failure to respond to complaint",detail:"BBB Northwest Florida rating C+. Specific reason cited: failure to respond to 1 complaint filed against the business.",src:"BBB Northwest Florida · Windermere Memory Care"},
+      {t:"warn",title:"Seniorly composite score: 4.8/10 across 41 web reviews",detail:"Seniorly's algorithm incorporating 41 reviews across all sources produces a 4.8/10 score. Mixed accounts.",src:"Seniorly · Windermere Memory Care · 41 reviews"},
+      {t:"good",title:"Harris family: 30+ years ALF experience",detail:"Family ownership with documented AHCA clean inspection history at prior facility (Grandview). Industry experience is genuine.",src:"Windermere Memory Care website · Staff bios"},
+      {t:"info",title:"60 beds · memory care focused · FL AHCA licensed",detail:"Licensed ALF with specific memory care focus and design. Administrator is a Registered Nurse with 3 decades dementia care experience.",src:"FL AHCA · windermeremc.com"}
+    ],
+    quotes:[
+      {t:"After 2 days at Windermere, his arms were covered with bruises. We were given 4 versions of what happened. He was not monitored at all and ended up in the hospital severely dehydrated to the point it caused muscle damage.",a:"A Place for Mom · 1 star · Family of Alzheimer's resident"},
+      {t:"Poop on her shoes, poop everywhere and left for days. There were times when I took pictures, sent them to the administrator, and I go back and it's still there.",a:"A Place for Mom · 1 star · Family reviewer · 2-year stay"},
+      {t:"Windermere Memory Care was very good. The administrator is wonderful, letting us see the cameras. The facility was very clean and very well kept.",a:"Caring.com · Positive reviewer"}
+    ],
+    compare:"Windermere is a hidden danger in the Pensacola memory care market. The physical environment and staff credentials appear credible, but the documented neglect accounts — particularly given that memory care residents cannot self-advocate — place this facility in the same risk tier as Bayside Health. Families specifically searching for memory care must see this data before any visit.",
+    gaps:"FL AHCA inspection history and complaint resolutions not retrieved. Recommend pulling the three most recent inspection reports from AHCA directly before any referral. Google review count not confirmed independently."
+  },
+  "azalea trace": {
+    name:"Azalea Trace", loc:"10100 Hillview Dr, Pensacola, FL 32514", type:"CCRC · IL · AL · Memory Care · Skilled Nursing · 120 acres",
+    founded:1984, ownership:"Non-profit · Acts Retirement-Life Communities · One of the largest non-profit CCRC operators in the US",
+    scores:{overall:"9.1",google:"4.9★",staff:"4.7★ (est.)",complaints:"Not found"},
+    sc:{overall:"sc-good",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[
+      {t:"Newsweek: One of America's Best CCRCs 2025",b:"Named by Newsweek in 2025 as one of America's Best Continuing Care Retirement Communities. Legitimate national recognition based on resident surveys and quality metrics."},
+      {t:"Non-profit ownership — no investor profit motive",b:"Operated by Acts Retirement-Life Communities, one of the country's largest non-profit CCRC operators. Non-profit CCRCs are statistically associated with higher care quality and better resident satisfaction than for-profit competitors. Mission is explicitly resident welfare, not investor returns."},
+      {t:"Only CCRC in Escambia County",b:"Azalea Trace is the only Continuing Care Retirement Community in Escambia County — meaning it's the only option where a resident can move from independent living through skilled nursing without leaving the campus."},
+      {t:"96% resident satisfaction rate — ACTS-wide",b:"ACTS communities report 96% resident satisfaction across their portfolio. Azalea Trace reviews independently confirm this — 4.9★ rating with consistent named-staff praise."},
+      {t:"Named staff praised across independent sources",b:"Nicole Nelson and Tuesday Broxon specifically named across independent reviews. Five-star dining described. Pool aerobics and physical wellness programs praised."},
+      {t:"WillowBrooke Court skilled nursing: High Performing in both categories",b:"The on-campus skilled nursing facility (WillowBrooke Court at Azalea Trace) rated High Performing for both short-term rehabilitation AND long-term care by US News — one of the strongest possible ratings."}
+    ],
+    red:[
+      {t:"Entry fee required — significant financial commitment",b:"As a Life Care CCRC, Azalea Trace requires an entry fee (amount not publicly listed) in addition to monthly fees. This is a different financial model than standard ALFs. Families must understand the contract type and entry fee refund terms before committing."},
+      {t:"Regulated by FL Office of Insurance Regulation — not just AHCA",b:"CCRCs with entry fees are regulated by Florida OIR in addition to AHCA. Families should request the most recent OIR inspection report alongside the AHCA inspection report."}
+    ],
+    findings:[
+      {t:"good",title:"Newsweek Best CCRCs 2025 · 4.9★ rating",detail:"National recognition in 2025. 4.9 star rating across multiple independent review platforms.",src:"Newsweek 2025 · AsssistedLivingCenter.com · Multiple sources"},
+      {t:"good",title:"Non-profit ACTS ownership · 50+ years in operation",detail:"ACTS opened its first community in 1972. One of the largest and most respected non-profit CCRC operators nationally.",src:"ACTS Retirement-Life Communities · Azalea Trace"},
+      {t:"good",title:"WillowBrooke Court: High Performing · Short-term and long-term",detail:"On-campus skilled nursing facility rated High Performing in both categories by US News. 24-bed facility within the CCRC campus.",src:"US News Best Nursing Homes · WillowBrooke Court at Azalea Trace"},
+      {t:"good",title:"120-acre campus · UWF 1 mile · Baptist Medical Group adjacent",detail:"Expansive campus. University of West Florida lifelong learning programs available. Baptist Medical Group less than 1 mile away.",src:"Azalea Trace · ACTS Retirement-Life Communities"},
+      {t:"warn",title:"Entry fee model — verify contract terms",detail:"Life Care contract requires entry fee payment before residency. Refund terms vary by contract type. FL OIR regulates. Families should request financial statements and contract details directly.",src:"FL Office of Insurance Regulation guidance · secondact.com"}
+    ],
+    quotes:[
+      {t:"Azalea Trace is a top of the line CONTINUAL CARE facility... very professionally managed... excellent residences, food, and activities... a real emphasis on physical and mental well-being. We LOVE living here.",a:"Caring.com · Current resident review"},
+      {t:"We are relatively new residents at Azalea Trace and are so happy with our choice to make this our 'forever home.' We got exactly the apartment location we wanted with a great view of the courtyard area.",a:"AsssistedLivingCenter.com · Resident review"}
+    ],
+    compare:"Azalea Trace is the strongest senior living option in the Pensacola market by virtually every measurable dimension — non-profit ownership, national recognition, highest-rated skilled nursing on campus, and 96% resident satisfaction. The entry fee model creates a financial complexity families need to understand, but the quality evidence is unambiguous. This is the hidden gem of the Pensacola market that most families never find because they're searching for 'assisted living' rather than 'CCRC.'",
+    gaps:"Entry fee amount and monthly fee ranges not publicly listed. Most recent OIR inspection report not retrieved. Waitlist status not confirmed."
+  },
+  "coral bay pensacola": {
+    name:"Coral Bay at Pensacola LLC", loc:"600 W Gregory St, Pensacola, FL 32502", type:"Skilled Nursing · Rehab · Memory Care · 210 beds",
+    founded:2003, ownership:"For-profit · Partnership ownership · Kerem Health management",
+    scores:{overall:"7.2",google:"3.8★ (est.)",staff:"3.0★ (est.)",complaints:"1 enforcement action · $662 fine"},
+    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-bad",complaints:"sc-warn"},
+    green:[
+      {t:"Medicare 4-star overall · 4-star health inspection · 5-star long-term quality",b:"CMS 4/5 star overall rating. Long-Stay Quality Measure Rating of 5 stars — the highest possible — indicates excellent long-term resident outcomes. JCAHO accredited and AHCA Silver Star award recipient."},
+      {t:"Therapy and rehab team consistently praised",b:"Multiple independent reviewers specifically praise the therapy department. 'The therapists were excellent. They not only help you, they explain why they were doing what they were doing.' Rehab is the strongest documented service."},
+      {t:"210-bed facility with extensive services",b:"Largest skilled nursing facility in the Pensacola market. Full clinical services: wound care, memory care unit (60 Alzheimer's beds), palliative, hospice, short-term rehab, long-term care. JCAHO accredited."},
+      {t:"Under Kerem Health leadership — commitment to improvement documented",b:"New ownership/management under Kerem Health with documented investment in facility improvements and clinical staff quality."}
+    ],
+    red:[
+      {t:"Staffing rating: 3 stars — below average",b:"CMS staffing rating of 3/5. Nurse aide hours per resident per day: 2.16 — below the national standard. Total nursing hours: 3.45/day. Understaffing is the most common family complaint and the underlying driver of most negative reviews."},
+      {t:"Short-Stay Quality Measure Rating: 2 stars",b:"CMS short-stay quality measure rating of 2/5. This is specifically relevant for families placing a parent for short-term post-hospitalization rehab — which is the most common use case for this facility."},
+      {t:"Sharply split client reviews — nursing vs. therapy divergence",b:"Positive reviews almost exclusively reference the therapy team. Negative reviews describe nursing staff antagonism, minimal care, residents left in soiled conditions. This split suggests therapy is well-run but floor nursing is inconsistent."},
+      {t:"1 enforcement action on record · $662.73 fine",b:"One enforcement action and fine of $662.73 documented in federal records. Fine amount is small but enforcement action is on record."}
+    ],
+    findings:[
+      {t:"good",title:"Medicare: 4★ overall · 5★ long-term quality · JCAHO accredited",detail:"CMS 4/5 overall rating. Long-stay quality measures rated 5/5. Joint Commission accredited. AHCA Silver Star award recipient.",src:"Medicare Care Compare · CMS · JCAHO · AHCA Silver Star"},
+      {t:"bad",title:"CMS staffing: 3★ · Nurse aide hours 2.16/day — below standard",detail:"CMS staffing rating 3/5. Nurse aide hours per resident per day: 2.16 (below national 2.4 standard). Total nursing hours: 3.45/day. Weekend RN hours: 0.33/day.",src:"CMS Nursing Home Data · ourhealthnetwork.com"},
+      {t:"warn",title:"Short-stay quality measures: 2★",detail:"CMS short-stay quality rating 2/5. Particularly relevant for post-hospitalization rehab placements — the most common family use case.",src:"Medicare Care Compare · US News Best Nursing Homes"},
+      {t:"warn",title:"1 enforcement action · $662.73 fine on record",detail:"One federal enforcement action and fine documented. Fine amount is small relative to industry; action is on record.",src:"nursinghomereport.org · Federal enforcement records"},
+      {t:"good",title:"210 beds · 60 Alzheimer's beds · full clinical suite",detail:"Largest skilled nursing facility in Pensacola. Memory care unit, wound care, palliative, hospice, rehab all on-site.",src:"coralbayhc.com · CareListings"}
+    ],
+    quotes:[
+      {t:"The therapists were excellent. They not only help you, they explain why they were doing what they were doing. It's extremely clean. I love Coral Bay. When I was in the hospital, I said there's only one place I want to go — Coral Bay.",a:"Caring.com · Former resident · 4 months stay"},
+      {t:"Except for the physical therapy department, getting the care our mom needed was a constant battle. The staff is antagonistic in general. They try to do as little as possible.",a:"Caring.com · Family member · Stroke patient"},
+      {t:"Coral Bay is a nightmare. Consistently understaffed while only one or two staff are doing all the work.",a:"SeniorCare.com · Family reviewer"}
+    ],
+    compare:"Coral Bay has a genuine split identity: an excellent therapy/rehab program inside a facility with documented nursing staffing problems. For short-term post-surgical rehab with an engaged family monitoring the floor nursing, it's a viable option. For long-term placement of a resident who cannot self-advocate, the staffing data and negative nursing reviews warrant serious caution. The 5-star long-term quality measure and 2-star short-stay measure combination is unusual and worth understanding before placement.",
+    gaps:"Most recent CMS inspection deficiency details not retrieved. Current Kerem Health ownership quality trajectory not independently assessed. Staffing data based on most recent available CMS filing."
+  },
+  "rosewood healthcare": {
+    name:"Rosewood Healthcare and Rehabilitation Center", loc:"Pensacola, FL 32501", type:"Skilled Nursing · Rehab · Memory Care · 151 beds",
+    founded:1991, ownership:"For-profit · Independent",
+    scores:{overall:"8.2",google:"4.1★ (mixed)",staff:"Not found",complaints:"3 deficiencies · no fines · no complaints"},
+    sc:{overall:"sc-good",google:"sc-warn",staff:"sc-good",complaints:"sc-good"},
+    green:[
+      {t:"Medicare 5-star overall rating",b:"Rosewood received a 5/5 star overall Medicare rating — the highest possible. Health audits, staffing, and quality measures all contributed to this top rating. This is rare in the Pensacola skilled nursing market."},
+      {t:"3 deficiencies · zero fines · zero complaints",b:"In the most recent rating period: 3 deficiencies (minor), no fines imposed, no payment denials, no complaints filed. This regulatory profile is among the cleanest in the local market."},
+      {t:"Named as best facility by multiple independent reviewers",b:"'Rosewood Healthcare IS the best facility I have ever seen.' Multiple independent reviewers describe it as their top choice in the Pensacola market. One reviewer's family member recovered from a near-bedridden state to walking."},
+      {t:"In operation since 1991 — 33 years of continuous operation",b:"Longest-operating independent skilled nursing facility in the market. Operational stability over three decades is a meaningful credibility signal."},
+      {t:"Wound care, psychiatric services, full therapy suite",b:"Comprehensive clinical services. Wound care team specifically praised by name in reviews. PT, OT, and speech therapy all documented as exceptional."}
+    ],
+    red:[
+      {t:"Some reviews describe neglect concerns",b:"Not all reviews are positive. SeniorLiving.org review summary describes concerns about neglect and unsanitary conditions from some reviewers. The 5-star Medicare rating suggests these may be isolated incidents, but families should verify."}
+    ],
+    findings:[
+      {t:"good",title:"Medicare: 5★ overall · 3 deficiencies · zero fines",detail:"5/5 star CMS rating. 3 minor deficiencies in last inspection period. No fines, no payment denials, no complaints filed.",src:"SeniorAdvice.com · Medicare Care Compare · Rosewood Healthcare"},
+      {t:"good",title:"'Best facility I have ever seen' — independent reviewer",detail:"Multiple independent reviewers describe exceptional PT, OT, speech therapy, and nursing teams. Recovery outcomes praised.",src:"Caring.com · Multiple sources"},
+      {t:"warn",title:"Some neglect concerns reported — minority of reviews",detail:"SeniorLiving.org review summary notes some negative accounts alongside positive majority. Medicare rating suggests these are isolated.",src:"SeniorLiving.org · Pensacola nursing home review summary"},
+      {t:"info",title:"151 beds · 1 mile from Baptist Hospital · Since 1991",detail:"Well-located relative to Pensacola's primary hospital. 33 years of continuous operation.",src:"SeniorAdvice.com · Rosewood Healthcare"}
+    ],
+    quotes:[
+      {t:"My brother recently spent 7.5 weeks at Rosewood. From the time we got there until we left, the entire experience was outstanding. The staff, from the custodians to the director, was very attentive. Rosewood Healthcare IS the best facility I have ever seen.",a:"Caring.com · Barry L Burke Sr · Family reviewer"},
+      {t:"Mom enjoyed the food. The DeLuna wound care team was excellent. Needing financial assistance, Allison worked tirelessly to help us find help. Visited mom daily — staff would always pop in to check on her.",a:"Caring.com · Family reviewer · Rosewood Pensacola"}
+    ],
+    compare:"Rosewood is the hidden gem of the Pensacola skilled nursing market. A 5-star Medicare rating with a clean complaint record, combined with consistent independent reviewer praise, places it above every other skilled nursing facility in the local database. Families searching for post-hospitalization rehab or long-term nursing care who find Coral Bay first are missing the better option.",
+    gaps:"Most recent CMS staffing hours per resident per day not retrieved. Employee satisfaction data not found. Pricing not publicly listed."
+  }
+};
 };
 
 function scNorm(s){return s.toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();}
