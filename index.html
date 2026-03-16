@@ -1554,10 +1554,12 @@ const SC_DB = {
   "bay breeze": {
     name:"Bay Breeze Senior Living and Rehabilitation Center", loc:"Gulf Breeze, FL", type:"Skilled Nursing / Rehabilitation",
     founded:null, ownership:"FL AHCA verified · Santa Rosa County",
-    scores:{overall:"6.8",google:"3.9★ (est.)",staff:"Not found",complaints:"Not found"},
-    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-good",complaints:"sc-good"},
+    scores:{overall:"5.4",google:"3.9★ (est.)",staff:"Not found",complaints:"On FL Watch List"},
+    sc:{overall:"sc-bad",google:"sc-warn",staff:"sc-good",complaints:"sc-bad"},
     green:[{t:"Gulf Breeze skilled nursing — Santa Rosa County",b:"Fills a geographic gap in the CareCircle network. Verified AHCA profile."}],
-    red:[{t:"Skilled nursing facilities carry higher regulatory complexity",b:"SNFs are subject to CMS star ratings and federal inspection cycles. Request the most recent CMS Care Compare rating before considering placement."}],
+    red:[
+      {t:"On Florida Nursing Home Watch List — confirmed March 2026",b:"Confirmed on current FloridaHealthFinder Watch List page in official AHCA verification pass. Watch List placement means the state has flagged this facility for elevated care quality concerns. Re-verify quarterly — status changes after inspections."},
+      {t:"Skilled nursing regulatory complexity",b:"SNFs subject to CMS star ratings and federal inspection cycles. Request the most recent CMS Care Compare rating and AHCA inspection report before any referral."}],
     findings:[
       {t:"info",title:"FL AHCA: licensed nursing home — Gulf Breeze",detail:"Profile visible in FHF. Santa Rosa County.",src:"FL AHCA/FHF Profile"},
       {t:"warn",title:"CMS star rating not retrieved",detail:"Families should check Medicare Care Compare for current star rating before considering this facility.",src:"Medicare Care Compare recommendation"}
@@ -1949,6 +1951,271 @@ const SC_DB = {
     ],
     compare:"Rosewood is the hidden gem of the Pensacola skilled nursing market. A 5-star Medicare rating with a clean complaint record, combined with consistent independent reviewer praise, places it above every other skilled nursing facility in the local database. Families searching for post-hospitalization rehab or long-term nursing care who find Coral Bay first are missing the better option.",
     gaps:"Most recent CMS staffing hours per resident per day not retrieved. Employee satisfaction data not found. Pricing not publicly listed."
+  }
+,
+  "harlow care solutions": {
+    name:"Harlow Care Solutions LLC", loc:"Panama City, FL 32401", type:"Non-medical home care",
+    founded:null, ownership:"Independent LLC · Bay County",
+    scores:{overall:"6.5",google:"Not found",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[
+      {t:"FL AHCA verified — Bay County · Top-ranked in current research pass",b:"AHCA/FHF profile active. Ranked #1 in provisional scoring for net-new Panhandle providers in current official-source pass."},
+      {t:"Official flags: Companions, CNAs, home health aides",b:"AHCA profile notes services include companions, CNAs, and home health aides — broader service offering than standard companion-only agencies."}
+    ],
+    red:[{t:"Zero public reviews found",b:"No Google, Indeed, Glassdoor, or BBB review data found. Cannot assess quality from public sources."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified · (850) 866-1553",detail:"Active AHCA/FHF profile. Address: Panama City, FL 32401. Official flags note companions, CNAs, and home health aides.",src:"FL AHCA/FHF · LID 455718"},
+      {t:"bad",title:"Zero public reviews",detail:"No reviews found across any public platform.",src:"Public search · March 2026"}
+    ],
+    quotes:[],
+    compare:"AHCA-verified Bay County independent with a broader-than-typical service offering. Insufficient public review data for quality assessment. Top-ranked in the current official-source pass for Panhandle net-new providers.",
+    gaps:"All review sources show zero data. Direct agency inquiry required. Address details incomplete in current pass."
+  },
+  "home helpers gulf coast": {
+    name:"Home Helpers of the Gulf Coast", loc:"Santa Rosa & Bay Counties, FL", type:"Non-medical home care · Franchise",
+    founded:null, ownership:"Franchise · Home Helpers national · Two local offices: Milton (850-896-7224) and Panama City (850-201-1842)",
+    scores:{overall:"7.0",google:"4.5★ (est. — national brand)",staff:"3.8★ (national)",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-warn",complaints:"sc-good"},
+    green:[
+      {t:"Two verified AHCA locations — Milton and Panama City",b:"Two separate AHCA-verified offices covering Santa Rosa County (Milton: 5941 Berryhill Rd) and Bay County (Panama City: 706 11th St W). Dual coverage across two counties."},
+      {t:"Home Helpers franchise — nationally recognized",b:"Part of the Home Helpers franchise network. Pensacola Home Helpers location (separate franchise) earned A Place for Mom Best of 2024 — local franchise quality depends on ownership."}
+    ],
+    red:[{t:"Franchise variability — local quality depends on franchisee",b:"Home Helpers quality varies significantly by franchise location. These two Gulf Coast offices are distinct from the Pensacola location. Verify local ownership and reviews independently."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified — two locations",detail:"Milton: LID 514991, 5941 Berryhill Rd Ste G, (850) 896-7224. Panama City: LID 553797, 706 11th St W, (850) 201-1842.",src:"FL AHCA/FHF · Two verified profiles"},
+      {t:"warn",title:"Local franchise reviews not confirmed",detail:"Gulf Coast franchise reviews not independently confirmed. National Home Helpers brand data applied — may not reflect these specific locations.",src:"Public search · March 2026"}
+    ],
+    quotes:[],
+    compare:"Two AHCA-verified Home Helpers locations serving the Panhandle expansion counties. Local quality data not yet confirmed. The Pensacola Home Helpers location has strong documented reputation — these are separate franchise owners.",
+    gaps:"Gulf Coast location-specific reviews not confirmed. Local franchise ownership identity not public."
+  },
+  "christlike senior care": {
+    name:"Christlike Senior Care LLC", loc:"108 Don Bishop Rd, Santa Rosa Beach, FL 32459", type:"Non-medical home care",
+    founded:null, ownership:"Independent LLC · Walton County · (850) 419-8431",
+    scores:{overall:"6.0",google:"Not found",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[
+      {t:"FL AHCA verified — Walton County (30A / Santa Rosa Beach)",b:"Active AHCA/FHF profile. Walton County coverage fills a gap in the CareCircle network between Pensacola and Fort Walton Beach."},
+      {t:"30A / Santa Rosa Beach service area",b:"Serves the 30A corridor — a high-income, high-demand area for non-medical home care with limited verified local provider coverage."}
+    ],
+    red:[{t:"Zero public reviews found",b:"No reviews found across any public platform."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified · Walton County · (850) 419-8431",detail:"Active profile. 108 Don Bishop Rd Unit 8-4, Santa Rosa Beach, FL 32459.",src:"FL AHCA/FHF · LID 551593"},
+      {t:"bad",title:"Zero public reviews",detail:"No reviews found.",src:"Public search · March 2026"}
+    ],
+    quotes:[],
+    compare:"AHCA-verified Walton County independent covering the 30A corridor — a high-value underserved area in the CareCircle network. Insufficient public data for quality assessment.",
+    gaps:"All review sources show zero data."
+  },
+  "southern traditions": {
+    name:"Southern Traditions In Home Care", loc:"2241 US Hwy 98 W, Santa Rosa Beach, FL 32459", type:"Non-medical home care",
+    founded:null, ownership:"Independent · Walton County · (850) 209-0125",
+    scores:{overall:"6.0",google:"Not found",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[
+      {t:"FL AHCA verified — Walton County · 30A area",b:"Active AHCA/FHF profile. Santa Rosa Beach address on US Hwy 98 W — serving the 30A/Walton County corridor."}
+    ],
+    red:[{t:"Zero public reviews found",b:"No reviews found across any public platform."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified · (850) 209-0125",detail:"Active profile. 2241 US Hwy 98 W, Santa Rosa Beach, FL 32459.",src:"FL AHCA/FHF · LID 583521"},
+      {t:"bad",title:"Zero public reviews",detail:"No reviews found.",src:"Public search · March 2026"}
+    ],
+    quotes:[],
+    compare:"Second AHCA-verified non-medical home care agency in the Santa Rosa Beach/30A corridor. Both Christlike and Southern Traditions serve this underserved Walton County area. Insufficient public data for quality comparison between the two.",
+    gaps:"All review sources show zero data."
+  },
+  "mathison retirement": {
+    name:"Mathison Retirement Community", loc:"3637 W Hwy 390, Panama City, FL 32405", type:"Assisted Living Facility",
+    founded:null, ownership:"FL AHCA verified · Bay County · (850) 215-4663",
+    scores:{overall:"6.5",google:"Not found",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[
+      {t:"FL AHCA verified — Bay County ALF",b:"Active AHCA/FHF profile (LID 4499). Long-established AHCA profile number suggests older, established facility."}
+    ],
+    red:[{t:"Zero public reviews found",b:"No reviews found across any public platform."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified · (850) 215-4663",detail:"Active ALF profile. 3637 W Hwy 390, Panama City, FL 32405.",src:"FL AHCA/FHF · LID 4499"},
+      {t:"bad",title:"Zero public reviews",detail:"No reviews found.",src:"Public search · March 2026"}
+    ],
+    quotes:[],
+    compare:"AHCA-verified Bay County ALF. Low AHCA LID number suggests long-established operation. Insufficient public data for quality assessment.",
+    gaps:"All review sources show zero data. Direct facility inquiry required."
+  },
+  "nhc homecare": {
+    name:"NHC HomeCare (Panama City Beach)", loc:"12234 Panama City Beach Pkwy Ste A-3, Panama City Beach, FL 32407", type:"Medical home health agency",
+    founded:null, ownership:"NHC (National HealthCare Corporation) · Public company · NYSE: NHC · (850) 769-5256",
+    scores:{overall:"7.2",google:"4.3★ (national est.)",staff:"3.9★ (national est.)",complaints:"Not found locally"},
+    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-warn",complaints:"sc-good"},
+    green:[
+      {t:"NHC is a publicly traded national home health company",b:"National HealthCare Corporation (NYSE: NHC) has operated since 1971. Public company accountability and standardized clinical protocols."},
+      {t:"FL AHCA verified — Bay County medical home health",b:"Active AHCA/FHF profile. Medicare-eligible home health services."}
+    ],
+    red:[{t:"National chain — local quality varies by office",b:"NHC operates 35+ home health offices nationally. Local Panama City Beach office quality not independently confirmed."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified · Medicare home health · (850) 769-5256",detail:"Active profile. 12234 Panama City Beach Pkwy Ste A-3.",src:"FL AHCA/FHF · LID 8254"},
+      {t:"info",title:"NHC — publicly traded since 1971",detail:"National HealthCare Corporation. Established national home health operator with public company oversight.",src:"NYSE: NHC · NHC corporate"}
+    ],
+    quotes:[],
+    compare:"NHC HomeCare brings public-company accountability and established clinical protocols to the Bay County market. Local office quality not independently confirmed.",
+    gaps:"Panama City Beach location-specific reviews and staff data not confirmed."
+  },
+  "sweet bay health": {
+    name:"Sweet Bay Health and Rehabilitation Center", loc:"1336 St Andrews Blvd, Panama City, FL 32405", type:"Skilled Nursing / Rehabilitation",
+    founded:null, ownership:"For-profit · Bay County",
+    scores:{overall:"4.5",google:"Not found",staff:"Not found",complaints:"On FL Watch List"},
+    sc:{overall:"sc-bad",google:"sc-good",staff:"sc-good",complaints:"sc-bad"},
+    green:[],
+    red:[
+      {t:"On Florida Nursing Home Watch List — confirmed",b:"Confirmed on current FloridaHealthFinder Watch List page. Official state designation indicating elevated care quality concerns. Re-verify quarterly — status changes after inspections."},
+      {t:"No public review data available to assess quality",b:"Zero Google, Caring.com, or A Place for Mom reviews found. Watch List status is the primary available signal."}
+    ],
+    findings:[
+      {t:"bad",title:"FL Nursing Home Watch List — confirmed current",detail:"Sweet Bay Health appears on current FloridaHealthFinder Watch List. AHCA profile verified (LID 28467).",src:"FL AHCA/FHF Watch List · March 2026 pass"},
+      {t:"warn",title:"Pull inspection history before any referral",detail:"Watch List status requires direct AHCA inspection report review before any family referral. Inspection history available at quality.healthfinder.fl.gov.",src:"FL AHCA recommendation"}
+    ],
+    quotes:[],
+    compare:"Watch List status is a mandatory stop signal. Do not refer families to this facility until current Watch List status is re-verified and inspection history is reviewed. Bayside Health (Pensacola) is the stronger documented risk — Sweet Bay is the Bay County equivalent.",
+    gaps:"Google reviews, CMS star rating, and inspection detail not retrieved. Watch List status must be re-verified before any referral."
+  },
+  "community health rehab panama city": {
+    name:"Community Health and Rehabilitation Center", loc:"Panama City, FL 32404", type:"Skilled Nursing / Rehabilitation",
+    founded:null, ownership:"FL AHCA verified · Bay County · (850) 588-4643",
+    scores:{overall:"6.0",google:"Not found",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[{t:"FL AHCA verified — Bay County skilled nursing",b:"Active AHCA/FHF profile (LID 28569). Medicare-eligible SNF."}],
+    red:[{t:"Zero public review data",b:"No reviews found across any public platform."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified · (850) 588-4643",detail:"Active SNF profile. Panama City, FL 32404.",src:"FL AHCA/FHF · LID 28569"},
+      {t:"warn",title:"CMS star rating not retrieved",detail:"Check Medicare Care Compare for current star rating before any referral.",src:"Medicare Care Compare recommendation"}
+    ],
+    quotes:[],
+    compare:"AHCA-verified Bay County skilled nursing facility. Insufficient data for quality assessment. CMS star rating retrieval is the essential next step.",
+    gaps:"CMS star rating, Google reviews, and inspection history not retrieved."
+  },
+  "gulf coast rehab center": {
+    name:"Gulf Coast Rehabilitation Center Inc", loc:"1937 Jenks Ave, Panama City, FL 32405", type:"Skilled Nursing / Rehabilitation",
+    founded:null, ownership:"FL AHCA verified · Bay County · (850) 258-0316",
+    scores:{overall:"6.0",google:"Not found",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[{t:"FL AHCA verified — Bay County skilled nursing",b:"Active AHCA/FHF profile (LID 28468). Established Bay County SNF address."}],
+    red:[{t:"Zero public review data",b:"No reviews found across any public platform."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified · 1937 Jenks Ave · (850) 258-0316",detail:"Active SNF profile. Long-established AHCA profile (LID 28468).",src:"FL AHCA/FHF · LID 28468"},
+      {t:"warn",title:"CMS star rating not retrieved",detail:"Check Medicare Care Compare for current rating.",src:"Medicare Care Compare recommendation"}
+    ],
+    quotes:[],
+    compare:"Established AHCA-verified Bay County SNF. CMS star rating is the critical next enrichment step.",
+    gaps:"CMS star rating and all review data not retrieved."
+  },
+  "panama city health rehab": {
+    name:"Panama City Health and Rehabilitation Center", loc:"924 W 13th St, Panama City, FL 32401", type:"Skilled Nursing / Rehabilitation",
+    founded:null, ownership:"FL AHCA verified · Bay County · (850) 763-8463",
+    scores:{overall:"6.0",google:"Not found",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[{t:"FL AHCA verified — Bay County skilled nursing",b:"Active AHCA/FHF profile (LID 28471). Central Panama City location."}],
+    red:[{t:"Zero public review data",b:"No reviews found across any public platform."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified · 924 W 13th St · (850) 763-8463",detail:"Active SNF profile. Central Panama City location.",src:"FL AHCA/FHF · LID 28471"},
+      {t:"warn",title:"CMS star rating not retrieved",detail:"Check Medicare Care Compare for current rating.",src:"Medicare Care Compare recommendation"}
+    ],
+    quotes:[],
+    compare:"Third AHCA-verified Bay County SNF. The Bay County skilled nursing market has Sweet Bay (Watch List risk), and these three facilities all needing CMS star rating enrichment before family referral.",
+    gaps:"CMS star rating and all review data not retrieved."
+  },
+  "ever well nursing": {
+    name:"Ever Well Nursing Home Care LLC", loc:"542 Backwater Rd, Port St Joe, FL 32456", type:"Non-medical home care",
+    founded:null, ownership:"Independent LLC · Gulf County · (225) 250-8778",
+    scores:{overall:"5.8",google:"Not found",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[{t:"FL AHCA verified — Gulf County coverage",b:"Active AHCA/FHF profile (LID 565677). Port St Joe, FL — Gulf County. Expands CareCircle coverage beyond Escambia/Santa Rosa/Bay."}],
+    red:[
+      {t:"Louisiana area code on listed phone",b:"Phone number (225) 250-8778 is a Louisiana area code — not a Florida number. This is an operational flag worth verifying directly with the agency."},
+      {t:"Zero public reviews",b:"No reviews found across any public platform."}
+    ],
+    findings:[
+      {t:"good",title:"FL AHCA verified · Gulf County · Port St Joe",detail:"Active profile (LID 565677). 542 Backwater Rd, Port St Joe, FL 32456.",src:"FL AHCA/FHF · LID 565677"},
+      {t:"warn",title:"Out-of-state phone number — verify",detail:"Listed phone (225) 250-8778 is a Louisiana area code. Verify this is the correct contact before any referral.",src:"AHCA profile data · March 2026"}
+    ],
+    quotes:[],
+    compare:"Gulf County coverage is a network expansion asset but the Louisiana phone number is an operational flag requiring verification before any referral.",
+    gaps:"All review data zero. Phone number origin requires verification."
+  },
+  "interim healthcare nwfl": {
+    name:"Interim Healthcare of Northwest Florida Inc", loc:"Okaloosa / Walton Counties, FL", type:"Medical home health · Medicare certified",
+    founded:null, ownership:"Franchise · Interim Healthcare national · Medicaid certified per AHCA",
+    scores:{overall:"7.0",google:"4.3★ (national est.)",staff:"3.8★ (national est.)",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-warn",complaints:"sc-good"},
+    green:[
+      {t:"Medicare and Medicaid certified",b:"AHCA profile confirms Medicaid certification. Medicare eligibility implied for home health agency category."},
+      {t:"Interim Healthcare — 50+ years national brand",b:"Interim Healthcare has operated since 1966. One of the oldest and most established home health franchise networks in the US."},
+      {t:"Serves Okaloosa and Walton Counties",b:"Fills the Fort Walton Beach / Niceville / Destin / 30A corridor — the next major expansion zone for the CareCircle network."}
+    ],
+    red:[{t:"Franchise variability — local office quality not confirmed",b:"Interim Healthcare quality varies by franchise location. Okaloosa/Walton office not independently reviewed."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified · Medicaid certified · Okaloosa/Walton",detail:"Active profile (LID 174799). Medicaid certified. Regional coverage.",src:"FL AHCA/FHF · LID 174799"},
+      {t:"info",title:"Interim Healthcare — franchise since 1966",detail:"National home health franchise. 50+ year operating history.",src:"Interim Healthcare corporate"}
+    ],
+    quotes:[],
+    compare:"Interim Healthcare provides medical-grade home health coverage across the Fort Walton Beach / Destin corridor — a key gap in the current CareCircle network. Local quality not independently confirmed.",
+    gaps:"Street address and phone not captured in current AHCA pass. Local office reviews not confirmed."
+  },
+  "brookdale destin": {
+    name:"Brookdale Destin", loc:"2400 Crystal Cove Lane, Destin, FL", type:"Assisted Living · Senior Living",
+    founded:null, ownership:"Corporate chain · Brookdale Senior Living (NYSE: BKD) · Same parent as Brookdale Pensacola",
+    scores:{overall:"7.0",google:"4.2★ (est. — brand average)",staff:"3.4★ (national Brookdale)",complaints:"Not confirmed locally"},
+    sc:{overall:"sc-warn",google:"sc-warn",staff:"sc-warn",complaints:"sc-good"},
+    green:[
+      {t:"Destin location — high-income Okaloosa County market",b:"Destin is one of the wealthiest communities on the Gulf Coast. ALF demand is high, supply is limited, and families have significant financial resources."},
+      {t:"FL AHCA verified",b:"Active AHCA/FHF profile (LID 2614). Licensed ALF."}
+    ],
+    red:[
+      {t:"Brookdale national — financial and regulatory history",b:"Same parent as Brookdale Pensacola. National chain with documented staffing complaints and financial restructuring history. Local quality depends entirely on local management."},
+      {t:"Local reviews not confirmed",b:"Destin-specific review data not retrieved. National Brookdale averages applied."}
+    ],
+    findings:[
+      {t:"good",title:"FL AHCA verified · 2400 Crystal Cove Lane, Destin",detail:"Active ALF profile (LID 2614).",src:"FL AHCA/FHF · LID 2614"},
+      {t:"warn",title:"Brookdale national: staff rating 3.4★",detail:"National Glassdoor average. Destin location not independently assessed.",src:"Glassdoor · Brookdale Senior Living national"}
+    ],
+    quotes:[],
+    compare:"Brookdale Destin sits in a high-value underserved market. Corporate ownership brings structural risk consistent with Brookdale Pensacola. Destin-specific enrichment is the essential next step.",
+    gaps:"Destin-specific Google reviews, staff data, and resident reviews not retrieved."
+  },
+  "beehive lynn haven": {
+    name:"Beehive Homes of Lynn Haven", loc:"4621 Hilltop Ln, Lynn Haven (Panama City), FL 32405", type:"Assisted Living Facility",
+    founded:null, ownership:"Beehive Homes franchise · Bay County",
+    scores:{overall:"7.8",google:"4.8★ (Beehive brand est.)",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-good",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[
+      {t:"Beehive Homes brand — 5.0★ at Gulf Breeze location",b:"Sister location in Gulf Breeze rates 5.0★ on SeniorAdvisor — the highest in Santa Rosa County. The Beehive small-home model (typically 10–16 residents) produces inherently higher staff ratios than large facilities."},
+      {t:"FL AHCA verified — Bay County",b:"Active AHCA/FHF profile (LID 373410). Lynn Haven address."},
+      {t:"Small-home model — superior staff ratios by design",b:"Beehive Homes operate small residential-style facilities. Lower resident counts mean higher staff-to-resident ratios than any large corporate ALF."}
+    ],
+    red:[{t:"Lynn Haven location reviews not independently confirmed",b:"Gulf Breeze Beehive reviews are exceptional. This is a separate location — quality should be verified independently."}],
+    findings:[
+      {t:"good",title:"FL AHCA verified · 4621 Hilltop Ln, Lynn Haven",detail:"Active ALF profile (LID 373410). Bay County.",src:"FL AHCA/FHF · LID 373410"},
+      {t:"good",title:"Beehive brand: small-home model with 5.0★ Gulf Breeze precedent",detail:"Gulf Breeze Beehive independently rated 5.0★ on SeniorAdvisor. Lynn Haven location not independently confirmed but brand model is strong.",src:"SeniorAdvisor · Beehive Homes Gulf Breeze"}
+    ],
+    quotes:[],
+    compare:"Beehive Lynn Haven is likely to be among the strongest ALF options in Bay County based on brand model and Gulf Breeze precedent — but local enrichment is essential before confident referral.",
+    gaps:"Lynn Haven location-specific reviews not confirmed. Google, SeniorAdvisor, and A Place for Mom data for this specific location not retrieved."
+  },
+  "aqua home care": {
+    name:"Aqua Home Care", loc:"97 Oak Ave Ste 5, Panama City, FL 32401", type:"Non-medical home care · Nurse Registry",
+    founded:null, ownership:"FL AHCA verified · Bay County",
+    scores:{overall:"6.0",google:"Not found",staff:"Not found",complaints:"Not found"},
+    sc:{overall:"sc-warn",google:"sc-good",staff:"sc-good",complaints:"sc-good"},
+    green:[{t:"FL AHCA verified — Bay County nurse registry",b:"Active AHCA/FHF profile (LID 574781). Panama City location."}],
+    red:[
+      {t:"Nurse Registry classification",b:"Aqua operates as a Nurse Registry — not a Medicare-certified Home Health Agency. Families using Medicare cannot use this provider for covered services. Private pay only."},
+      {t:"Zero public reviews",b:"No reviews found across any public platform."}
+    ],
+    findings:[
+      {t:"good",title:"FL AHCA verified · 97 Oak Ave, Panama City",detail:"Active Nurse Registry profile (LID 574781).",src:"FL AHCA/FHF · LID 574781"},
+      {t:"warn",title:"Nurse Registry — not Medicare certified",detail:"Private pay only. Medicare coverage not available.",src:"FL AHCA classification"}
+    ],
+    quotes:[],
+    compare:"AHCA-verified Bay County nurse registry. Non-Medicare certification limits eligibility for some families. Insufficient public data for quality assessment.",
+    gaps:"All review data zero."
   }
 };
 
@@ -2806,41 +3073,102 @@ document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='E
   }
 
   // ─── FORM → SHOW MATCHES ───
-  function showMatches() {
-    const zip = document.getElementById('hero-zip').value.trim();
-    const careType = document.getElementById('hero-care-type').value;
-    const who = document.getElementById('hero-who').value;
-    const when = document.getElementById('hero-when').value;
+  // ─── BREVO ───
+  const BREVO_KEY = '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';
+  const BREVO_URL = 'https://api.brevo.com/v3/smtp/email';
+  const CC_EMAIL  = 'campaigns@transbidlive.faith';
+  const CC_NAME   = 'CareCircle Network';
 
-    // Update subtitle dynamically
-    const subtitle = document.getElementById('match-subtitle');
-    const location = zip || 'your area';
-    subtitle.textContent = `Based on your need for ${careType.toLowerCase()} ${location !== 'your area' ? 'near ' + location : 'in your area'} — here are our best-fit licensed providers.`;
-
-    // Show results section
-    const results = document.getElementById('match-results');
-    results.style.display = 'block';
-
-    // Smooth scroll to results
-    setTimeout(() => {
-      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+  async function brevoSend(subject, html) {
+    try {
+      await fetch(BREVO_URL, {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'content-type': 'application/json',
+          'api-key': BREVO_KEY
+        },
+        body: JSON.stringify({
+          sender: { name: CC_NAME, email: CC_EMAIL },
+          to: [{ email: CC_EMAIL, name: 'CareCircle Inbox' }],
+          subject,
+          htmlContent: html
+        })
+      });
+    } catch(e) {
+      console.warn('Brevo send failed:', e);
+    }
   }
 
-  // ─── AGENCY FORM SUBMIT ───
-  function submitAgencyForm() {
-    const name = document.getElementById('ag-name').value.trim();
+  // ─── FAMILY FORM → BREVO ───
+  async function showMatches() {
+    const zip      = document.getElementById('hero-zip').value.trim();
+    const careType = document.getElementById('hero-care-type').value;
+    const who      = document.getElementById('hero-who').value;
+    const when     = document.getElementById('hero-when').value;
+
+    // Show match results UI
+    const location = zip || 'your area';
+    document.getElementById('match-subtitle').textContent =
+      `Based on your need for ${careType.toLowerCase()} ${location !== 'your area' ? 'near ' + location : 'in your area'} — here are our best-fit licensed providers.`;
+    const results = document.getElementById('match-results');
+    results.style.display = 'block';
+    setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+
+    // Fire Brevo notification
+    if (zip || careType) {
+      await brevoSend(
+        `New CareCircle Family Inquiry — ${zip || 'no zip'} · ${careType}`,
+        `<h2>New Family Care Inquiry</h2>
+         <table cellpadding="6" style="font-family:sans-serif;font-size:14px;">
+           <tr><td><b>Location:</b></td><td>${zip || 'Not provided'}</td></tr>
+           <tr><td><b>Care type:</b></td><td>${careType}</td></tr>
+           <tr><td><b>Who needs care:</b></td><td>${who}</td></tr>
+           <tr><td><b>Timeline:</b></td><td>${when}</td></tr>
+           <tr><td><b>Submitted:</b></td><td>${new Date().toLocaleString()}</td></tr>
+         </table>
+         <p style="margin-top:16px;font-size:13px;color:#666;">Call (850) 341-4324 to follow up.</p>`
+      );
+    }
+  }
+
+  // ─── AGENCY FORM → BREVO ───
+  async function submitAgencyForm() {
+    const name    = document.getElementById('ag-name').value.trim();
     const contact = document.getElementById('ag-contact').value.trim();
-    const phone = document.getElementById('ag-phone').value.trim();
-    const email = document.getElementById('ag-email').value.trim();
+    const phone   = document.getElementById('ag-phone').value.trim();
+    const email   = document.getElementById('ag-email').value.trim();
+    const area    = document.getElementById('ag-area').value.trim();
+    const license = document.getElementById('ag-license').value.trim();
+    const tier    = document.getElementById('ag-tier').value;
+    const notes   = document.getElementById('ag-notes').value.trim();
 
     if (!name || !contact || !phone || !email) {
       alert('Please fill in your agency name, contact name, phone, and email.');
       return;
     }
 
-    // In production: POST to your backend / Brevo / webhook here
-    // For now, show success state
+    // Disable button, show sending state
+    const btn = document.querySelector('.agency-submit');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    await brevoSend(
+      `New Agency Application — ${name}`,
+      `<h2>New CareCircle Agency Application</h2>
+       <table cellpadding="6" style="font-family:sans-serif;font-size:14px;">
+         <tr><td><b>Agency name:</b></td><td>${name}</td></tr>
+         <tr><td><b>Contact:</b></td><td>${contact}</td></tr>
+         <tr><td><b>Phone:</b></td><td>${phone}</td></tr>
+         <tr><td><b>Email:</b></td><td>${email}</td></tr>
+         <tr><td><b>Service area:</b></td><td>${area || '—'}</td></tr>
+         <tr><td><b>FL license:</b></td><td>${license || '—'}</td></tr>
+         <tr><td><b>Partnership level:</b></td><td>${tier}</td></tr>
+         <tr><td><b>Notes:</b></td><td>${notes || '—'}</td></tr>
+         <tr><td><b>Submitted:</b></td><td>${new Date().toLocaleString()}</td></tr>
+       </table>`
+    );
+
     document.getElementById('agency-form').style.display = 'none';
     document.getElementById('agency-success').classList.add('show');
   }
