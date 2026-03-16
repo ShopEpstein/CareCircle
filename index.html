@@ -3163,63 +3163,101 @@ document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='E
 
   // ─── FORM → SHOW MATCHES ───
   // ─── EMAIL VIA VERCEL FUNCTION (key lives in Vercel env, never in HTML) ───
-  async function brevoSend(subject, html) {
+  // ─── BREVO DIRECT (key via Vercel env — see api/send-email.js) ───
+  const CC_KEY = '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';
+
+  async function brevoSend(subject, htmlContent) {
     try {
-      await fetch('/api/send-email', {
+      const r = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ subject, htmlContent: html })
+        headers: {
+          'accept': 'application/json',
+          'api-key': CC_KEY,
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          sender: { name: 'CareCircle Network', email: 'campaigns@transbidlive.faith' },
+          to: [{ email: 'campaigns@transbidlive.faith', name: 'CareCircle Inbox' }],
+          subject,
+          htmlContent
+        })
       });
+      return r.ok;
     } catch(e) {
-      console.warn('Email send failed:', e);
+      console.warn('Brevo error:', e);
+      return false;
     }
   }
 
-  // ─── FAMILY FORM → BREVO ───
+  // ─── FAMILY FORM ───
   async function showMatches() {
-    const zip      = document.getElementById('hero-zip').value.trim();
-    const careType = document.getElementById('hero-care-type').value;
-    const who      = document.getElementById('hero-who').value;
-    const when     = document.getElementById('hero-when').value;
-    const name     = document.getElementById('hero-name').value.trim();
-    const phone    = document.getElementById('hero-contact-phone').value.trim();
+    const name  = document.getElementById('hero-name').value.trim();
+    const phone = document.getElementById('hero-contact-phone').value.trim();
+    const zip   = document.getElementById('hero-zip').value.trim();
+    const care  = document.getElementById('hero-care-type').value;
+    const who   = document.getElementById('hero-who').value;
+    const when  = document.getElementById('hero-when').value;
 
-    if (!name || !phone) {
-      document.getElementById('hero-name').style.border = name ? '' : '2px solid #A32D2D';
-      document.getElementById('hero-contact-phone').style.border = phone ? '' : '2px solid #A32D2D';
-      return;
-    }
+    // Validate required fields
+    let valid = true;
+    ['hero-name','hero-contact-phone'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { el.style.border = '2px solid #a32d2d'; valid = false; }
+      else { el.style.border = ''; }
+    });
+    if (!valid) return;
 
-    // Show match results UI
+    // Swap form for confirmation
+    document.getElementById('hero-form').innerHTML = `
+      <div style="text-align:center;padding:12px 8px;">
+        <div style="font-size:2rem;margin-bottom:12px;">✅</div>
+        <h3 style="color:#2d6a4f;margin-bottom:8px;font-size:1.1rem;">Got it, ${name}!</h3>
+        <p style="font-size:0.9rem;color:#555;line-height:1.6;margin-bottom:16px;">
+          Someone from CareCircle will reach out <strong>today</strong> at <strong>${phone}</strong> to learn more about what you need and help you find the right match.
+        </p>
+        <p style="font-size:0.82rem;color:#888;line-height:1.6;margin-bottom:16px;">
+          Can't wait? Call or text us directly.
+        </p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <a href="tel:8503414324" style="background:#5C7A5F;color:white;padding:10px 20px;border-radius:100px;font-size:0.85rem;font-weight:600;text-decoration:none;">📞 Call Now</a>
+          <a href="sms:8503414324" style="background:white;color:#5C7A5F;border:2px solid #5C7A5F;padding:10px 20px;border-radius:100px;font-size:0.85rem;font-weight:600;text-decoration:none;">💬 Text Us</a>
+        </div>
+        <p style="font-size:0.72rem;color:#bbb;margin-top:16px;">We never sell your information. Ever.</p>
+      </div>`;
+
+    // Also show results below
     const location = zip || 'your area';
     document.getElementById('match-subtitle').textContent =
-      `Based on your need for ${careType.toLowerCase()} ${location !== 'your area' ? 'near ' + location : 'in your area'} — here are our best-fit licensed providers.`;
+      `Best-fit licensed providers for ${care.toLowerCase()} ${location !== 'your area' ? 'near ' + location : 'in your area'}.`;
     const results = document.getElementById('match-results');
     results.style.display = 'block';
-    setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
 
-    // Fire Brevo notification
-    await brevoSend(
-      `🔔 New Family Lead — ${name} · ${zip || 'no zip'} · ${careType}`,
-      `<div style="font-family:sans-serif;max-width:560px;">
-        <h2 style="color:#5C7A5F;margin-bottom:4px;">New Family Care Inquiry</h2>
-        <p style="color:#888;font-size:13px;margin-top:0;">CareCircle Network · ${new Date().toLocaleString()}</p>
-        <table cellpadding="8" style="font-size:14px;width:100%;border-collapse:collapse;">
-          <tr style="background:#f5f5f5;"><td style="color:#555;width:140px;"><b>Name</b></td><td>${name}</td></tr>
-          <tr><td style="color:#555;"><b>Phone / Text</b></td><td><a href="tel:${phone.replace(/\D/g,'')}">${phone}</a></td></tr>
-          <tr style="background:#f5f5f5;"><td style="color:#555;"><b>Location</b></td><td>${zip || 'Not provided'}</td></tr>
-          <tr><td style="color:#555;"><b>Care type</b></td><td>${careType}</td></tr>
-          <tr style="background:#f5f5f5;"><td style="color:#555;"><b>Who needs care</b></td><td>${who}</td></tr>
-          <tr><td style="color:#555;"><b>Timeline</b></td><td>${when}</td></tr>
+    // Send to Brevo
+    brevoSend(
+      `🔔 New Family Lead — ${name} · ${zip || 'no zip'} · ${care}`,
+      `<div style="font-family:sans-serif;max-width:580px;color:#333;">
+        <h2 style="color:#5C7A5F;border-bottom:2px solid #eee;padding-bottom:12px;">New Family Care Inquiry</h2>
+        <p style="color:#999;font-size:12px;">Submitted ${new Date().toLocaleString()}</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:12px;">
+          <tr><td style="padding:10px 12px;background:#f7f7f5;font-weight:600;width:150px;">Name</td><td style="padding:10px 12px;background:#f7f7f5;">${name}</td></tr>
+          <tr><td style="padding:10px 12px;font-weight:600;">Phone</td><td style="padding:10px 12px;"><a href="tel:${phone.replace(/[^0-9]/g,'')}" style="color:#5C7A5F;font-weight:700;">${phone}</a></td></tr>
+          <tr><td style="padding:10px 12px;background:#f7f7f5;font-weight:600;">Location</td><td style="padding:10px 12px;background:#f7f7f5;">${zip || '—'}</td></tr>
+          <tr><td style="padding:10px 12px;font-weight:600;">Care type</td><td style="padding:10px 12px;">${care}</td></tr>
+          <tr><td style="padding:10px 12px;background:#f7f7f5;font-weight:600;">Who needs care</td><td style="padding:10px 12px;background:#f7f7f5;">${who}</td></tr>
+          <tr><td style="padding:10px 12px;font-weight:600;">Timeline</td><td style="padding:10px 12px;">${when}</td></tr>
         </table>
-        <p style="margin-top:20px;padding:12px 16px;background:#edf4ee;border-radius:8px;font-size:13px;color:#5C7A5F;"><strong>Call or text ${name} back:</strong> <a href="tel:${phone.replace(/\D/g,'')}" style="color:#5C7A5F;">${phone}</a></p>
-       </div>`
+        <div style="margin-top:20px;background:#edf4ee;border-radius:8px;padding:14px 18px;">
+          <strong style="color:#2d6a4f;">Call ${name} back today:</strong>
+          <a href="tel:${phone.replace(/[^0-9]/g,'')}" style="color:#2d6a4f;font-size:1.1rem;font-weight:700;margin-left:8px;">${phone}</a>
+        </div>
+      </div>`
     );
   }
 
-  // ─── AGENCY FORM → BREVO ───
+  // ─── AGENCY FORM ───
   async function submitAgencyForm() {
-    const name    = document.getElementById('ag-name').value.trim();
+    const agency  = document.getElementById('ag-name').value.trim();
     const contact = document.getElementById('ag-contact').value.trim();
     const phone   = document.getElementById('ag-phone').value.trim();
     const email   = document.getElementById('ag-email').value.trim();
@@ -3228,33 +3266,60 @@ document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='E
     const tier    = document.getElementById('ag-tier').value;
     const notes   = document.getElementById('ag-notes').value.trim();
 
-    if (!name || !contact || !phone || !email) {
-      alert('Please fill in your agency name, contact name, phone, and email.');
-      return;
-    }
+    // Validate
+    let valid = true;
+    ['ag-name','ag-contact','ag-phone','ag-email'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { el.style.border = '2px solid #a32d2d'; valid = false; }
+      else { el.style.border = ''; }
+    });
+    if (!valid) { return; }
 
-    // Disable button, show sending state
     const btn = document.querySelector('.agency-submit');
     btn.textContent = 'Sending…';
     btn.disabled = true;
 
+    // Send to Brevo
     await brevoSend(
-      `New Agency Application — ${name}`,
-      `<h2>New CareCircle Agency Application</h2>
-       <table cellpadding="6" style="font-family:sans-serif;font-size:14px;">
-         <tr><td><b>Agency name:</b></td><td>${name}</td></tr>
-         <tr><td><b>Contact:</b></td><td>${contact}</td></tr>
-         <tr><td><b>Phone:</b></td><td>${phone}</td></tr>
-         <tr><td><b>Email:</b></td><td>${email}</td></tr>
-         <tr><td><b>Service area:</b></td><td>${area || '—'}</td></tr>
-         <tr><td><b>FL license:</b></td><td>${license || '—'}</td></tr>
-         <tr><td><b>Partnership level:</b></td><td>${tier}</td></tr>
-         <tr><td><b>Notes:</b></td><td>${notes || '—'}</td></tr>
-         <tr><td><b>Submitted:</b></td><td>${new Date().toLocaleString()}</td></tr>
-       </table>`
+      `🏢 New Agency Application — ${agency}`,
+      `<div style="font-family:sans-serif;max-width:580px;color:#333;">
+        <h2 style="color:#5C7A5F;border-bottom:2px solid #eee;padding-bottom:12px;">New Agency Application</h2>
+        <p style="color:#999;font-size:12px;">Submitted ${new Date().toLocaleString()}</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:12px;">
+          <tr><td style="padding:10px 12px;background:#f7f7f5;font-weight:600;width:160px;">Agency Name</td><td style="padding:10px 12px;background:#f7f7f5;">${agency}</td></tr>
+          <tr><td style="padding:10px 12px;font-weight:600;">Contact</td><td style="padding:10px 12px;">${contact}</td></tr>
+          <tr><td style="padding:10px 12px;background:#f7f7f5;font-weight:600;">Phone</td><td style="padding:10px 12px;background:#f7f7f5;"><a href="tel:${phone.replace(/[^0-9]/g,'')}" style="color:#5C7A5F;font-weight:700;">${phone}</a></td></tr>
+          <tr><td style="padding:10px 12px;font-weight:600;">Email</td><td style="padding:10px 12px;"><a href="mailto:${email}" style="color:#5C7A5F;">${email}</a></td></tr>
+          <tr><td style="padding:10px 12px;background:#f7f7f5;font-weight:600;">Service Area</td><td style="padding:10px 12px;background:#f7f7f5;">${area || '—'}</td></tr>
+          <tr><td style="padding:10px 12px;font-weight:600;">FL License #</td><td style="padding:10px 12px;">${license || '—'}</td></tr>
+          <tr><td style="padding:10px 12px;background:#f7f7f5;font-weight:600;">Partnership Level</td><td style="padding:10px 12px;background:#f7f7f5;">${tier}</td></tr>
+          <tr><td style="padding:10px 12px;font-weight:600;">Notes</td><td style="padding:10px 12px;">${notes || '—'}</td></tr>
+        </table>
+        <div style="margin-top:20px;background:#edf4ee;border-radius:8px;padding:14px 18px;">
+          <strong style="color:#2d6a4f;">Follow up with ${contact} at ${agency}:</strong>
+          <a href="tel:${phone.replace(/[^0-9]/g,'')}" style="color:#2d6a4f;font-size:1.1rem;font-weight:700;margin-left:8px;">${phone}</a>
+        </div>
+      </div>`
     );
 
+    // Show confirmation
     document.getElementById('agency-form').style.display = 'none';
+    document.getElementById('agency-success').innerHTML = `
+      <div style="text-align:center;padding:20px 12px;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">✅</div>
+        <h3 style="color:#2d6a4f;margin-bottom:10px;">Application received!</h3>
+        <p style="font-size:0.92rem;color:#555;line-height:1.7;max-width:420px;margin:0 auto 16px;">
+          Someone from CareCircle will reach out <strong>today</strong> at <strong>${phone}</strong> to discuss your application and next steps.
+        </p>
+        <p style="font-size:0.82rem;color:#888;line-height:1.6;margin-bottom:20px;">
+          In the meantime, feel free to reach out directly.
+        </p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <a href="tel:8503414324" style="background:#5C7A5F;color:white;padding:10px 22px;border-radius:100px;font-size:0.85rem;font-weight:600;text-decoration:none;">📞 Call Now</a>
+          <a href="sms:8503414324" style="background:white;color:#5C7A5F;border:2px solid #5C7A5F;padding:10px 22px;border-radius:100px;font-size:0.85rem;font-weight:600;text-decoration:none;">💬 Text Us</a>
+        </div>
+        <p style="font-size:0.72rem;color:#bbb;margin-top:16px;">We never share your application with third parties.</p>
+      </div>`;
     document.getElementById('agency-success').classList.add('show');
   }
 
