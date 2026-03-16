@@ -3160,27 +3160,16 @@ document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='E
   // ─── FORM → SHOW MATCHES ───
   // ─── EMAIL VIA VERCEL FUNCTION (key lives in Vercel env, never in HTML) ───
   // ─── BREVO DIRECT (key via Vercel env — see api/send-email.js) ───
-  const CC_KEY = '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';
-
   async function brevoSend(subject, htmlContent) {
     try {
-      const r = await fetch('https://api.brevo.com/v3/smtp/email', {
+      const r = await fetch('/api/send-email', {
         method: 'POST',
-        headers: {
-          'accept': 'application/json',
-          'api-key': CC_KEY,
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          sender: { name: 'CareCircle Network', email: 'campaigns@transbidlive.faith' },
-          to: [{ email: 'campaigns@transbidlive.faith', name: 'CareCircle Inbox' }],
-          subject,
-          htmlContent
-        })
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ subject, htmlContent })
       });
       return r.ok;
     } catch(e) {
-      console.warn('Brevo error:', e);
+      console.warn('Email error:', e);
       return false;
     }
   }
