@@ -3120,7 +3120,7 @@ document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='E
     <h3>Compensation Disclosure</h3>
     <p>CareCircle Network is compensated by care provider partners for qualified referrals. Families are never charged. This compensation may influence which providers appear as "Featured" in our network.</p>
     <h3>Contact</h3>
-    <p>Questions about your data: <a href="/cdn-cgi/l/email-protection#d8b0bdb4b4b798bbb9aabdbbb1aabbb4bdb6bdacafb7aab3f6bbb7b5" style="color:var(--sage);"><span class="__cf_email__" data-cfemail="b3dbd6dfdfdcf3d0d2c1d6d0dac1d0dfd6ddd6c7c4dcc1d89dd0dcde">[email&#160;protected]</span></a> or <a href="tel:8503414324" style="color:var(--sage);">call</a> / <a href="sms:8503414324" style="color:var(--sage);">text</a> us.</p>
+    <p>Questions about your data: <a href="mailto:hello@carecirclenetwork.com" style="color:var(--sage);">hello@carecirclenetwork.com</a> or <a href="tel:8503414324" style="color:var(--sage);">call</a> / <a href="sms:8503414324" style="color:var(--sage);">text</a> us.</p>
   </div>
 </div>
 
@@ -3141,11 +3141,11 @@ document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='E
     <h3>Florida Law</h3>
     <p>These terms are governed by the laws of the State of Florida. Any disputes shall be resolved in Escambia County, Florida.</p>
     <h3>Contact</h3>
-    <p><a href="/cdn-cgi/l/email-protection#771f121b1b183714160512141e05141b121912030018051c5914181a" style="color:var(--sage);"><span class="__cf_email__" data-cfemail="462e232a2a290625273423252f34252a232823323129342d6825292b">[email&#160;protected]</span></a> · <a href="tel:8503414324" style="color:var(--sage);">Call</a> / <a href="sms:8503414324" style="color:var(--sage);">Text</a></p>
+    <p><a href="mailto:hello@carecirclenetwork.com" style="color:var(--sage);">hello@carecirclenetwork.com</a> · <a href="tel:8503414324" style="color:var(--sage);">Call</a> / <a href="sms:8503414324" style="color:var(--sage);">Text</a></p>
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // ─── HAMBURGER ───
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -3336,4 +3336,21 @@ document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='E
   }
   // Close on overlay click
   document.querySelectorAll('.modal-overlay').forEach(overlay => {
-    overlay.addEventListener('click', (e)
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+  // Close on ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+
+</body>
+</html>
