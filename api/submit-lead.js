@@ -1,4 +1,4 @@
-// pages/api/submit-lead.js
+// api/submit-lead.js
 // CareCircle form submission handler
 // Fires on every form submit:
 //   1. SMS to the lead (Chase's personal follow-up message via CLAW)
@@ -81,7 +81,7 @@ async function sendBrevoEmail({ to, name, careType, urgency }) {
         </td></tr>
         <tr><td style="background:#f5f5f5;padding:16px 32px;border-top:1px solid #eee;">
           <p style="font-size:11px;color:#aaa;margin:0;line-height:1.5;">
-            You're receiving this because you submitted a care request at care-circle-nu.vercel.app.
+            You're receiving this because you submitted a care request at carecircle.fit.
             Reply STOP to opt out. CareCircle Network · 11000 Tanton Lane, Pensacola FL 32506
           </p>
         </td></tr>
@@ -189,6 +189,43 @@ export default async function handler(req, res) {
     }
   } else {
     results.emailSent = 'skipped (no email)';
+  }
+
+  // ── 5. Also notify Chase via Brevo (backup to SMS alert) ─────────────────
+  if (BREVO_API_KEY) {
+    try {
+      await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: { 'api-key': BREVO_API_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sender: { name: 'CareCircle Network', email: BREVO_FROM_EMAIL },
+          to: [
+            { email: 'contactfire757@gmail.com', name: 'Chase Turnquest' },
+            { email: 'campaigns@transbidlive.faith', name: 'CareCircle Inbox' }
+          ],
+          subject: `🔔 New CareCircle Lead — ${name || 'Unknown'} · ${city || 'no city'} · ${careType || 'N/A'}`,
+          htmlContent: `<div style="font-family:sans-serif;max-width:580px;color:#333;">
+            <h2 style="color:#5C7A5F;border-bottom:2px solid #eee;padding-bottom:12px;">New Family Care Inquiry</h2>
+            <p style="color:#999;font-size:12px;">Submitted ${new Date().toISOString()}</p>
+            <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:12px;">
+              <tr><td style="padding:10px 12px;background:#f7f7f5;font-weight:600;width:150px;">Name</td><td style="padding:10px 12px;background:#f7f7f5;">${name || '—'}</td></tr>
+              <tr><td style="padding:10px 12px;font-weight:600;">Phone</td><td style="padding:10px 12px;"><a href="tel:${e164}" style="color:#5C7A5F;font-weight:700;">${phone}</a></td></tr>
+              <tr><td style="padding:10px 12px;background:#f7f7f5;font-weight:600;">Location</td><td style="padding:10px 12px;background:#f7f7f5;">${city || '—'}</td></tr>
+              <tr><td style="padding:10px 12px;font-weight:600;">Care type</td><td style="padding:10px 12px;">${careType || '—'}</td></tr>
+              <tr><td style="padding:10px 12px;background:#f7f7f5;font-weight:600;">Who needs care</td><td style="padding:10px 12px;background:#f7f7f5;">${forWhom || '—'}</td></tr>
+              <tr><td style="padding:10px 12px;font-weight:600;">Timeline</td><td style="padding:10px 12px;">${urgency || '—'}</td></tr>
+            </table>
+            <div style="margin-top:20px;background:#edf4ee;border-radius:8px;padding:14px 18px;">
+              <strong style="color:#2d6a4f;">Call back today:</strong>
+              <a href="tel:${e164}" style="color:#2d6a4f;font-size:1.1rem;font-weight:700;margin-left:8px;">${phone}</a>
+            </div>
+            <p style="font-size:11px;color:#aaa;margin-top:16px;">SMS to lead: ${results.smsToLead} · SMS alert: ${results.alertToChase} · CLAW: ${results.contactSaved}</p>
+          </div>`
+        })
+      });
+    } catch (e) {
+      console.error('Chase notification email error:', e.message);
+    }
   }
 
   return res.status(200).json({ ok: true, results });
