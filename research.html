@@ -816,6 +816,93 @@
   <a href="/#find-care" class="mobile-cta" onclick="closeMobile()">Get Matched Free →</a>
 </div>
 
+
+
+<!-- ═══ INTELLIGENCE SCANNER ═══ -->
+<section id="scanner" style="padding: 70px 5%; background: var(--cream); border-bottom: 1px solid rgba(92,122,95,0.1);">
+  <div style="max-width: 900px; margin: 0 auto;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
+      <div>
+        <div class="section-label">Free Research Tool · 50+ Providers Indexed</div>
+        <h2 class="section-title" style="margin-bottom:6px;">Research any senior care provider before you call</h2>
+        <p style="font-size:0.9rem;color:var(--text-muted);max-width:580px;line-height:1.6;">Google Reviews, employee ratings, FL AHCA records, CMS Medicare data, BBB complaints, ownership history, and ProPublica inspection records — for home care agencies, nursing homes, ALFs, memory care, hospice, and CCRCs across Northwest Florida. We surface what families never think to look for.</p>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="sc-search-row" style="display:flex;gap:8px;margin-bottom:12px;">
+      <input type="text" id="sc-input" placeholder="Type an agency name or click a suggestion..." style="flex:1;padding:12px 16px;border:1.5px solid rgba(92,122,95,0.2);border-radius:10px;font-size:0.92rem;font-family:'DM Sans',sans-serif;color:var(--warm-dark);background:white;outline:none;" />
+      <button onclick="scScan()" style="background:var(--sage);color:white;padding:12px 24px;border-radius:10px;font-size:0.92rem;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">Search →</button>
+    </div>
+
+    <!-- Suggestions -->
+    <div id="sc-pills" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;"></div>
+
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:16px;line-height:1.5;">Sources: Google Reviews · Indeed · Glassdoor · FL AHCA · CMS/Medicare · ProPublica Nursing Home Inspect · BBB Northwest Florida · A Place for Mom · Caring.com · SeniorAdvisor · Seniorly · US News. Data compiled March 2026. 50+ providers indexed across home care, ALF, memory care, skilled nursing, hospice, and CCRC categories.</div>
+
+    <!-- Status -->
+    <div id="sc-status" style="font-size:12px;font-family:monospace;color:var(--text-muted);min-height:18px;margin-bottom:8px;"></div>
+
+    <!-- Results -->
+    <div id="sc-results" style="display:none;"></div>
+  </div>
+</section>
+
+<style>
+  .sc-sbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem;}
+  .sc-sc{background:var(--sage-pale);border-radius:var(--radius);padding:14px;text-align:center;}
+  .sc-sv{font-size:1.3rem;font-weight:700;font-family:'Playfair Display',serif;display:block;}
+  .sc-sl{font-size:0.7rem;color:var(--text-muted);margin-top:3px;display:block;line-height:1.3;}
+  .sc-good{color:var(--sage);}
+  .sc-warn{color:#B07D2A;}
+  .sc-bad{color:#A32D2D;}
+  .sc-sh{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin:1.25rem 0 0.5rem;border-top:1px solid rgba(92,122,95,0.1);padding-top:1rem;}
+  .sc-finding{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(92,122,95,0.08);}
+  .sc-finding:last-child{border-bottom:none;}
+  .sc-fi{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:10px;font-weight:700;}
+  .sc-fi.good{background:rgba(92,122,95,0.15);color:var(--sage);}
+  .sc-fi.warn{background:rgba(176,125,42,0.15);color:#B07D2A;}
+  .sc-fi.bad{background:rgba(163,45,45,0.12);color:#A32D2D;}
+  .sc-fi.info{background:rgba(92,122,95,0.08);color:var(--text-muted);}
+  .sc-fb{flex:1;}
+  .sc-ft{font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:3px;}
+  .sc-fd{font-size:0.8rem;color:var(--text-muted);line-height:1.55;}
+  .sc-fs{font-size:0.7rem;color:var(--text-muted);margin-top:3px;font-family:monospace;opacity:0.7;}
+  .sc-qb{background:var(--sage-pale);border-left:2px solid var(--sage-light);padding:10px 14px;margin:6px 0;font-size:0.82rem;color:var(--text-body);line-height:1.6;font-style:italic;}
+  .sc-qa{font-size:0.7rem;color:var(--text-muted);margin-top:4px;font-style:normal;font-family:monospace;}
+  .sc-flag{border-radius:var(--radius);padding:12px 16px;margin:6px 0;}
+  .sc-flag.red{background:rgba(163,45,45,0.06);border:1px solid rgba(163,45,45,0.2);}
+  .sc-flag.green{background:rgba(92,122,95,0.08);border:1px solid rgba(92,122,95,0.2);}
+  .sc-ft2{font-size:0.88rem;font-weight:600;margin-bottom:4px;}
+  .sc-flag.red .sc-ft2{color:#A32D2D;}
+  .sc-flag.green .sc-ft2{color:var(--sage);}
+  .sc-fb2{font-size:0.8rem;line-height:1.6;opacity:0.85;}
+  .sc-flag.red .sc-fb2{color:#A32D2D;}
+  .sc-flag.green .sc-fb2{color:var(--warm-mid);}
+  .sc-cnote{font-size:0.8rem;color:var(--text-muted);background:var(--sage-pale);border-radius:var(--radius);padding:12px 16px;margin-top:1rem;line-height:1.65;}
+  .sc-pill{font-size:0.72rem;padding:5px 12px;border-radius:100px;border:1px solid rgba(92,122,95,0.2);color:var(--sage);background:white;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+  .sc-pill:hover{background:var(--sage-pale);}
+  .sc-spinner{display:inline-block;width:10px;height:10px;border:1.5px solid rgba(92,122,95,0.2);border-top-color:var(--sage);border-radius:50%;animation:scSpin 0.7s linear infinite;vertical-align:middle;margin-right:6px;}
+  @keyframes scSpin{to{transform:rotate(360deg)}}
+  @media(max-width:600px){.sc-sbar{grid-template-columns:repeat(2,1fr);}}
+</style>
+
+<style>
+  @media (max-width: 600px) {
+    #sc-results [style*="grid-template-columns:repeat(4"] {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+  .submit-facility-section {
+    text-align: center;
+    padding: 40px 5%;
+    background: var(--sage-pale);
+    border-radius: 16px;
+    margin: 24px 0;
+  }
+</style>
+
+
 <!-- ═══ HIDDEN GEMS & DANGERS ═══ -->
 <section style="padding: 70px 5%; background: var(--warm-dark);" id="spotlight-section">
   <div style="max-width: 1100px; margin: 0 auto;">
@@ -893,6 +980,8 @@
 </section>
 
 
+
+
 <!-- ═══ HOSPITAL DISCHARGE ═══ -->
 <section style="padding: 70px 5%; background: var(--sage-pale);" id="hospital-discharge">
   <div style="max-width: 900px; margin: 0 auto;">
@@ -935,673 +1024,7 @@
 </section>
 
 
-<!-- ═══ INTELLIGENCE SCANNER ═══ -->
-<section id="scanner" style="padding: 70px 5%; background: var(--cream); border-bottom: 1px solid rgba(92,122,95,0.1);">
-  <div style="max-width: 900px; margin: 0 auto;">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
-      <div>
-        <div class="section-label">Free Research Tool · 50+ Providers Indexed</div>
-        <h2 class="section-title" style="margin-bottom:6px;">Research any senior care provider before you call</h2>
-        <p style="font-size:0.9rem;color:var(--text-muted);max-width:580px;line-height:1.6;">Google Reviews, employee ratings, FL AHCA records, CMS Medicare data, BBB complaints, ownership history, and ProPublica inspection records — for home care agencies, nursing homes, ALFs, memory care, hospice, and CCRCs across Northwest Florida. We surface what families never think to look for.</p>
-      </div>
-    </div>
 
-    <!-- Search -->
-    <div class="sc-search-row" style="display:flex;gap:8px;margin-bottom:12px;">
-      <input type="text" id="sc-input" placeholder="Type an agency name or click a suggestion..." style="flex:1;padding:12px 16px;border:1.5px solid rgba(92,122,95,0.2);border-radius:10px;font-size:0.92rem;font-family:'DM Sans',sans-serif;color:var(--warm-dark);background:white;outline:none;" />
-      <button onclick="scScan()" style="background:var(--sage);color:white;padding:12px 24px;border-radius:10px;font-size:0.92rem;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">Search →</button>
-    </div>
-
-    <!-- Suggestions -->
-    <div id="sc-pills" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;"></div>
-
-    <div style="font-size:11px;color:var(--text-muted);margin-bottom:16px;line-height:1.5;">Sources: Google Reviews · Indeed · Glassdoor · FL AHCA · CMS/Medicare · ProPublica Nursing Home Inspect · BBB Northwest Florida · A Place for Mom · Caring.com · SeniorAdvisor · Seniorly · US News. Data compiled March 2026. 50+ providers indexed across home care, ALF, memory care, skilled nursing, hospice, and CCRC categories.</div>
-
-    <!-- Status -->
-    <div id="sc-status" style="font-size:12px;font-family:monospace;color:var(--text-muted);min-height:18px;margin-bottom:8px;"></div>
-
-    <!-- Results -->
-    <div id="sc-results" style="display:none;"></div>
-  </div>
-</section>
-
-<style>
-  .sc-sbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem;}
-  .sc-sc{background:var(--sage-pale);border-radius:var(--radius);padding:14px;text-align:center;}
-  .sc-sv{font-size:1.3rem;font-weight:700;font-family:'Playfair Display',serif;display:block;}
-  .sc-sl{font-size:0.7rem;color:var(--text-muted);margin-top:3px;display:block;line-height:1.3;}
-  .sc-good{color:var(--sage);}
-  .sc-warn{color:#B07D2A;}
-  .sc-bad{color:#A32D2D;}
-  .sc-sh{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin:1.25rem 0 0.5rem;border-top:1px solid rgba(92,122,95,0.1);padding-top:1rem;}
-  .sc-finding{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(92,122,95,0.08);}
-  .sc-finding:last-child{border-bottom:none;}
-  .sc-fi{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:10px;font-weight:700;}
-  .sc-fi.good{background:rgba(92,122,95,0.15);color:var(--sage);}
-  .sc-fi.warn{background:rgba(176,125,42,0.15);color:#B07D2A;}
-  .sc-fi.bad{background:rgba(163,45,45,0.12);color:#A32D2D;}
-  .sc-fi.info{background:rgba(92,122,95,0.08);color:var(--text-muted);}
-  .sc-fb{flex:1;}
-  .sc-ft{font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:3px;}
-  .sc-fd{font-size:0.8rem;color:var(--text-muted);line-height:1.55;}
-  .sc-fs{font-size:0.7rem;color:var(--text-muted);margin-top:3px;font-family:monospace;opacity:0.7;}
-  .sc-qb{background:var(--sage-pale);border-left:2px solid var(--sage-light);padding:10px 14px;margin:6px 0;font-size:0.82rem;color:var(--text-body);line-height:1.6;font-style:italic;}
-  .sc-qa{font-size:0.7rem;color:var(--text-muted);margin-top:4px;font-style:normal;font-family:monospace;}
-  .sc-flag{border-radius:var(--radius);padding:12px 16px;margin:6px 0;}
-  .sc-flag.red{background:rgba(163,45,45,0.06);border:1px solid rgba(163,45,45,0.2);}
-  .sc-flag.green{background:rgba(92,122,95,0.08);border:1px solid rgba(92,122,95,0.2);}
-  .sc-ft2{font-size:0.88rem;font-weight:600;margin-bottom:4px;}
-  .sc-flag.red .sc-ft2{color:#A32D2D;}
-  .sc-flag.green .sc-ft2{color:var(--sage);}
-  .sc-fb2{font-size:0.8rem;line-height:1.6;opacity:0.85;}
-  .sc-flag.red .sc-fb2{color:#A32D2D;}
-  .sc-flag.green .sc-fb2{color:var(--warm-mid);}
-  .sc-cnote{font-size:0.8rem;color:var(--text-muted);background:var(--sage-pale);border-radius:var(--radius);padding:12px 16px;margin-top:1rem;line-height:1.65;}
-  .sc-pill{font-size:0.72rem;padding:5px 12px;border-radius:100px;border:1px solid rgba(92,122,95,0.2);color:var(--sage);background:white;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
-  .sc-pill:hover{background:var(--sage-pale);}
-  .sc-spinner{display:inline-block;width:10px;height:10px;border:1.5px solid rgba(92,122,95,0.2);border-top-color:var(--sage);border-radius:50%;animation:scSpin 0.7s linear infinite;vertical-align:middle;margin-right:6px;}
-  @keyframes scSpin{to{transform:rotate(360deg)}}
-  @media(max-width:600px){.sc-sbar{grid-template-columns:repeat(2,1fr);}}
-</style>
-
-<script>
-let SC_DB = {};
-
-// Load provider database from external JSON
-(async function loadProviders() {
-  try {
-    const r = await fetch('/providers.json');
-    if (!r.ok) throw new Error('Failed to load providers.json');
-    SC_DB = await r.json();
-    console.log('Loaded ' + Object.keys(SC_DB).length + ' providers');
-    // Build suggestion pills after data loads
-    buildScPills();
-  } catch(e) {
-    console.error('Provider database load error:', e);
-    document.getElementById('sc-status').textContent = 'Provider database failed to load. Please refresh.';
-  }
-})();
-
-function scNorm(s){return s.toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();}
-
-function scMatch(input){
-  const n=scNorm(input);
-  for(const key of Object.keys(SC_DB)){if(n.includes(key)||key.includes(n))return SC_DB[key];}
-  const words=n.split(' ');
-  for(const key of Object.keys(SC_DB)){if(words.some(w=>w.length>3&&key.includes(w)))return SC_DB[key];}
-  return null;
-}
-
-function buildScPills(){
-  const c=document.getElementById('sc-pills');
-  c.innerHTML=''; // Clear any existing pills
-  Object.values(SC_DB).forEach(d=>{
-    const btn=document.createElement('button');
-    btn.className='sc-pill';
-    btn.textContent=d.name.replace(' (Pensacola)','').replace(' LLC','');
-    btn.onclick=()=>{document.getElementById('sc-input').value=d.name;scScan();};
-    c.appendChild(btn);
-  });
-}
-
-function scScan(){
-  const input=document.getElementById('sc-input').value.trim();
-  if(!input){scStatus('Enter an agency name or click a suggestion.','sc-bad');return;}
-  document.getElementById('sc-results').style.display='none';
-  document.getElementById('sc-results').innerHTML='';
-  scStatus('<span class="sc-spinner"></span>Loading intelligence report...','');
-  setTimeout(()=>{
-    const match=scMatch(input);
-    if(match){scStatus('Report loaded.','sc-good');scRender(match);}
-    else{
-      scStatus('','');
-      document.getElementById('sc-results').innerHTML=`<div style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;padding:1rem 0;">
-        No profile found for "<strong>${input}</strong>." Currently indexed: ${Object.values(SC_DB).map(d=>d.name).join(' · ')}<br><br>
-        More agencies being added. <a href="tel:8503414324" style="color:var(--sage);font-weight:600;">Call us</a> or <a href="sms:8503414324" style="color:var(--sage);font-weight:600;">text us</a> and we'll research any agency for you personally.
-      </div>`;
-      document.getElementById('sc-results').style.display='block';
-    }
-  },600);
-}
-
-const SC_ICONS={good:'✓',warn:'!',bad:'✕',info:'i'};
-
-/* ── SCORING MODEL ── */
-function calcScore(r){
-  // Weights per checklist spec
-  // Regulatory 35% | Client reviews 25% | Employee 20% | Complaints 10% | Ownership risk 5% | Legal/news 5%
-  let reg=5, client=5, emp=5, comp=10, own=5, legal=5;
-
-  // Regulatory (0-10 → ×3.5)
-  const hasWatchList = r.findings?.some(f=>f.src?.toLowerCase().includes('watch list'));
-  const hasLegalActions = r.findings?.some(f=>f.title?.toLowerCase().includes('legal action'));
-  const hasCMSDeficiency = r.findings?.some(f=>f.src?.toLowerCase().includes('propublica')||f.src?.toLowerCase().includes('cms'));
-  const hasActiveLicense = r.findings?.some(f=>f.t==='good'&&(f.title?.includes('AHCA')||f.title?.includes('license')));
-  if(hasWatchList) reg=1;
-  else if(hasLegalActions) reg=3;
-  else if(hasCMSDeficiency) reg=4;
-  else if(hasActiveLicense) reg=8;
-  else reg=5;
-
-  // Client reviews (0-10 → ×2.5)
-  const gRating = parseFloat((r.scores?.google||'0').replace(/[^0-9.]/g,''));
-  if(gRating>=4.8) client=10;
-  else if(gRating>=4.5) client=8;
-  else if(gRating>=4.0) client=6;
-  else if(gRating>=3.5) client=4;
-  else if(gRating>0) client=2;
-  else client=5; // unknown
-
-  // Employee sentiment (0-10 → ×2.0)
-  const sRating = parseFloat((r.scores?.staff||'0').replace(/[^0-9.]/g,''));
-  if(sRating>=4.5) emp=10;
-  else if(sRating>=4.0) emp=8;
-  else if(sRating>=3.5) emp=6;
-  else if(sRating>=3.0) emp=4;
-  else if(sRating>0) emp=2;
-  else emp=5; // unknown
-
-  // Complaint history (0-10 → ×1.0)
-  const compStr = (r.scores?.complaints||'').toLowerCase();
-  if(compStr.includes('none')||compStr.includes('not found')) comp=10;
-  else if(compStr.includes('multiple')) comp=2;
-  else comp=5;
-
-  // Ownership risk (0-10 → ×0.5)
-  const ownerStr = (r.ownership||'').toLowerCase();
-  if(ownerStr.includes('private equity')||ownerStr.includes('pe-backed')) own=2;
-  else if(ownerStr.includes('independent')||ownerStr.includes('family-owned')) own=10;
-  else if(ownerStr.includes('franchise')) own=6;
-  else if(ownerStr.includes('corporate')||ownerStr.includes('chain')) own=5;
-  else own=7;
-
-  // Legal/news (0-10 → ×0.5)
-  const hasRedFlags = (r.red||[]).length;
-  if(hasRedFlags>=3) legal=1;
-  else if(hasRedFlags===2) legal=4;
-  else if(hasRedFlags===1) legal=6;
-  else legal=10;
-
-  const raw = (reg*3.5 + client*2.5 + emp*2.0 + comp*1.0 + own*0.5 + legal*0.5) / 10;
-  return Math.min(10, Math.max(1, Math.round(raw*10)/10));
-}
-
-function scoreColor(s){
-  if(s>=8) return 'sc-good';
-  if(s>=6) return 'sc-warn';
-  return 'sc-bad';
-}
-
-function scoreBar(score){
-  const pct = (score/10)*100;
-  const col = score>=8?'var(--sage)':score>=6?'#B07D2A':'#A32D2D';
-  return `<div style="margin:12px 0 16px;">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
-      <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);">CareCircle Intelligence Score</span>
-      <span style="font-size:1.6rem;font-weight:700;font-family:'Playfair Display',serif;color:${col};">${score}/10</span>
-    </div>
-    <div style="height:8px;background:var(--sage-pale);border-radius:100px;overflow:hidden;">
-      <div style="height:100%;width:${pct}%;background:${col};border-radius:100px;transition:width 0.6s ease;"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.68rem;color:var(--text-muted);">
-      <span>Weights: Regulatory 35% · Client Reviews 25% · Staff 20% · Complaints 10% · Ownership 5% · Legal 5%</span>
-    </div>
-  </div>`;
-}
-
-function scRender(r){
-  const el=document.getElementById('sc-results');
-  const computedScore = calcScore(r);
-  const storedScore = parseFloat((r.scores?.overall||'0').replace(/[^0-9.]/g,''));
-  const displayScore = storedScore > 0 ? storedScore : computedScore;
-  const scoreColor = displayScore >= 8 ? '#2d6a4f' : displayScore >= 6.5 ? '#b5700a' : '#a32d2d';
-  const scoreBg    = displayScore >= 8 ? '#edf7f0' : displayScore >= 6.5 ? '#fef7ec' : '#fdf0f0';
-  const scoreLabel = displayScore >= 8.5 ? 'Excellent' : displayScore >= 7.5 ? 'Good' : displayScore >= 6 ? 'Mixed signals' : 'High concern';
-  const ownerType  = (r.ownership||'').includes('Independent')||(r.ownership||'').includes('family') ? '🟢 Independent' : (r.ownership||'').includes('Franchise') ? '🟡 Franchise' : (r.ownership||'').includes('Corporate')||(r.ownership||'').includes('chain') ? '🔴 Corporate chain' : '⚪ Unknown';
-
-  let html = `
-  <div style="background:white;border-radius:16px;border:1.5px solid #e5e5e0;overflow:hidden;font-family:'DM Sans',sans-serif;">
-
-    <!-- HEADER -->
-    <div style="padding:24px 28px 20px;border-bottom:1px solid #f0ede8;">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-        <div>
-          <div style="font-size:1.25rem;font-weight:700;color:#2c2c2a;margin-bottom:4px;">${r.name}</div>
-          <div style="font-size:0.85rem;color:#888;margin-bottom:6px;">${r.loc} &nbsp;·&nbsp; ${r.type}</div>
-          <div style="font-size:0.8rem;color:#aaa;">${r.ownership||''}${r.founded?' &nbsp;·&nbsp; Est. '+r.founded:''}</div>
-        </div>
-        <div style="text-align:center;min-width:90px;padding:14px 20px;border-radius:12px;background:${scoreBg};border:1.5px solid ${scoreColor}22;">
-          <div style="font-size:2rem;font-weight:800;color:${scoreColor};line-height:1;">${displayScore.toFixed(1)}</div>
-          <div style="font-size:0.7rem;font-weight:600;color:${scoreColor};text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">${scoreLabel}</div>
-          <div style="font-size:0.65rem;color:#aaa;margin-top:2px;">out of 10</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SCORE GRID -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #f0ede8;">
-      ${[
-        {label:'Client Rating', val:r.scores.google, cls:r.sc.google},
-        {label:'Staff Satisfaction', val:r.scores.staff, cls:r.sc.staff},
-        {label:'State Complaints', val:r.scores.complaints, cls:r.sc.complaints},
-        {label:'Ownership', val:ownerType, cls:''}
-      ].map((s,i)=>`
-        <div style="padding:14px 16px;${i<3?'border-right:1px solid #f0ede8;':''}">
-          <div style="font-size:0.7rem;color:#aaa;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">${s.label}</div>
-          <div style="font-size:0.88rem;font-weight:600;color:${s.cls==='sc-bad'?'#a32d2d':s.cls==='sc-warn'?'#b5700a':'#2d6a4f'};">${s.val}</div>
-        </div>`).join('')}
-    </div>`;
-
-  // RED FLAGS
-  if(r.red&&r.red.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#a32d2d;margin-bottom:12px;">⚠ Concerns</div>`;
-    r.red.forEach(f=>{html+=`
-      <div style="background:#fdf5f5;border-left:3px solid #a32d2d;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;">
-        <div style="font-size:0.88rem;font-weight:600;color:#a32d2d;margin-bottom:4px;">${f.t}</div>
-        <div style="font-size:0.82rem;color:#666;line-height:1.55;">${f.b}</div>
-      </div>`;});
-    html+=`</div>`;
-  }
-
-  // GREEN FLAGS
-  if(r.green&&r.green.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#2d6a4f;margin-bottom:12px;">✓ Verified Strengths</div>`;
-    r.green.forEach(f=>{html+=`
-      <div style="background:#f0f7f2;border-left:3px solid #5C7A5F;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;">
-        <div style="font-size:0.88rem;font-weight:600;color:#2d6a4f;margin-bottom:4px;">${f.t}</div>
-        <div style="font-size:0.82rem;color:#555;line-height:1.55;">${f.b}</div>
-      </div>`;});
-    html+=`</div>`;
-  }
-
-  // FINDINGS
-  if(r.findings&&r.findings.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:12px;">📋 Findings by Source</div>`;
-    r.findings.forEach(f=>{
-      const ic = f.t==='bad'?'#a32d2d':f.t==='warn'?'#b5700a':f.t==='good'?'#2d6a4f':'#5C7A5F';
-      html+=`
-      <div style="display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;">
-        <div style="width:22px;height:22px;border-radius:50%;background:${ic};color:white;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${SC_ICONS[f.t]||'i'}</div>
-        <div>
-          <div style="font-size:0.88rem;font-weight:600;color:#2c2c2a;margin-bottom:2px;">${f.title}</div>
-          <div style="font-size:0.82rem;color:#555;line-height:1.5;margin-bottom:3px;">${f.detail}</div>
-          <div style="font-size:0.72rem;color:#aaa;">Source: ${f.src}</div>
-        </div>
-      </div>`;});
-    html+=`</div>`;
-  }
-
-  // QUOTES
-  if(r.quotes&&r.quotes.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:12px;">💬 What Families Said</div>`;
-    r.quotes.forEach(q=>{html+=`
-      <div style="background:#fafaf8;border-radius:10px;padding:14px 18px;margin-bottom:10px;border:1px solid #ebe8e2;">
-        <div style="font-size:0.88rem;color:#444;line-height:1.6;font-style:italic;margin-bottom:8px;">"${q.t}"</div>
-        <div style="font-size:0.75rem;color:#aaa;">${q.a}</div>
-      </div>`;});
-    html+=`</div>`;
-  }
-
-  // BOTTOM ASSESSMENT
-  if(r.compare||r.gaps){
-    html+=`<div style="padding:20px 28px;">`;
-    if(r.compare){html+=`
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:8px;">📊 CareCircle Assessment</div>
-      <div style="font-size:0.86rem;color:#444;line-height:1.65;margin-bottom:16px;padding:14px 18px;background:#f5f3ef;border-radius:10px;">${r.compare}</div>`;}
-    if(r.gaps){html+=`
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#bbb;margin-bottom:6px;">Data Gaps</div>
-      <div style="font-size:0.78rem;color:#aaa;line-height:1.6;">${r.gaps}</div>`;}
-    html+=`</div>`;
-  }
-
-  html+=`</div>
-
-  <!-- CALL TO ACTION BELOW REPORT -->
-  <div style="margin-top:16px;padding:18px 20px;background:#edf4ee;border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-    <div style="font-size:0.88rem;color:#2d6a4f;font-weight:600;">Need help evaluating this agency or finding a better match?</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="tel:8503414324" style="background:#5C7A5F;color:white;padding:9px 18px;border-radius:100px;font-size:0.82rem;font-weight:600;text-decoration:none;">📞 Call Now</a>
-      <a href="sms:8503414324" style="background:white;color:#5C7A5F;border:1.5px solid #5C7A5F;padding:9px 18px;border-radius:100px;font-size:0.82rem;font-weight:600;text-decoration:none;">💬 Text Us</a>
-    </div>
-  </div>`;
-
-  el.innerHTML=html;
-  el.style.display='block';
-  document.getElementById('scanner').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function scStatus(msg,cls){
-  const el=document.getElementById('sc-status');
-  el.innerHTML=msg;
-  el.style.color=cls==='sc-bad'?'#A32D2D':cls==='sc-good'?'var(--sage)':'var(--text-muted)';
-}
-
-document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='Enter')scScan();});
-</script>
-
-
-
-<style>
-  .sc-sbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem;}
-  .sc-sc{background:var(--sage-pale);border-radius:var(--radius);padding:14px;text-align:center;}
-  .sc-sv{font-size:1.3rem;font-weight:700;font-family:'Playfair Display',serif;display:block;}
-  .sc-sl{font-size:0.7rem;color:var(--text-muted);margin-top:3px;display:block;line-height:1.3;}
-  .sc-good{color:var(--sage);}
-  .sc-warn{color:#B07D2A;}
-  .sc-bad{color:#A32D2D;}
-  .sc-sh{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin:1.25rem 0 0.5rem;border-top:1px solid rgba(92,122,95,0.1);padding-top:1rem;}
-  .sc-finding{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(92,122,95,0.08);}
-  .sc-finding:last-child{border-bottom:none;}
-  .sc-fi{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:10px;font-weight:700;}
-  .sc-fi.good{background:rgba(92,122,95,0.15);color:var(--sage);}
-  .sc-fi.warn{background:rgba(176,125,42,0.15);color:#B07D2A;}
-  .sc-fi.bad{background:rgba(163,45,45,0.12);color:#A32D2D;}
-  .sc-fi.info{background:rgba(92,122,95,0.08);color:var(--text-muted);}
-  .sc-fb{flex:1;}
-  .sc-ft{font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:3px;}
-  .sc-fd{font-size:0.8rem;color:var(--text-muted);line-height:1.55;}
-  .sc-fs{font-size:0.7rem;color:var(--text-muted);margin-top:3px;font-family:monospace;opacity:0.7;}
-  .sc-qb{background:var(--sage-pale);border-left:2px solid var(--sage-light);padding:10px 14px;margin:6px 0;font-size:0.82rem;color:var(--text-body);line-height:1.6;font-style:italic;}
-  .sc-qa{font-size:0.7rem;color:var(--text-muted);margin-top:4px;font-style:normal;font-family:monospace;}
-  .sc-flag{border-radius:var(--radius);padding:12px 16px;margin:6px 0;}
-  .sc-flag.red{background:rgba(163,45,45,0.06);border:1px solid rgba(163,45,45,0.2);}
-  .sc-flag.green{background:rgba(92,122,95,0.08);border:1px solid rgba(92,122,95,0.2);}
-  .sc-ft2{font-size:0.88rem;font-weight:600;margin-bottom:4px;}
-  .sc-flag.red .sc-ft2{color:#A32D2D;}
-  .sc-flag.green .sc-ft2{color:var(--sage);}
-  .sc-fb2{font-size:0.8rem;line-height:1.6;opacity:0.85;}
-  .sc-flag.red .sc-fb2{color:#A32D2D;}
-  .sc-flag.green .sc-fb2{color:var(--warm-mid);}
-  .sc-cnote{font-size:0.8rem;color:var(--text-muted);background:var(--sage-pale);border-radius:var(--radius);padding:12px 16px;margin-top:1rem;line-height:1.65;}
-  .sc-pill{font-size:0.72rem;padding:5px 12px;border-radius:100px;border:1px solid rgba(92,122,95,0.2);color:var(--sage);background:white;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
-  .sc-pill:hover{background:var(--sage-pale);}
-  .sc-spinner{display:inline-block;width:10px;height:10px;border:1.5px solid rgba(92,122,95,0.2);border-top-color:var(--sage);border-radius:50%;animation:scSpin 0.7s linear infinite;vertical-align:middle;margin-right:6px;}
-  @keyframes scSpin{to{transform:rotate(360deg)}}
-  @media(max-width:600px){.sc-sbar{grid-template-columns:repeat(2,1fr);}}
-</style>
-
-<script>
-let SC_DB = {};
-
-// Load provider database from external JSON
-(async function loadProviders() {
-  try {
-    const r = await fetch('/providers.json');
-    if (!r.ok) throw new Error('Failed to load providers.json');
-    SC_DB = await r.json();
-    console.log('Loaded ' + Object.keys(SC_DB).length + ' providers');
-    // Build suggestion pills after data loads
-    buildScPills();
-  } catch(e) {
-    console.error('Provider database load error:', e);
-    document.getElementById('sc-status').textContent = 'Provider database failed to load. Please refresh.';
-  }
-})();
-
-function scNorm(s){return s.toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();}
-
-function scMatch(input){
-  const n=scNorm(input);
-  for(const key of Object.keys(SC_DB)){if(n.includes(key)||key.includes(n))return SC_DB[key];}
-  const words=n.split(' ');
-  for(const key of Object.keys(SC_DB)){if(words.some(w=>w.length>3&&key.includes(w)))return SC_DB[key];}
-  return null;
-}
-
-function buildScPills(){
-  const c=document.getElementById('sc-pills');
-  c.innerHTML=''; // Clear any existing pills
-  Object.values(SC_DB).forEach(d=>{
-    const btn=document.createElement('button');
-    btn.className='sc-pill';
-    btn.textContent=d.name.replace(' (Pensacola)','').replace(' LLC','');
-    btn.onclick=()=>{document.getElementById('sc-input').value=d.name;scScan();};
-    c.appendChild(btn);
-  });
-}
-
-function scScan(){
-  const input=document.getElementById('sc-input').value.trim();
-  if(!input){scStatus('Enter an agency name or click a suggestion.','sc-bad');return;}
-  document.getElementById('sc-results').style.display='none';
-  document.getElementById('sc-results').innerHTML='';
-  scStatus('<span class="sc-spinner"></span>Loading intelligence report...','');
-  setTimeout(()=>{
-    const match=scMatch(input);
-    if(match){scStatus('Report loaded.','sc-good');scRender(match);}
-    else{
-      scStatus('','');
-      document.getElementById('sc-results').innerHTML=`<div style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;padding:1rem 0;">
-        No profile found for "<strong>${input}</strong>." Currently indexed: ${Object.values(SC_DB).map(d=>d.name).join(' · ')}<br><br>
-        More agencies being added. <a href="tel:8503414324" style="color:var(--sage);font-weight:600;">Call us</a> or <a href="sms:8503414324" style="color:var(--sage);font-weight:600;">text us</a> and we'll research any agency for you personally.
-      </div>`;
-      document.getElementById('sc-results').style.display='block';
-    }
-  },600);
-}
-
-const SC_ICONS={good:'✓',warn:'!',bad:'✕',info:'i'};
-
-/* ── SCORING MODEL ── */
-function calcScore(r){
-  // Weights per checklist spec
-  // Regulatory 35% | Client reviews 25% | Employee 20% | Complaints 10% | Ownership risk 5% | Legal/news 5%
-  let reg=5, client=5, emp=5, comp=10, own=5, legal=5;
-
-  // Regulatory (0-10 → ×3.5)
-  const hasWatchList = r.findings?.some(f=>f.src?.toLowerCase().includes('watch list'));
-  const hasLegalActions = r.findings?.some(f=>f.title?.toLowerCase().includes('legal action'));
-  const hasCMSDeficiency = r.findings?.some(f=>f.src?.toLowerCase().includes('propublica')||f.src?.toLowerCase().includes('cms'));
-  const hasActiveLicense = r.findings?.some(f=>f.t==='good'&&(f.title?.includes('AHCA')||f.title?.includes('license')));
-  if(hasWatchList) reg=1;
-  else if(hasLegalActions) reg=3;
-  else if(hasCMSDeficiency) reg=4;
-  else if(hasActiveLicense) reg=8;
-  else reg=5;
-
-  // Client reviews (0-10 → ×2.5)
-  const gRating = parseFloat((r.scores?.google||'0').replace(/[^0-9.]/g,''));
-  if(gRating>=4.8) client=10;
-  else if(gRating>=4.5) client=8;
-  else if(gRating>=4.0) client=6;
-  else if(gRating>=3.5) client=4;
-  else if(gRating>0) client=2;
-  else client=5; // unknown
-
-  // Employee sentiment (0-10 → ×2.0)
-  const sRating = parseFloat((r.scores?.staff||'0').replace(/[^0-9.]/g,''));
-  if(sRating>=4.5) emp=10;
-  else if(sRating>=4.0) emp=8;
-  else if(sRating>=3.5) emp=6;
-  else if(sRating>=3.0) emp=4;
-  else if(sRating>0) emp=2;
-  else emp=5; // unknown
-
-  // Complaint history (0-10 → ×1.0)
-  const compStr = (r.scores?.complaints||'').toLowerCase();
-  if(compStr.includes('none')||compStr.includes('not found')) comp=10;
-  else if(compStr.includes('multiple')) comp=2;
-  else comp=5;
-
-  // Ownership risk (0-10 → ×0.5)
-  const ownerStr = (r.ownership||'').toLowerCase();
-  if(ownerStr.includes('private equity')||ownerStr.includes('pe-backed')) own=2;
-  else if(ownerStr.includes('independent')||ownerStr.includes('family-owned')) own=10;
-  else if(ownerStr.includes('franchise')) own=6;
-  else if(ownerStr.includes('corporate')||ownerStr.includes('chain')) own=5;
-  else own=7;
-
-  // Legal/news (0-10 → ×0.5)
-  const hasRedFlags = (r.red||[]).length;
-  if(hasRedFlags>=3) legal=1;
-  else if(hasRedFlags===2) legal=4;
-  else if(hasRedFlags===1) legal=6;
-  else legal=10;
-
-  const raw = (reg*3.5 + client*2.5 + emp*2.0 + comp*1.0 + own*0.5 + legal*0.5) / 10;
-  return Math.min(10, Math.max(1, Math.round(raw*10)/10));
-}
-
-function scoreColor(s){
-  if(s>=8) return 'sc-good';
-  if(s>=6) return 'sc-warn';
-  return 'sc-bad';
-}
-
-function scoreBar(score){
-  const pct = (score/10)*100;
-  const col = score>=8?'var(--sage)':score>=6?'#B07D2A':'#A32D2D';
-  return `<div style="margin:12px 0 16px;">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
-      <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);">CareCircle Intelligence Score</span>
-      <span style="font-size:1.6rem;font-weight:700;font-family:'Playfair Display',serif;color:${col};">${score}/10</span>
-    </div>
-    <div style="height:8px;background:var(--sage-pale);border-radius:100px;overflow:hidden;">
-      <div style="height:100%;width:${pct}%;background:${col};border-radius:100px;transition:width 0.6s ease;"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.68rem;color:var(--text-muted);">
-      <span>Weights: Regulatory 35% · Client Reviews 25% · Staff 20% · Complaints 10% · Ownership 5% · Legal 5%</span>
-    </div>
-  </div>`;
-}
-
-function scRender(r){
-  const el=document.getElementById('sc-results');
-  const computedScore = calcScore(r);
-  const storedScore = parseFloat((r.scores?.overall||'0').replace(/[^0-9.]/g,''));
-  const displayScore = storedScore > 0 ? storedScore : computedScore;
-  const scoreColor = displayScore >= 8 ? '#2d6a4f' : displayScore >= 6.5 ? '#b5700a' : '#a32d2d';
-  const scoreBg    = displayScore >= 8 ? '#edf7f0' : displayScore >= 6.5 ? '#fef7ec' : '#fdf0f0';
-  const scoreLabel = displayScore >= 8.5 ? 'Excellent' : displayScore >= 7.5 ? 'Good' : displayScore >= 6 ? 'Mixed signals' : 'High concern';
-  const ownerType  = (r.ownership||'').includes('Independent')||(r.ownership||'').includes('family') ? '🟢 Independent' : (r.ownership||'').includes('Franchise') ? '🟡 Franchise' : (r.ownership||'').includes('Corporate')||(r.ownership||'').includes('chain') ? '🔴 Corporate chain' : '⚪ Unknown';
-
-  let html = `
-  <div style="background:white;border-radius:16px;border:1.5px solid #e5e5e0;overflow:hidden;font-family:'DM Sans',sans-serif;">
-
-    <!-- HEADER -->
-    <div style="padding:24px 28px 20px;border-bottom:1px solid #f0ede8;">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-        <div>
-          <div style="font-size:1.25rem;font-weight:700;color:#2c2c2a;margin-bottom:4px;">${r.name}</div>
-          <div style="font-size:0.85rem;color:#888;margin-bottom:6px;">${r.loc} &nbsp;·&nbsp; ${r.type}</div>
-          <div style="font-size:0.8rem;color:#aaa;">${r.ownership||''}${r.founded?' &nbsp;·&nbsp; Est. '+r.founded:''}</div>
-        </div>
-        <div style="text-align:center;min-width:90px;padding:14px 20px;border-radius:12px;background:${scoreBg};border:1.5px solid ${scoreColor}22;">
-          <div style="font-size:2rem;font-weight:800;color:${scoreColor};line-height:1;">${displayScore.toFixed(1)}</div>
-          <div style="font-size:0.7rem;font-weight:600;color:${scoreColor};text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">${scoreLabel}</div>
-          <div style="font-size:0.65rem;color:#aaa;margin-top:2px;">out of 10</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SCORE GRID -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #f0ede8;">
-      ${[
-        {label:'Client Rating', val:r.scores.google, cls:r.sc.google},
-        {label:'Staff Satisfaction', val:r.scores.staff, cls:r.sc.staff},
-        {label:'State Complaints', val:r.scores.complaints, cls:r.sc.complaints},
-        {label:'Ownership', val:ownerType, cls:''}
-      ].map((s,i)=>`
-        <div style="padding:14px 16px;${i<3?'border-right:1px solid #f0ede8;':''}">
-          <div style="font-size:0.7rem;color:#aaa;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">${s.label}</div>
-          <div style="font-size:0.88rem;font-weight:600;color:${s.cls==='sc-bad'?'#a32d2d':s.cls==='sc-warn'?'#b5700a':'#2d6a4f'};">${s.val}</div>
-        </div>`).join('')}
-    </div>`;
-
-  // RED FLAGS
-  if(r.red&&r.red.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#a32d2d;margin-bottom:12px;">⚠ Concerns</div>`;
-    r.red.forEach(f=>{html+=`
-      <div style="background:#fdf5f5;border-left:3px solid #a32d2d;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;">
-        <div style="font-size:0.88rem;font-weight:600;color:#a32d2d;margin-bottom:4px;">${f.t}</div>
-        <div style="font-size:0.82rem;color:#666;line-height:1.55;">${f.b}</div>
-      </div>`;});
-    html+=`</div>`;
-  }
-
-  // GREEN FLAGS
-  if(r.green&&r.green.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#2d6a4f;margin-bottom:12px;">✓ Verified Strengths</div>`;
-    r.green.forEach(f=>{html+=`
-      <div style="background:#f0f7f2;border-left:3px solid #5C7A5F;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;">
-        <div style="font-size:0.88rem;font-weight:600;color:#2d6a4f;margin-bottom:4px;">${f.t}</div>
-        <div style="font-size:0.82rem;color:#555;line-height:1.55;">${f.b}</div>
-      </div>`;});
-    html+=`</div>`;
-  }
-
-  // FINDINGS
-  if(r.findings&&r.findings.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:12px;">📋 Findings by Source</div>`;
-    r.findings.forEach(f=>{
-      const ic = f.t==='bad'?'#a32d2d':f.t==='warn'?'#b5700a':f.t==='good'?'#2d6a4f':'#5C7A5F';
-      html+=`
-      <div style="display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;">
-        <div style="width:22px;height:22px;border-radius:50%;background:${ic};color:white;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${SC_ICONS[f.t]||'i'}</div>
-        <div>
-          <div style="font-size:0.88rem;font-weight:600;color:#2c2c2a;margin-bottom:2px;">${f.title}</div>
-          <div style="font-size:0.82rem;color:#555;line-height:1.5;margin-bottom:3px;">${f.detail}</div>
-          <div style="font-size:0.72rem;color:#aaa;">Source: ${f.src}</div>
-        </div>
-      </div>`;});
-    html+=`</div>`;
-  }
-
-  // QUOTES
-  if(r.quotes&&r.quotes.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:12px;">💬 What Families Said</div>`;
-    r.quotes.forEach(q=>{html+=`
-      <div style="background:#fafaf8;border-radius:10px;padding:14px 18px;margin-bottom:10px;border:1px solid #ebe8e2;">
-        <div style="font-size:0.88rem;color:#444;line-height:1.6;font-style:italic;margin-bottom:8px;">"${q.t}"</div>
-        <div style="font-size:0.75rem;color:#aaa;">${q.a}</div>
-      </div>`;});
-    html+=`</div>`;
-  }
-
-  // BOTTOM ASSESSMENT
-  if(r.compare||r.gaps){
-    html+=`<div style="padding:20px 28px;">`;
-    if(r.compare){html+=`
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:8px;">📊 CareCircle Assessment</div>
-      <div style="font-size:0.86rem;color:#444;line-height:1.65;margin-bottom:16px;padding:14px 18px;background:#f5f3ef;border-radius:10px;">${r.compare}</div>`;}
-    if(r.gaps){html+=`
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#bbb;margin-bottom:6px;">Data Gaps</div>
-      <div style="font-size:0.78rem;color:#aaa;line-height:1.6;">${r.gaps}</div>`;}
-    html+=`</div>`;
-  }
-
-  html+=`</div>
-
-  <!-- CALL TO ACTION BELOW REPORT -->
-  <div style="margin-top:16px;padding:18px 20px;background:#edf4ee;border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-    <div style="font-size:0.88rem;color:#2d6a4f;font-weight:600;">Need help evaluating this agency or finding a better match?</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="tel:8503414324" style="background:#5C7A5F;color:white;padding:9px 18px;border-radius:100px;font-size:0.82rem;font-weight:600;text-decoration:none;">📞 Call Now</a>
-      <a href="sms:8503414324" style="background:white;color:#5C7A5F;border:1.5px solid #5C7A5F;padding:9px 18px;border-radius:100px;font-size:0.82rem;font-weight:600;text-decoration:none;">💬 Text Us</a>
-    </div>
-  </div>`;
-
-  el.innerHTML=html;
-  el.style.display='block';
-  document.getElementById('scanner').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function scStatus(msg,cls){
-  const el=document.getElementById('sc-status');
-  el.innerHTML=msg;
-  el.style.color=cls==='sc-bad'?'#A32D2D':cls==='sc-good'?'var(--sage)':'var(--text-muted)';
-}
-
-document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='Enter')scScan();});
-</script>
 
 <!-- ═══ CTA ═══ -->
 <section class="cta-section">
@@ -1759,6 +1182,320 @@ document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='E
       document.body.style.overflow = '';
     }
   });
+</script>
+
+
+<script>
+let SC_DB = {};
+
+// Load provider database from external JSON
+(async function loadProviders() {
+  try {
+    const r = await fetch('/providers.json');
+    if (!r.ok) throw new Error('Failed to load providers.json');
+    SC_DB = await r.json();
+    console.log('Loaded ' + Object.keys(SC_DB).length + ' providers');
+    // Build suggestion pills after data loads
+    buildScPills();
+  } catch(e) {
+    console.error('Provider database load error:', e);
+    document.getElementById('sc-status').textContent = 'Provider database failed to load. Please refresh.';
+  }
+})();
+
+function scNorm(s){return s.toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();}
+
+function scMatch(input){
+  const n=scNorm(input);
+  for(const key of Object.keys(SC_DB)){if(n.includes(key)||key.includes(n))return SC_DB[key];}
+  const words=n.split(' ');
+  for(const key of Object.keys(SC_DB)){if(words.some(w=>w.length>3&&key.includes(w)))return SC_DB[key];}
+  return null;
+}
+
+function buildScPills(){
+  const c=document.getElementById('sc-pills');
+  c.innerHTML=''; // Clear any existing pills
+  Object.values(SC_DB).forEach(d=>{
+    const btn=document.createElement('button');
+    btn.className='sc-pill';
+    btn.textContent=d.name.replace(' (Pensacola)','').replace(' LLC','');
+    btn.onclick=()=>{document.getElementById('sc-input').value=d.name;scScan();};
+    c.appendChild(btn);
+  });
+}
+
+function scScan(){
+  const input=document.getElementById('sc-input').value.trim();
+  if(!input){scStatus('Enter an agency name or click a suggestion.','sc-bad');return;}
+  document.getElementById('sc-results').style.display='none';
+  document.getElementById('sc-results').innerHTML='';
+  scStatus('<span class="sc-spinner"></span>Loading intelligence report...','');
+  setTimeout(()=>{
+    const match=scMatch(input);
+    if(match){scStatus('Report loaded.','sc-good');scRender(match);}
+    else{
+      scStatus('','');
+      document.getElementById('sc-results').innerHTML=`<div style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;padding:1rem 0;">
+        <div style="text-align:center;padding:2rem 0;">
+        <div style="font-size:1.1rem;font-weight:600;color:var(--warm-dark);margin-bottom:8px;">No report found for "<strong>${input}</strong>"</div>
+        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:20px;">We haven't researched this provider yet. Want us to? Submit it below and we'll generate a full intelligence report.</p>
+        <div id="submit-facility-inline" style="display:flex;gap:10px;max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center;">
+          <input type="text" id="submit-name" value="${input}" style="flex:1;min-width:200px;padding:12px 16px;border:1.5px solid rgba(92,122,95,0.25);border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;" placeholder="Provider name" />
+          <input type="text" id="submit-city" value="" style="width:140px;padding:12px 16px;border:1.5px solid rgba(92,122,95,0.25);border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;" placeholder="City" />
+          <button onclick="submitFacility()" style="background:var(--sage);color:white;border:none;padding:12px 24px;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Submit for Research</button>
+        </div>
+        <div id="submit-status" style="margin-top:12px;font-size:0.85rem;color:var(--text-muted);"></div>
+      </div>
+        More agencies being added. <a href="tel:8503414324" style="color:var(--sage);font-weight:600;">Call us</a> or <a href="sms:8503414324" style="color:var(--sage);font-weight:600;">text us</a> and we'll research any agency for you personally.
+      </div>`;
+      document.getElementById('sc-results').style.display='block';
+    }
+  },600);
+}
+
+const SC_ICONS={good:'✓',warn:'!',bad:'✕',info:'i'};
+
+/* ── SCORING MODEL ── */
+function calcScore(r){
+  // Weights per checklist spec
+  // Regulatory 35% | Client reviews 25% | Employee 20% | Complaints 10% | Ownership risk 5% | Legal/news 5%
+  let reg=5, client=5, emp=5, comp=10, own=5, legal=5;
+
+  // Regulatory (0-10 → ×3.5)
+  const hasWatchList = r.findings?.some(f=>f.src?.toLowerCase().includes('watch list'));
+  const hasLegalActions = r.findings?.some(f=>f.title?.toLowerCase().includes('legal action'));
+  const hasCMSDeficiency = r.findings?.some(f=>f.src?.toLowerCase().includes('propublica')||f.src?.toLowerCase().includes('cms'));
+  const hasActiveLicense = r.findings?.some(f=>f.t==='good'&&(f.title?.includes('AHCA')||f.title?.includes('license')));
+  if(hasWatchList) reg=1;
+  else if(hasLegalActions) reg=3;
+  else if(hasCMSDeficiency) reg=4;
+  else if(hasActiveLicense) reg=8;
+  else reg=5;
+
+  // Client reviews (0-10 → ×2.5)
+  const gRating = parseFloat((r.scores?.google||'0').replace(/[^0-9.]/g,''));
+  if(gRating>=4.8) client=10;
+  else if(gRating>=4.5) client=8;
+  else if(gRating>=4.0) client=6;
+  else if(gRating>=3.5) client=4;
+  else if(gRating>0) client=2;
+  else client=5; // unknown
+
+  // Employee sentiment (0-10 → ×2.0)
+  const sRating = parseFloat((r.scores?.staff||'0').replace(/[^0-9.]/g,''));
+  if(sRating>=4.5) emp=10;
+  else if(sRating>=4.0) emp=8;
+  else if(sRating>=3.5) emp=6;
+  else if(sRating>=3.0) emp=4;
+  else if(sRating>0) emp=2;
+  else emp=5; // unknown
+
+  // Complaint history (0-10 → ×1.0)
+  const compStr = (r.scores?.complaints||'').toLowerCase();
+  if(compStr.includes('none')||compStr.includes('not found')) comp=10;
+  else if(compStr.includes('multiple')) comp=2;
+  else comp=5;
+
+  // Ownership risk (0-10 → ×0.5)
+  const ownerStr = (r.ownership||'').toLowerCase();
+  if(ownerStr.includes('private equity')||ownerStr.includes('pe-backed')) own=2;
+  else if(ownerStr.includes('independent')||ownerStr.includes('family-owned')) own=10;
+  else if(ownerStr.includes('franchise')) own=6;
+  else if(ownerStr.includes('corporate')||ownerStr.includes('chain')) own=5;
+  else own=7;
+
+  // Legal/news (0-10 → ×0.5)
+  const hasRedFlags = (r.red||[]).length;
+  if(hasRedFlags>=3) legal=1;
+  else if(hasRedFlags===2) legal=4;
+  else if(hasRedFlags===1) legal=6;
+  else legal=10;
+
+  const raw = (reg*3.5 + client*2.5 + emp*2.0 + comp*1.0 + own*0.5 + legal*0.5) / 10;
+  return Math.min(10, Math.max(1, Math.round(raw*10)/10));
+}
+
+function scoreColor(s){
+  if(s>=8) return 'sc-good';
+  if(s>=6) return 'sc-warn';
+  return 'sc-bad';
+}
+
+function scoreBar(score){
+  const pct = (score/10)*100;
+  const col = score>=8?'var(--sage)':score>=6?'#B07D2A':'#A32D2D';
+  return `<div style="margin:12px 0 16px;">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+      <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);">CareCircle Intelligence Score</span>
+      <span style="font-size:1.6rem;font-weight:700;font-family:'Playfair Display',serif;color:${col};">${score}/10</span>
+    </div>
+    <div style="height:8px;background:var(--sage-pale);border-radius:100px;overflow:hidden;">
+      <div style="height:100%;width:${pct}%;background:${col};border-radius:100px;transition:width 0.6s ease;"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.68rem;color:var(--text-muted);">
+      <span>Weights: Regulatory 35% · Client Reviews 25% · Staff 20% · Complaints 10% · Ownership 5% · Legal 5%</span>
+    </div>
+  </div>`;
+}
+
+function scRender(r){
+  const el=document.getElementById('sc-results');
+  const computedScore = calcScore(r);
+  const storedScore = parseFloat((r.scores?.overall||'0').replace(/[^0-9.]/g,''));
+  const displayScore = storedScore > 0 ? storedScore : computedScore;
+  const scoreColor = displayScore >= 8 ? '#2d6a4f' : displayScore >= 6.5 ? '#b5700a' : '#a32d2d';
+  const scoreBg    = displayScore >= 8 ? '#edf7f0' : displayScore >= 6.5 ? '#fef7ec' : '#fdf0f0';
+  const scoreLabel = displayScore >= 8.5 ? 'Excellent' : displayScore >= 7.5 ? 'Good' : displayScore >= 6 ? 'Mixed signals' : 'High concern';
+  const ownerType  = (r.ownership||'').includes('Independent')||(r.ownership||'').includes('family') ? '🟢 Independent' : (r.ownership||'').includes('Franchise') ? '🟡 Franchise' : (r.ownership||'').includes('Corporate')||(r.ownership||'').includes('chain') ? '🔴 Corporate chain' : '⚪ Unknown';
+
+  let html = `
+  <div style="background:white;border-radius:16px;border:1.5px solid #e5e5e0;overflow:hidden;font-family:'DM Sans',sans-serif;">
+
+    <!-- HEADER -->
+    <div style="padding:24px 28px 20px;border-bottom:1px solid #f0ede8;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="font-size:1.4rem;font-weight:700;color:#2c2c2a;margin-bottom:4px;">${r.name}</div>
+          <div style="font-size:0.85rem;color:#888;margin-bottom:6px;">${r.loc} &nbsp;·&nbsp; ${r.type}</div>
+          <div style="font-size:0.8rem;color:#aaa;">${r.ownership||''}${r.founded?' &nbsp;·&nbsp; Est. '+r.founded:''}</div>
+        </div>
+        <div style="text-align:center;min-width:90px;padding:14px 20px;border-radius:12px;background:${scoreBg};border:1.5px solid ${scoreColor}22;">
+          <div style="font-size:2.5rem;font-weight:800;color:${scoreColor};line-height:1;">${displayScore.toFixed(1)}</div>
+          <div style="font-size:0.7rem;font-weight:600;color:${scoreColor};text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">${scoreLabel}</div>
+          <div style="font-size:0.65rem;color:#aaa;margin-top:2px;">out of 10</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCORE GRID -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #f0ede8;">
+      ${[
+        {label:'Client Rating', val:r.scores.google, cls:r.sc.google},
+        {label:'Staff Satisfaction', val:r.scores.staff, cls:r.sc.staff},
+        {label:'State Complaints', val:r.scores.complaints, cls:r.sc.complaints},
+        {label:'Ownership', val:ownerType, cls:''}
+      ].map((s,i)=>`
+        <div style="padding:14px 16px;${i<3?'border-right:1px solid #f0ede8;':''}">
+          <div style="font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;font-weight:500;">${s.label}</div>
+          <div style="font-size:1.05rem;font-weight:700;color:${s.cls==='sc-bad'?'#a32d2d':s.cls==='sc-warn'?'#b5700a':'#2d6a4f'};">${s.val}</div>
+        </div>`).join('')}
+    </div>`;
+
+  // RED FLAGS
+  if(r.red&&r.red.length){
+    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#a32d2d;margin-bottom:12px;">⚠ Concerns</div>`;
+    r.red.forEach(f=>{html+=`
+      <div style="background:#fdf5f5;border-left:3px solid #a32d2d;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;">
+        <div style="font-size:1.05rem;font-weight:700;color:#a32d2d;margin-bottom:4px;">${f.t}</div>
+        <div style="font-size:0.82rem;color:#666;line-height:1.55;">${f.b}</div>
+      </div>`;});
+    html+=`</div>`;
+  }
+
+  // GREEN FLAGS
+  if(r.green&&r.green.length){
+    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#2d6a4f;margin-bottom:12px;">✓ Verified Strengths</div>`;
+    r.green.forEach(f=>{html+=`
+      <div style="background:#f0f7f2;border-left:3px solid #5C7A5F;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;">
+        <div style="font-size:1.05rem;font-weight:700;color:#2d6a4f;margin-bottom:4px;">${f.t}</div>
+        <div style="font-size:0.82rem;color:#555;line-height:1.55;">${f.b}</div>
+      </div>`;});
+    html+=`</div>`;
+  }
+
+  // FINDINGS
+  if(r.findings&&r.findings.length){
+    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:12px;">📋 Findings by Source</div>`;
+    r.findings.forEach(f=>{
+      const ic = f.t==='bad'?'#a32d2d':f.t==='warn'?'#b5700a':f.t==='good'?'#2d6a4f':'#5C7A5F';
+      html+=`
+      <div style="display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;">
+        <div style="width:22px;height:22px;border-radius:50%;background:${ic};color:white;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${SC_ICONS[f.t]||'i'}</div>
+        <div>
+          <div style="font-size:1.05rem;font-weight:700;color:#2c2c2a;margin-bottom:2px;">${f.title}</div>
+          <div style="font-size:0.82rem;color:#555;line-height:1.5;margin-bottom:3px;">${f.detail}</div>
+          <div style="font-size:0.72rem;color:#aaa;">Source: ${f.src}</div>
+        </div>
+      </div>`;});
+    html+=`</div>`;
+  }
+
+  // QUOTES
+  if(r.quotes&&r.quotes.length){
+    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:12px;">💬 What Families Said</div>`;
+    r.quotes.forEach(q=>{html+=`
+      <div style="background:#fafaf8;border-radius:10px;padding:14px 18px;margin-bottom:10px;border:1px solid #ebe8e2;">
+        <div style="font-size:0.88rem;color:#444;line-height:1.6;font-style:italic;margin-bottom:8px;">"${q.t}"</div>
+        <div style="font-size:0.75rem;color:#aaa;">${q.a}</div>
+      </div>`;});
+    html+=`</div>`;
+  }
+
+  // BOTTOM ASSESSMENT
+  if(r.compare||r.gaps){
+    html+=`<div style="padding:20px 28px;">`;
+    if(r.compare){html+=`
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:8px;">📊 CareCircle Assessment</div>
+      <div style="font-size:0.86rem;color:#444;line-height:1.65;margin-bottom:16px;padding:14px 18px;background:#f5f3ef;border-radius:10px;">${r.compare}</div>`;}
+    if(r.gaps){html+=`
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#bbb;margin-bottom:6px;">Data Gaps</div>
+      <div style="font-size:0.78rem;color:#aaa;line-height:1.6;">${r.gaps}</div>`;}
+    html+=`</div>`;
+  }
+
+  html+=`</div>
+
+  <!-- CALL TO ACTION BELOW REPORT -->
+  <div style="margin-top:16px;padding:18px 20px;background:#edf4ee;border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div style="font-size:0.88rem;color:#2d6a4f;font-weight:600;">Need help evaluating this agency or finding a better match?</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="tel:8503414324" style="background:#5C7A5F;color:white;padding:9px 18px;border-radius:100px;font-size:0.82rem;font-weight:600;text-decoration:none;">📞 Call Now</a>
+      <a href="sms:8503414324" style="background:white;color:#5C7A5F;border:1.5px solid #5C7A5F;padding:9px 18px;border-radius:100px;font-size:0.82rem;font-weight:600;text-decoration:none;">💬 Text Us</a>
+    </div>
+  </div>`;
+
+  el.innerHTML=html;
+  el.style.display='block';
+  document.getElementById('scanner').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function scStatus(msg,cls){
+  const el=document.getElementById('sc-status');
+  el.innerHTML=msg;
+  el.style.color=cls==='sc-bad'?'#A32D2D':cls==='sc-good'?'var(--sage)':'var(--text-muted)';
+}
+
+document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='Enter')scScan();});
+
+function submitFacility(){
+  const name = document.getElementById('submit-name').value.trim();
+  const city = document.getElementById('submit-city').value.trim();
+  const statusEl = document.getElementById('submit-status');
+  if(!name){statusEl.textContent='Please enter a provider name.';return;}
+  statusEl.innerHTML='<span style="color:var(--sage);">Submitting... We\'ll research this provider and notify you when it\'s ready.</span>';
+  
+  fetch('/api/submit-lead', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      name: 'Facility Submission',
+      phone: '',
+      zip: city,
+      careType: 'FACILITY RESEARCH REQUEST: ' + name + ' in ' + city,
+      relationship: 'Public submission',
+      urgency: 'Research request'
+    })
+  }).then(r=>r.json()).then(d=>{
+    statusEl.innerHTML='<span style="color:var(--sage);">✓ Submitted! We\'ll research <strong>' + name + '</strong> and add them to the scanner. Check back in 24 hours.</span>';
+  }).catch(e=>{
+    statusEl.innerHTML='<span style="color:var(--sage);">✓ Request received! We\'ll research <strong>' + name + '</strong> and add them soon.</span>';
+  });
+}
 </script>
 
 </body>
