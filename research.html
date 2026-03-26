@@ -819,88 +819,172 @@
 
 
 <!-- ═══ INTELLIGENCE SCANNER ═══ -->
-<section id="scanner" style="padding: 70px 5%; background: var(--cream); border-bottom: 1px solid rgba(92,122,95,0.1);">
-  <div style="max-width: 900px; margin: 0 auto;">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
-      <div>
-        <div class="section-label">Free Research Tool · 50+ Providers Indexed</div>
-        <h2 class="section-title" style="margin-bottom:6px;">Research any senior care provider before you call</h2>
-        <p style="font-size:0.9rem;color:var(--text-muted);max-width:580px;line-height:1.6;">Google Reviews, employee ratings, FL AHCA records, CMS Medicare data, BBB complaints, ownership history, and ProPublica inspection records — for home care agencies, nursing homes, ALFs, memory care, hospice, and CCRCs across Northwest Florida. We surface what families never think to look for.</p>
+<section id="scanner" style="padding: 80px 5% 60px; background: var(--cream);">
+  <div style="max-width: 780px; margin: 0 auto;">
+    
+    <div style="text-align:center; margin-bottom: 40px;">
+      <div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--sage); margin-bottom: 12px;">Intelligence Scanner · 50+ Providers</div>
+      <h1 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--warm-dark); line-height: 1.2; margin-bottom: 14px;">Research any provider<br>before you call</h1>
+      <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 520px; margin: 0 auto; line-height: 1.65;">We cross-reference Google Reviews, FL AHCA records, CMS data, BBB complaints, employee ratings, and ownership history. Then we tell you what we found.</p>
+    </div>
+
+    <!-- Search with autocomplete -->
+    <div style="position: relative; max-width: 560px; margin: 0 auto 12px;">
+      <div style="display:flex; gap: 0; border: 2px solid var(--sage); border-radius: 14px; overflow: hidden; background: white; transition: box-shadow 0.2s;" id="search-wrap">
+        <div style="position:relative; flex:1; display:flex; align-items:center;">
+          <svg style="position:absolute; left:16px; width:18px; height:18px; opacity:0.35;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="sc-input" placeholder="Search providers..." autocomplete="off"
+            style="width:100%; padding: 16px 16px 16px 44px; border:none; font-size: 1rem; font-family:'DM Sans',sans-serif; color: var(--warm-dark); background: transparent; outline:none;" />
+        </div>
+        <button onclick="scScan()" style="background:var(--sage); color:white; padding: 0 28px; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size: 0.92rem; font-weight: 600; white-space:nowrap; transition: background 0.15s;" onmouseover="this.style.background='#4a6a4d'" onmouseout="this.style.background='var(--sage)'">Search</button>
       </div>
+      
+      <!-- Autocomplete dropdown -->
+      <div id="sc-dropdown" style="display:none; position:absolute; top:100%; left:0; right:0; margin-top:4px; background:white; border-radius:12px; border:1px solid rgba(92,122,95,0.15); box-shadow: 0 12px 40px rgba(28,36,25,0.12); max-height:280px; overflow-y:auto; z-index:100;"></div>
     </div>
-
-    <!-- Search -->
-    <div class="sc-search-row" style="display:flex;gap:8px;margin-bottom:12px;">
-      <input type="text" id="sc-input" placeholder="Type an agency name or click a suggestion..." style="flex:1;padding:12px 16px;border:1.5px solid rgba(92,122,95,0.2);border-radius:10px;font-size:0.92rem;font-family:'DM Sans',sans-serif;color:var(--warm-dark);background:white;outline:none;" />
-      <button onclick="scScan()" style="background:var(--sage);color:white;padding:12px 24px;border-radius:10px;font-size:0.92rem;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">Search →</button>
-    </div>
-
-    <!-- Suggestions -->
-    <div id="sc-pills" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;"></div>
-
-    <div style="font-size:11px;color:var(--text-muted);margin-bottom:16px;line-height:1.5;">Sources: Google Reviews · Indeed · Glassdoor · FL AHCA · CMS/Medicare · ProPublica Nursing Home Inspect · BBB Northwest Florida · A Place for Mom · Caring.com · SeniorAdvisor · Seniorly · US News. Data compiled March 2026. 50+ providers indexed across home care, ALF, memory care, skilled nursing, hospice, and CCRC categories.</div>
 
     <!-- Status -->
-    <div id="sc-status" style="font-size:12px;font-family:monospace;color:var(--text-muted);min-height:18px;margin-bottom:8px;"></div>
+    <div id="sc-status" style="text-align:center; font-size: 0.8rem; color: var(--text-muted); min-height: 20px; margin-bottom: 8px;"></div>
 
-    <!-- Results -->
+    <!-- Compare bar (hidden until first provider loaded) -->
+    <div id="compare-bar" style="display:none; text-align:center; margin-bottom:20px;">
+      <button onclick="startCompare()" id="compare-btn" style="background:white; border:1.5px solid var(--sage); color:var(--sage); padding:10px 24px; border-radius:100px; font-size:0.85rem; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s;">
+        + Compare with another provider
+      </button>
+    </div>
+
+    <!-- Results area -->
     <div id="sc-results" style="display:none;"></div>
+    
+    <!-- Compare results (side by side) -->
+    <div id="sc-compare" style="display:none;"></div>
+
+    <!-- "Don't see your provider?" link -->
+    <div id="submit-prompt" style="text-align:center; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(92,122,95,0.1);">
+      <p style="font-size: 0.85rem; color: var(--text-muted);">Don't see your provider? <a href="#" onclick="showSubmitForm(); return false;" style="color: var(--sage); font-weight:600; text-decoration:underline;">Request a report →</a></p>
+    </div>
+
+    <!-- Submit form (hidden by default) -->
+    <div id="submit-form" style="display:none; max-width:480px; margin:20px auto 0; padding:24px; background:white; border-radius:14px; border:1px solid rgba(92,122,95,0.12);">
+      <p style="font-size:0.95rem; font-weight:600; color:var(--warm-dark); margin-bottom:12px;">Request a provider report</p>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:16px;">We'll research this provider and add them within 24 hours.</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <input type="text" id="submit-name" placeholder="Provider name" style="flex:1; min-width:180px; padding:11px 14px; border:1.5px solid rgba(92,122,95,0.2); border-radius:10px; font-size:0.9rem; font-family:'DM Sans',sans-serif; outline:none;" />
+        <input type="text" id="submit-city" placeholder="City" style="width:130px; padding:11px 14px; border:1.5px solid rgba(92,122,95,0.2); border-radius:10px; font-size:0.9rem; font-family:'DM Sans',sans-serif; outline:none;" />
+        <button onclick="submitFacility()" style="background:var(--sage); color:white; border:none; padding:11px 20px; border-radius:10px; font-size:0.88rem; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif;">Submit</button>
+      </div>
+      <div id="submit-status" style="margin-top:10px; font-size:0.82rem; color:var(--text-muted);"></div>
+    </div>
+
+    <div style="text-align:center; margin-top:20px; font-size:0.7rem; color:var(--text-muted); line-height:1.5; opacity:0.6;">Sources: Google Reviews · Indeed · Glassdoor · FL AHCA · CMS/Medicare · ProPublica · BBB · A Place for Mom · Caring.com · Data compiled March 2026.</div>
   </div>
 </section>
 
-<style>
-  .sc-sbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem;}
-  .sc-sc{background:var(--sage-pale);border-radius:var(--radius);padding:14px;text-align:center;}
-  .sc-sv{font-size:1.3rem;font-weight:700;font-family:'Playfair Display',serif;display:block;}
-  .sc-sl{font-size:0.7rem;color:var(--text-muted);margin-top:3px;display:block;line-height:1.3;}
-  .sc-good{color:var(--sage);}
-  .sc-warn{color:#B07D2A;}
-  .sc-bad{color:#A32D2D;}
-  .sc-sh{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin:1.25rem 0 0.5rem;border-top:1px solid rgba(92,122,95,0.1);padding-top:1rem;}
-  .sc-finding{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(92,122,95,0.08);}
-  .sc-finding:last-child{border-bottom:none;}
-  .sc-fi{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:10px;font-weight:700;}
-  .sc-fi.good{background:rgba(92,122,95,0.15);color:var(--sage);}
-  .sc-fi.warn{background:rgba(176,125,42,0.15);color:#B07D2A;}
-  .sc-fi.bad{background:rgba(163,45,45,0.12);color:#A32D2D;}
-  .sc-fi.info{background:rgba(92,122,95,0.08);color:var(--text-muted);}
-  .sc-fb{flex:1;}
-  .sc-ft{font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:3px;}
-  .sc-fd{font-size:0.8rem;color:var(--text-muted);line-height:1.55;}
-  .sc-fs{font-size:0.7rem;color:var(--text-muted);margin-top:3px;font-family:monospace;opacity:0.7;}
-  .sc-qb{background:var(--sage-pale);border-left:2px solid var(--sage-light);padding:10px 14px;margin:6px 0;font-size:0.82rem;color:var(--text-body);line-height:1.6;font-style:italic;}
-  .sc-qa{font-size:0.7rem;color:var(--text-muted);margin-top:4px;font-style:normal;font-family:monospace;}
-  .sc-flag{border-radius:var(--radius);padding:12px 16px;margin:6px 0;}
-  .sc-flag.red{background:rgba(163,45,45,0.06);border:1px solid rgba(163,45,45,0.2);}
-  .sc-flag.green{background:rgba(92,122,95,0.08);border:1px solid rgba(92,122,95,0.2);}
-  .sc-ft2{font-size:0.88rem;font-weight:600;margin-bottom:4px;}
-  .sc-flag.red .sc-ft2{color:#A32D2D;}
-  .sc-flag.green .sc-ft2{color:var(--sage);}
-  .sc-fb2{font-size:0.8rem;line-height:1.6;opacity:0.85;}
-  .sc-flag.red .sc-fb2{color:#A32D2D;}
-  .sc-flag.green .sc-fb2{color:var(--warm-mid);}
-  .sc-cnote{font-size:0.8rem;color:var(--text-muted);background:var(--sage-pale);border-radius:var(--radius);padding:12px 16px;margin-top:1rem;line-height:1.65;}
-  .sc-pill{font-size:0.72rem;padding:5px 12px;border-radius:100px;border:1px solid rgba(92,122,95,0.2);color:var(--sage);background:white;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
-  .sc-pill:hover{background:var(--sage-pale);}
-  .sc-spinner{display:inline-block;width:10px;height:10px;border:1.5px solid rgba(92,122,95,0.2);border-top-color:var(--sage);border-radius:50%;animation:scSpin 0.7s linear infinite;vertical-align:middle;margin-right:6px;}
-  @keyframes scSpin{to{transform:rotate(360deg)}}
-  @media(max-width:600px){.sc-sbar{grid-template-columns:repeat(2,1fr);}}
-</style>
 
 <style>
-  @media (max-width: 600px) {
-    #sc-results [style*="grid-template-columns:repeat(4"] {
-      grid-template-columns: repeat(2, 1fr) !important;
-    }
+  /* Scanner autocomplete */
+  .sc-dd-item { padding: 12px 18px; cursor: pointer; display:flex; align-items:center; justify-content:space-between; transition: background 0.1s; border-bottom: 1px solid rgba(92,122,95,0.06); }
+  .sc-dd-item:last-child { border-bottom: none; }
+  .sc-dd-item:hover, .sc-dd-item.active { background: var(--sage-pale); }
+  .sc-dd-name { font-size: 0.92rem; font-weight: 500; color: var(--warm-dark); }
+  .sc-dd-meta { font-size: 0.75rem; color: var(--text-muted); }
+  .sc-dd-score { font-size: 0.8rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+  
+  /* Report card */
+  .sc-card { background: white; border-radius: 20px; border: 1px solid rgba(92,122,95,0.1); overflow: hidden; box-shadow: 0 4px 24px rgba(28,36,25,0.06); }
+  .sc-card-header { padding: 28px 32px 24px; }
+  .sc-card-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--warm-dark); margin-bottom: 4px; }
+  .sc-card-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2px; }
+  .sc-card-owner { font-size: 0.78rem; color: var(--text-muted); opacity: 0.7; }
+  
+  /* Score badge */
+  .sc-score-badge { text-align: center; min-width: 88px; padding: 16px 20px; border-radius: 16px; }
+  .sc-score-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; line-height: 1; }
+  .sc-score-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+  .sc-score-of { font-size: 0.62rem; color: var(--text-muted); margin-top: 2px; }
+  
+  /* Score grid */
+  .sc-scores-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(92,122,95,0.08); border-bottom: 1px solid rgba(92,122,95,0.08); }
+  .sc-score-cell { padding: 18px 20px; text-align: center; border-right: 1px solid rgba(92,122,95,0.06); }
+  .sc-score-cell:last-child { border-right: none; }
+  .sc-score-cell-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; font-weight: 500; }
+  .sc-score-cell-val { font-size: 1.1rem; font-weight: 700; }
+  
+  /* Collapsible sections */
+  .sc-section { border-top: 1px solid rgba(92,122,95,0.06); }
+  .sc-section-toggle { width: 100%; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; background: none; border: none; font-family: 'DM Sans', sans-serif; text-align: left; transition: background 0.15s; }
+  .sc-section-toggle:hover { background: rgba(92,122,95,0.03); }
+  .sc-section-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .sc-section-title.red { color: #a32d2d; }
+  .sc-section-title.green { color: var(--sage); }
+  .sc-section-title.neutral { color: var(--text-muted); }
+  .sc-section-arrow { font-size: 0.7rem; color: var(--text-muted); transition: transform 0.2s; }
+  .sc-section.open .sc-section-arrow { transform: rotate(180deg); }
+  .sc-section-body { padding: 0 32px 20px; display: none; }
+  .sc-section.open .sc-section-body { display: block; }
+  
+  /* Flags */
+  .sc-flag { border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; }
+  .sc-flag.red { background: #fdf5f5; border-left: 3px solid #a32d2d; }
+  .sc-flag.green { background: #f0f7f2; border-left: 3px solid var(--sage); }
+  .sc-flag-title { font-size: 0.92rem; font-weight: 600; margin-bottom: 4px; }
+  .sc-flag.red .sc-flag-title { color: #a32d2d; }
+  .sc-flag.green .sc-flag-title { color: #2d6a4f; }
+  .sc-flag-body { font-size: 0.84rem; color: #555; line-height: 1.6; }
+  
+  /* Findings */
+  .sc-finding { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid rgba(92,122,95,0.06); }
+  .sc-finding:last-child { border-bottom: none; }
+  .sc-finding-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; font-weight: 700; }
+  .sc-finding-icon.good { background: rgba(92,122,95,0.12); color: var(--sage); }
+  .sc-finding-icon.warn { background: rgba(176,125,42,0.12); color: #b5700a; }
+  .sc-finding-icon.bad { background: rgba(163,45,45,0.1); color: #a32d2d; }
+  .sc-finding-icon.info { background: rgba(92,122,95,0.06); color: var(--text-muted); }
+  .sc-finding-title { font-size: 0.9rem; font-weight: 600; color: var(--warm-dark); margin-bottom: 2px; }
+  .sc-finding-detail { font-size: 0.82rem; color: #666; line-height: 1.55; }
+  .sc-finding-src { font-size: 0.7rem; color: var(--text-muted); margin-top: 3px; opacity: 0.7; }
+  
+  /* Quotes */
+  .sc-quote { background: var(--sage-pale); border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; }
+  .sc-quote-text { font-size: 0.9rem; color: #444; line-height: 1.65; font-style: italic; margin-bottom: 6px; }
+  .sc-quote-attr { font-size: 0.72rem; color: var(--text-muted); }
+  
+  /* Assessment */
+  .sc-assess { background: #f5f3ef; border-radius: 12px; padding: 16px 20px; font-size: 0.88rem; color: #444; line-height: 1.65; margin-bottom: 12px; }
+  .sc-gaps { font-size: 0.78rem; color: var(--text-muted); }
+  
+  /* CTA below report */
+  .sc-cta { margin-top: 20px; padding: 20px 24px; background: var(--sage-pale); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .sc-cta-text { font-size: 0.9rem; color: #2d6a4f; font-weight: 600; }
+  .sc-cta-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .sc-cta-btn { padding: 10px 20px; border-radius: 100px; font-size: 0.84rem; font-weight: 600; text-decoration: none; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+  .sc-cta-btn.primary { background: var(--sage); color: white; }
+  .sc-cta-btn.secondary { background: white; color: var(--sage); border: 1.5px solid var(--sage); }
+  
+  /* Compare layout */
+  .sc-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .sc-compare-grid .sc-card { font-size: 0.9em; }
+  
+  /* Responsive */
+  @media (max-width: 700px) {
+    .sc-scores-grid { grid-template-columns: repeat(2, 1fr); }
+    .sc-score-cell:nth-child(2) { border-right: none; }
+    .sc-card-header { padding: 20px 20px 18px; }
+    .sc-section-toggle { padding: 16px 20px; }
+    .sc-section-body { padding: 0 20px 16px; }
+    .sc-card-name { font-size: 1.25rem; }
+    .sc-compare-grid { grid-template-columns: 1fr; }
+    .sc-cta { flex-direction: column; text-align: center; }
   }
-  .submit-facility-section {
-    text-align: center;
-    padding: 40px 5%;
-    background: var(--sage-pale);
-    border-radius: 16px;
-    margin: 24px 0;
+  
+  @media (max-width: 400px) {
+    #search-wrap { border-radius: 12px; }
+    #sc-input { padding: 14px 14px 14px 40px; font-size: 0.9rem; }
   }
 </style>
+
+
+
 
 
 <!-- ═══ HIDDEN GEMS & DANGERS ═══ -->
@@ -1187,316 +1271,354 @@
 
 <script>
 let SC_DB = {};
+let compareProvider = null; // stored first provider for comparison
 
-// Load provider database from external JSON
 (async function loadProviders() {
   try {
     const r = await fetch('/providers.json');
-    if (!r.ok) throw new Error('Failed to load providers.json');
+    if (!r.ok) throw new Error('Failed to load');
     SC_DB = await r.json();
     console.log('Loaded ' + Object.keys(SC_DB).length + ' providers');
-    // Build suggestion pills after data loads
-    buildScPills();
   } catch(e) {
-    console.error('Provider database load error:', e);
+    console.error('Provider load error:', e);
     document.getElementById('sc-status').textContent = 'Provider database failed to load. Please refresh.';
   }
 })();
 
+const SC_ICONS = {good:'✓', warn:'!', bad:'✗', info:'i'};
+
+// Autocomplete
+const scInput = document.getElementById('sc-input');
+const scDropdown = document.getElementById('sc-dropdown');
+let ddIndex = -1;
+
+scInput.addEventListener('input', function() {
+  const val = this.value.trim().toLowerCase();
+  if (val.length < 2) { scDropdown.style.display='none'; return; }
+  
+  const matches = Object.values(SC_DB).filter(d => 
+    d.name.toLowerCase().includes(val) || 
+    (d.type && d.type.toLowerCase().includes(val)) ||
+    (d.loc && d.loc.toLowerCase().includes(val))
+  ).slice(0, 8);
+  
+  if (!matches.length) {
+    scDropdown.innerHTML = `<div style="padding:16px 18px; text-align:center;">
+      <span style="font-size:0.88rem; color:var(--text-muted);">No providers found for "${this.value}"</span><br>
+      <a href="#" onclick="showSubmitForm(); scDropdown.style.display='none'; return false;" style="font-size:0.82rem; color:var(--sage); font-weight:600;">Request a report →</a>
+    </div>`;
+    scDropdown.style.display = 'block';
+    return;
+  }
+  
+  scDropdown.innerHTML = matches.map((d, i) => {
+    const score = parseFloat((d.scores?.overall||'0').replace(/[^0-9.]/g,''));
+    const scoreCol = score >= 8 ? '#2d6a4f' : score >= 6.5 ? '#b5700a' : '#a32d2d';
+    const scoreBg = score >= 8 ? '#edf7f0' : score >= 6.5 ? '#fef7ec' : '#fdf0f0';
+    return `<div class="sc-dd-item" onclick="selectProvider('${d.name.replace(/'/g,"\\'")}')" data-idx="${i}">
+      <div>
+        <div class="sc-dd-name">${d.name}</div>
+        <div class="sc-dd-meta">${d.loc} · ${d.type?.split('·')[0]?.trim() || ''}</div>
+      </div>
+      ${score > 0 ? `<div class="sc-dd-score" style="color:${scoreCol}; background:${scoreBg};">${score.toFixed(1)}</div>` : ''}
+    </div>`;
+  }).join('');
+  scDropdown.style.display = 'block';
+  ddIndex = -1;
+});
+
+scInput.addEventListener('keydown', function(e) {
+  const items = scDropdown.querySelectorAll('.sc-dd-item');
+  if (e.key === 'ArrowDown') { e.preventDefault(); ddIndex = Math.min(ddIndex+1, items.length-1); updateDD(items); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); ddIndex = Math.max(ddIndex-1, 0); updateDD(items); }
+  else if (e.key === 'Enter') { 
+    e.preventDefault();
+    if (ddIndex >= 0 && items[ddIndex]) items[ddIndex].click();
+    else scScan();
+  }
+  else if (e.key === 'Escape') { scDropdown.style.display='none'; }
+});
+
+function updateDD(items) {
+  items.forEach((el,i) => el.classList.toggle('active', i===ddIndex));
+  if (items[ddIndex]) items[ddIndex].scrollIntoView({block:'nearest'});
+}
+
+function selectProvider(name) {
+  scInput.value = name;
+  scDropdown.style.display = 'none';
+  scScan();
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#sc-input') && !e.target.closest('#sc-dropdown')) scDropdown.style.display='none';
+});
+
+// Search
 function scNorm(s){return s.toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();}
 
-function scMatch(input){
-  const n=scNorm(input);
-  for(const key of Object.keys(SC_DB)){if(n.includes(key)||key.includes(n))return SC_DB[key];}
-  const words=n.split(' ');
-  for(const key of Object.keys(SC_DB)){if(words.some(w=>w.length>3&&key.includes(w)))return SC_DB[key];}
+function scMatch(input) {
+  const n = scNorm(input);
+  for (const k in SC_DB) { if (scNorm(SC_DB[k].name)===n || scNorm(k)===n) return SC_DB[k]; }
+  for (const k in SC_DB) { if (scNorm(SC_DB[k].name).includes(n) || n.includes(scNorm(k))) return SC_DB[k]; }
   return null;
 }
 
-function buildScPills(){
-  const c=document.getElementById('sc-pills');
-  c.innerHTML=''; // Clear any existing pills
-  Object.values(SC_DB).forEach(d=>{
-    const btn=document.createElement('button');
-    btn.className='sc-pill';
-    btn.textContent=d.name.replace(' (Pensacola)','').replace(' LLC','');
-    btn.onclick=()=>{document.getElementById('sc-input').value=d.name;scScan();};
-    c.appendChild(btn);
-  });
-}
-
-function scScan(){
-  const input=document.getElementById('sc-input').value.trim();
-  if(!input){scStatus('Enter an agency name or click a suggestion.','sc-bad');return;}
+function scScan() {
+  const input = scInput.value.trim();
+  if (!input) return;
+  scDropdown.style.display = 'none';
   document.getElementById('sc-results').style.display='none';
   document.getElementById('sc-results').innerHTML='';
-  scStatus('<span class="sc-spinner"></span>Loading intelligence report...','');
-  setTimeout(()=>{
-    const match=scMatch(input);
-    if(match){scStatus('Report loaded.','sc-good');scRender(match);}
-    else{
+  scStatus('<span class="sc-spinner"></span> Searching...','');
+  
+  setTimeout(() => {
+    const match = scMatch(input);
+    if (match) {
       scStatus('','');
-      document.getElementById('sc-results').innerHTML=`<div style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;padding:1rem 0;">
-        <div style="text-align:center;padding:2rem 0;">
-        <div style="font-size:1.1rem;font-weight:600;color:var(--warm-dark);margin-bottom:8px;">No report found for "<strong>${input}</strong>"</div>
-        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:20px;">We haven't researched this provider yet. Want us to? Submit it below and we'll generate a full intelligence report.</p>
-        <div id="submit-facility-inline" style="display:flex;gap:10px;max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center;">
-          <input type="text" id="submit-name" value="${input}" style="flex:1;min-width:200px;padding:12px 16px;border:1.5px solid rgba(92,122,95,0.25);border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;" placeholder="Provider name" />
-          <input type="text" id="submit-city" value="" style="width:140px;padding:12px 16px;border:1.5px solid rgba(92,122,95,0.25);border-radius:10px;font-size:0.9rem;font-family:'DM Sans',sans-serif;" placeholder="City" />
-          <button onclick="submitFacility()" style="background:var(--sage);color:white;border:none;padding:12px 24px;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Submit for Research</button>
-        </div>
-        <div id="submit-status" style="margin-top:12px;font-size:0.85rem;color:var(--text-muted);"></div>
-      </div>
-        More agencies being added. <a href="tel:8503414324" style="color:var(--sage);font-weight:600;">Call us</a> or <a href="sms:8503414324" style="color:var(--sage);font-weight:600;">text us</a> and we'll research any agency for you personally.
+      scRender(match);
+      document.getElementById('compare-bar').style.display = 'block';
+    } else {
+      scStatus('','');
+      document.getElementById('sc-results').innerHTML = `<div style="text-align:center; padding:3rem 1rem;">
+        <div style="font-size:1.1rem; font-weight:600; color:var(--warm-dark); margin-bottom:8px;">No report found for "${input}"</div>
+        <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:16px;">We haven't researched this provider yet.</p>
+        <button onclick="document.getElementById('submit-name').value='${input.replace(/'/g,"\\'")}'; showSubmitForm();" style="background:var(--sage); color:white; border:none; padding:12px 28px; border-radius:100px; font-size:0.88rem; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif;">Request a Report →</button>
       </div>`;
       document.getElementById('sc-results').style.display='block';
     }
-  },600);
+  }, 300);
 }
 
-const SC_ICONS={good:'✓',warn:'!',bad:'✕',info:'i'};
+// Compare
+function startCompare() {
+  const current = document.getElementById('sc-results').querySelector('.sc-card');
+  if (!current) return;
+  compareProvider = current.outerHTML;
+  document.getElementById('compare-btn').innerHTML = '✓ First provider saved — now search another';
+  document.getElementById('compare-btn').style.background = 'var(--sage-pale)';
+  scInput.value = '';
+  scInput.focus();
+  scInput.placeholder = 'Search second provider to compare...';
+}
 
-/* ── SCORING MODEL ── */
-function calcScore(r){
-  // Weights per checklist spec
-  // Regulatory 35% | Client reviews 25% | Employee 20% | Complaints 10% | Ownership risk 5% | Legal/news 5%
-  let reg=5, client=5, emp=5, comp=10, own=5, legal=5;
-
-  // Regulatory (0-10 → ×3.5)
-  const hasWatchList = r.findings?.some(f=>f.src?.toLowerCase().includes('watch list'));
-  const hasLegalActions = r.findings?.some(f=>f.title?.toLowerCase().includes('legal action'));
-  const hasCMSDeficiency = r.findings?.some(f=>f.src?.toLowerCase().includes('propublica')||f.src?.toLowerCase().includes('cms'));
-  const hasActiveLicense = r.findings?.some(f=>f.t==='good'&&(f.title?.includes('AHCA')||f.title?.includes('license')));
-  if(hasWatchList) reg=1;
-  else if(hasLegalActions) reg=3;
-  else if(hasCMSDeficiency) reg=4;
-  else if(hasActiveLicense) reg=8;
-  else reg=5;
-
-  // Client reviews (0-10 → ×2.5)
-  const gRating = parseFloat((r.scores?.google||'0').replace(/[^0-9.]/g,''));
-  if(gRating>=4.8) client=10;
-  else if(gRating>=4.5) client=8;
-  else if(gRating>=4.0) client=6;
-  else if(gRating>=3.5) client=4;
-  else if(gRating>0) client=2;
-  else client=5; // unknown
-
-  // Employee sentiment (0-10 → ×2.0)
-  const sRating = parseFloat((r.scores?.staff||'0').replace(/[^0-9.]/g,''));
-  if(sRating>=4.5) emp=10;
-  else if(sRating>=4.0) emp=8;
-  else if(sRating>=3.5) emp=6;
-  else if(sRating>=3.0) emp=4;
-  else if(sRating>0) emp=2;
-  else emp=5; // unknown
-
-  // Complaint history (0-10 → ×1.0)
-  const compStr = (r.scores?.complaints||'').toLowerCase();
-  if(compStr.includes('none')||compStr.includes('not found')) comp=10;
-  else if(compStr.includes('multiple')) comp=2;
-  else comp=5;
-
-  // Ownership risk (0-10 → ×0.5)
-  const ownerStr = (r.ownership||'').toLowerCase();
-  if(ownerStr.includes('private equity')||ownerStr.includes('pe-backed')) own=2;
-  else if(ownerStr.includes('independent')||ownerStr.includes('family-owned')) own=10;
-  else if(ownerStr.includes('franchise')) own=6;
-  else if(ownerStr.includes('corporate')||ownerStr.includes('chain')) own=5;
-  else own=7;
-
-  // Legal/news (0-10 → ×0.5)
-  const hasRedFlags = (r.red||[]).length;
-  if(hasRedFlags>=3) legal=1;
-  else if(hasRedFlags===2) legal=4;
-  else if(hasRedFlags===1) legal=6;
-  else legal=10;
-
-  const raw = (reg*3.5 + client*2.5 + emp*2.0 + comp*1.0 + own*0.5 + legal*0.5) / 10;
+// Score calculation
+function calcScore(r) {
+  let total=0, count=0;
+  const gStr=(r.scores?.google||'');
+  const gMatch=gStr.match(/([\d.]+)★/);
+  if(gMatch){const g=parseFloat(gMatch[1]); total+=g*2; count+=2;}
+  const sStr=(r.scores?.staff||'');
+  const sMatch=sStr.match(/([\d.]+)/);
+  if(sMatch&&!sStr.toLowerCase().includes('not')){const s=parseFloat(sMatch[1]); total+=s*1.5; count+=1.5;}
+  const compStr=(r.scores?.complaints||'').toLowerCase();
+  let comp=5;
+  if(compStr.includes('none')||compStr.includes('zero')||compStr.includes('clean')) comp=10;
+  else if(compStr.includes('minor')||compStr.includes('1 ')) comp=7;
+  else if(compStr.includes('multiple')||compStr.includes('several')||compStr.includes('watch list')) comp=2;
+  else if(compStr.includes('not found')) comp=5;
+  total+=comp*1.5; count+=1.5;
+  const greenBonus = (r.green?.length||0)*0.3;
+  const redPenalty = (r.red?.length||0)*0.4;
+  let raw = count>0 ? (total/count)*2 + greenBonus - redPenalty : 5;
   return Math.min(10, Math.max(1, Math.round(raw*10)/10));
 }
 
-function scoreColor(s){
-  if(s>=8) return 'sc-good';
-  if(s>=6) return 'sc-warn';
-  return 'sc-bad';
-}
+function scoreColor(s){ return s>=8?'#2d6a4f':s>=6.5?'#b5700a':'#a32d2d'; }
+function scoreBg(s){ return s>=8?'#edf7f0':s>=6.5?'#fef7ec':'#fdf0f0'; }
+function scoreLabel(s){ return s>=8.5?'Excellent':s>=7.5?'Good':s>=6?'Mixed signals':'High concern'; }
 
-function scoreBar(score){
-  const pct = (score/10)*100;
-  const col = score>=8?'var(--sage)':score>=6?'#B07D2A':'#A32D2D';
-  return `<div style="margin:12px 0 16px;">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
-      <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);">CareCircle Intelligence Score</span>
-      <span style="font-size:1.6rem;font-weight:700;font-family:'Playfair Display',serif;color:${col};">${score}/10</span>
-    </div>
-    <div style="height:8px;background:var(--sage-pale);border-radius:100px;overflow:hidden;">
-      <div style="height:100%;width:${pct}%;background:${col};border-radius:100px;transition:width 0.6s ease;"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.68rem;color:var(--text-muted);">
-      <span>Weights: Regulatory 35% · Client Reviews 25% · Staff 20% · Complaints 10% · Ownership 5% · Legal 5%</span>
-    </div>
-  </div>`;
-}
-
-function scRender(r){
-  const el=document.getElementById('sc-results');
-  const computedScore = calcScore(r);
+// Render
+function scRender(r) {
+  const el = document.getElementById('sc-results');
   const storedScore = parseFloat((r.scores?.overall||'0').replace(/[^0-9.]/g,''));
-  const displayScore = storedScore > 0 ? storedScore : computedScore;
-  const scoreColor = displayScore >= 8 ? '#2d6a4f' : displayScore >= 6.5 ? '#b5700a' : '#a32d2d';
-  const scoreBg    = displayScore >= 8 ? '#edf7f0' : displayScore >= 6.5 ? '#fef7ec' : '#fdf0f0';
-  const scoreLabel = displayScore >= 8.5 ? 'Excellent' : displayScore >= 7.5 ? 'Good' : displayScore >= 6 ? 'Mixed signals' : 'High concern';
-  const ownerType  = (r.ownership||'').includes('Independent')||(r.ownership||'').includes('family') ? '🟢 Independent' : (r.ownership||'').includes('Franchise') ? '🟡 Franchise' : (r.ownership||'').includes('Corporate')||(r.ownership||'').includes('chain') ? '🔴 Corporate chain' : '⚪ Unknown';
+  const score = storedScore > 0 ? storedScore : calcScore(r);
+  const sCol = scoreColor(score);
+  const sBg = scoreBg(score);
+  const sLabel = scoreLabel(score);
+  const ownerType = (r.ownership||'').includes('Independent')||(r.ownership||'').includes('family') ? '🟢 Independent' : (r.ownership||'').includes('Franchise') ? '🟡 Franchise' : (r.ownership||'').includes('Corporate')||(r.ownership||'').includes('chain') ? '🔴 Corporate' : '⚪ Unknown';
+  
+  const redCount = r.red?.length || 0;
+  const greenCount = r.green?.length || 0;
+  const findingsCount = r.findings?.length || 0;
+  const quotesCount = r.quotes?.length || 0;
 
-  let html = `
-  <div style="background:white;border-radius:16px;border:1.5px solid #e5e5e0;overflow:hidden;font-family:'DM Sans',sans-serif;">
-
-    <!-- HEADER -->
-    <div style="padding:24px 28px 20px;border-bottom:1px solid #f0ede8;">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-        <div>
-          <div style="font-size:1.4rem;font-weight:700;color:#2c2c2a;margin-bottom:4px;">${r.name}</div>
-          <div style="font-size:0.85rem;color:#888;margin-bottom:6px;">${r.loc} &nbsp;·&nbsp; ${r.type}</div>
-          <div style="font-size:0.8rem;color:#aaa;">${r.ownership||''}${r.founded?' &nbsp;·&nbsp; Est. '+r.founded:''}</div>
-        </div>
-        <div style="text-align:center;min-width:90px;padding:14px 20px;border-radius:12px;background:${scoreBg};border:1.5px solid ${scoreColor}22;">
-          <div style="font-size:2.5rem;font-weight:800;color:${scoreColor};line-height:1;">${displayScore.toFixed(1)}</div>
-          <div style="font-size:0.7rem;font-weight:600;color:${scoreColor};text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">${scoreLabel}</div>
-          <div style="font-size:0.65rem;color:#aaa;margin-top:2px;">out of 10</div>
-        </div>
+  let html = `<div class="sc-card">
+    <div class="sc-card-header" style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+      <div style="flex:1; min-width:200px;">
+        <div class="sc-card-name">${r.name}</div>
+        <div class="sc-card-meta">${r.loc} · ${r.type}</div>
+        <div class="sc-card-owner">${r.ownership||''}${r.founded?' · Est. '+r.founded:''}</div>
+      </div>
+      <div class="sc-score-badge" style="background:${sBg}; border:1.5px solid ${sCol}22;">
+        <div class="sc-score-num" style="color:${sCol};">${score.toFixed(1)}</div>
+        <div class="sc-score-label" style="color:${sCol};">${sLabel}</div>
+        <div class="sc-score-of">out of 10</div>
       </div>
     </div>
-
-    <!-- SCORE GRID -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #f0ede8;">
-      ${[
-        {label:'Client Rating', val:r.scores.google, cls:r.sc.google},
-        {label:'Staff Satisfaction', val:r.scores.staff, cls:r.sc.staff},
-        {label:'State Complaints', val:r.scores.complaints, cls:r.sc.complaints},
-        {label:'Ownership', val:ownerType, cls:''}
-      ].map((s,i)=>`
-        <div style="padding:14px 16px;${i<3?'border-right:1px solid #f0ede8;':''}">
-          <div style="font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;font-weight:500;">${s.label}</div>
-          <div style="font-size:1.05rem;font-weight:700;color:${s.cls==='sc-bad'?'#a32d2d':s.cls==='sc-warn'?'#b5700a':'#2d6a4f'};">${s.val}</div>
+    
+    <div class="sc-scores-grid">
+      ${[{l:'Client Rating',v:r.scores.google,c:r.sc.google},{l:'Staff Satisfaction',v:r.scores.staff,c:r.sc.staff},{l:'State Complaints',v:r.scores.complaints,c:r.sc.complaints},{l:'Ownership',v:ownerType,c:''}].map(s=>`
+        <div class="sc-score-cell">
+          <div class="sc-score-cell-label">${s.l}</div>
+          <div class="sc-score-cell-val" style="color:${s.c==='sc-bad'?'#a32d2d':s.c==='sc-warn'?'#b5700a':'#2d6a4f'};">${s.v}</div>
         </div>`).join('')}
     </div>`;
 
-  // RED FLAGS
-  if(r.red&&r.red.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#a32d2d;margin-bottom:12px;">⚠ Concerns</div>`;
-    r.red.forEach(f=>{html+=`
-      <div style="background:#fdf5f5;border-left:3px solid #a32d2d;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;">
-        <div style="font-size:1.05rem;font-weight:700;color:#a32d2d;margin-bottom:4px;">${f.t}</div>
-        <div style="font-size:0.82rem;color:#666;line-height:1.55;">${f.b}</div>
-      </div>`;});
-    html+=`</div>`;
+  // Concerns (collapsible, open by default if there are concerns)
+  if (redCount) {
+    html += `<div class="sc-section ${redCount?'open':''}">
+      <button class="sc-section-toggle" onclick="this.parentElement.classList.toggle('open')">
+        <span class="sc-section-title red">⚠ Concerns (${redCount})</span>
+        <span class="sc-section-arrow">▼</span>
+      </button>
+      <div class="sc-section-body">
+        ${r.red.map(f=>`<div class="sc-flag red"><div class="sc-flag-title">${f.t}</div><div class="sc-flag-body">${f.b}</div></div>`).join('')}
+      </div>
+    </div>`;
   }
 
-  // GREEN FLAGS
-  if(r.green&&r.green.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#2d6a4f;margin-bottom:12px;">✓ Verified Strengths</div>`;
-    r.green.forEach(f=>{html+=`
-      <div style="background:#f0f7f2;border-left:3px solid #5C7A5F;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;">
-        <div style="font-size:1.05rem;font-weight:700;color:#2d6a4f;margin-bottom:4px;">${f.t}</div>
-        <div style="font-size:0.82rem;color:#555;line-height:1.55;">${f.b}</div>
-      </div>`;});
-    html+=`</div>`;
+  // Strengths (collapsible, open by default)
+  if (greenCount) {
+    html += `<div class="sc-section ${greenCount?'open':''}">
+      <button class="sc-section-toggle" onclick="this.parentElement.classList.toggle('open')">
+        <span class="sc-section-title green">✓ Verified Strengths (${greenCount})</span>
+        <span class="sc-section-arrow">▼</span>
+      </button>
+      <div class="sc-section-body">
+        ${r.green.map(f=>`<div class="sc-flag green"><div class="sc-flag-title">${f.t}</div><div class="sc-flag-body">${f.b}</div></div>`).join('')}
+      </div>
+    </div>`;
   }
 
-  // FINDINGS
-  if(r.findings&&r.findings.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:12px;">📋 Findings by Source</div>`;
-    r.findings.forEach(f=>{
-      const ic = f.t==='bad'?'#a32d2d':f.t==='warn'?'#b5700a':f.t==='good'?'#2d6a4f':'#5C7A5F';
-      html+=`
-      <div style="display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;">
-        <div style="width:22px;height:22px;border-radius:50%;background:${ic};color:white;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${SC_ICONS[f.t]||'i'}</div>
-        <div>
-          <div style="font-size:1.05rem;font-weight:700;color:#2c2c2a;margin-bottom:2px;">${f.title}</div>
-          <div style="font-size:0.82rem;color:#555;line-height:1.5;margin-bottom:3px;">${f.detail}</div>
-          <div style="font-size:0.72rem;color:#aaa;">Source: ${f.src}</div>
-        </div>
-      </div>`;});
-    html+=`</div>`;
+  // Findings (collapsed by default)
+  if (findingsCount) {
+    html += `<div class="sc-section">
+      <button class="sc-section-toggle" onclick="this.parentElement.classList.toggle('open')">
+        <span class="sc-section-title neutral">📋 Findings by Source (${findingsCount})</span>
+        <span class="sc-section-arrow">▼</span>
+      </button>
+      <div class="sc-section-body">
+        ${r.findings.map(f=>{
+          const ic=f.t==='bad'?'bad':f.t==='warn'?'warn':f.t==='good'?'good':'info';
+          return `<div class="sc-finding">
+            <div class="sc-finding-icon ${ic}">${SC_ICONS[f.t]||'i'}</div>
+            <div>
+              <div class="sc-finding-title">${f.title}</div>
+              <div class="sc-finding-detail">${f.detail}</div>
+              <div class="sc-finding-src">Source: ${f.src}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
   }
 
-  // QUOTES
-  if(r.quotes&&r.quotes.length){
-    html+=`<div style="padding:20px 28px;border-bottom:1px solid #f0ede8;">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:12px;">💬 What Families Said</div>`;
-    r.quotes.forEach(q=>{html+=`
-      <div style="background:#fafaf8;border-radius:10px;padding:14px 18px;margin-bottom:10px;border:1px solid #ebe8e2;">
-        <div style="font-size:0.88rem;color:#444;line-height:1.6;font-style:italic;margin-bottom:8px;">"${q.t}"</div>
-        <div style="font-size:0.75rem;color:#aaa;">${q.a}</div>
-      </div>`;});
-    html+=`</div>`;
+  // Quotes (collapsed by default)
+  if (quotesCount) {
+    html += `<div class="sc-section">
+      <button class="sc-section-toggle" onclick="this.parentElement.classList.toggle('open')">
+        <span class="sc-section-title neutral">💬 What Families Said (${quotesCount})</span>
+        <span class="sc-section-arrow">▼</span>
+      </button>
+      <div class="sc-section-body">
+        ${r.quotes.map(q=>`<div class="sc-quote"><div class="sc-quote-text">"${q.t}"</div><div class="sc-quote-attr">${q.a}</div></div>`).join('')}
+      </div>
+    </div>`;
   }
 
-  // BOTTOM ASSESSMENT
-  if(r.compare||r.gaps){
-    html+=`<div style="padding:20px 28px;">`;
-    if(r.compare){html+=`
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin-bottom:8px;">📊 CareCircle Assessment</div>
-      <div style="font-size:0.86rem;color:#444;line-height:1.65;margin-bottom:16px;padding:14px 18px;background:#f5f3ef;border-radius:10px;">${r.compare}</div>`;}
-    if(r.gaps){html+=`
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#bbb;margin-bottom:6px;">Data Gaps</div>
-      <div style="font-size:0.78rem;color:#aaa;line-height:1.6;">${r.gaps}</div>`;}
-    html+=`</div>`;
+  // Assessment
+  if (r.compare || r.gaps) {
+    html += `<div class="sc-section open">
+      <button class="sc-section-toggle" onclick="this.parentElement.classList.toggle('open')">
+        <span class="sc-section-title neutral">📊 CareCircle Assessment</span>
+        <span class="sc-section-arrow">▼</span>
+      </button>
+      <div class="sc-section-body">
+        ${r.compare?`<div class="sc-assess">${r.compare}</div>`:''}
+        ${r.gaps?`<div class="sc-gaps"><strong>Data gaps:</strong> ${r.gaps}</div>`:''}
+      </div>
+    </div>`;
   }
 
-  html+=`</div>
+  html += `</div>`;
 
-  <!-- CALL TO ACTION BELOW REPORT -->
-  <div style="margin-top:16px;padding:18px 20px;background:#edf4ee;border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-    <div style="font-size:0.88rem;color:#2d6a4f;font-weight:600;">Need help evaluating this agency or finding a better match?</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="tel:8503414324" style="background:#5C7A5F;color:white;padding:9px 18px;border-radius:100px;font-size:0.82rem;font-weight:600;text-decoration:none;">📞 Call Now</a>
-      <a href="sms:8503414324" style="background:white;color:#5C7A5F;border:1.5px solid #5C7A5F;padding:9px 18px;border-radius:100px;font-size:0.82rem;font-weight:600;text-decoration:none;">💬 Text Us</a>
+  // CTA
+  html += `<div class="sc-cta">
+    <div class="sc-cta-text">Need help evaluating this provider?</div>
+    <div class="sc-cta-btns">
+      <a href="tel:8503414324" class="sc-cta-btn primary">📞 Call Now</a>
+      <a href="sms:8503414324" class="sc-cta-btn secondary">💬 Text Us</a>
     </div>
   </div>`;
 
-  el.innerHTML=html;
-  el.style.display='block';
-  document.getElementById('scanner').scrollIntoView({behavior:'smooth',block:'start'});
+  // If we have a compare provider saved, show side by side
+  if (compareProvider) {
+    document.getElementById('sc-compare').innerHTML = `
+      <div class="sc-compare-grid">
+        <div>${compareProvider}</div>
+        <div>${html.split('</div><div class="sc-cta">')[0]}</div></div>
+      </div>`;
+    document.getElementById('sc-compare').style.display = 'block';
+    document.getElementById('sc-results').style.display = 'none';
+    compareProvider = null;
+    document.getElementById('compare-btn').innerHTML = '+ Compare with another provider';
+    document.getElementById('compare-btn').style.background = 'white';
+    scInput.placeholder = 'Search providers...';
+  } else {
+    el.innerHTML = html;
+    el.style.display = 'block';
+    document.getElementById('sc-compare').style.display = 'none';
+  }
+  
+  document.getElementById('scanner').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-function scStatus(msg,cls){
-  const el=document.getElementById('sc-status');
-  el.innerHTML=msg;
-  el.style.color=cls==='sc-bad'?'#A32D2D':cls==='sc-good'?'var(--sage)':'var(--text-muted)';
+function scStatus(msg, cls) {
+  const el = document.getElementById('sc-status');
+  el.innerHTML = msg;
+  el.style.color = cls==='sc-bad'?'#A32D2D':cls==='sc-good'?'var(--sage)':'var(--text-muted)';
 }
 
-document.getElementById('sc-input').addEventListener('keydown',e=>{if(e.key==='Enter')scScan();});
+function showSubmitForm() {
+  document.getElementById('submit-form').style.display = 'block';
+  document.getElementById('submit-name').focus();
+}
 
-function submitFacility(){
+function submitFacility() {
   const name = document.getElementById('submit-name').value.trim();
   const city = document.getElementById('submit-city').value.trim();
   const statusEl = document.getElementById('submit-status');
-  if(!name){statusEl.textContent='Please enter a provider name.';return;}
-  statusEl.innerHTML='<span style="color:var(--sage);">Submitting... We\'ll research this provider and notify you when it\'s ready.</span>';
+  if(!name){statusEl.textContent='Please enter a provider name.'; return;}
+  statusEl.innerHTML='<span style="color:var(--sage);">Submitting...</span>';
   
   fetch('/api/submit-lead', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
-      name: 'Facility Submission',
-      phone: '',
-      zip: city,
-      careType: 'FACILITY RESEARCH REQUEST: ' + name + ' in ' + city,
-      relationship: 'Public submission',
-      urgency: 'Research request'
+      name:'Facility Request',
+      phone:'',
+      zip:city||'NW FL',
+      careType:'FACILITY RESEARCH: '+name+(city?' in '+city:''),
+      relationship:'Public submission',
+      urgency:'Research request'
     })
-  }).then(r=>r.json()).then(d=>{
-    statusEl.innerHTML='<span style="color:var(--sage);">✓ Submitted! We\'ll research <strong>' + name + '</strong> and add them to the scanner. Check back in 24 hours.</span>';
-  }).catch(e=>{
-    statusEl.innerHTML='<span style="color:var(--sage);">✓ Request received! We\'ll research <strong>' + name + '</strong> and add them soon.</span>';
+  }).then(()=>{
+    statusEl.innerHTML='<span style="color:var(--sage);">✓ Submitted! We\'ll research <strong>'+name+'</strong> and add them within 24 hours.</span>';
+  }).catch(()=>{
+    statusEl.innerHTML='<span style="color:var(--sage);">✓ Request received! We\'ll add <strong>'+name+'</strong> soon.</span>';
   });
 }
+
+// Spinner CSS
+document.head.insertAdjacentHTML('beforeend','<style>.sc-spinner{display:inline-block;width:12px;height:12px;border:2px solid rgba(92,122,95,0.2);border-top-color:var(--sage);border-radius:50%;animation:scSpin 0.7s linear infinite;vertical-align:middle;margin-right:6px;}@keyframes scSpin{to{transform:rotate(360deg)}}</style>');
+
+// Enter key on search
+scInput.addEventListener('keydown', function(e){
+  if(e.key==='Enter' && ddIndex<0) scScan();
+});
 </script>
+
 
 </body>
 </html>
