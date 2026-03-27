@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senior Care for Men — Veterans & Retired Professionals | CareCircle Network</title>
+<meta name="description" content="The senior care system wasn't built for him. We help families find providers who understand military service, professional identity, and the difference between resistance and aggression. Northwest Florida.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage: #5C7A5F;
+    --sage-light: #8FAF92;
+    --sage-pale: #EFF5F0;
+    --cream: #FAF8F4;
+    --warm-dark: #1C2419;
+    --warm-mid: #3D4F3F;
+    --gold: #C8A96E;
+    --gold-light: #E8D5A8;
+    --terracotta: #C4714A;
+    --text-body: #3A4A3C;
+    --text-muted: #7A8E7C;
+    --shadow-soft: 0 4px 24px rgba(28,36,25,0.10);
+    --shadow-card: 0 2px 16px rgba(28,36,25,0.06);
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(250,248,244,0.95); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(92,122,95,0.12); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--warm-dark); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo-mark { width: 34px; height: 34px; background: var(--sage); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: white; font-weight: 700; font-family: 'DM Sans', sans-serif; flex-shrink: 0; }
+  .nav-center { display: flex; align-items: center; gap: 28px; }
+  .nav-center a { font-size: 0.875rem; font-weight: 500; color: var(--text-body); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+  .nav-center a:hover { color: var(--sage); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-phone { font-size: 0.875rem; font-weight: 600; color: var(--sage); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .nav-cta { background: var(--sage); color: white !important; padding: 10px 20px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: background 0.2s; white-space: nowrap; }
+  .nav-cta:hover { background: var(--warm-mid); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--warm-dark); border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 199; background: rgba(250,248,244,0.98); backdrop-filter: blur(14px); padding: 24px 5% 32px; border-bottom: 1px solid rgba(92,122,95,0.12); flex-direction: column; gap: 0; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { padding: 14px 0; font-size: 1rem; font-weight: 500; color: var(--text-body); text-decoration: none; border-bottom: 1px solid rgba(92,122,95,0.08); transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--sage); }
+  .mobile-menu .mobile-phone { margin-top: 20px; font-size: 1.1rem; font-weight: 700; color: var(--sage); border-bottom: none; display: flex; align-items: center; gap: 8px; }
+  .mobile-menu .mobile-cta { margin-top: 12px; background: var(--sage); color: white; padding: 14px 24px; border-radius: 100px; text-align: center; font-weight: 600; border-bottom: none; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--warm-dark) 0%, #2a3a2c 60%, var(--warm-mid) 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 120px 5% 80px; text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 900px;
+    background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 65%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.2em; color: var(--gold); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; display: block; width: 40px; height: 1px; background: rgba(200,169,110,0.4);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    color: white; line-height: 1.15;
+    max-width: 800px; margin: 0 auto 24px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 1.1rem; color: rgba(255,255,255,0.6);
+    max-width: 580px; margin: 0 auto 48px; line-height: 1.75; font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .btn-gold { background: var(--gold); color: var(--warm-dark); padding: 15px 32px; border-radius: 100px; font-size: 0.95rem; font-weight: 700; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline-white { background: transparent; color: rgba(255,255,255,0.8); padding: 15px 30px; border-radius: 100px; font-size: 0.95rem; font-weight: 500; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.25); transition: all 0.25s; }
+  .btn-outline-white:hover { border-color: rgba(255,255,255,0.6); color: white; }
+  .hero-scroll { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.25); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .hero-scroll::after { content: '↓'; font-size: 1rem; }
+
+  /* STAT BAR */
+  .stat-bar { background: var(--warm-dark); padding: 0; border-top: 1px solid rgba(255,255,255,0.06); }
+  .stat-bar-inner { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stat-item { padding: 28px 24px; text-align: center; border-right: 1px solid rgba(255,255,255,0.06); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold); display: block; line-height: 1; }
+  .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 6px; line-height: 1.4; }
+
+  /* BODY SECTIONS */
+  .section { padding: 90px 5%; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--sage); margin-bottom: 14px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--warm-dark); line-height: 1.2; margin-bottom: 20px; }
+  .section-body { font-size: 1rem; color: var(--text-body); line-height: 1.8; max-width: 680px; }
+  .section-body p { margin-bottom: 18px; }
+  .section-body p:last-child { margin-bottom: 0; }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .two-col.reverse { direction: rtl; }
+  .two-col.reverse > * { direction: ltr; }
+
+  /* PULLQUOTE */
+  .pullquote {
+    background: var(--warm-dark); border-radius: var(--radius-lg);
+    padding: 40px 48px; margin: 48px 0; position: relative;
+  }
+  .pullquote::before {
+    content: '"'; font-family: 'Playfair Display', serif;
+    font-size: 8rem; color: rgba(200,169,110,0.15); line-height: 1;
+    position: absolute; top: 10px; left: 32px;
+  }
+  .pullquote p {
+    font-family: 'Playfair Display', serif; font-size: 1.4rem;
+    color: white; line-height: 1.55; font-style: italic;
+    position: relative; z-index: 1;
+  }
+  .pullquote cite { display: block; margin-top: 16px; font-size: 0.8rem; color: var(--gold); font-style: normal; font-family: 'DM Sans', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* REALITY SECTION */
+  .reality-section { background: var(--sage-pale); padding: 90px 5%; }
+  .reality-inner { max-width: 1200px; margin: 0 auto; }
+  .reality-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
+  .reality-card { background: white; border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-card); border-top: 4px solid var(--sage); }
+  .reality-card.danger { border-top-color: var(--terracotta); }
+  .reality-card.gold { border-top-color: var(--gold); }
+  .reality-card-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+  .reality-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--warm-dark); margin-bottom: 12px; line-height: 1.3; }
+  .reality-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; }
+
+  /* WARNING SECTION */
+  .warning-section { background: var(--warm-dark); padding: 90px 5%; position: relative; overflow: hidden; }
+  .warning-section::before { content: ''; position: absolute; top: -150px; right: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(196,113,74,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .warning-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+  .warning-section .section-label { color: var(--terracotta); }
+  .warning-section .section-title { color: white; }
+  .warning-section .section-body { color: rgba(255,255,255,0.65); }
+  .warning-list { margin-top: 44px; display: flex; flex-direction: column; gap: 0; }
+  .warning-item { display: flex; gap: 24px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .warning-item:last-child { border-bottom: none; }
+  .warning-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: rgba(196,113,74,0.3); line-height: 1; flex-shrink: 0; width: 60px; }
+  .warning-body h3 { font-size: 1rem; font-weight: 600; color: white; margin-bottom: 8px; }
+  .warning-body p { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.75; }
+  .warning-body strong { color: rgba(255,255,255,0.85); }
+
+  /* WHAT WE DO */
+  .what-section { padding: 90px 5%; }
+  .what-inner { max-width: 1200px; margin: 0 auto; }
+  .what-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 52px; }
+  .what-card { background: white; border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-card); border: 1px solid rgba(92,122,95,0.1); display: flex; gap: 20px; align-items: flex-start; transition: all 0.3s; }
+  .what-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+  .what-icon { width: 48px; height: 48px; background: var(--sage-pale); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+  .what-card h3 { font-size: 1rem; font-weight: 600; color: var(--warm-dark); margin-bottom: 8px; }
+  .what-card p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* QUESTIONS */
+  .questions-section { background: var(--sage-pale); padding: 90px 5%; }
+  .questions-inner { max-width: 800px; margin: 0 auto; }
+  .question-block { background: white; border-radius: var(--radius-lg); padding: 28px 32px; margin-bottom: 16px; border: 1px solid rgba(92,122,95,0.1); box-shadow: var(--shadow-card); }
+  .question-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--sage); margin-bottom: 8px; }
+  .question-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--warm-dark); margin-bottom: 10px; line-height: 1.4; }
+  .question-why { font-size: 0.86rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* FLORIDA CONTEXT */
+  .florida-section { padding: 90px 5%; }
+  .florida-inner { max-width: 1200px; margin: 0 auto; }
+  .florida-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 52px; }
+  .florida-stat-stack { display: flex; flex-direction: column; gap: 16px; }
+  .florida-stat { background: var(--warm-dark); border-radius: var(--radius-lg); padding: 24px 28px; display: flex; gap: 20px; align-items: center; }
+  .florida-stat-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--gold); flex-shrink: 0; line-height: 1; }
+  .florida-stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+  .florida-stat-label strong { display: block; color: white; font-size: 0.95rem; margin-bottom: 2px; }
+
+  /* CTA */
+  .cta-section { padding: 90px 5%; background: linear-gradient(135deg, var(--warm-dark) 0%, #2a3a2c 100%); text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); color: white; margin-bottom: 16px; position: relative; z-index: 1; }
+  .cta-section p { font-size: 1rem; color: rgba(255,255,255,0.55); margin-bottom: 40px; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.7; position: relative; z-index: 1; }
+  .cta-phone { font-size: 1.6rem; font-weight: 700; color: var(--gold); text-decoration: none; display: block; margin-bottom: 32px; letter-spacing: 0.02em; position: relative; z-index: 1; }
+  .cta-phone:hover { color: var(--gold-light); }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .btn-white { background: white; color: var(--sage); padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 700; text-decoration: none; transition: all 0.25s; }
+  .btn-white:hover { background: var(--cream); transform: translateY(-2px); }
+  .btn-outline-gold { background: transparent; color: var(--gold); padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 600; text-decoration: none; border: 1.5px solid rgba(200,169,110,0.4); transition: all 0.25s; }
+  .btn-outline-gold:hover { border-color: var(--gold); }
+
+  /* FOOTER */
+  footer { background: var(--warm-dark); padding: 40px 5% 24px; border-top: 1px solid rgba(255,255,255,0.06); }
+
+  /* DISCLAIMER */
+  .source-note { font-size: 0.72rem; color: var(--text-muted); margin-top: 16px; font-style: italic; line-height: 1.6; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) { .nav-center { display: none; } .hamburger { display: flex; } .two-col, .florida-grid { grid-template-columns: 1fr; gap: 40px; } .two-col.reverse { direction: ltr; } }
+  @media (max-width: 768px) { .stat-bar-inner { grid-template-columns: repeat(2, 1fr); } .reality-grid, .what-grid { grid-template-columns: 1fr; } .pullquote { padding: 28px 24px; } .pullquote p { font-size: 1.15rem; } }
+  @media (max-width: 600px) { .nav-phone { display: none; } .stat-bar-inner { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo"><div class="nav-logo-mark">CC</div>CareCircle Network</a>
+  <div class="nav-center">
+    <a href="/#how-it-works">How It Works</a>
+    <a href="/research">Research Providers</a>
+    <a href="/partners">For Partners</a>
+    <a href="/blog">Blog</a>
+  </div>
+  <div class="nav-right">
+    <a href="tel:8503414324" class="nav-phone">📞 Call Now</a>
+    <a href="/#find-care" class="nav-cta">Get Matched Free</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/#how-it-works" onclick="closeMobile()">How It Works</a>
+  <a href="/research" onclick="closeMobile()">Research Providers</a>
+  <a href="/partners" onclick="closeMobile()">For Partners</a>
+  <a href="/blog" onclick="closeMobile()">Blog</a>
+  <a href="tel:8503414324" class="mobile-phone">📞 Call Now</a>
+  <a href="/#find-care" class="mobile-cta" onclick="closeMobile()">Get Matched Free →</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Veterans · Retired Professionals · Northwest Florida</div>
+  <h1>He spent his life in command.<br><em>The last thing he needs is to be handled.</em></h1>
+  <p class="hero-sub">The senior care system was built for a different kind of patient. If your father, grandfather, or husband spent 30 years leading — in uniform or in a boardroom — we know what he needs. And we know what to watch for.</p>
+  <div class="hero-actions">
+    <a href="tel:8503414324" class="btn-gold">📞 Call 850-341-4324</a>
+    <a href="/#find-care" class="btn-outline-white">Get Matched Free →</a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</div>
+
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="stat-bar-inner">
+    <div class="stat-item">
+      <span class="stat-num">179K</span>
+      <div class="stat-label">nursing home residents receive inappropriate antipsychotics every week — Human Rights Watch</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">87%</span>
+      <div class="stat-label">of professional senior caregivers are women — a workforce demographic most men never considered</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">16%</span>
+      <div class="stat-label">of nursing home residents given antipsychotics with no appropriate diagnosis — federal government data</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">55%</span>
+      <div class="stat-label">of America's 16.5M veterans are age 60 or older and navigating the care system right now</div>
+    </div>
+  </div>
+</div>
+
+<!-- THE PROBLEM -->
+<div style="padding: 90px 5%;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="two-col">
+      <div>
+        <div class="section-label">The Problem Nobody Talks About</div>
+        <h2 class="section-title">Your father isn't being difficult. The system just wasn't built for him.</h2>
+        <div class="section-body">
+          <p>The retired Navy captain who gets combative at 2am isn't a behavior problem. He's a man with 35 years of service who doesn't recognize his surroundings and is responding the only way he knows how — by taking command of a situation that feels like a threat.</p>
+          <p>The retired surgeon who refuses a bath from a young aide he's never met isn't being resistant. He spent his entire career in charge. His identity is built on competence, dignity, and being in control. What looks like non-compliance to an undertrained staff member is grief.</p>
+          <p>The retired executive who asks sharp questions about his medication isn't paranoid. He's doing exactly what he did for 40 years when someone proposed something that didn't make sense to him.</p>
+          <p>In each of these cases, the wrong care setting's response is the same: a prescription. A sedative. A note in the file that says "combative" or "resistant to care." And a family that gets a call describing a man they don't recognize — because the man they know has been chemically subdued.</p>
+        </div>
+      </div>
+      <div>
+        <div class="pullquote">
+          <p>Staff justify using antipsychotic drugs on people with dementia because they interpret urgent expressions of pain or distress as disruptive behavior that needs to be suppressed.</p>
+          <cite>Human Rights Watch, "They Want Docile" — Report on Chemical Restraints in U.S. Nursing Homes</cite>
+        </div>
+        <div style="background: white; border-radius: var(--radius-lg); padding: 28px 32px; border: 1px solid rgba(92,122,95,0.1); box-shadow: var(--shadow-card); margin-top: 20px;">
+          <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--terracotta); margin-bottom: 10px;">Breaking — March 2026</div>
+          <p style="font-size: 0.9rem; color: var(--text-body); line-height: 1.7;">The Washington Post reported this month that nursing homes across the U.S. are creating false schizophrenia diagnoses in residents' files specifically to justify antipsychotic prescriptions — a practice a government watchdog called its sharpest finding yet on a persistent form of documented abuse.</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; font-style: italic;">Source: Washington Post, March 19, 2026 — U.S. Department of Health and Human Services Office of Inspector General</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REALITY CARDS -->
+<div class="reality-section">
+  <div class="reality-inner">
+    <div class="section-label">Why This Happens</div>
+    <h2 class="section-title">Three realities families need to understand</h2>
+    <div class="reality-grid">
+      <div class="reality-card danger">
+        <span class="reality-card-icon">💊</span>
+        <h3>Chemical restraint is cheaper than care</h3>
+        <p>Antipsychotic medications are not approved for dementia. The FDA has required a black box warning on these drugs since 2008 noting an increased risk of death in elderly patients. And yet nursing homes give them to an estimated 179,000 residents every week without an appropriate diagnosis — because sedation is cheaper than proper staffing and engagement.</p>
+      </div>
+      <div class="reality-card danger">
+        <span class="reality-card-icon">👩‍⚕️</span>
+        <h3>The workforce was built around a different patient</h3>
+        <p>More than 75% of professional caregivers are women. That's not a criticism — it's a demographic reality that creates a specific friction for certain men. A retired military officer, a physician, a man who spent his career in authority does not naturally defer to a stranger half his age, regardless of that person's gender. Facilities that don't understand this dynamic label it as a problem to be managed. It isn't.</p>
+      </div>
+      <div class="reality-card gold">
+        <span class="reality-card-icon">🔍</span>
+        <h3>Families are usually the last to know</h3>
+        <p>Men from military and professional backgrounds — and their families — are conditioned not to make a fuss. Distance compounds this: most adult children don't live near their parents. By the time a family notices that Dad seems foggy, slower, less himself — the sedation may have been happening for months. The documentation will say "improved behavioral compliance." What it won't say is what was prescribed to achieve it.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WARNING SIGNS -->
+<div class="warning-section">
+  <div class="warning-inner">
+    <div class="section-label">Warning Signs</div>
+    <h2 class="section-title" style="color:white;">What to watch for if your loved one is already in a facility</h2>
+    <p class="section-body" style="color:rgba(255,255,255,0.55); margin-bottom: 0;">These are not proof of chemical restraint — but they are the questions you have the right to ask, and that any reputable facility should be able to answer directly.</p>
+    <div class="warning-list">
+      <div class="warning-item">
+        <div class="warning-num">01</div>
+        <div class="warning-body">
+          <h3>Sudden personality change</h3>
+          <p>If a man who was sharp, engaged, and present becomes flat, slow, or unusually passive — especially after a period of being labeled "difficult" or "agitated" — that shift warrants a direct conversation about his current medication regimen. <strong>Ask for a complete list of every medication he is currently taking and when each was added.</strong></p>
+        </div>
+      </div>
+      <div class="warning-item">
+        <div class="warning-num">02</div>
+        <div class="warning-body">
+          <h3>New balance or gait problems</h3>
+          <p>Antipsychotics cause Parkinson's-like symptoms — tremors, shuffling gait, instability. Falls that appear suddenly in a man who was previously mobile are a documented side effect of chemical restraint. <strong>Ask whether any new medications coincide with the onset of balance problems.</strong></p>
+        </div>
+      </div>
+      <div class="warning-item">
+        <div class="warning-num">03</div>
+        <div class="warning-body">
+          <h3>A new diagnosis that appeared in the file recently</h3>
+          <p>The Washington Post reported in March 2026 that nursing homes are intentionally creating false schizophrenia diagnoses to justify antipsychotic prescriptions. If your loved one suddenly has a psychiatric diagnosis he's never had before, ask who made that diagnosis, when, and what evaluation supported it. <strong>You have a legal right to this information.</strong></p>
+        </div>
+      </div>
+      <div class="warning-item">
+        <div class="warning-num">04</div>
+        <div class="warning-body">
+          <h3>Staff describing him in ways his family doesn't recognize</h3>
+          <p>If staff consistently describe a man his family knows as calm and competent as "aggressive," "combative," or "resistive" — and the family cannot reconcile those descriptions with the man they visit — that gap is worth investigating. It may reflect a care environment that doesn't understand him, a documentation pattern designed to justify medication, or both.</p>
+        </div>
+      </div>
+      <div class="warning-item">
+        <div class="warning-num">05</div>
+        <div class="warning-body">
+          <h3>Reluctance to let family visit unannounced</h3>
+          <p>Federal law gives family members the right to visit residents at any time. A facility that discourages unannounced visits or creates friction around them is worth examining. <strong>Unannounced visits are the single most reliable way to assess the actual daily care environment.</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT CARECIRCLE DOES -->
+<div class="what-section">
+  <div class="what-inner">
+    <div class="section-label">How CareCircle Helps</div>
+    <h2 class="section-title">What we do differently for this population</h2>
+    <p style="font-size: 1rem; color: var(--text-muted); max-width: 580px; line-height: 1.75; margin-bottom: 0;">We're not a national platform. We're a local service that knows this market, knows these providers, and asks the questions that nobody else asks before a family makes a placement decision.</p>
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-icon">👨‍⚕️</div>
+        <div>
+          <h3>We ask about male caregiver availability</h3>
+          <p>When vetting home care partners, we ask directly: what percentage of your caregivers are male? Do you have male CNAs available for personal care? For men who prefer same-gender intimate care, that question matters — and almost nobody thinks to ask it.</p>
+        </div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">🎖️</div>
+        <div>
+          <h3>We flag providers with military experience</h3>
+          <p>Some home care agencies and facilities have caregivers or staff with military backgrounds. That shared context changes how care is delivered. We track this in our provider data and match accordingly.</p>
+        </div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">📋</div>
+        <div>
+          <h3>We check the chemical restraint indicators</h3>
+          <p>Our Intelligence Scanner cross-references CMS data, AHCA inspection records, and complaint histories. For memory care facilities in particular, we flag providers whose inspection records show patterns consistent with chemical restraint issues — resident rights violations, unnecessary drug citations, documentation problems.</p>
+        </div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">🏠</div>
+        <div>
+          <h3>We ask about VA benefits — every time</h3>
+          <p>Many veterans and their families don't know about VA Aid and Attendance — a pension benefit that can provide up to $1,911 per month toward senior care costs for qualifying single veterans. We discuss this on every call with a veteran's family. It often changes what's financially possible.</p>
+        </div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">🔒</div>
+        <div>
+          <h3>We don't earn more when you choose more expensive care</h3>
+          <p>A Place for Mom charges facilities one month's rent per placement — $3,500 to $7,000. Their advisor earns more when you choose a more expensive facility. CareCircle charges a flat $150 referral fee regardless of which provider you choose. Our incentive is a good match, not an expensive one.</p>
+        </div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">📞</div>
+        <div>
+          <h3>One person. One call. Local.</h3>
+          <p>When you call CareCircle, you talk to Chase — a real person in Pensacola who knows the providers he's recommending because he's been inside those facilities, talked to the staff, and read the inspection reports. You're not routed through a national call center. There's no aggressive follow-up. Just a straight answer about what we know.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTIONS TO ASK -->
+<div class="questions-section">
+  <div class="questions-inner">
+    <div class="section-label">Before You Choose a Facility</div>
+    <h2 class="section-title">Questions that protect him</h2>
+    <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 36px; line-height: 1.7;">These questions are for any facility or home care agency you're considering for a veteran or retired professional. A facility that cannot answer them clearly is telling you something.</p>
+
+    <div class="question-block">
+      <div class="question-label">On medication</div>
+      <div class="question-text">What is your current rate of antipsychotic prescriptions among memory care residents, and how does that compare to the CMS national average?</div>
+      <div class="question-why">Why it matters: CMS publishes this data. Facilities with high rates relative to diagnosis prevalence are a flag. Any facility that can't answer this question, or becomes defensive when asked, warrants further scrutiny.</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">On staffing</div>
+      <div class="question-text">Do you have male caregivers available for personal care, and can you match my loved one with one by request?</div>
+      <div class="question-why">Why it matters: Dignity in personal care is not a preference to be accommodated later — it should be a placement criterion. Asking this question upfront tells you how seriously the facility takes individual resident preferences.</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">On behavioral response</div>
+      <div class="question-text">When a resident displays agitation or behavioral changes, what is your protocol before medication is considered? What non-pharmacological interventions does your staff use?</div>
+      <div class="question-why">Why it matters: Federal regulations require facilities to attempt non-pharmacological approaches before resorting to medication. A facility that goes straight to "we involve the physician" without describing what they try first is operating at a level of care that puts your loved one at risk.</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">On family rights</div>
+      <div class="question-text">If a new medication is proposed for my loved one, what notification will our family receive before it is administered, and what is the consent process?</div>
+      <div class="question-why">Why it matters: Federal law gives residents — and their legal representatives — the right to informed consent before medication is administered. Many facilities violate this. Asking this question signals that you know your rights and intend to exercise them.</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">On military experience</div>
+      <div class="question-text">Do any of your staff members have military service backgrounds, and how does your team approach care for veterans specifically?</div>
+      <div class="question-why">Why it matters: A facility that has thought about this will have an answer. A facility that hasn't thought about it — in a market like Northwest Florida — should prompt you to keep looking.</div>
+    </div>
+
+    <p class="source-note">CareCircle can walk you through these questions on any facility in our database before you schedule a tour. Call 850-341-4324 — it's free.</p>
+  </div>
+</div>
+
+<!-- FLORIDA CONTEXT -->
+<div class="florida-section">
+  <div class="florida-inner">
+    <div class="two-col">
+      <div>
+        <div class="section-label">Northwest Florida Context</div>
+        <h2 class="section-title">This market has more veterans than almost anywhere in the country.</h2>
+        <div class="section-body">
+          <p>Pensacola is home to NAS Pensacola — the oldest naval air station in the United States. Eglin Air Force Base, Hurlburt Field, and Whiting Field surround it. The percentage of senior men in this market who are veterans is significantly higher than the national average.</p>
+          <p>These men — and their families — have a specific relationship with authority, service, self-reliance, and dignity that the national senior care platforms don't understand because they weren't built for this market. They were built for volume.</p>
+          <p>CareCircle was built here. We know which providers have staff with military backgrounds. We know which facilities have a genuine culture of respect for residents who push back. And we know which ones reach for a sedative when a resident gives them a hard time.</p>
+          <p>That knowledge is what we offer. It doesn't cost your family anything to access it.</p>
+        </div>
+        <a href="tel:8503414324" style="display:inline-flex; align-items:center; gap:8px; margin-top:28px; font-size:0.95rem; font-weight:700; color:var(--sage); text-decoration:none;">📞 Call Chase directly at 850-341-4324 →</a>
+      </div>
+      <div class="florida-stat-stack">
+        <div class="florida-stat">
+          <div class="florida-stat-num">118</div>
+          <div class="florida-stat-label"><strong>Years of NAS Pensacola</strong>Oldest naval air station in the U.S. — the Cradle of Naval Aviation</div>
+        </div>
+        <div class="florida-stat">
+          <div class="florida-stat-num">4</div>
+          <div class="florida-stat-label"><strong>Major military installations</strong>NAS Pensacola, Eglin AFB, Hurlburt Field, Whiting Field — all within the counties we serve</div>
+        </div>
+        <div class="florida-stat">
+          <div class="florida-stat-num">50+</div>
+          <div class="florida-stat-label"><strong>Providers in our scanner</strong>Across 6 counties — with AHCA records, employee reviews, and complaint histories for each</div>
+        </div>
+        <div class="florida-stat">
+          <div class="florida-stat-num">$0</div>
+          <div class="florida-stat-label"><strong>Cost to families</strong>CareCircle never charges families. Our referral fee comes from providers — at a fraction of what national platforms charge.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>He earned better than this.<br>Let's make sure he gets it.</h2>
+  <p>Free matching. No pressure. One real person who knows this market and will be straight with you about what we know.</p>
+  <a href="tel:8503414324" class="cta-phone">📞 850-341-4324</a>
+  <div class="cta-buttons">
+    <a href="/#find-care" class="btn-white">Get Matched Free →</a>
+    <a href="/research" class="btn-outline-gold">Research a Provider</a>
+  </div>
+</div>
+
+<footer style="background:var(--warm-dark); padding:40px 5% 24px;">
+  <div style="max-width:1100px; margin:0 auto; padding-bottom:20px; font-size:0.72rem; color:rgba(255,255,255,0.25); line-height:1.8;">
+    © 2026 CareCircle Network, a TransBid LLC service. All rights reserved. CareCircle is a care coordination and referral platform serving Northwest Florida. We are not a licensed healthcare provider, and nothing on this page constitutes medical or legal advice. Families are encouraged to consult with qualified healthcare professionals before making care decisions.<br><br>
+    Sources referenced: Human Rights Watch, "They Want Docile" (2018); Washington Post, March 19, 2026; U.S. Department of Health and Human Services Office of Inspector General; FDA Black Box Warning on antipsychotic medications (2005, extended 2008); Senior Veterans Service Alliance; National Alliance for Caregiving and AARP.
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+  function closeMobile() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }
+</script>
+</body>
+</html>
