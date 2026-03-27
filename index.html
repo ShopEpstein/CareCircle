@@ -52,6 +52,51 @@
     font-family: 'DM Sans', sans-serif; flex-shrink: 0;
   }
   .nav-center { display: flex; align-items: center; gap: 28px; }
+
+  /* DROPDOWN */
+  .nav-dropdown { position: relative; display: flex; align-items: center; }
+  .nav-dropdown-trigger {
+    font-size: 0.875rem; font-weight: 500; color: var(--text-body);
+    text-decoration: none; transition: color 0.2s; white-space: nowrap;
+    cursor: pointer; background: none; border: none; font-family: 'DM Sans', sans-serif;
+    padding: 0; display: flex; align-items: center; gap: 4px;
+  }
+  .nav-dropdown-trigger:hover { color: var(--sage); }
+  .nav-dropdown-trigger::after {
+    content: ''; display: block; width: 0; height: 0;
+    border-left: 4px solid transparent; border-right: 4px solid transparent;
+    border-top: 4px solid currentColor; margin-top: 1px; transition: transform 0.2s;
+  }
+  .nav-dropdown:hover .nav-dropdown-trigger::after { transform: rotate(180deg); }
+  .nav-dropdown-menu {
+    position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%);
+    background: white; border-radius: 14px; padding: 8px;
+    box-shadow: 0 8px 32px rgba(28,36,25,0.14), 0 0 0 1px rgba(92,122,95,0.1);
+    min-width: 220px; opacity: 0; pointer-events: none;
+    transform: translateX(-50%) translateY(-6px);
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 300;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu {
+    opacity: 1; pointer-events: all;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 11px 14px; border-radius: 10px; text-decoration: none;
+    transition: background 0.15s; color: var(--text-body);
+  }
+  .nav-dropdown-item:hover { background: var(--sage-pale); }
+  .nav-dropdown-icon {
+    width: 32px; height: 32px; border-radius: 8px; background: var(--sage-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; flex-shrink: 0;
+  }
+  .nav-dropdown-item:hover .nav-dropdown-icon { background: rgba(92,122,95,0.15); }
+  .nav-dropdown-label { font-size: 0.84rem; font-weight: 600; color: var(--warm-dark); display: block; margin-bottom: 1px; }
+  .nav-dropdown-desc { font-size: 0.74rem; color: var(--text-muted); line-height: 1.4; }
+  .nav-dropdown-divider { height: 1px; background: rgba(92,122,95,0.1); margin: 4px 8px; }
+
   .nav-center a {
     font-size: 0.875rem; font-weight: 500; color: var(--text-body);
     text-decoration: none; transition: color 0.2s; white-space: nowrap;
@@ -790,7 +835,33 @@
   <div class="nav-center">
     <a href="#how-it-works">How It Works</a>
     <a href="#providers">Find Care</a>
-    <a href="/research">Research Providers</a>
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-trigger">Services</button>
+      <div class="nav-dropdown-menu">
+        <a href="/men" class="nav-dropdown-item">
+          <div class="nav-dropdown-icon">🎖️</div>
+          <div>
+            <span class="nav-dropdown-label">For Veterans & Men</span>
+            <span class="nav-dropdown-desc">Care advocacy for retired military & professionals</span>
+          </div>
+        </a>
+        <a href="/present" class="nav-dropdown-item">
+          <div class="nav-dropdown-icon">👁️</div>
+          <div>
+            <span class="nav-dropdown-label">CareCircle Present</span>
+            <span class="nav-dropdown-desc">Unannounced visits — day, evening & overnight</span>
+          </div>
+        </a>
+        <div class="nav-dropdown-divider"></div>
+        <a href="/research" class="nav-dropdown-item">
+          <div class="nav-dropdown-icon">🔍</div>
+          <div>
+            <span class="nav-dropdown-label">Research Providers</span>
+            <span class="nav-dropdown-desc">Intelligence Scanner — AHCA, reviews & more</span>
+          </div>
+        </a>
+      </div>
+    </div>
     <a href="/partners">For Partners</a>
     <a href="/blog">Blog</a>
     <a href="#for-agencies">For Agencies</a>
@@ -808,12 +879,12 @@
 <div class="mobile-menu" id="mobile-menu">
   <a href="#how-it-works" onclick="closeMobile()">How It Works</a>
   <a href="#providers" onclick="closeMobile()">Find Care</a>
+  <a href="/men" onclick="closeMobile()" style="font-weight:600; color:var(--sage);">🎖️ For Veterans & Men</a>
+  <a href="/present" onclick="closeMobile()" style="font-weight:600; color:var(--sage);">👁️ CareCircle Present</a>
   <a href="/research" onclick="closeMobile()">Research Providers</a>
   <a href="/partners" onclick="closeMobile()">For Partners</a>
   <a href="/blog" onclick="closeMobile()">Blog</a>
-  <a href="#memory-magnet" onclick="closeMobile()">Care Coordination</a>
   <a href="#for-agencies" onclick="closeMobile()">For Agencies</a>
-  <a href="#agency-contact" onclick="closeMobile()">List Your Agency</a>
   <a href="tel:8503414324" class="mobile-phone">📞 Call Now</a>
   <a href="#find-care" class="mobile-cta" onclick="closeMobile()">Get Matched Free →</a>
 </div>
