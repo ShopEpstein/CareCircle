@@ -67,17 +67,21 @@
     border-left: 4px solid transparent; border-right: 4px solid transparent;
     border-top: 4px solid currentColor; margin-top: 1px; transition: transform 0.2s;
   }
-  .nav-dropdown:hover .nav-dropdown-trigger::after { transform: rotate(180deg); }
+  .nav-dropdown.open .nav-dropdown-trigger::after { transform: rotate(180deg); }
+  .nav-dropdown.open .nav-dropdown-trigger { color: var(--sage); }
   .nav-dropdown-menu {
-    position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%);
+    position: absolute; top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%) translateY(-6px);
     background: white; border-radius: 14px; padding: 8px;
     box-shadow: 0 8px 32px rgba(28,36,25,0.14), 0 0 0 1px rgba(92,122,95,0.1);
-    min-width: 220px; opacity: 0; pointer-events: none;
-    transform: translateX(-50%) translateY(-6px);
-    transition: opacity 0.2s, transform 0.2s;
+    min-width: 240px; opacity: 0; pointer-events: none;
+    transition: opacity 0.18s, transform 0.18s;
     z-index: 300;
   }
-  .nav-dropdown:hover .nav-dropdown-menu {
+  .nav-dropdown-menu::before {
+    content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px;
+  }
+  .nav-dropdown.open .nav-dropdown-menu {
     opacity: 1; pointer-events: all;
     transform: translateX(-50%) translateY(0);
   }
@@ -896,13 +900,13 @@
     <h1>Find care you can <em>actually</em> trust for your loved one</h1>
     <p class="hero-sub">We connect Gulf Coast families with vetted, licensed senior home care providers — for free. No pressure, no hidden fees, real human guidance.</p>
     <div class="hero-actions">
-      <button onclick="scrollToForm()" class="btn-primary">Find a Caregiver →</button>
+      <button onclick="scrollToForm()" class="btn-primary">Get Matched Free →</button>
       <a href="#for-agencies" class="btn-secondary">For Agencies</a>
     </div>
     <div class="hero-trust">
       <div class="trust-text" style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">
         <strong style="color:var(--warm-dark);display:block;margin-bottom:3px;">New — and built to fix what's broken.</strong>
-        Assisting Seniors has served Gulf Coast families for 17+ years. We built CareCircle to bring AI-powered care coordination, real transparency, and honest provider intelligence to the families they didn't have time to reach.
+        Assisting Seniors has served Gulf Coast families for 17 years. We built CareCircle to bring AI-powered care coordination, real transparency, and honest provider intelligence to the families they didn't have time to reach.
       </div>
     </div>
     <div class="hero-phone-row">
@@ -1717,6 +1721,24 @@
   function closeMobile() {
     hamburger.classList.remove('open');
     mobileMenu.classList.remove('open');
+  }
+
+  // ─── SERVICES DROPDOWN (click-based, works on all devices) ───
+  const dropdownEl = document.querySelector('.nav-dropdown');
+  const triggerEl  = document.querySelector('.nav-dropdown-trigger');
+  if (dropdownEl && triggerEl) {
+    triggerEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdownEl.classList.toggle('open');
+    });
+    // close when clicking anywhere outside
+    document.addEventListener('click', () => {
+      dropdownEl.classList.remove('open');
+    });
+    // prevent clicks inside menu from closing it
+    dropdownEl.querySelector('.nav-dropdown-menu').addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
   }
 
   // ─── SCROLL TO FORM ───
