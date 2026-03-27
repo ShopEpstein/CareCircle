@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Vista Assisted Living Pensacola: Full Review (2026) | CareCircle</title>
+<meta name="description" content="Summer Vista looks great on a tour. But for residents who need real help, the staffing data tells a different story. We break down exactly what families should know before choosing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --sage: #5C7A5F; --sage-light: #8FAF92; --sage-pale: #EFF5F0; --cream: #FAF8F4; --warm-dark: #1C2419; --warm-mid: #3D4F3F; --gold: #C8A96E; --gold-light: #E8D5A8; --terracotta: #C4714A; --text-body: #3A4A3C; --text-muted: #7A8E7C; --shadow-soft: 0 4px 24px rgba(28,36,25,0.10); --shadow-card: 0 2px 16px rgba(28,36,25,0.06); --radius: 12px; --radius-lg: 20px; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(250,248,244,0.95); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(92,122,95,0.12); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--warm-dark); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo-mark { width: 34px; height: 34px; background: var(--sage); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: white; font-weight: 700; font-family: 'DM Sans', sans-serif; flex-shrink: 0; }
+  .nav-center { display: flex; align-items: center; gap: 28px; }
+  .nav-center a { font-size: 0.875rem; font-weight: 500; color: var(--text-body); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-phone { font-size: 0.875rem; font-weight: 600; color: var(--sage); text-decoration: none; }
+  .nav-cta { background: var(--sage); color: white !important; padding: 10px 20px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: background 0.2s; white-space: nowrap; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--warm-dark); border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 199; background: rgba(250,248,244,0.98); backdrop-filter: blur(14px); padding: 24px 5% 32px; border-bottom: 1px solid rgba(92,122,95,0.12); flex-direction: column; gap: 0; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { padding: 14px 0; font-size: 1rem; font-weight: 500; color: var(--text-body); text-decoration: none; border-bottom: 1px solid rgba(92,122,95,0.08); }
+  .mobile-menu .mobile-phone { margin-top: 20px; font-size: 1.1rem; font-weight: 700; color: var(--sage); border-bottom: none; }
+  .mobile-menu .mobile-cta { margin-top: 12px; background: var(--sage); color: white; padding: 14px 24px; border-radius: 100px; text-align: center; font-weight: 600; border-bottom: none; }
+  .post-hero { padding: 120px 5% 40px; text-align: center; }
+  .post-body { max-width: 680px; margin: 0 auto; padding: 0 5% 60px; }
+  .post-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--warm-dark); margin: 40px 0 16px; }
+  .post-body h3 { font-size: 1.1rem; font-weight: 600; color: var(--warm-dark); margin: 28px 0 12px; }
+  .post-body p { font-size: 1rem; color: var(--text-body); line-height: 1.75; margin-bottom: 16px; }
+  .post-body a { color: var(--sage); font-weight: 500; }
+  .post-callout { background: var(--sage-pale); border-radius: 14px; padding: 24px 28px; margin: 28px 0; }
+  .post-callout p { margin-bottom: 8px; }
+  .post-callout p:last-child { margin-bottom: 0; }
+  .post-callout.warning { background: #fef7ec; border-left: 4px solid #C8A96E; }
+  .post-callout.danger { background: #fef2f2; border-left: 4px solid #dc2626; }
+  .provider-mention { background: white; border-radius: 12px; border: 1px solid rgba(92,122,95,0.12); padding: 20px 24px; margin: 20px 0; }
+  .provider-mention-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--warm-dark); margin-bottom: 4px; }
+  .provider-mention-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
+  .provider-mention-detail { font-size: 0.9rem; color: var(--text-body); line-height: 1.65; }
+  .provider-mention-link { display: inline-block; margin-top: 10px; font-size: 0.85rem; color: var(--sage); font-weight: 600; }
+  .score-inline { display: inline-block; font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 0.85rem; }
+  .score-good { background: #edf7f0; color: #2d6a4f; }
+  .score-mixed { background: #fef7ec; color: #b5700a; }
+  .score-low { background: #fef2f2; color: #b91c1c; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .two-col-box { background: white; border-radius: 12px; padding: 20px; border: 1px solid rgba(92,122,95,0.12); }
+  .two-col-box h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; }
+  .two-col-box ul { padding-left: 18px; }
+  .two-col-box li { font-size: 0.85rem; color: var(--text-body); line-height: 1.7; }
+  .two-col-box.green { border-top: 3px solid var(--sage); }
+  .two-col-box.green h4 { color: var(--sage); }
+  .two-col-box.amber { border-top: 3px solid #C8A96E; }
+  .two-col-box.amber h4 { color: #b5700a; }
+  .data-source { font-size: 0.75rem; color: var(--text-muted); margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(92,122,95,0.12); font-style: italic; }
+  .cta-section { padding: 90px 5%; background: linear-gradient(135deg, var(--sage) 0%, var(--warm-mid) 100%); text-align: center; }
+  .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); color: white; margin-bottom: 14px; }
+  .cta-section p { font-size: 1rem; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+  .cta-phone { font-size: 1.4rem; font-weight: 700; color: var(--gold); text-decoration: none; display: block; margin-bottom: 28px; }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-white { background: white; color: var(--sage); padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 700; text-decoration: none; }
+  .btn-outline-white { background: transparent; color: white; padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 600; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.4); }
+  @media (max-width: 1024px) { .nav-center { display: none; } .hamburger { display: flex; } }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .nav-phone { display: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo"><div class="nav-logo-mark">CC</div>CareCircle Network</a>
+  <div class="nav-center">
+    <a href="/#how-it-works">How It Works</a>
+    <a href="/research">Research Providers</a>
+    <a href="/partners">For Partners</a>
+    <a href="/blog" style="color:var(--sage);font-weight:600;">Blog</a>
+  </div>
+  <div class="nav-right">
+    <a href="tel:8503414324" class="nav-phone">📞 Call Now</a>
+    <a href="/#find-care" class="nav-cta">Get Matched Free</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/#how-it-works" onclick="closeMobile()">How It Works</a>
+  <a href="/research" onclick="closeMobile()">Research Providers</a>
+  <a href="/partners" onclick="closeMobile()">For Partners</a>
+  <a href="/blog" onclick="closeMobile()">Blog</a>
+  <a href="tel:8503414324" class="mobile-phone">📞 Call Now</a>
+  <a href="/#find-care" class="mobile-cta" onclick="closeMobile()">Get Matched Free →</a>
+</div>
+
+<div class="post-hero">
+  <div style="font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:var(--sage); margin-bottom:12px;">Assisted Living · Memory Care · Pensacola · March 2026</div>
+  <h1 style="font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:var(--warm-dark); line-height:1.2; max-width:640px; margin:0 auto 16px;">Summer Vista Assisted Living: What the Data Shows</h1>
+  <p style="font-size:1rem; color:var(--text-muted); max-width:520px; margin:0 auto;">It looks great on a tour. For residents who need real help, the staffing picture tells a different story. Here's the honest breakdown.</p>
+  <div style="margin-top:16px; font-size:0.8rem; color:var(--text-muted);">CareCircle Intelligence Score: <span class="score-inline score-mixed">7.1 / 10</span></div>
+</div>
+
+<article class="post-body">
+
+<p>Summer Vista sits on a landscaped property on Wimbledon Drive in Pensacola — a 100-bed facility that presents beautifully and offers one of the longer amenity lists in the local market. The first impression is strong. The data behind that impression is more complicated.</p>
+
+<p>Our 7.1 intelligence score reflects a genuine split in the evidence: a facility that delivers well for some residents and falls short for others — and where the difference almost entirely comes down to how much daily assistance a resident actually needs.</p>
+
+<h2>What Summer Vista Does Well</h2>
+
+<div class="provider-mention">
+  <div class="provider-mention-name">Summer Vista Assisted Living <span class="score-inline score-mixed">7.1</span></div>
+  <div class="provider-mention-meta">3450 Wimbledon Drive, Pensacola, FL 32504 · Assisted Living & Memory Care · 100 beds · Starting ~$4,625/month</div>
+  <div class="provider-mention-detail">Nurses on staff around the clock, on-site physical, occupational, and speech therapists, and a "Heartful Care" program that handles housekeeping and laundry. 24/7 visiting hours and weekly family support groups. Extensive activity calendar. Two specialty licenses. Wound care and injection services available on-site.</div>
+  <a href="/research" class="provider-mention-link">View full Intelligence Report →</a>
+</div>
+
+<p>For residents who are largely independent and want an active, socially rich environment, Summer Vista's offerings are genuinely strong. The facility is attractive, activities are real and well-attended, and many families describe compassionate individual caregivers. Some employees describe a supportive management culture and family-oriented atmosphere.</p>
+
+<h2>The Two Different Summer Vistas</h2>
+
+<p>The review record at Summer Vista is unusually polarized — not between a handful of outliers, but between two clearly distinct cohorts of families describing two clearly distinct experiences.</p>
+
+<div class="two-col">
+  <div class="two-col-box green">
+    <h4>✓ What satisfied families describe</h4>
+    <ul>
+      <li>Beautiful, clean facility</li>
+      <li>Strong activities programming</li>
+      <li>Specific staff members who are exceptional</li>
+      <li>Good experience for independent residents</li>
+      <li>Family-friendly visiting culture</li>
+    </ul>
+  </div>
+  <div class="two-col-box amber">
+    <h4>⚠ What concerned families describe</h4>
+    <ul>
+      <li>Call button response times of 45+ minutes</li>
+      <li>One documented two-hour emergency wait</li>
+      <li>After-hours staffing gaps</li>
+      <li>Administrative turnover (two managers in 8 months)</li>
+      <li>Tour experience not matching daily reality</li>
+    </ul>
+  </div>
+</div>
+
+<div class="post-callout danger">
+  <p><strong>The staffing gap is documented, not anecdotal.</strong> Multiple independent review sources — not just one or two disgruntled families — describe inadequate staffing for residents who need meaningful daily assistance. One analysis of the full review record specifically noted that the facility appears well-suited for independent residents but carries real risk for those requiring higher-acuity assisted care without supplemental outside oversight. This pattern across multiple unrelated sources is what moved the needle in our scoring.</p>
+</div>
+
+<h2>Memory Care: Specific Concerns</h2>
+
+<p>Summer Vista's memory care wing warrants separate attention. Reviewers who toured the facility noted odor in the memory care section even during favorable visits. More substantively, the call-button response delays and staffing gap complaints are especially concerning in a memory care context — residents with dementia are often unable to articulate distress, advocate for themselves, or understand why help isn't coming.</p>
+
+<p>If you are evaluating Summer Vista specifically for a loved one with Alzheimer's or another form of dementia, the staffing questions below are not optional — they're essential.</p>
+
+<h2>Questions You Need to Ask</h2>
+
+<h3>Staffing specifics</h3>
+<p>What is the current staff-to-resident ratio in the memory care unit during day, evening, and overnight shifts? What is the protocol when a call button goes unanswered? What is the maximum response time before an escalation procedure triggers?</p>
+
+<h3>Management continuity</h3>
+<p>Who is the current administrator and how long have they been in the role? Management turnover directly affects operational consistency — it's a legitimate question to ask directly.</p>
+
+<h3>Ask about a non-tour visit</h3>
+<p>Request permission to visit during an evening shift before committing. Most reputable facilities will accommodate this. A facility that declines is telling you something.</p>
+
+<h2>The Bottom Line</h2>
+
+<p>Summer Vista is a facility of two very different experiences depending on what your loved one actually needs. For active, largely independent seniors who want a social environment with professional support nearby, it can be an excellent fit. For seniors who need meaningful daily assistance or memory care oversight, the documented staffing gaps represent a risk that families should investigate directly — not assume away based on a well-executed tour.</p>
+
+<p>View the full Intelligence Scanner report at <a href="/research">carecircle.fit/research</a>. We're happy to walk through the data with you directly — call <a href="tel:8503414324">850-341-4324</a>.</p>
+
+<p class="data-source">Source data: Caring.com, Mirador Living comprehensive review analysis, Oasis Senior Advisors, MyCaringPlan, Indeed employee reviews, A Place for Mom. CareCircle Intelligence Score reflects cross-referenced data as of March 2026.</p>
+
+</article>
+
+<section class="cta-section">
+  <h2>Not sure Summer Vista is the right fit?</h2>
+  <p>We'll help you compare your options honestly — at no cost to your family.</p>
+  <a href="tel:8503414324" class="cta-phone">📞 Call 850-341-4324</a>
+  <div class="cta-buttons">
+    <a href="/#find-care" class="btn-white">Get Matched Free →</a>
+    <a href="/research" class="btn-outline-white">Research a Provider</a>
+  </div>
+</section>
+
+<footer style="background:var(--warm-dark); padding:40px 5% 24px;">
+  <div style="max-width:1100px; margin:0 auto; padding-bottom:20px; font-size:0.72rem; color:rgba(255,255,255,0.25);">
+    © 2026 CareCircle Network, a TransBid LLC service. All rights reserved. CareCircle is a care coordination and referral platform. We are not a licensed healthcare provider. Provider information is sourced from publicly available records and verified third-party reviews.
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+  function closeMobile() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }
+</script>
+</body>
+</html>
