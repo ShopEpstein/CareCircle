@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspiritas of Pensacola: Full Review — Memory Care & Assisted Living (2026) | CareCircle</title>
+<meta name="description" content="Inspiritas scores 6.9 on CareCircle's Intelligence Scanner. Some platforms rate it near-perfect. Others document serious care concerns. Here's what every data source actually shows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --sage: #5C7A5F; --sage-light: #8FAF92; --sage-pale: #EFF5F0; --cream: #FAF8F4; --warm-dark: #1C2419; --warm-mid: #3D4F3F; --gold: #C8A96E; --gold-light: #E8D5A8; --terracotta: #C4714A; --text-body: #3A4A3C; --text-muted: #7A8E7C; --shadow-soft: 0 4px 24px rgba(28,36,25,0.10); --shadow-card: 0 2px 16px rgba(28,36,25,0.06); --radius: 12px; --radius-lg: 20px; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(250,248,244,0.95); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(92,122,95,0.12); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--warm-dark); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo-mark { width: 34px; height: 34px; background: var(--sage); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: white; font-weight: 700; font-family: 'DM Sans', sans-serif; flex-shrink: 0; }
+  .nav-center { display: flex; align-items: center; gap: 28px; }
+  .nav-center a { font-size: 0.875rem; font-weight: 500; color: var(--text-body); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-phone { font-size: 0.875rem; font-weight: 600; color: var(--sage); text-decoration: none; }
+  .nav-cta { background: var(--sage); color: white !important; padding: 10px 20px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: background 0.2s; white-space: nowrap; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--warm-dark); border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 199; background: rgba(250,248,244,0.98); backdrop-filter: blur(14px); padding: 24px 5% 32px; border-bottom: 1px solid rgba(92,122,95,0.12); flex-direction: column; gap: 0; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { padding: 14px 0; font-size: 1rem; font-weight: 500; color: var(--text-body); text-decoration: none; border-bottom: 1px solid rgba(92,122,95,0.08); }
+  .mobile-menu .mobile-phone { margin-top: 20px; font-size: 1.1rem; font-weight: 700; color: var(--sage); border-bottom: none; }
+  .mobile-menu .mobile-cta { margin-top: 12px; background: var(--sage); color: white; padding: 14px 24px; border-radius: 100px; text-align: center; font-weight: 600; border-bottom: none; }
+  .post-hero { padding: 120px 5% 40px; text-align: center; }
+  .post-body { max-width: 680px; margin: 0 auto; padding: 0 5% 60px; }
+  .post-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--warm-dark); margin: 40px 0 16px; }
+  .post-body h3 { font-size: 1.1rem; font-weight: 600; color: var(--warm-dark); margin: 28px 0 12px; }
+  .post-body p { font-size: 1rem; color: var(--text-body); line-height: 1.75; margin-bottom: 16px; }
+  .post-body a { color: var(--sage); font-weight: 500; }
+  .post-callout { background: var(--sage-pale); border-radius: 14px; padding: 24px 28px; margin: 28px 0; }
+  .post-callout p { margin-bottom: 8px; }
+  .post-callout p:last-child { margin-bottom: 0; }
+  .post-callout.warning { background: #fef7ec; border-left: 4px solid #C8A96E; }
+  .post-callout.danger { background: #fef2f2; border-left: 4px solid #dc2626; }
+  .provider-mention { background: white; border-radius: 12px; border: 1px solid rgba(92,122,95,0.12); padding: 20px 24px; margin: 20px 0; }
+  .provider-mention-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--warm-dark); margin-bottom: 4px; }
+  .provider-mention-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
+  .provider-mention-detail { font-size: 0.9rem; color: var(--text-body); line-height: 1.65; }
+  .provider-mention-link { display: inline-block; margin-top: 10px; font-size: 0.85rem; color: var(--sage); font-weight: 600; }
+  .score-inline { display: inline-block; font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 0.85rem; }
+  .score-good { background: #edf7f0; color: #2d6a4f; }
+  .score-mixed { background: #fef7ec; color: #b5700a; }
+  .score-low { background: #fef2f2; color: #b91c1c; }
+  .data-source { font-size: 0.75rem; color: var(--text-muted); margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(92,122,95,0.12); font-style: italic; }
+  .cta-section { padding: 90px 5%; background: linear-gradient(135deg, var(--sage) 0%, var(--warm-mid) 100%); text-align: center; }
+  .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); color: white; margin-bottom: 14px; }
+  .cta-section p { font-size: 1rem; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+  .cta-phone { font-size: 1.4rem; font-weight: 700; color: var(--gold); text-decoration: none; display: block; margin-bottom: 28px; }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-white { background: white; color: var(--sage); padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 700; text-decoration: none; }
+  .btn-outline-white { background: transparent; color: white; padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 600; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.4); }
+  @media (max-width: 1024px) { .nav-center { display: none; } .hamburger { display: flex; } }
+  @media (max-width: 600px) { .nav-phone { display: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo"><div class="nav-logo-mark">CC</div>CareCircle Network</a>
+  <div class="nav-center">
+    <a href="/#how-it-works">How It Works</a>
+    <a href="/research">Research Providers</a>
+    <a href="/partners">For Partners</a>
+    <a href="/blog" style="color:var(--sage);font-weight:600;">Blog</a>
+  </div>
+  <div class="nav-right">
+    <a href="tel:8503414324" class="nav-phone">📞 Call Now</a>
+    <a href="/#find-care" class="nav-cta">Get Matched Free</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/#how-it-works" onclick="closeMobile()">How It Works</a>
+  <a href="/research" onclick="closeMobile()">Research Providers</a>
+  <a href="/partners" onclick="closeMobile()">For Partners</a>
+  <a href="/blog" onclick="closeMobile()">Blog</a>
+  <a href="tel:8503414324" class="mobile-phone">📞 Call Now</a>
+  <a href="/#find-care" class="mobile-cta" onclick="closeMobile()">Get Matched Free →</a>
+</div>
+
+<div class="post-hero">
+  <div style="font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:var(--sage); margin-bottom:12px;">Memory Care · Assisted Living · Pensacola · March 2026</div>
+  <h1 style="font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:var(--warm-dark); line-height:1.2; max-width:640px; margin:0 auto 16px;">Inspiritas of Pensacola: What Every Data Source Actually Shows</h1>
+  <p style="font-size:1rem; color:var(--text-muted); max-width:540px; margin:0 auto;">Some platforms rate Inspiritas near-perfect. Others document serious concerns. We looked at all of it. Here's the full picture.</p>
+  <div style="margin-top:16px; font-size:0.8rem; color:var(--text-muted);">CareCircle Intelligence Score: <span class="score-inline score-low">6.9 / 10</span></div>
+</div>
+
+<article class="post-body">
+
+<p>Inspiritas of Pensacola sits at 8601 North Davis Highway — a regional chain facility owned by Retirement Unlimited Inc. (RUI), a Virginia-based company that has operated senior living communities since 1982. The facility offers assisted living, independent living, and memory care, and is positioned as a premium option in the North Pensacola corridor.</p>
+
+<p>If you've been researching Inspiritas online, you've probably seen conflicting signals. Seniorly rates it 9.7 out of 10. Our cross-referenced intelligence score is 6.9. That gap isn't an error — it reflects the difference between a single-platform rating and a multi-source analysis that includes what families who had problems actually experienced. Here's the full picture.</p>
+
+<h2>Why the Ratings Diverge</h2>
+
+<p>Platform ratings are not neutral. Seniorly, A Place for Mom, and similar aggregators have commercial relationships with the facilities they rate — they earn referral fees when families choose communities through their platforms. This doesn't mean their positive reviews are fabricated, but it does mean their scoring methodologies can systematically favor partner communities.</p>
+
+<p>CareCircle's score cross-references Google Reviews, employee reviews, AHCA records, BBB data, and third-party verified family testimonials — including negative ones that may not appear prominently on partner-incentivized platforms. That's how a facility can score 9.7 on one platform and 6.9 on ours.</p>
+
+<h2>What the Positive Reviews Show</h2>
+
+<div class="provider-mention">
+  <div class="provider-mention-name">Inspiritas of Pensacola <span class="score-inline score-low">6.9</span></div>
+  <div class="provider-mention-meta">8601 North Davis Highway, Pensacola, FL 32514 · Assisted Living, Memory Care, Independent Living · Owned by Retirement Unlimited Inc. (RUI) · 0.4 miles from West Florida Primary Care</div>
+  <div class="provider-mention-detail">Three separate memory care neighborhoods for residents at similar cognitive stages. Personalized care plans. 13 signature engagement programs. 24-hour CNA and nursing assistance. Executive Chef-prepared meals. Trained staff in dementia care protocols. Multiple reviewers note staff consistency — the same caregivers present throughout a loved one's entire stay, which is genuinely valuable in memory care.</div>
+  <a href="/research" class="provider-mention-link">View full Intelligence Report →</a>
+</div>
+
+<p>The positive reviews at Inspiritas are real and specific. Staff learning resident names quickly, family-style dining, an activities program that celebrates holidays meaningfully, and caregivers who are described as kind and present. For families who had good experiences here, those experiences appear genuine.</p>
+
+<h2>The Concerns That Moved Our Score</h2>
+
+<div class="post-callout danger">
+  <p><strong>Overmedication and falls:</strong> One verified family reviewer described a family member who experienced falls, incontinence, and behavioral changes during a stay — attributing the issues to overmedication. The same reviewer described visiting the facility multiple times when staff did not know where their family member was located, and observed caregivers in common areas on personal phones while residents were unsupervised — including one wheelchair-bound resident who was leaning forward and would have fallen without the family member's intervention.</p>
+  <p>This is a single account, but the specific nature of the observations — overmedication leading to falls, supervision gaps, staff location awareness — reflects exactly the kind of concern that CareCircle was built to surface.</p>
+</div>
+
+<p>A second reviewer described a family member in a wheelchair having multiple falls, doors kept closed per facility policy in ways that complicated oversight, and being told that 24/7 nursing coverage existed — which did not match their actual experience on the floor.</p>
+
+<p>Inspiritas is not BBB accredited, which is a minor data point on its own. More relevant: the gap between what families are told on tours and what some families experience day-to-day is large enough to warrant direct, pointed questions before any placement decision.</p>
+
+<h2>The Overmedication Question</h2>
+
+<p>This is something CareCircle takes seriously across the entire senior care industry. In memory care facilities nationally, residents who display confusion, agitation, or behavioral changes associated with dementia are sometimes managed through medication rather than engagement — because sedation is cheaper and easier than proper cognitive stimulation. Families rarely see this happening directly. It shows up in falls, in a loved one who seems "foggy," in incontinence that appeared suddenly.</p>
+
+<p>If you're considering Inspiritas for a loved one with dementia, ask directly: what is the facility's protocol when a resident displays agitation or behavioral changes? Who makes medication decisions — the facility's medical team, the family's physician, or both? What oversight exists for psychotropic medication prescriptions?</p>
+
+<h2>Questions to Ask Before Choosing Inspiritas</h2>
+
+<h3>On staffing and supervision</h3>
+<p>What is the current staff-to-resident ratio on the memory care floor during each shift? What is the protocol when a caregiver needs to leave a common area — who maintains visual coverage of residents? How does the facility track resident location in real time?</p>
+
+<h3>On medication management</h3>
+<p>How are medication changes initiated and approved? Does the family receive notification before any new prescription is started? What is the process if a family has concerns about a resident's medication regimen?</p>
+
+<h3>On touring honestly</h3>
+<p>Request an evening visit — not a mid-morning tour. Ask to walk the memory care floor specifically. Observe whether staff are present and engaged with residents, or whether common areas are unsupervised.</p>
+
+<h2>The Bottom Line</h2>
+
+<p>Inspiritas has the infrastructure, the programming framework, and — on its best days — the staff culture to provide meaningful memory care. The physical environment is well-designed, the neighborhood structure for memory care residents is thoughtful, and the positive reviews reflect genuine experiences.</p>
+
+<p>But the documented concerns about overmedication, supervision gaps, and a gap between tour presentation and daily reality are serious enough that we cannot recommend Inspiritas without heavy qualification. Families who choose it should plan on frequent, unannounced visits, establish a direct relationship with the director of nursing, and be prepared to advocate actively on behalf of their loved one.</p>
+
+<p>View the full Intelligence Scanner report at <a href="/research">carecircle.fit/research</a>. If you want help comparing Inspiritas against other memory care options in Pensacola, call us at <a href="tel:8503414324">850-341-4324</a> — we don't earn commissions from any facility.</p>
+
+<p class="data-source">Source data: A Place for Mom, Caring.com verified reviews, Seniorly, BBB, AssistedLivingCenter.com, MemoryCare.com, SeniorLivingInterviews.com. CareCircle Intelligence Score reflects cross-referenced data as of March 2026.</p>
+
+</article>
+
+<section class="cta-section">
+  <h2>Evaluating memory care options in Pensacola?</h2>
+  <p>We'll help you compare honestly. Free. No referral fees from any facility.</p>
+  <a href="tel:8503414324" class="cta-phone">📞 Call 850-341-4324</a>
+  <div class="cta-buttons">
+    <a href="/#find-care" class="btn-white">Get Matched Free →</a>
+    <a href="/research" class="btn-outline-white">Research a Provider</a>
+  </div>
+</section>
+
+<footer style="background:var(--warm-dark); padding:40px 5% 24px;">
+  <div style="max-width:1100px; margin:0 auto; padding-bottom:20px; font-size:0.72rem; color:rgba(255,255,255,0.25);">
+    © 2026 CareCircle Network, a TransBid LLC service. All rights reserved. CareCircle is a care coordination and referral platform. We are not a licensed healthcare provider. Provider information is sourced from publicly available records and verified third-party reviews. Families are encouraged to conduct independent research and visit facilities before making care decisions.
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+  function closeMobile() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }
+</script>
+</body>
+</html>
