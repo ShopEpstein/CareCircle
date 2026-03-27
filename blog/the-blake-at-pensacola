@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Blake at Pensacola: An Honest Look at What the Data Shows (2026) | CareCircle</title>
+<meta name="description" content="We pulled Google Reviews, AHCA records, and family testimonials for The Blake at Pensacola. Here's the full picture — what works, what doesn't, and what families should ask before choosing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage: #5C7A5F;
+    --sage-light: #8FAF92;
+    --sage-pale: #EFF5F0;
+    --cream: #FAF8F4;
+    --warm-dark: #1C2419;
+    --warm-mid: #3D4F3F;
+    --gold: #C8A96E;
+    --gold-light: #E8D5A8;
+    --terracotta: #C4714A;
+    --text-body: #3A4A3C;
+    --text-muted: #7A8E7C;
+    --shadow-soft: 0 4px 24px rgba(28,36,25,0.10);
+    --shadow-card: 0 2px 16px rgba(28,36,25,0.06);
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(250,248,244,0.95); backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(92,122,95,0.12);
+    padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 68px;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--warm-dark); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo-mark { width: 34px; height: 34px; background: var(--sage); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: white; font-weight: 700; font-family: 'DM Sans', sans-serif; flex-shrink: 0; }
+  .nav-center { display: flex; align-items: center; gap: 28px; }
+  .nav-center a { font-size: 0.875rem; font-weight: 500; color: var(--text-body); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+  .nav-center a:hover { color: var(--sage); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-phone { font-size: 0.875rem; font-weight: 600; color: var(--sage); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .nav-cta { background: var(--sage); color: white !important; padding: 10px 20px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: background 0.2s; white-space: nowrap; }
+  .nav-cta:hover { background: var(--warm-mid); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--warm-dark); border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 199; background: rgba(250,248,244,0.98); backdrop-filter: blur(14px); padding: 24px 5% 32px; border-bottom: 1px solid rgba(92,122,95,0.12); flex-direction: column; gap: 0; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { padding: 14px 0; font-size: 1rem; font-weight: 500; color: var(--text-body); text-decoration: none; border-bottom: 1px solid rgba(92,122,95,0.08); transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--sage); }
+  .mobile-menu .mobile-phone { margin-top: 20px; font-size: 1.1rem; font-weight: 700; color: var(--sage); border-bottom: none; display: flex; align-items: center; gap: 8px; }
+  .mobile-menu .mobile-cta { margin-top: 12px; background: var(--sage); color: white; padding: 14px 24px; border-radius: 100px; text-align: center; font-weight: 600; border-bottom: none; }
+  .post-hero { padding: 120px 5% 40px; text-align: center; }
+  .post-body { max-width: 680px; margin: 0 auto; padding: 0 5% 60px; }
+  .post-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--warm-dark); margin: 40px 0 16px; }
+  .post-body h3 { font-size: 1.1rem; font-weight: 600; color: var(--warm-dark); margin: 28px 0 12px; }
+  .post-body p { font-size: 1rem; color: var(--text-body); line-height: 1.75; margin-bottom: 16px; }
+  .post-body a { color: var(--sage); font-weight: 500; }
+  .post-callout { background: var(--sage-pale); border-radius: 14px; padding: 24px 28px; margin: 28px 0; }
+  .post-callout p { margin-bottom: 8px; }
+  .post-callout p:last-child { margin-bottom: 0; }
+  .post-callout.warning { background: #fef7ec; border-left: 4px solid #C8A96E; }
+  .provider-mention { background: white; border-radius: 12px; border: 1px solid rgba(92,122,95,0.12); padding: 20px 24px; margin: 20px 0; }
+  .provider-mention-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--warm-dark); margin-bottom: 4px; }
+  .provider-mention-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
+  .provider-mention-detail { font-size: 0.9rem; color: var(--text-body); line-height: 1.65; }
+  .provider-mention-link { display: inline-block; margin-top: 10px; font-size: 0.85rem; color: var(--sage); font-weight: 600; }
+  .score-inline { display: inline-block; font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 0.85rem; }
+  .score-good { background: #edf7f0; color: #2d6a4f; }
+  .score-mixed { background: #fef7ec; color: #b5700a; }
+  .score-low { background: #fef2f2; color: #b91c1c; }
+  .data-source { font-size: 0.75rem; color: var(--text-muted); margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(92,122,95,0.12); font-style: italic; }
+  .cta-section { padding: 90px 5%; background: linear-gradient(135deg, var(--sage) 0%, var(--warm-mid) 100%); text-align: center; position: relative; overflow: hidden; }
+  .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); color: white; margin-bottom: 14px; }
+  .cta-section p { font-size: 1rem; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+  .cta-phone { font-size: 1.4rem; font-weight: 700; color: var(--gold); text-decoration: none; display: block; margin-bottom: 28px; letter-spacing: 0.02em; }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-white { background: white; color: var(--sage); padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 700; text-decoration: none; transition: all 0.25s; }
+  .btn-white:hover { background: var(--cream); transform: translateY(-2px); }
+  .btn-outline-white { background: transparent; color: white; padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 600; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.4); transition: all 0.25s; }
+  .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.1); }
+  @media (max-width: 1024px) { .nav-center { display: none; } .hamburger { display: flex; } }
+  @media (max-width: 600px) { .nav-phone { display: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo"><div class="nav-logo-mark">CC</div>CareCircle Network</a>
+  <div class="nav-center">
+    <a href="/#how-it-works">How It Works</a>
+    <a href="/research">Research Providers</a>
+    <a href="/partners">For Partners</a>
+    <a href="/blog" style="color:var(--sage);font-weight:600;">Blog</a>
+  </div>
+  <div class="nav-right">
+    <a href="tel:8503414324" class="nav-phone">📞 Call Now</a>
+    <a href="/#find-care" class="nav-cta">Get Matched Free</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/#how-it-works" onclick="closeMobile()">How It Works</a>
+  <a href="/research" onclick="closeMobile()">Research Providers</a>
+  <a href="/partners" onclick="closeMobile()">For Partners</a>
+  <a href="/blog" onclick="closeMobile()">Blog</a>
+  <a href="tel:8503414324" class="mobile-phone">📞 Call Now</a>
+  <a href="/#find-care" class="mobile-cta" onclick="closeMobile()">Get Matched Free →</a>
+</div>
+
+<div class="post-hero">
+  <div style="font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:var(--sage); margin-bottom:12px;">Assisted Living · Pensacola · March 2026</div>
+  <h1 style="font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:var(--warm-dark); line-height:1.2; max-width:640px; margin:0 auto 16px;">The Blake at Pensacola: An Honest Look at What the Data Shows</h1>
+  <p style="font-size:1rem; color:var(--text-muted); max-width:520px; margin:0 auto;">We pulled Google Reviews, AHCA records, and verified family testimonials. Here's the full picture — the strengths, the concerns, and the questions every family should ask.</p>
+  <div style="margin-top:16px; font-size:0.8rem; color:var(--text-muted);">CareCircle Intelligence Score: <span class="score-inline score-good">8.3 / 10</span></div>
+</div>
+
+<article class="post-body">
+
+<p>If you've spent more than ten minutes researching assisted living in Pensacola, The Blake has probably come up. It's one of the most prominent facilities in the market, and for the most part, the reputation is earned. Located at 428 Airport Blvd, The Blake offers independent living, assisted living, and memory care — meaning residents can age in place rather than being uprooted as their needs change.</p>
+
+<p>At CareCircle, we don't take marketing materials at face value. We cross-reference Google Reviews, FL AHCA license and inspection records, employee reviews, and verified family testimonials to build a complete picture. Here's what we found on The Blake.</p>
+
+<h2>What Works</h2>
+
+<p>The Blake earns its 8.3 score on the strength of consistent family satisfaction across multiple platforms. It has received Best of Senior Living recognition, awarded to communities with 25 or more verified reviews and sustained high scores across care quality, staff, activities, and food.</p>
+
+<div class="provider-mention">
+  <div class="provider-mention-name">The Blake at Pensacola <span class="score-inline score-good">8.3</span></div>
+  <div class="provider-mention-meta">428 Airport Blvd, Pensacola, FL 32503 · Assisted Living, Memory Care, Independent Living · AHCA License #13226 · 130 beds</div>
+  <div class="provider-mention-detail">The facility offers chef-prepared meals, a personal pendant emergency response system, onsite primary care providers, and personalized care planning. Physical therapy and rehabilitation services are available onsite. Residents have access to an extensive activities program — cooking classes, live performances, social hours, and organized outings. U.S. News rated The Blake in 2025 based on resident and family surveys covering safety, caregiving, activities, management, staff, food, and value.</div>
+  <a href="/research" class="provider-mention-link">View full Intelligence Report →</a>
+</div>
+
+<p>For independent and standard assisted living residents, the feedback is consistently strong. Families mention responsiveness from staff, a clean facility, and an activities program that genuinely engages residents.</p>
+
+<h2>Where It Gets More Complicated</h2>
+
+<p>The Blake's reviews are not uniformly glowing — and the concerns that surface are worth taking seriously, particularly for families considering memory care.</p>
+
+<div class="post-callout warning">
+  <p><strong>Staffing concerns:</strong> One verified family reviewer described the staff as "amazing" while simultaneously stating the facility is "grossly understaffed." Their family member, a resident with Alzheimer's disease, was eventually issued a discharge notice. The letter cited behavioral symptoms that are, as the reviewer noted, characteristic of mid-to-late stage Alzheimer's — not grounds for discharge from a facility that markets itself as a memory care provider.</p>
+</div>
+
+<p>This pattern — excellent individual staff, systemic staffing shortages, and discharge used as a response to dementia-related behavior — is one of the most common failure modes in memory care facilities nationally. It doesn't mean The Blake is a bad facility. It means families need to ask direct questions before making a placement decision for a loved one with a dementia diagnosis.</p>
+
+<h2>Questions to Ask Before You Choose</h2>
+
+<p>If you're evaluating The Blake for a loved one — particularly for memory care — here are the questions that matter:</p>
+
+<h3>On staffing</h3>
+<p>What is the current staff-to-resident ratio on the memory care floor during day, evening, and overnight shifts? Has that ratio changed in the past 12 months? What is the current caregiver turnover rate?</p>
+
+<h3>On discharge policy</h3>
+<p>Under what circumstances would a resident be asked to leave? Specifically: are behavioral symptoms of Alzheimer's or dementia — including agitation, wandering, or verbal aggression — grounds for discharge? What is the process, and how much notice is given?</p>
+
+<h3>On care plan reviews</h3>
+<p>How often is a resident's care plan formally reviewed? Who participates — family, physician, floor staff? What triggers an unscheduled review?</p>
+
+<h2>The Bottom Line</h2>
+
+<p>The Blake at Pensacola is a well-appointed, professionally run facility that performs above average by most measurable standards. The physical environment, amenities, and overall care quality justify its position as one of the higher-rated options in this market.</p>
+
+<p>For independent living and assisted living residents who don't have significant memory care needs, The Blake is a strong option. For advanced memory care, the concerns raised about staffing levels and discharge practices are real enough that we'd strongly recommend an unannounced visit, direct conversation with floor staff (not just admissions), and explicit answers to the questions above before committing.</p>
+
+<p>You can view The Blake's full Intelligence Scanner report — including their AHCA history, employee review data, and source citations — at <a href="/research">carecircle.fit/research</a>.</p>
+
+<p class="data-source">Source data: Caring.com verified reviews, Mirador Living, AHCA license records, U.S. News Best Senior Living 2025, A Place for Mom review data. CareCircle Intelligence Score reflects cross-referenced data as of March 2026.</p>
+
+</article>
+
+<section class="cta-section">
+  <h2>Need help choosing the right facility?</h2>
+  <p>Free matching. No pressure. Real people helping real Gulf Coast families.</p>
+  <a href="tel:8503414324" class="cta-phone">📞 Call 850-341-4324</a>
+  <div class="cta-buttons">
+    <a href="/#find-care" class="btn-white">Get Matched Free →</a>
+    <a href="/research" class="btn-outline-white">Research a Provider</a>
+  </div>
+</section>
+
+<footer style="background:var(--warm-dark); padding:40px 5% 24px;">
+  <div style="max-width:1100px; margin:0 auto; padding-bottom:20px; font-size:0.72rem; color:rgba(255,255,255,0.25);">
+    © 2026 CareCircle Network, a TransBid LLC service. All rights reserved. CareCircle is a care coordination and referral platform. We are not a licensed healthcare provider. Provider information is sourced from publicly available records and verified third-party reviews. Families are encouraged to conduct independent research and visit facilities before making care decisions.
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+  function closeMobile() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }
+</script>
+</body>
+</html>
