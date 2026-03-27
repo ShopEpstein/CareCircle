@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Beacon at Gulf Breeze: Honest Review — Assisted Living & Memory Care (2026) | CareCircle</title>
+<meta name="description" content="The Beacon scores well on family reviews but carries a significant AHCA inspection record. 49 deficiency citations out of 51 inspections. Here's what that means for families.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --sage: #5C7A5F; --sage-light: #8FAF92; --sage-pale: #EFF5F0; --cream: #FAF8F4; --warm-dark: #1C2419; --warm-mid: #3D4F3F; --gold: #C8A96E; --gold-light: #E8D5A8; --terracotta: #C4714A; --text-body: #3A4A3C; --text-muted: #7A8E7C; --shadow-soft: 0 4px 24px rgba(28,36,25,0.10); --shadow-card: 0 2px 16px rgba(28,36,25,0.06); --radius: 12px; --radius-lg: 20px; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(250,248,244,0.95); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(92,122,95,0.12); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--warm-dark); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo-mark { width: 34px; height: 34px; background: var(--sage); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: white; font-weight: 700; font-family: 'DM Sans', sans-serif; flex-shrink: 0; }
+  .nav-center { display: flex; align-items: center; gap: 28px; }
+  .nav-center a { font-size: 0.875rem; font-weight: 500; color: var(--text-body); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-phone { font-size: 0.875rem; font-weight: 600; color: var(--sage); text-decoration: none; }
+  .nav-cta { background: var(--sage); color: white !important; padding: 10px 20px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--warm-dark); border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 199; background: rgba(250,248,244,0.98); backdrop-filter: blur(14px); padding: 24px 5% 32px; border-bottom: 1px solid rgba(92,122,95,0.12); flex-direction: column; gap: 0; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { padding: 14px 0; font-size: 1rem; font-weight: 500; color: var(--text-body); text-decoration: none; border-bottom: 1px solid rgba(92,122,95,0.08); }
+  .mobile-menu .mobile-phone { margin-top: 20px; font-size: 1.1rem; font-weight: 700; color: var(--sage); border-bottom: none; }
+  .mobile-menu .mobile-cta { margin-top: 12px; background: var(--sage); color: white; padding: 14px 24px; border-radius: 100px; text-align: center; font-weight: 600; border-bottom: none; }
+  .post-hero { padding: 120px 5% 40px; text-align: center; }
+  .post-body { max-width: 680px; margin: 0 auto; padding: 0 5% 60px; }
+  .post-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--warm-dark); margin: 40px 0 16px; }
+  .post-body h3 { font-size: 1.1rem; font-weight: 600; color: var(--warm-dark); margin: 28px 0 12px; }
+  .post-body p { font-size: 1rem; color: var(--text-body); line-height: 1.75; margin-bottom: 16px; }
+  .post-body a { color: var(--sage); font-weight: 500; }
+  .post-callout { background: var(--sage-pale); border-radius: 14px; padding: 24px 28px; margin: 28px 0; }
+  .post-callout p { margin-bottom: 8px; }
+  .post-callout p:last-child { margin-bottom: 0; }
+  .post-callout.warning { background: #fef7ec; border-left: 4px solid #C8A96E; }
+  .post-callout.danger { background: #fef2f2; border-left: 4px solid #dc2626; }
+  .stat-highlight { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 24px 0; }
+  .stat-box { background: white; border-radius: 12px; padding: 18px; text-align: center; border: 1px solid rgba(92,122,95,0.12); }
+  .stat-box .num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; display: block; }
+  .stat-box .label { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+  .stat-box.red .num { color: #dc2626; }
+  .stat-box.green .num { color: var(--sage); }
+  .stat-box.amber .num { color: #b5700a; }
+  .provider-mention { background: white; border-radius: 12px; border: 1px solid rgba(92,122,95,0.12); padding: 20px 24px; margin: 20px 0; }
+  .provider-mention-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--warm-dark); margin-bottom: 4px; }
+  .provider-mention-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
+  .provider-mention-detail { font-size: 0.9rem; color: var(--text-body); line-height: 1.65; }
+  .provider-mention-link { display: inline-block; margin-top: 10px; font-size: 0.85rem; color: var(--sage); font-weight: 600; }
+  .score-inline { display: inline-block; font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 0.85rem; }
+  .score-good { background: #edf7f0; color: #2d6a4f; }
+  .score-mixed { background: #fef7ec; color: #b5700a; }
+  .score-low { background: #fef2f2; color: #b91c1c; }
+  .data-source { font-size: 0.75rem; color: var(--text-muted); margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(92,122,95,0.12); font-style: italic; }
+  .cta-section { padding: 90px 5%; background: linear-gradient(135deg, var(--sage) 0%, var(--warm-mid) 100%); text-align: center; }
+  .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); color: white; margin-bottom: 14px; }
+  .cta-section p { font-size: 1rem; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+  .cta-phone { font-size: 1.4rem; font-weight: 700; color: var(--gold); text-decoration: none; display: block; margin-bottom: 28px; }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-white { background: white; color: var(--sage); padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 700; text-decoration: none; }
+  .btn-outline-white { background: transparent; color: white; padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 600; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.4); }
+  @media (max-width: 1024px) { .nav-center { display: none; } .hamburger { display: flex; } }
+  @media (max-width: 700px) { .stat-highlight { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .nav-phone { display: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo"><div class="nav-logo-mark">CC</div>CareCircle Network</a>
+  <div class="nav-center">
+    <a href="/#how-it-works">How It Works</a>
+    <a href="/research">Research Providers</a>
+    <a href="/partners">For Partners</a>
+    <a href="/blog" style="color:var(--sage);font-weight:600;">Blog</a>
+  </div>
+  <div class="nav-right">
+    <a href="tel:8503414324" class="nav-phone">📞 Call Now</a>
+    <a href="/#find-care" class="nav-cta">Get Matched Free</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/#how-it-works" onclick="closeMobile()">How It Works</a>
+  <a href="/research" onclick="closeMobile()">Research Providers</a>
+  <a href="/partners" onclick="closeMobile()">For Partners</a>
+  <a href="/blog" onclick="closeMobile()">Blog</a>
+  <a href="tel:8503414324" class="mobile-phone">📞 Call Now</a>
+  <a href="/#find-care" class="mobile-cta" onclick="closeMobile()">Get Matched Free →</a>
+</div>
+
+<div class="post-hero">
+  <div style="font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:var(--sage); margin-bottom:12px;">Assisted Living · Memory Care · Gulf Breeze · March 2026</div>
+  <h1 style="font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:var(--warm-dark); line-height:1.2; max-width:640px; margin:0 auto 16px;">The Beacon at Gulf Breeze: What the Data Really Shows</h1>
+  <p style="font-size:1rem; color:var(--text-muted); max-width:540px; margin:0 auto;">Strong family reviews. Attractive facility. And an AHCA inspection record that every family deserves to know about before choosing.</p>
+  <div style="margin-top:16px; font-size:0.8rem; color:var(--text-muted);">CareCircle Intelligence Score: <span class="score-inline score-mixed">7.0 / 10</span></div>
+</div>
+
+<article class="post-body">
+
+<p>The Beacon at Gulf Breeze sits on Gulf Breeze Parkway — a 120-bed facility offering assisted living and memory care to the Gulf Breeze and East Pensacola markets. It's premium-priced, well-appointed, and carries genuinely strong family reviews. It has also been cited for deficiencies in 49 out of 51 AHCA inspections over its operating history.</p>
+
+<p>Both of those things are true simultaneously. Understanding how is the point of this article.</p>
+
+<h2>The Inspection Record</h2>
+
+<p>The Florida Agency for Health Care Administration (AHCA) conducts routine and complaint-triggered inspections of all licensed assisted living facilities. Their records are public. This is what The Beacon's record shows:</p>
+
+<div class="stat-highlight">
+  <div class="stat-box amber">
+    <span class="num">51</span>
+    <div class="label">Total AHCA inspections (2012–2024)</div>
+  </div>
+  <div class="stat-box red">
+    <span class="num">49</span>
+    <div class="label">Inspections citing deficiencies</div>
+  </div>
+  <div class="stat-box amber">
+    <span class="num">55</span>
+    <div class="label">Total deficiency line items identified</div>
+  </div>
+</div>
+
+<div class="post-callout danger">
+  <p><strong>What "Pending" status means:</strong> The Beacon's most recent AHCA inspection was conducted on December 11, 2024, with a current status of Pending — meaning the findings from that inspection have not yet been fully resolved. The common themes across the facility's inspection history include records and documentation issues, resident care and rights violations, and emergency planning deficiencies.</p>
+  <p>This is public record. You can verify it directly at <a href="https://ahca.myflorida.com" target="_blank" rel="noopener">ahca.myflorida.com</a> by searching for The Beacon at Gulf Breeze.</p>
+</div>
+
+<p>To be clear about what this record does and doesn't mean: AHCA citations range from minor documentation gaps to serious care violations. Not all 55 deficiency line items represent harm to residents. But 49 citations out of 51 inspections over more than a decade is not a technicality rate — it reflects persistent operational issues that state regulators have flagged repeatedly, and the "Resident Care and Rights" category in particular is one families should take seriously.</p>
+
+<h2>The Family Experience</h2>
+
+<p>Here's the tension: The Beacon's family reviews are genuinely strong. With 150+ reviews across platforms and a 4.2 average, the volume is large enough to be meaningful.</p>
+
+<div class="provider-mention">
+  <div class="provider-mention-name">The Beacon at Gulf Breeze <span class="score-inline score-mixed">7.0</span></div>
+  <div class="provider-mention-meta">4410 Gulf Breeze Pkwy, Gulf Breeze, FL 32563 · Assisted Living & Memory Care · 120 beds · Operated by CHP Gulf Breeze FL Tenant Corp · Cost: $3,500–$6,700/month</div>
+  <div class="provider-mention-detail">Spacious rooms with accessible bathrooms, grab bars, and shower chairs. Large dining hall with private family dining room. Movie theatre with recliner seating, two courtyard areas including one with putt-putt golf, beauty salon and spa. On-site licensed nurse 24/7, emergency response system, on-site physical, occupational, and speech therapists. Regular outings including Pensacola Wahoos games, shopping trips, and community events. Best of Senior Living All Star recognition for 2025.</div>
+  <a href="/research" class="provider-mention-link">View full Intelligence Report →</a>
+</div>
+
+<p>Family reviewers describe a facility with genuine warmth — staff who explain everything during tours, dining options that accommodate different preferences, activities that keep residents genuinely engaged. The physical environment is well-designed and the hospitality culture appears real.</p>
+
+<h2>How Both Can Be True</h2>
+
+<p>A facility can have warm, engaged front-line staff and still have systemic documentation problems, rights protocol issues, and emergency planning gaps that AHCA flags repeatedly. Family satisfaction and regulatory compliance measure different things. Families experience the hospitality layer. Inspectors assess operational protocols, documentation accuracy, rights procedures, and emergency preparedness.</p>
+
+<p>This matters because documentation problems and rights issues aren't just bureaucratic failures — they can indicate that when something goes wrong with a resident's care, the facility's systems for tracking it, escalating it, and correcting it may not be reliable. That's the actual risk embedded in a persistent deficiency record.</p>
+
+<h2>What to Do With This Information</h2>
+
+<p>We're not telling you not to choose The Beacon. We're telling you that every family considering this facility deserves to know about this inspection record before they do.</p>
+
+<h3>Pull the actual inspection reports</h3>
+<p>Go to <a href="https://ahca.myflorida.com/site/health-quality-assurance/inspection-reports-for-health-care-providers" target="_blank" rel="noopener">AHCA's inspection report portal</a> and search for The Beacon at Gulf Breeze. Read the most recent statement of deficiencies. The categories matter — "Resident Care and Rights" violations are different from "Emergency Power Plan" documentation issues.</p>
+
+<h3>Ask about the December 2024 inspection specifically</h3>
+<p>The most recent inspection is listed as Pending. Ask the administrator directly: what did that inspection find, and what is the current status of the corrective action plan? A facility with nothing to hide will answer this directly.</p>
+
+<h3>Ask about rights and care escalation procedures</h3>
+<p>Specifically: if a family member has a concern about their loved one's care, what is the formal process for raising it? Who tracks complaints and follow-through? How are resident rights complaints handled?</p>
+
+<h2>The Bottom Line</h2>
+
+<p>The Beacon at Gulf Breeze is an attractive, well-amenitized facility with a genuinely warm family-facing culture and a price point that reflects its positioning. The inspection record is a real concern that doesn't match the positive family experience — which is exactly why it's important to surface it. A facility that looks and feels excellent can still have systemic operational gaps that regulators keep finding.</p>
+
+<p>If you choose The Beacon, go in informed. Pull the inspection record. Ask about the Pending status. Stay actively involved. And know that if something goes wrong, the documentation history suggests the operational systems may not catch it as reliably as you'd want.</p>
+
+<p>View The Beacon's full Intelligence Scanner report at <a href="/research">carecircle.fit/research</a>. Questions? Call us at <a href="tel:8503414324">850-341-4324</a>.</p>
+
+<p class="data-source">Source data: A Place for Mom (71 reviews), Caring.com, Assisted Living Magazine / AHCA inspection records (public), Mirador Living, AssistedLivingCenter.com, FamilyAssets.com pricing data. AHCA inspection record verified at ahca.myflorida.com. CareCircle Intelligence Score reflects cross-referenced data as of March 2026.</p>
+
+</article>
+
+<section class="cta-section">
+  <h2>Weighing your options in Gulf Breeze?</h2>
+  <p>We'll walk through the data with you. Free, no referral fees, no pressure.</p>
+  <a href="tel:8503414324" class="cta-phone">📞 Call 850-341-4324</a>
+  <div class="cta-buttons">
+    <a href="/#find-care" class="btn-white">Get Matched Free →</a>
+    <a href="/research" class="btn-outline-white">Research a Provider</a>
+  </div>
+</section>
+
+<footer style="background:var(--warm-dark); padding:40px 5% 24px;">
+  <div style="max-width:1100px; margin:0 auto; padding-bottom:20px; font-size:0.72rem; color:rgba(255,255,255,0.25);">
+    © 2026 CareCircle Network, a TransBid LLC service. All rights reserved. CareCircle is a care coordination and referral platform. We are not a licensed healthcare provider. Provider information is sourced from publicly available records and verified third-party reviews. AHCA inspection data is public record available at ahca.myflorida.com.
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+  function closeMobile() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }
+</script>
+</body>
+</html>
