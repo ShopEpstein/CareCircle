@@ -227,8 +227,37 @@
   .btn-outline-white { background: transparent; color: white; padding: 14px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 600; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.4); transition: all 0.25s; }
   .btn-outline-white:hover { border-color: white; }
 
-  @media (max-width: 1024px) { .nav-center { display: none; } .hamburger { display: flex; } .usecase-grid { grid-template-columns: 1fr; } .hiw-steps { grid-template-columns: repeat(2, 1fr); gap: 32px; } .hiw-steps::before { display: none; } .observe-grid, .report-inner { grid-template-columns: 1fr; gap: 40px; } .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin-left: auto; margin-right: auto; } .who-grid { grid-template-columns: 1fr; } }
-  @media (max-width: 600px) { .nav-phone { display: none; } .hero h1 { font-size: 2.2rem; } }
+  /* VETERANS SECTION */
+  .pullquote { background: var(--warm-dark); border-radius: var(--radius-lg); padding: 40px 48px; margin: 0 0 16px; position: relative; overflow: hidden; }
+  .pullquote::before { content: '"'; font-family: 'Playfair Display', serif; font-size: 8rem; color: rgba(200,169,110,0.15); line-height: 1; position: absolute; top: 10px; left: 32px; }
+  .pullquote p { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: white; line-height: 1.55; font-style: italic; position: relative; z-index: 1; }
+  .pullquote cite { display: block; margin-top: 16px; font-size: 0.8rem; color: var(--gold); font-style: normal; font-family: 'DM Sans', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+  .reality-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
+  .reality-card { background: white; border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-card); border-top: 4px solid var(--sage); }
+  .reality-card.danger { border-top-color: var(--terracotta); }
+  .reality-card.gold { border-top-color: var(--gold); }
+  .reality-card-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+  .reality-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--warm-dark); margin-bottom: 12px; line-height: 1.3; }
+  .reality-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; }
+  .vet-warn-section { background: var(--warm-dark); padding: 88px 5%; position: relative; overflow: hidden; }
+  .vet-warn-section::before { content: ''; position: absolute; top: -150px; right: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(196,113,74,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .vet-warn-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+  .warning-list { margin-top: 44px; display: flex; flex-direction: column; }
+  .warning-item { display: flex; gap: 24px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .warning-item:last-child { border-bottom: none; }
+  .warning-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: rgba(196,113,74,0.3); line-height: 1; flex-shrink: 0; width: 60px; }
+  .warning-body h3 { font-size: 1rem; font-weight: 600; color: white; margin-bottom: 8px; }
+  .warning-body p { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.75; }
+  .warning-body strong { color: rgba(255,255,255,0.85); }
+  .vet-stat-bar { background: var(--warm-dark); padding: 0; border-top: 1px solid rgba(255,255,255,0.06); }
+  .vet-stat-inner { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 1200px; margin: 0 auto; }
+  .vet-stat-item { padding: 28px 24px; text-align: center; border-right: 1px solid rgba(255,255,255,0.06); }
+  .vet-stat-item:last-child { border-right: none; }
+  .vet-stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold); display: block; line-height: 1; }
+  .vet-stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 6px; line-height: 1.4; }
+
+  @media (max-width: 1024px) { .nav-center { display: none; } .hamburger { display: flex; } .usecase-grid { grid-template-columns: 1fr; } .hiw-steps { grid-template-columns: repeat(2, 1fr); gap: 32px; } .hiw-steps::before { display: none; } .observe-grid, .report-inner { grid-template-columns: 1fr; gap: 40px; } .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin-left: auto; margin-right: auto; } .who-grid { grid-template-columns: 1fr; } .reality-grid { grid-template-columns: 1fr; } .vet-stat-inner { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .nav-phone { display: none; } .hero h1 { font-size: 2.2rem; } .vet-stat-inner { grid-template-columns: 1fr 1fr; } }
 </style>
 </head>
 <body>
@@ -524,6 +553,156 @@
   </div>
 </div>
 
+<!-- VETERANS & RETIRED PROFESSIONALS -->
+<div id="veterans" class="section" style="background: white;">
+  <div class="section-inner">
+    <div class="section-label">Care for Veterans &amp; Retired Professionals</div>
+    <h2 class="section-title">He spent his life in command. The last thing he needs is to be handled.</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; margin-top:52px;">
+      <div>
+        <div class="section-body">
+          <p>The retired Navy captain who gets combative at 2am isn't a behavior problem. The retired surgeon who refuses care from a young aide he's never met isn't being resistant. The retired executive who asks sharp questions about his medication isn't paranoid. In each case, what looks like non-compliance to an undertrained staff member is identity, grief, or a man doing exactly what he did for 40 years when someone proposed something that didn't make sense.</p>
+          <p>The wrong care setting's response is the same every time: a prescription. A sedative. A note in the file that says "combative." And a family that gets a call describing a man they don't recognize — because the man they know has been chemically subdued.</p>
+          <p>CareCircle Present unannounced visits are especially valuable for this population. We send male companions when requested, we know what chemical restraint looks like in practice, and we ask the questions most families don't know to ask.</p>
+        </div>
+      </div>
+      <div>
+        <div class="pullquote">
+          <p>Staff justify using antipsychotic drugs on people with dementia because they interpret urgent expressions of pain or distress as disruptive behavior that needs to be suppressed.</p>
+          <cite>Human Rights Watch, "They Want Docile"</cite>
+        </div>
+        <div style="background: var(--sage-pale); border-radius: var(--radius-lg); padding: 22px 26px; border: 1px solid rgba(92,122,95,0.12);">
+          <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--terracotta); margin-bottom: 8px;">March 2026 — Federal Report</div>
+          <p style="font-size: 0.88rem; color: var(--text-body); line-height: 1.7; margin-bottom: 0;">A government watchdog confirmed nursing homes are creating false schizophrenia diagnoses to justify antipsychotic prescriptions. <a href="/blog/chemical-restraint-nursing-homes-2026.html" style="color: var(--sage); font-weight: 600;">Read our full analysis →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VETERANS — WHY THIS HAPPENS -->
+<div class="section" style="background: var(--sage-pale);">
+  <div class="section-inner">
+    <div class="section-label">Why This Happens</div>
+    <h2 class="section-title">Three realities families need to understand</h2>
+    <div class="reality-grid">
+      <div class="reality-card danger">
+        <span class="reality-card-icon">💊</span>
+        <h3>Chemical restraint is cheaper than care</h3>
+        <p>Antipsychotic medications are not approved for dementia. The FDA has required a black box warning on these drugs since 2008 noting an increased risk of death in elderly patients. Nursing homes give them to an estimated 179,000 residents every week without an appropriate diagnosis — because sedation is cheaper than proper staffing and engagement.</p>
+      </div>
+      <div class="reality-card danger">
+        <span class="reality-card-icon">👩‍⚕️</span>
+        <h3>The workforce was built around a different patient</h3>
+        <p>More than 75% of professional caregivers are women. A retired military officer or physician who spent his career in authority does not naturally defer to a stranger half his age. Facilities that don't understand this dynamic label it a problem to be managed — and reach for a prescription to solve it.</p>
+      </div>
+      <div class="reality-card gold">
+        <span class="reality-card-icon">🔍</span>
+        <h3>Families are usually the last to know</h3>
+        <p>Men from military and professional backgrounds are conditioned not to make a fuss. By the time a family notices that Dad seems foggy or slower, the sedation may have been happening for months. The documentation will say "improved behavioral compliance." What it won't say is what was prescribed to achieve it.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VETERANS — WARNING SIGNS -->
+<div class="vet-warn-section">
+  <div class="vet-warn-inner">
+    <div class="section-label" style="color: var(--terracotta);">Warning Signs</div>
+    <h2 class="section-title" style="color: white;">What to watch for if your loved one is already in a facility</h2>
+    <p style="font-size: 1rem; color: rgba(255,255,255,0.55); max-width: 640px; line-height: 1.75;">These are not proof of chemical restraint — but they are questions you have the right to ask, and that any reputable facility should answer directly.</p>
+    <div class="warning-list">
+      <div class="warning-item">
+        <div class="warning-num">01</div>
+        <div class="warning-body">
+          <h3>Sudden personality change</h3>
+          <p>If a man who was sharp and present becomes flat or unusually passive — especially after being labeled "difficult" — that shift warrants a direct conversation about his current medications. <strong>Ask for a complete list of every medication he is currently taking and when each was added.</strong></p>
+        </div>
+      </div>
+      <div class="warning-item">
+        <div class="warning-num">02</div>
+        <div class="warning-body">
+          <h3>New balance or gait problems</h3>
+          <p>Antipsychotics cause Parkinson's-like symptoms — tremors, shuffling gait, instability. Falls that appear suddenly in a man who was previously mobile are a documented side effect of chemical restraint. <strong>Ask whether any new medications coincide with the onset of balance problems.</strong></p>
+        </div>
+      </div>
+      <div class="warning-item">
+        <div class="warning-num">03</div>
+        <div class="warning-body">
+          <h3>A new psychiatric diagnosis that appeared recently</h3>
+          <p>Nursing homes are creating false schizophrenia diagnoses to justify antipsychotic prescriptions. If your loved one suddenly has a psychiatric diagnosis he's never had before, ask who made that diagnosis, when, and what evaluation supported it. <strong>You have a legal right to this information.</strong></p>
+        </div>
+      </div>
+      <div class="warning-item">
+        <div class="warning-num">04</div>
+        <div class="warning-body">
+          <h3>Staff describing him in ways his family doesn't recognize</h3>
+          <p>If staff consistently describe a man his family knows as calm and competent as "aggressive" or "resistive" — and you cannot reconcile those descriptions with the man you visit — that gap is worth investigating. It may reflect a care environment that doesn't understand him, a documentation pattern designed to justify medication, or both.</p>
+        </div>
+      </div>
+      <div class="warning-item">
+        <div class="warning-num">05</div>
+        <div class="warning-body">
+          <h3>Reluctance to allow unannounced family visits</h3>
+          <p>Federal law gives family members the right to visit residents at any time. A facility that discourages unannounced visits is worth examining. <strong>Unannounced visits are the single most reliable way to assess the actual daily care environment — which is exactly what CareCircle Present provides.</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VETERANS — HOW WE HELP -->
+<div class="section" style="background: white;">
+  <div class="section-inner">
+    <div class="section-label">How CareCircle Helps</div>
+    <h2 class="section-title">What we do differently for veterans &amp; retired professionals</h2>
+    <div class="who-grid" style="margin-top: 52px;">
+      <div class="who-card">
+        <div class="who-avatar">👨</div>
+        <h3>Male companions — available on request</h3>
+        <p>For veterans and retired professionals who prefer same-gender care or companionship, we have male companions available through our partner network. We ask this question upfront so it's never an afterthought — personal care and dignity-first visits from someone who understands that background.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-avatar">🎖️</div>
+        <h3>Military-aware companions</h3>
+        <p>We prioritize companions who understand — or share — a military or professional background when visiting veterans. The dynamic between a retired officer and a caregiver matters. We don't pretend it doesn't.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-avatar">📋</div>
+        <h3>Chemical restraint indicators in every report</h3>
+        <p>Our Intelligence Scanner cross-references CMS data and AHCA records. For memory care facilities, we flag providers whose inspection records show patterns consistent with chemical restraint — resident rights violations, unnecessary drug citations, and documentation irregularities.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-avatar">🏠</div>
+        <h3>VA Aid and Attendance — we ask every time</h3>
+        <p>Many veterans and families don't know about VA Aid and Attendance — a pension benefit that can provide up to $1,911 per month toward senior care costs for qualifying single veterans. We discuss this on every call with a veteran's family. It often changes what's financially possible.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VETERANS — FLORIDA STATS -->
+<div class="vet-stat-bar">
+  <div class="vet-stat-inner">
+    <div class="vet-stat-item">
+      <span class="vet-stat-num">118</span>
+      <div class="vet-stat-label">Years of NAS Pensacola — the Cradle of Naval Aviation</div>
+    </div>
+    <div class="vet-stat-item">
+      <span class="vet-stat-num">4</span>
+      <div class="vet-stat-label">Major military installations within the counties we serve</div>
+    </div>
+    <div class="vet-stat-item">
+      <span class="vet-stat-num">179K</span>
+      <div class="vet-stat-label">Nursing home residents receive inappropriate antipsychotics every week — Human Rights Watch</div>
+    </div>
+    <div class="vet-stat-item">
+      <span class="vet-stat-num">$0</span>
+      <div class="vet-stat-label">Cost to families — CareCircle never charges families for matching or research</div>
+    </div>
+  </div>
+</div>
+
 <!-- PRICING -->
 <div class="pricing-section">
   <div class="pricing-inner">
@@ -533,6 +712,19 @@
       <p style="font-size:0.95rem; color:var(--text-muted); max-width:500px; margin:0 auto; line-height:1.75;">Every plan includes a structured written report within 24 hours of every visit. Pricing reflects visit length and frequency. Call to discuss what makes sense for your situation.</p>
     </div>
     <div class="pricing-grid" style="grid-template-columns: repeat(4,1fr);">
+      <div class="pricing-card">
+        <div class="pricing-name">Pre-Placement</div>
+        <div class="pricing-price">$150 <span>/ facility</span></div>
+        <div class="pricing-desc">Visit before you commit. The most valuable visit we do.</div>
+        <ul class="pricing-includes">
+          <li>Unannounced companion visit</li>
+          <li>Full observation checklist</li>
+          <li>Written assessment report</li>
+          <li>Up to 2 facility comparison</li>
+          <li>Consultation call with Chase</li>
+        </ul>
+        <a href="tel:8503414324" class="pricing-cta">Book Assessment</a>
+      </div>
       <div class="pricing-card">
         <div class="pricing-name">Single Visit</div>
         <div class="pricing-price">$95 <span>/ visit</span></div>
@@ -544,20 +736,6 @@
           <li>Direct call if anything flagged</li>
         </ul>
         <a href="tel:8503414324" class="pricing-cta">Book a Visit</a>
-      </div>
-      <div class="pricing-card featured">
-        <div class="pricing-name">Monthly Plan</div>
-        <div class="pricing-price">$295 <span>/ month</span></div>
-        <div class="pricing-desc">Four visits per month at rotating, unpredictable times.</div>
-        <ul class="pricing-includes">
-          <li>4 visits/month — varied hours</li>
-          <li>Mix of day, evening, overnight</li>
-          <li>Written report after every visit</li>
-          <li>Immediate call for red flags</li>
-          <li>Monthly family summary</li>
-          <li>Male companion matching</li>
-        </ul>
-        <a href="tel:8503414324" class="pricing-cta">Book This Plan</a>
       </div>
       <div class="pricing-card">
         <div class="pricing-name">Overnight Visit</div>
@@ -572,21 +750,22 @@
         </ul>
         <a href="tel:8503414324" class="pricing-cta">Book Overnight</a>
       </div>
-      <div class="pricing-card">
-        <div class="pricing-name">Pre-Placement</div>
-        <div class="pricing-price">$150 <span>/ facility</span></div>
-        <div class="pricing-desc">Visit before you commit. The most valuable visit we do.</div>
+      <div class="pricing-card featured">
+        <div class="pricing-name">Guardian Plan</div>
+        <div class="pricing-price">$295 <span>/ month</span></div>
+        <div class="pricing-desc">Four visits per month at rotating, unpredictable times.</div>
         <ul class="pricing-includes">
-          <li>Unannounced companion visit</li>
-          <li>Full observation checklist</li>
-          <li>Written assessment report</li>
-          <li>Up to 2 facility comparison</li>
-          <li>Consultation call with Chase</li>
+          <li>4 visits/month — varied hours</li>
+          <li>Mix of day, evening, overnight</li>
+          <li>Written report after every visit</li>
+          <li>Immediate call for red flags</li>
+          <li>Monthly family summary</li>
+          <li>Male companion matching</li>
         </ul>
-        <a href="tel:8503414324" class="pricing-cta">Book Assessment</a>
+        <a href="tel:8503414324" class="pricing-cta">Book This Plan</a>
       </div>
     </div>
-    <p class="pricing-note">All pricing is for the Pensacola metro area. Escambia, Santa Rosa, and Okaloosa counties. Call 850-341-4324 to confirm availability in your area.</p>
+    <p class="pricing-note">Call 850-341-4324 to confirm availability in your area.</p>
   </div>
 </div>
 
@@ -597,7 +776,7 @@
   <a href="tel:8503414324" class="cta-phone">📞 850-341-4324</a>
   <div class="cta-buttons">
     <a href="tel:8503414324" class="btn-white">Book a Visit →</a>
-    <a href="/men" class="btn-outline-white">Senior Care for Veterans & Men</a>
+    <a href="#veterans" class="btn-outline-white">Care for Veterans &amp; Retired Professionals</a>
   </div>
 </div>
 
