@@ -868,7 +868,7 @@
     <!-- Submit form (hidden by default) -->
     <div id="submit-form" style="display:none; max-width:480px; margin:20px auto 0; padding:24px; background:white; border-radius:14px; border:1px solid rgba(92,122,95,0.12);">
       <p style="font-size:0.95rem; font-weight:600; color:var(--warm-dark); margin-bottom:12px;">Request a provider report</p>
-      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:16px;">We'll research this provider and add them within 24 hours.</p>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:16px;">We'll research this provider and add them within 12 hours.</p>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <input type="text" id="submit-name" placeholder="Provider name" style="flex:1; min-width:180px; padding:11px 14px; border:1.5px solid rgba(92,122,95,0.2); border-radius:10px; font-size:0.9rem; font-family:'DM Sans',sans-serif; outline:none;" />
         <input type="text" id="submit-city" placeholder="City" style="width:130px; padding:11px 14px; border:1.5px solid rgba(92,122,95,0.2); border-radius:10px; font-size:0.9rem; font-family:'DM Sans',sans-serif; outline:none;" />
@@ -1614,7 +1614,7 @@ function submitFacility() {
       urgency:'Research request'
     })
   }).then(()=>{
-    statusEl.innerHTML='<span style="color:var(--sage);">✓ Submitted! We\'ll research <strong>'+name+'</strong> and add them within 24 hours.</span>';
+    statusEl.innerHTML='<span style="color:var(--sage);">✓ Submitted! We\'ll research <strong>'+name+'</strong> and add them within 12 hours.</span>';
   }).catch(()=>{
     statusEl.innerHTML='<span style="color:var(--sage);">✓ Request received! We\'ll add <strong>'+name+'</strong> soon.</span>';
   });
