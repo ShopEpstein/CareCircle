@@ -3093,5 +3093,130 @@
     "quotes": [],
     "compare": "AHCA-verified Bay County nurse registry. Non-Medicare certification limits eligibility for some families. Insufficient public data for quality assessment.",
     "gaps": "All review data zero."
+  },
+  "westpointe retirement community": {
+    "name": "Westpointe Retirement Community",
+    "loc": "5101 Northpointe Pkwy, Pensacola, FL 32514",
+    "type": "Assisted Living / Independent Living · ALF",
+    "founded": null,
+    "ownership": "Independent · Dr. Mohammad Mikhchi · Also operates Northpointe RC · 100 beds · AHCA License #3252",
+    "scores": {
+      "overall": "3.9",
+      "google": "2.6★ (13+ reviews across Caring.com, A Place for Mom, Seniorly)",
+      "staff": "5.0★ (Glassdoor — 1 review, insufficient sample)",
+      "complaints": "AHCA #3252 — 129 citations, 13 complaints, 4 fines (2005–2011); recent surveys improved"
+    },
+    "sc": {
+      "overall": "sc-bad",
+      "google": "sc-bad",
+      "staff": "sc-good",
+      "complaints": "sc-warn"
+    },
+    "green": [
+      {
+        "t": "Below-market pricing with documented lifetime rent guarantee",
+        "b": "$2,900–$3,700/month is genuinely below the Pensacola average of ~$3,900+. The lifetime no-rent-increase guarantee on month-to-month leases is documented and cited by multiple independent families."
+      },
+      {
+        "t": "Room size consistently praised across positive and negative reviews",
+        "b": "Both satisfied and dissatisfied reviewers note room size as a genuine advantage. Private baths and kitchenettes included."
+      },
+      {
+        "t": "Long-tenure staff — 4 employees with 20+ years, 15 with 10+ years",
+        "b": "Documented staff longevity. Some long-term caregivers specifically praised by name across independent reviews."
+      },
+      {
+        "t": "Active AHCA license — no current suspension or revocation",
+        "b": "License #3252 active. Standard surveys in 2024–2025 returned mostly no deficiencies, reflecting measurable improvement from earlier years."
+      }
+    ],
+    "red": [
+      {
+        "t": "Pest infestation — roaches, flies, mice documented across multiple independent reviewers",
+        "b": "Multiple independent family reviewers on different platforms report roaches in the dining room, roaches found in resident food on multiple occasions (including two separate accounts of dead roaches in dinner), flies, mice, and urine odors on carpeting that were not addressed."
+      },
+      {
+        "t": "Nutrition failures — significant unexplained resident weight loss documented",
+        "b": "Multiple independent reviewers report significant unexplained weight loss: one family reports 80 pounds over five years, another 30 pounds without medical cause. Reviewers describe inadequate caloric content and failure to accommodate dietary needs."
+      },
+      {
+        "t": "Management conduct — repeated independent accounts of dismissiveness and hostility",
+        "b": "Repeated, independent reviewer reports describe management as dismissive and unresponsive to complaints. Multiple accounts independently report being told to leave the facility if unhappy."
+      },
+      {
+        "t": "Emergency response — call bells described as slow to non-existent; falls left unattended",
+        "b": "Multiple reviewers describe emergency call bell response times as slow or absent. Falls reported left unattended for extended periods. Nighttime staffing described as minimal."
+      },
+      {
+        "t": "Historical AHCA record — 129 citations, 13 substantiated complaints, 4 fines (2005–2011)",
+        "b": "Among the highest documented citation volumes in Escambia County during that period. Presented as historical context; recent survey performance reflects measurable improvement."
+      }
+    ],
+    "findings": [
+      {
+        "t": "bad",
+        "title": "Pest infestation — roaches in dining room and resident food documented across sources",
+        "detail": "Multiple independent reviewers on separate platforms report roaches in the dining room and found in resident food, including two separate accounts of dead roaches in dinner. Also flies, mice, and urine odors on carpeting.",
+        "src": "Caring.com · A Place for Mom · Seniorly · Mirador · Multiple independent reviewers"
+      },
+      {
+        "t": "bad",
+        "title": "Nutrition failures — resident weight loss of 30–80 lbs documented",
+        "detail": "Multiple independent families report significant unexplained resident weight loss. One family reports 80 pounds over five years; another reports 30 pounds without identified medical cause. Inadequate caloric content and failure to accommodate dietary needs also documented.",
+        "src": "Caring.com · A Place for Mom · Multiple independent reviewers"
+      },
+      {
+        "t": "bad",
+        "title": "Management conduct — dismissiveness, hostility, told families to leave",
+        "detail": "Repeated, independent reviewer reports describe management telling families to leave if unhappy. Described as oppressive environment by one reviewer. Accounts span multiple platforms and time periods.",
+        "src": "Caring.com · A Place for Mom · Seniorly · Multiple platforms"
+      },
+      {
+        "t": "warn",
+        "title": "Emergency call response — slow to non-existent; falls left unattended",
+        "detail": "Multiple reviewers describe emergency call bell response as slow or absent. Falls left unattended for extended periods. Nighttime staffing described as minimal.",
+        "src": "Caring.com · A Place for Mom · Multiple reviewers"
+      },
+      {
+        "t": "warn",
+        "title": "AHCA historical record — 129 citations, 13 complaints, 4 fines (2005–2011)",
+        "detail": "Historical AHCA data shows 129 total citations, 13 substantiated complaints, and 4 fines — among the highest in Escambia County during that period. Recent 2024–2025 surveys show improvement.",
+        "src": "FL AHCA FloridaHealthFinder · License #3252"
+      },
+      {
+        "t": "good",
+        "title": "Pricing $2,900–$3,700/mo — below-market with lifetime rent guarantee",
+        "detail": "Below-market pricing. Documented lifetime no-rent-increase guarantee on month-to-month leases. Consistently noted by multiple independent families as a real financial advantage.",
+        "src": "Caring.com · A Place for Mom · Facility website"
+      },
+      {
+        "t": "good",
+        "title": "Long-tenure staff — 4 employees 20+ years, 15 employees 10+ years",
+        "detail": "Documented staff longevity. Some caregivers specifically named and praised in independent reviews.",
+        "src": "Facility-reported data · Caring.com reviews"
+      },
+      {
+        "t": "info",
+        "title": "100-bed ALF · AHCA License #3252 · Active",
+        "detail": "License active. No current emergency suspension or revocation. Licensed as ALF, not CMS-certified skilled nursing. Recent standard surveys (2024–2025) mostly no deficiencies.",
+        "src": "FL AHCA FloridaHealthFinder · License #3252"
+      }
+    ],
+    "quotes": [
+      {
+        "t": "Found a dead roach in my mom’s dinner on two separate occasions. The food is unsafe for human consumption.",
+        "a": "Caring.com · Family reviewer"
+      },
+      {
+        "t": "My mother lost 80 pounds in 5 years. Management is dismissive, hostile, and told us to leave if we were not happy.",
+        "a": "A Place for Mom · Family reviewer"
+      },
+      {
+        "t": "The value is unmatched in Pensacola. Large rooms, private bath, no rent increases guaranteed — that alone is worth serious consideration.",
+        "a": "Caring.com · Satisfied family reviewer"
+      }
+    ],
+    "compare": "Westpointe’s pricing and rent stability are genuine market advantages. However, the volume and consistency of multi-source documentation around pest infestation in food, significant resident weight loss, and dismissive management make this a serious concern for residents needing reliable hands-on assisted living support. Families considering this facility should conduct multiple unannounced visits, eat a meal there, and establish a robust monitoring plan before placement.",
+    "gaps": "Seniorly composite review count and full breakdown not confirmed. Direct AHCA survey PDFs for May 2023 deficiency list not retrieved — families should access full PDFs at quality.healthfinder.fl.gov (License #3252). Google Business Profile review count not independently verified."
   }
 }
