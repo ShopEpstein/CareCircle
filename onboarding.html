@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareCircle Network — 1099 Contractor Commission System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --sage: #6B8C7A;
+    --sage-light: #E8F0EC;
+    --sage-dark: #3D5449;
+    --warm-dark: #1C1C1A;
+    --gold: #C4963A;
+    --gold-light: #FDF3E0;
+    --cream: #FAF8F4;
+    --terracotta: #C4633A;
+    --terracotta-light: #FDF0EB;
+    --navy: #1A2B3C;
+    --border: rgba(28,28,26,0.12);
+    --border-strong: rgba(28,28,26,0.25);
+    --text-muted: #6B6860;
+    --success: #3B6D11;
+    --success-bg: #EAF3DE;
+    --warning: #854F0B;
+    --warning-bg: #FAEEDA;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--warm-dark);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* PRINT */
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white; }
+    .section-card { break-inside: avoid; }
+    .page-break { page-break-before: always; }
+  }
+
+  /* HEADER */
+  .doc-header {
+    background: var(--warm-dark);
+    color: white;
+    padding: 48px 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: var(--sage);
+    opacity: 0.08;
+  }
+
+  .doc-header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 40%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.06;
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 12px;
+  }
+
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    line-height: 1.1;
+    color: white;
+    margin-bottom: 8px;
+  }
+
+  .header-title span { color: var(--gold); }
+
+  .header-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    max-width: 560px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item { font-size: 13px; }
+  .header-meta-item .label { color: rgba(255,255,255,0.4); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .header-meta-item .val { color: white; font-weight: 500; margin-top: 2px; }
+
+  /* LAYOUT */
+  .doc-body { max-width: 920px; margin: 0 auto; padding: 48px 32px; }
+
+  /* TOC */
+  .toc {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+  }
+
+  .toc-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 32px;
+  }
+
+  .toc-item {
+    font-size: 13px;
+    color: var(--sage-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.15s;
+  }
+
+  .toc-item:hover { color: var(--terracotta); }
+  .toc-num { font-size: 11px; color: var(--text-muted); min-width: 20px; }
+
+  /* SECTION CARDS */
+  .section-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 40px;
+    margin-bottom: 28px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--warm-dark);
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--sage-light);
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--warm-dark);
+    margin: 24px 0 10px;
+  }
+
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--sage-dark);
+    margin: 16px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  p { margin-bottom: 12px; color: var(--warm-dark); }
+  
+  .lead { font-size: 16px; color: var(--text-muted); margin-bottom: 20px; font-weight: 300; }
+
+  /* TABLES */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 16px 0 24px;
+  }
+
+  .data-table th {
+    background: var(--warm-dark);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .data-table th:first-child { border-radius: 8px 0 0 0; }
+  .data-table th:last-child { border-radius: 0 8px 0 0; }
+
+  .data-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:nth-child(even) td { background: var(--cream); }
+  .data-table .highlight td { background: var(--gold-light) !important; font-weight: 500; }
+  .data-table .total-row td { background: var(--sage-light) !important; font-weight: 600; border-top: 2px solid var(--sage); }
+
+  .money { font-family: 'DM Serif Display', serif; color: var(--sage-dark); }
+  .money-gold { font-family: 'DM Serif Display', serif; color: var(--gold); }
+  .money-big { font-size: 22px; font-family: 'DM Serif Display', serif; color: var(--sage-dark); }
+
+  /* TIER CARDS */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .tier-card {
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .tier-card.featured {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(196,150,58,0.12);
+  }
+
+  .tier-header {
+    padding: 16px 18px 14px;
+    background: var(--warm-dark);
+    color: white;
+  }
+
+  .tier-card.featured .tier-header { background: var(--gold); }
+  .tier-card.elite .tier-header { background: var(--terracotta); }
+
+  .tier-name { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+  .tier-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-top: 2px; }
+
+  .tier-body { padding: 18px; }
+
+  .tier-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .tier-row:last-child { border-bottom: none; }
+  .tier-row-label { color: var(--text-muted); }
+  .tier-row-val { font-weight: 600; }
+
+  .tier-badge {
+    display: inline-block;
+    background: var(--gold-light);
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  /* BONUS CARDS */
+  .bonus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  
+  .bonus-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    border-left: 4px solid var(--sage);
+  }
+
+  .bonus-card.gold { border-left-color: var(--gold); }
+  .bonus-card.terra { border-left-color: var(--terracotta); }
+  .bonus-card.navy { border-left-color: var(--navy); }
+
+  .bonus-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .bonus-amount { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--sage-dark); margin: 6px 0 4px; }
+  .bonus-card.gold .bonus-amount { color: var(--gold); }
+  .bonus-card.terra .bonus-amount { color: var(--terracotta); }
+  .bonus-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    align-items: flex-start;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    width: 20px; height: 20px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .check-box.done { background: var(--sage); border-color: var(--sage); color: white; }
+  .check-label { flex: 1; }
+  .check-day { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--sage); }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 28px; margin: 16px 0; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--sage-light);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 24px 24px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -28px; top: 4px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--sage);
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--sage-light);
+  }
+
+  .timeline-head { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .timeline-sub { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .timeline-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: var(--sage-light);
+    color: var(--sage-dark);
+    margin-bottom: 4px;
+  }
+  .timeline-tag.gold { background: var(--gold-light); color: var(--gold); }
+
+  /* ALERT BOXES */
+  .alert {
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+    display: flex;
+    gap: 12px;
+  }
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .alert-body { flex: 1; }
+  .alert-title { font-weight: 600; margin-bottom: 4px; }
+
+  .alert.info { background: var(--sage-light); border-left: 4px solid var(--sage); }
+  .alert.warning { background: var(--warning-bg); border-left: 4px solid var(--warning); }
+  .alert.success { background: var(--success-bg); border-left: 4px solid var(--success); }
+  .alert.gold { background: var(--gold-light); border-left: 4px solid var(--gold); }
+
+  /* PRODUCT ROLE CARDS */
+  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .role-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .role-icon { font-size: 24px; margin-bottom: 8px; }
+  .role-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .role-earnings { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--sage-dark); }
+  .role-desc { font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+
+  /* SCENARIO BUILDER */
+  .scenario-box {
+    background: var(--warm-dark);
+    color: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 20px 0;
+  }
+
+  .scenario-title { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--gold); margin-bottom: 16px; }
+  .scenario-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 14px; }
+  .scenario-row:last-child { border-bottom: none; }
+  .scenario-label { color: rgba(255,255,255,0.55); }
+  .scenario-val { font-weight: 600; }
+  .scenario-total { display: flex; justify-content: space-between; padding: 14px 0 0; margin-top: 6px; border-top: 2px solid rgba(255,255,255,0.2); font-size: 18px; }
+  .scenario-total-label { color: white; font-weight: 600; }
+  .scenario-total-val { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--gold); }
+
+  /* AGREEMENT SECTION */
+  .agreement-block {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 12px 0;
+  }
+
+  .agreement-block strong { color: var(--warm-dark); }
+
+  .sig-line {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .sig-field {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .sig-field-line {
+    border-bottom: 1.5px solid var(--warm-dark);
+    height: 36px;
+    margin-bottom: 5px;
+  }
+
+  .sig-field-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); }
+
+  /* RESPONSIVE */
+  @media (max-width: 680px) {
+    .doc-header { padding: 32px 24px 28px; }
+    .header-title { font-size: 30px; }
+    .doc-body { padding: 28px 20px; }
+    .section-card { padding: 24px 20px; }
+    .tier-grid { grid-template-columns: 1fr; }
+    .bonus-grid { grid-template-columns: 1fr; }
+    .role-grid { grid-template-columns: 1fr; }
+    .toc-grid { grid-template-columns: 1fr; }
+    .scenario-box { padding: 20px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ DOCUMENT HEADER ═══ -->
+<div class="doc-header">
+  <div class="header-eyebrow">CareCircle Network — Internal Operations</div>
+  <div class="header-title">1099 Contractor<br><span>Commission System</span></div>
+  <div class="header-sub">Complete onboarding kit, compensation structures, tier bonuses, and performance incentives for independent sales contractors. All lines of revenue. Commission only.</div>
+  <div class="header-meta">
+    <div class="header-meta-item">
+      <div class="label">Document Type</div>
+      <div class="val">1099 Independent Contractor</div>
+    </div>
+    <div class="header-meta-item">
+      <div class="label">Compensation Model</div>
+      <div class="val">100% Commission — No Base</div>
+    </div>
+    <div class="header-meta-item">
+      <div class="label">Revenue Lines</div>
+      <div class="val">Network Partners · CareCircle Present · AI Care Intelligence</div>
+    </div>
+    <div class="header-meta-item">
+      <div class="label">Operator</div>
+      <div class="val">TransBid LLC / carecircle.fit</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-body">
+
+  <!-- TOC -->
+  <div class="toc no-print">
+    <div class="toc-title">Contents</div>
+    <div class="toc-grid">
+      <a href="#roles" class="toc-item"><span class="toc-num">01</span> Contractor Roles & Products</a>
+      <a href="#commission" class="toc-item"><span class="toc-num">02</span> Base Commission Structures</a>
+      <a href="#tiers" class="toc-item"><span class="toc-num">03</span> Performance Tiers</a>
+      <a href="#bonuses" class="toc-item"><span class="toc-num">04</span> Bonuses & Incentives</a>
+      <a href="#scenarios" class="toc-item"><span class="toc-num">05</span> Earnings Scenarios</a>
+      <a href="#rules" class="toc-item"><span class="toc-num">06</span> Commission Rules & Clawbacks</a>
+      <a href="#onboarding" class="toc-item"><span class="toc-num">07</span> Onboarding Checklist</a>
+      <a href="#agreement" class="toc-item"><span class="toc-num">08</span> Contractor Agreement</a>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 1: ROLES ═══ -->
+  <div id="roles" class="section-card">
+    <div class="section-label">Section 01</div>
+    <div class="section-title">Contractor Roles & Revenue Lines</div>
+    <p class="lead">CareCircle operates three revenue streams. Contractors can sell into one or all three. Each has its own comp structure. Highest earners work all three.</p>
+
+    <div class="role-grid">
+      <div class="role-card">
+        <div class="role-icon">🤝</div>
+        <div class="role-title">Network Partner Sales</div>
+        <div class="role-earnings">$52–$122/mo recurring per deal</div>
+        <div class="role-desc">Sell monthly agency/facility memberships to home care agencies, ALFs, memory care facilities, and hospice. B2B direct sales. These deals compound — every partner you sign keeps paying you every month they're active. Primary revenue stream for most reps.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">🛡️</div>
+        <div class="role-title">CareCircle Present Sales</div>
+        <div class="role-earnings">$52–$134/mo recurring per family</div>
+        <div class="role-desc">Sell family-paid monitoring, advocacy, and strategic consulting services directly to families with loved ones in care facilities. Single visits or monthly Guardian Plans. Human to human. High emotional stakes. Higher close rate for empathetic reps.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">🤖</div>
+        <div class="role-title">AI Care Intelligence (SaaS)</div>
+        <div class="role-earnings">$35–$70/mo recurring per facility</div>
+        <div class="role-desc">Sell the memoia.live AI Care Intelligence platform to Featured Partners and facilities. Per-resident SaaS tool. Sold as add-on to Featured Partner deals or standalone to facilities not yet in the network. Requires product-specific training.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">🎯</div>
+        <div class="role-title">Full Stack Rep (All Three)</div>
+        <div class="role-earnings">Uncapped — compound recurring book</div>
+        <div class="role-desc">Best earners sell all three products. A single facility relationship can generate a Network membership, AI Care Intelligence SaaS, AND family referrals for CareCircle Present. One relationship, three revenue lines. This is the play.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 2: BASE COMMISSION ═══ -->
+  <div id="commission" class="section-card">
+    <div class="section-label">Section 02</div>
+    <div class="section-title">Base Commission Structures</div>
+
+    <h3>Line 1 — Network Partner Sales (B2B Agency/Facility)</h3>
+    <p>Setup fees are one-time upfront commissions. Monthly recurring commissions pay on the 1st of every month as long as the partner stays active. These stack indefinitely.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Setup Fee</th>
+          <th>Your Setup Commission (50%)</th>
+          <th>Monthly Recurring</th>
+          <th>Your Monthly Commission (35%)</th>
+          <th>Your Year 1 Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Network Partner</strong></td>
+          <td>$499</td>
+          <td class="money">$249.50</td>
+          <td>$179/mo</td>
+          <td class="money">$62.65/mo</td>
+          <td class="money">$1,001.30</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Featured Partner</strong></td>
+          <td>$999</td>
+          <td class="money">$499.50</td>
+          <td>$399/mo</td>
+          <td class="money">$139.65/mo</td>
+          <td class="money">$2,174.30</td>
+        </tr>
+        <tr>
+          <td>Network — Annual</td>
+          <td>$499</td>
+          <td class="money">$249.50</td>
+          <td>$1,790/yr</td>
+          <td class="money">$626.50 lump or $52.21/mo</td>
+          <td class="money">$876.00</td>
+        </tr>
+        <tr class="highlight">
+          <td>Featured — Annual</td>
+          <td>$999</td>
+          <td class="money">$499.50</td>
+          <td>$3,990/yr</td>
+          <td class="money">$1,396.50 lump or $116.38/mo</td>
+          <td class="money">$1,896.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert info">
+      <div class="alert-icon">📌</div>
+      <div class="alert-body">
+        <div class="alert-title">Annual Plan Commissions</div>
+        Annual plan recurring commissions are paid monthly (1/12 of the annual amount). You receive the setup commission when payment clears. Annual recurring portion is paid out 1/12 each month over 12 months.
+      </div>
+    </div>
+
+    <h3>Line 2 — CareCircle Present (Family-Paid Services)</h3>
+    <p>These are direct-to-family sales. Families pay for peace of mind. Your job is discovery — identifying families who need eyes inside the facility — and conversion. Higher emotional sale, shorter sales cycle than B2B.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Price to Family</th>
+          <th>Your Commission (30%)</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Strategic Assessment</td>
+          <td>$295</td>
+          <td class="money">$88.50</td>
+          <td>One-time</td>
+        </tr>
+        <tr>
+          <td>Intelligence Visit</td>
+          <td>$175</td>
+          <td class="money">$52.50</td>
+          <td>One-time</td>
+        </tr>
+        <tr>
+          <td>Overnight Intelligence Visit</td>
+          <td>$250</td>
+          <td class="money">$75.00</td>
+          <td>One-time</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Strategic Advocacy Retainer</strong></td>
+          <td>$795/mo</td>
+          <td class="money"><strong>$238.50/mo</strong></td>
+          <td>Monthly recurring</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert gold">
+      <div class="alert-icon">💡</div>
+      <div class="alert-body">
+        <div class="alert-title">The CareCircle Present Pitch</div>
+        The pitch isn't the visit — it's the guarantee of somebody showing up when nobody expects it. Every family with a parent in a facility has a fear. Your job is to surface it, name it, and then solve it with CareCircle Present. One closed family on the monthly retainer pays you $238.50 every single month for as long as they stay enrolled.
+      </div>
+    </div>
+
+    <h3>Line 3 — AI Care Intelligence SaaS (memoia.live)</h3>
+    <p>This product sells to Featured Partners and standalone facilities. Per-resident monthly SaaS. Requires one additional product training session before selling.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Price/Resident/Month</th>
+          <th>Avg. Facility Size</th>
+          <th>Avg. Monthly Deal Value</th>
+          <th>Your Commission (25%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Starter (≤10 residents)</td>
+          <td>$14/resident</td>
+          <td>8 avg.</td>
+          <td>$112/mo</td>
+          <td class="money">$28/mo</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Standard (11–30 residents)</strong></td>
+          <td>$12/resident</td>
+          <td>20 avg.</td>
+          <td>$240/mo</td>
+          <td class="money"><strong>$60/mo</strong></td>
+        </tr>
+        <tr>
+          <td>Enterprise (30+ residents)</td>
+          <td>$10/resident</td>
+          <td>45 avg.</td>
+          <td>$450/mo</td>
+          <td class="money">$112.50/mo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ SECTION 3: PERFORMANCE TIERS ═══ -->
+  <div id="tiers" class="section-card page-break">
+    <div class="section-label">Section 03</div>
+    <div class="section-title">Performance Tiers — Elevated Rates</div>
+    <p class="lead">Base commission rates apply in months 1–3. Hit the thresholds below and your commission rate upgrades for the following month — and stays upgraded as long as you maintain the threshold. These are rolling 30-day metrics.</p>
+
+    <div class="alert warning">
+      <div class="alert-icon">⚡</div>
+      <div class="alert-body">
+        <div class="alert-title">How Tier Upgrades Work</div>
+        Tiers reset monthly. Hit Gold in June → Gold rates in July. Fall below Gold threshold in July → back to Silver in August. We run the numbers on the 1st of each month. Keeps it honest and keeps you hungry.
+      </div>
+    </div>
+
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-header">
+          <div class="tier-name">Tier 1</div>
+          <div class="tier-title">Silver</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-badge">Default — Months 1–3</div>
+          <div class="tier-row">
+            <span class="tier-row-label">Threshold</span>
+            <span class="tier-row-val">Starting rate</span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">Setup commission</span>
+            <span class="tier-row-val">50%</span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">Monthly recurring</span>
+            <span class="tier-row-val">35%</span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">CareCircle Present</span>
+            <span class="tier-row-val">30%</span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">AI SaaS</span>
+            <span class="tier-row-val">25%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tier-card featured">
+        <div class="tier-header">
+          <div class="tier-name">Tier 2</div>
+          <div class="tier-title">Gold</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-badge">★ Most Achievable</div>
+          <div class="tier-row">
+            <span class="tier-row-label">Threshold</span>
+            <span class="tier-row-val">5+ active partners OR $1,500 MRC</span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">Setup commission</span>
+            <span class="tier-row-val" style="color:var(--gold)"><strong>55%</strong></span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">Monthly recurring</span>
+            <span class="tier-row-val" style="color:var(--gold)"><strong>40%</strong></span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">CareCircle Present</span>
+            <span class="tier-row-val" style="color:var(--gold)"><strong>35%</strong></span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">AI SaaS</span>
+            <span class="tier-row-val" style="color:var(--gold)"><strong>30%</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tier-card elite">
+        <div class="tier-header">
+          <div class="tier-name">Tier 3</div>
+          <div class="tier-title">Elite</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-badge" style="background:#FDF0EB;color:var(--terracotta)">Top Performers</div>
+          <div class="tier-row">
+            <span class="tier-row-label">Threshold</span>
+            <span class="tier-row-val">10+ active OR $3,500 MRC</span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">Setup commission</span>
+            <span class="tier-row-val" style="color:var(--terracotta)"><strong>60%</strong></span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">Monthly recurring</span>
+            <span class="tier-row-val" style="color:var(--terracotta)"><strong>45%</strong></span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">CareCircle Present</span>
+            <span class="tier-row-val" style="color:var(--terracotta)"><strong>40%</strong></span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-row-label">AI SaaS</span>
+            <span class="tier-row-val" style="color:var(--terracotta)"><strong>35%</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Elevated Rate Impact — Same 10-Partner Book</h3>
+    <p>Below is the monthly recurring commission difference across tiers for a rep carrying 10 Network Partner accounts (mix of standard and featured):</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Recurring Rate</th>
+          <th>Monthly Commission on $1,790 MRC</th>
+          <th>Annual Difference vs. Silver</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Silver</td>
+          <td>35%</td>
+          <td class="money">$626.50</td>
+          <td>—</td>
+        </tr>
+        <tr class="highlight">
+          <td>Gold</td>
+          <td>40%</td>
+          <td class="money">$716.00</td>
+          <td class="money">+$1,074/yr</td>
+        </tr>
+        <tr>
+          <td>Elite</td>
+          <td>45%</td>
+          <td class="money">$805.50</td>
+          <td class="money">+$2,148/yr</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="3"><strong>Elite vs Silver — same book, same effort, 3 extra partners</strong></td>
+          <td class="money">+$2,148/yr free</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Month 3 Retention Bonus Tier</h3>
+    <p>Any partner still active at month 3 triggers a one-time <strong>Retention Loyalty Bonus</strong> paid to the rep who signed them. This is on top of regular monthly recurring.</p>
+
+    <table class="data-table">
+      <thead><tr><th>Partner Type</th><th>Retention Bonus at 90 Days</th></tr></thead>
+      <tbody>
+        <tr><td>Network Partner — Monthly</td><td class="money">$50</td></tr>
+        <tr class="highlight"><td>Featured Partner — Monthly</td><td class="money">$150</td></tr>
+        <tr><td>Network Partner — Annual</td><td class="money">$100</td></tr>
+        <tr class="highlight"><td>Featured Partner — Annual</td><td class="money">$300</td></tr>
+        <tr><td>CareCircle Present — Monthly Retainer</td><td class="money">$100</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ SECTION 4: BONUSES ═══ -->
+  <div id="bonuses" class="section-card">
+    <div class="section-label">Section 04</div>
+    <div class="section-title">Bonuses & Incentive Programs</div>
+
+    <h3>Fast-Start Bonus — First 30 Days</h3>
+    <p>Designed to push new reps to build their book fast. Triggered on cumulative closed deals in the first calendar month of contracting.</p>
+
+    <div class="bonus-grid">
+      <div class="bonus-card">
+        <div class="bonus-title">Fast-Start Bronze</div>
+        <div class="bonus-amount">+$250</div>
+        <div class="bonus-desc">Close 3 paid deals (any product) in your first 30 days. One-time cash bonus paid at month end.</div>
+      </div>
+      <div class="bonus-card gold">
+        <div class="bonus-title">Fast-Start Gold</div>
+        <div class="bonus-amount">+$500</div>
+        <div class="bonus-desc">Close 5 paid deals in your first 30 days. Gold also earns Bronze — not additive; takes the higher.</div>
+      </div>
+      <div class="bonus-card terra">
+        <div class="bonus-title">Fast-Start Platinum</div>
+        <div class="bonus-amount">+$1,000</div>
+        <div class="bonus-desc">Close 8+ paid deals in your first 30 days. Takes the highest threshold only. Triggers Gold tier rate immediately.</div>
+      </div>
+      <div class="bonus-card navy">
+        <div class="bonus-title">Featured Partner First Deal</div>
+        <div class="bonus-amount">+$150</div>
+        <div class="bonus-desc">Close your very first Featured Partner deal (any time, any month). One-time recognition bonus. Stacks with everything else.</div>
+      </div>
+    </div>
+
+    <h3>Monthly Performance Bonuses (Recurring)</h3>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Bonus Name</th>
+          <th>Trigger</th>
+          <th>Payout</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Volume Bonus — Standard</strong></td>
+          <td>3+ new closed deals in a single month</td>
+          <td class="money">+$200</td>
+          <td>Any product mix</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Volume Bonus — Premium</strong></td>
+          <td>6+ new closed deals in a single month</td>
+          <td class="money">+$500</td>
+          <td>Takes higher tier only</td>
+        </tr>
+        <tr>
+          <td><strong>Volume Bonus — Elite</strong></td>
+          <td>10+ new closed deals in a single month</td>
+          <td class="money">+$1,000</td>
+          <td>Takes highest tier only</td>
+        </tr>
+        <tr>
+          <td><strong>Full Stack Bonus</strong></td>
+          <td>Close deals on all 3 revenue lines in one month</td>
+          <td class="money">+$350</td>
+          <td>At least 1 new deal per line</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Annual Conversion Bonus</strong></td>
+          <td>Convert a monthly partner to annual plan</td>
+          <td class="money">+$100/conversion</td>
+          <td>Per conversion, uncapped</td>
+        </tr>
+        <tr>
+          <td><strong>Veteran/Men's Care Bonus</strong></td>
+          <td>Close a CareCircle Present family in the Veteran or Men's Care category</td>
+          <td class="money">+$75/family</td>
+          <td>Encourages underserved segment</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Behavioral Risk Advocacy Bonus</strong></td>
+          <td>Close a family whose resident is labeled "behavioral" or "combative" by the facility</td>
+          <td class="money">+$100/family</td>
+          <td>Document in CRM at close</td>
+        </tr>
+        <tr>
+          <td><strong>Streak Bonus</strong></td>
+          <td>Close at least 2 deals for 3+ consecutive months</td>
+          <td class="money">+$250/month</td>
+          <td>Starts month 3 of streak, resets if missed</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Quarterly & Annual Incentives</h3>
+    <p>Paid quarterly. Based on active MRC (monthly recurring commission to you) at end of quarter — not gross revenue.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Incentive</th>
+          <th>Qualifying Threshold</th>
+          <th>Payout</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Quarterly Growth Bonus</strong></td>
+          <td>MRC grew by 20%+ vs prior quarter</td>
+          <td class="money">+$500</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Top Rep Award</strong></td>
+          <td>Highest MRC of any rep in the quarter</td>
+          <td class="money">+$1,000 + title recognition</td>
+        </tr>
+        <tr>
+          <td><strong>Retention Royale</strong></td>
+          <td>Zero cancellations in a quarter from your book</td>
+          <td class="money">+$400</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Annual Elite Award</strong></td>
+          <td>$15,000+ in total commissions earned in the calendar year</td>
+          <td class="money">+$2,500 + Elite status lock (no tier decay for 6 months)</td>
+        </tr>
+        <tr>
+          <td><strong>$5K Month Club</strong></td>
+          <td>Any single month with $5,000+ total commission</td>
+          <td class="money">+$1,000 one-time recognition</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert success">
+      <div class="alert-icon">🔒</div>
+      <div class="alert-body">
+        <div class="alert-title">Elite Status Lock — What It Means</div>
+        Normally if your book drops below the Elite threshold in a given month, you fall back to Gold. The "Elite Status Lock" earned with the Annual Elite Award means your Elite rates are frozen for 6 months regardless of book size — you keep earning 60% setup / 45% recurring even through a slow period.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 5: SCENARIOS ═══ -->
+  <div id="scenarios" class="section-card page-break">
+    <div class="section-label">Section 05</div>
+    <div class="section-title">Earnings Scenarios — Real Numbers</div>
+
+    <h3>Scenario A — Conservative First Quarter (Silver Tier)</h3>
+    <p>New rep. Slow start. Focused on Network Partners only. No bonuses triggered.</p>
+
+    <div class="scenario-box">
+      <div class="scenario-title">Q1 Conservative — 8 Network Partners, 2 Featured</div>
+      <div class="scenario-row"><span class="scenario-label">Setup commissions (month 1)</span><span class="scenario-val">$3,994</span></div>
+      <div class="scenario-row"><span class="scenario-label">Monthly recurring at end of Q1</span><span class="scenario-val">$780/mo</span></div>
+      <div class="scenario-row"><span class="scenario-label">Q1 total commission</span><span class="scenario-val">$5,334</span></div>
+      <div class="scenario-row"><span class="scenario-label">Annualized if book holds flat</span><span class="scenario-val">$13,294</span></div>
+      <div class="scenario-total">
+        <span class="scenario-total-label">Year 1 (adds 2 deals/mo ongoing)</span>
+        <span class="scenario-total-val">~$21,000</span>
+      </div>
+    </div>
+
+    <h3>Scenario B — Strong First Quarter (Gold Tier Unlocked)</h3>
+    <p>Experienced rep. Hits Gold tier month 2. Selling Network + CareCircle Present families.</p>
+
+    <div class="scenario-box">
+      <div class="scenario-title">Q1 Strong — 12 Network, 4 Featured, 3 Present Families</div>
+      <div class="scenario-row"><span class="scenario-label">Setup commissions (months 1–3)</span><span class="scenario-val">$7,994</span></div>
+      <div class="scenario-row"><span class="scenario-label">Monthly recurring at end of Q1</span><span class="scenario-val">$1,580/mo (Gold rates)</span></div>
+      <div class="scenario-row"><span class="scenario-label">Fast-Start Platinum bonus</span><span class="scenario-val">+$1,000</span></div>
+      <div class="scenario-row"><span class="scenario-label">Volume bonuses (2 triggered)</span><span class="scenario-val">+$700</span></div>
+      <div class="scenario-row"><span class="scenario-label">Retention bonuses (90-day)</span><span class="scenario-val">+$1,050</span></div>
+      <div class="scenario-total">
+        <span class="scenario-total-label">Q1 Total</span>
+        <span class="scenario-total-val">~$11,324</span>
+      </div>
+    </div>
+
+    <h3>Scenario C — Elite Rep, Full Stack, Month 12</h3>
+    <p>Mature book. Elite tier locked. Selling all three lines. This is the endgame for a top performer in year one.</p>
+
+    <div class="scenario-box">
+      <div class="scenario-title">Year 1 Elite — 20 Network, 8 Featured, 10 Present Families, 4 AI SaaS</div>
+      <div class="scenario-row"><span class="scenario-label">Total setup commissions (YTD)</span><span class="scenario-val">$18,954</span></div>
+      <div class="scenario-row"><span class="scenario-label">Monthly recurring by month 12 (Elite rates)</span><span class="scenario-val">$3,840/mo</span></div>
+      <div class="scenario-row"><span class="scenario-label">Bonuses & incentives (est.)</span><span class="scenario-val">$5,300</span></div>
+      <div class="scenario-row"><span class="scenario-label">Annual Elite Award</span><span class="scenario-val">+$2,500</span></div>
+      <div class="scenario-total">
+        <span class="scenario-total-label">Year 1 Total Earned</span>
+        <span class="scenario-total-val">~$72,000</span>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <div class="alert-icon">📊</div>
+      <div class="alert-body">
+        <div class="alert-title">The Compounding Reality</div>
+        Every deal you close pays you again next month. A rep with 30 active accounts in month 12 earns $3,000+ passively in recurring that month — before closing a single new deal. Build the book fast, keep partners happy, and the recurring becomes your floor, not your ceiling.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 6: RULES ═══ -->
+  <div id="rules" class="section-card">
+    <div class="section-label">Section 06</div>
+    <div class="section-title">Commission Rules & Clawback Policy</div>
+
+    <h3>Payment Schedule</h3>
+    <ul class="checklist">
+      <li>
+        <div class="check-box done">✓</div>
+        <div class="check-label">
+          <strong>Setup commissions</strong> — paid when payment clears in CareCircle's account. Not on signing, not on contract execution. On cleared payment. Typically within 3–5 business days of collection.
+        </div>
+      </li>
+      <li>
+        <div class="check-box done">✓</div>
+        <div class="check-label">
+          <strong>Monthly recurring commissions</strong> — paid on the 1st of each month for all partners who were active and paid in the prior month.
+        </div>
+      </li>
+      <li>
+        <div class="check-box done">✓</div>
+        <div class="check-label">
+          <strong>Bonuses</strong> — calculated at month/quarter end and paid with the next regular commission cycle.
+        </div>
+      </li>
+      <li>
+        <div class="check-box done">✓</div>
+        <div class="check-label">
+          <strong>Payment method</strong> — ACH direct deposit (preferred) or Zelle for amounts under $500. All commission statements sent to contractor email on file.
+        </div>
+      </li>
+    </ul>
+
+    <h3>Clawback Policy</h3>
+    <div class="alert warning">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-body">
+        <div class="alert-title">60-Day Clawback Window</div>
+        CareCircle offers a 60-day money-back guarantee to all partners. If a partner cancels and requests a refund within 60 days of signup, and CareCircle issues the refund, the contractor's setup commission on that deal is clawed back from the next commission cycle. Monthly recurring commissions earned during the active period are not clawed back — only the setup commission.
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Scenario</th><th>Setup Commission</th><th>Recurring Commission</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Partner stays active &gt;60 days</td>
+          <td class="money">Kept — fully earned</td>
+          <td class="money">Paid monthly as long as active</td>
+        </tr>
+        <tr>
+          <td>Partner cancels within 60 days + refund issued</td>
+          <td style="color:var(--terracotta)">Clawback — deducted next cycle</td>
+          <td class="money">Any earned monthly commissions kept</td>
+        </tr>
+        <tr>
+          <td>Partner cancels after 60 days (no refund)</td>
+          <td class="money">Kept</td>
+          <td style="color:var(--text-muted)">Stops — no more recurring</td>
+        </tr>
+        <tr>
+          <td>Setup fee was waived at rep's discretion</td>
+          <td style="color:var(--text-muted)">No commission (nothing to clawback)</td>
+          <td class="money">Recurring still earns normally</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Important Rules</h3>
+    <ul class="checklist">
+      <li>
+        <div class="check-box"></div>
+        <div class="check-label">
+          <strong>Setup fee negotiation:</strong> You may reduce or waive the setup fee to close a deal — this is your primary negotiating lever. If you waive it, you waive your commission on it. Never advertise this option publicly.
+        </div>
+      </li>
+      <li>
+        <div class="check-box"></div>
+        <div class="check-label">
+          <strong>No double-dipping:</strong> If Chase or another CareCircle team member closes a deal you introduced but did not close, introductions may qualify for a reduced referral credit (10%) but not full commission. Close your own deals.
+        </div>
+      </li>
+      <li>
+        <div class="check-box"></div>
+        <div class="check-label">
+          <strong>Territory:</strong> No exclusive territories. First-to-close wins. If two reps are working the same agency, the rep who creates a signed agreement first earns the commission.
+        </div>
+      </li>
+      <li>
+        <div class="check-box"></div>
+        <div class="check-label">
+          <strong>Activity minimum for recurring payout:</strong> Contractors must submit a monthly activity report (calls, visits, outcomes) to remain eligible for recurring commission payout. Zero activity reported = commissions held pending report submission.
+        </div>
+      </li>
+      <li>
+        <div class="check-box"></div>
+        <div class="check-label">
+          <strong>1099 threshold:</strong> CareCircle will issue a 1099-NEC for all contractors earning $600+ in a calendar year. Contractors are responsible for all self-employment taxes. CareCircle does not withhold.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ═══ SECTION 7: ONBOARDING CHECKLIST ═══ -->
+  <div id="onboarding" class="section-card page-break">
+    <div class="section-label">Section 07</div>
+    <div class="section-title">Contractor Onboarding Checklist</div>
+    <p class="lead">Complete before making your first outreach call. Steps are in order — don't skip. The playbook only works if you've walked the platform from a prospect's perspective first.</p>
+
+    <h3>Before Day 1 — Admin</h3>
+    <ul class="checklist">
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Pre-Start</div>
+          <strong>Sign 1099 Independent Contractor Agreement</strong> — nothing starts before this is executed and returned. No exceptions.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Pre-Start</div>
+          <strong>Submit W-9</strong> — name exactly as it appears on your tax return, SSN or EIN, address. Required for commission payments.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Pre-Start</div>
+          <strong>Submit banking info for ACH</strong> — routing and account number, or confirm Zelle phone number for early payments under $500.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Pre-Start</div>
+          <strong>Confirm commission tier</strong> — you start at Silver. Acknowledge you've read this document and understand the tier upgrade thresholds.
+        </div>
+      </li>
+    </ul>
+
+    <h3>Day 1 — Platform & Product</h3>
+    <ul class="checklist">
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 1</div>
+          <strong>Receive and read the full Sales Operations Manual</strong> — sections 1–4 minimum before your Day 2 call. This is your bible.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 1</div>
+          <strong>Walk carecircle.fit/research</strong> — search 3 different providers on your own. See exactly what a prospective agency sees when they search their own name. This is your door-opener.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 1</div>
+          <strong>Set up call log</strong> — Google Sheet or CRM provided. Columns: Agency Name, Contact Name, Phone, Date Called, Outcome, Follow-Up Date. You log every single call.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 1</div>
+          <strong>Walk the CareCircle Present page</strong> — read every tier, every guarantee, every FAQ. You need to be able to answer any family question cold.
+        </div>
+      </li>
+    </ul>
+
+    <h3>Day 2 — Training & Role-Play</h3>
+    <ul class="checklist">
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 2</div>
+          <strong>Playbook quiz call with Chase</strong> — 15 minutes. You will be asked: What's the 60-day guarantee? What does A Place for Mom charge? What are the two partner tiers and pricing? Don't wing it.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 2</div>
+          <strong>Role-play the B2B pitch — twice</strong> — Chase plays a skeptical ALF marketing director. You run the full call. Debrief after each. You don't get on real calls until you've done this.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 2</div>
+          <strong>Pull your first hit list</strong> — identify 20 high-priority agencies to call first. Write them down with phone numbers. Your first week target is 50 calls minimum.
+        </div>
+      </li>
+    </ul>
+
+    <h3>Days 3–5 — Live Calls</h3>
+    <ul class="checklist">
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 3</div>
+          <strong>Shadow Chase on 2 live calls</strong> — listen only. No talking. Debrief immediately after each call.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 3</div>
+          <strong>Make first 5 solo calls with Chase available</strong> — Chase doesn't speak, but is on the line or immediately reachable. Debrief after each.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 5</div>
+          <strong>First weekly activity report</strong> — calls made, outcomes (DM, VM, callback, demo scheduled, closed), follow-ups booked. This report is required for commission eligibility.
+        </div>
+      </li>
+    </ul>
+
+    <h3>30-Day Review</h3>
+    <ul class="checklist">
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 30</div>
+          <strong>Performance review call</strong> — calls made, demos given, deals closed. Are you on pace? What's working? Adjust territory or approach as needed.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 30</div>
+          <strong>Commission statement review</strong> — we walk through every line item together. Any disputes resolved here, not in email.
+        </div>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''"></div>
+        <div class="check-label">
+          <div class="check-day">Day 30</div>
+          <strong>Unlock CareCircle Present selling</strong> — if you've closed at least 2 Network Partner deals by day 30, you're cleared to add CareCircle Present to your pitch. Not before.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ═══ SECTION 8: AGREEMENT ═══ -->
+  <div id="agreement" class="section-card">
+    <div class="section-label">Section 08</div>
+    <div class="section-title">Independent Contractor Agreement</div>
+
+    <div class="alert warning">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-body">
+        <div class="alert-title">Legal Review Required</div>
+        The language below is a framework and must be reviewed by a licensed Florida attorney before use. This is not legal advice. Do not rely on this document as-is for legally binding contractor relationships.
+      </div>
+    </div>
+
+    <div class="agreement-block">
+      <strong>INDEPENDENT CONTRACTOR AGREEMENT</strong><br>
+      This Independent Contractor Agreement ("Agreement") is entered into as of the date signed below, between <strong>TransBid LLC</strong>, a Florida limited liability company, operating under the name CareCircle Network ("Company"), and the undersigned independent contractor ("Contractor").
+    </div>
+
+    <h4>1. Relationship of the Parties</h4>
+    <div class="agreement-block">
+      Contractor is an independent contractor and not an employee, agent, partner, or joint venturer of Company. Contractor shall have no authority to bind Company in any contract, agreement, or obligation. Company shall not control the manner or means by which Contractor performs services, only the result.
+    </div>
+
+    <h4>2. Services</h4>
+    <div class="agreement-block">
+      Contractor agrees to solicit prospective customers for Company's services, including but not limited to: CareCircle Network Partner Memberships, CareCircle Present advocacy services, and AI Care Intelligence SaaS products (collectively, "Products"). Contractor shall present Company's Products in accordance with provided sales materials and shall not make representations inconsistent with Company's published pricing, service descriptions, or guarantees.
+    </div>
+
+    <h4>3. Compensation — Commission Only</h4>
+    <div class="agreement-block">
+      <strong>Contractor acknowledges and agrees that all compensation is commission-based only. There is no base salary, draw, or guaranteed minimum payment of any kind.</strong><br><br>
+      Commissions are calculated per the Commission Schedule attached as Exhibit A and incorporated herein by reference. Commission rates, tier thresholds, bonus structures, and payout timing are subject to change by Company with 30 days written notice. Changes apply prospectively only to deals closed after the effective date of the change.<br><br>
+      Setup commissions are earned upon cleared payment from the customer. Monthly recurring commissions are earned on the 1st of each month for partners active and paid in the prior month. No commission is earned on refunded transactions.
+    </div>
+
+    <h4>4. Clawback</h4>
+    <div class="agreement-block">
+      If Company issues a refund to a customer pursuant to its published guarantee policy within sixty (60) days of that customer's original payment, Company may deduct the Contractor's setup commission for that transaction from Contractor's next commission cycle. Monthly recurring commissions earned during the active period are not subject to clawback.
+    </div>
+
+    <h4>5. Confidentiality</h4>
+    <div class="agreement-block">
+      Contractor agrees to maintain the confidentiality of Company's pricing structures, internal commission rates, customer lists, sales materials, and operational processes. Contractor shall not disclose commission rates to prospects, customers, or third parties. This obligation survives termination of this Agreement.
+    </div>
+
+    <h4>6. Non-Solicitation</h4>
+    <div class="agreement-block">
+      For twelve (12) months following termination of this Agreement, Contractor agrees not to solicit Company's active customers on behalf of a competing senior care referral, advocacy, or care coordination platform.
+    </div>
+
+    <h4>7. Taxes</h4>
+    <div class="agreement-block">
+      Contractor is solely responsible for all federal, state, and local taxes on compensation received under this Agreement, including self-employment taxes. Company will not withhold income taxes, Social Security, or Medicare. Company will issue Form 1099-NEC for total compensation of $600 or more in a calendar year.
+    </div>
+
+    <h4>8. Termination</h4>
+    <div class="agreement-block">
+      Either party may terminate this Agreement with 14 days written notice. Company may terminate immediately for cause, including but not limited to: misrepresentation to customers, breach of confidentiality, or failure to submit required activity reports. Upon termination, Contractor is entitled to all earned commissions for deals closed prior to the termination date. Recurring commissions cease upon termination.
+    </div>
+
+    <h4>9. Entire Agreement</h4>
+    <div class="agreement-block">
+      This Agreement, together with Exhibit A (Commission Schedule), constitutes the entire agreement between the parties regarding the subject matter herein and supersedes all prior discussions, representations, and agreements.
+    </div>
+
+    <div class="sig-line">
+      <div class="sig-field">
+        <div class="sig-field-line"></div>
+        <div class="sig-field-label">Contractor Signature</div>
+      </div>
+      <div class="sig-field">
+        <div class="sig-field-line"></div>
+        <div class="sig-field-label">Printed Name</div>
+      </div>
+      <div class="sig-field">
+        <div class="sig-field-line"></div>
+        <div class="sig-field-label">Date</div>
+      </div>
+    </div>
+
+    <div class="sig-line">
+      <div class="sig-field">
+        <div class="sig-field-line"></div>
+        <div class="sig-field-label">Chase Turnquest — TransBid LLC / CareCircle Network</div>
+      </div>
+      <div class="sig-field">
+        <div class="sig-field-line"></div>
+        <div class="sig-field-label">Date</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="text-align:center;padding:32px 0;font-size:12px;color:var(--text-muted);border-top:1px solid var(--border);margin-top:8px;">
+    CareCircle Network — TransBid LLC · carecircle.fit · Internal Use Only — Do Not Distribute to Prospects
+  </div>
+
+</div>
+
+</body>
+</html>
