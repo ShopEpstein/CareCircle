@@ -1091,7 +1091,7 @@
               </div>
             </div>
             <div class="checkbox-group">
-              <label class="checkbox-item" onclick="toggleCheck(this, 'ica_agree')">
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'ica_agree')">
                 <input type="checkbox" id="ica_agree">
                 <div class="checkbox-custom"></div>
                 <div class="checkbox-text">
@@ -1270,7 +1270,7 @@
               <div class="field-error" id="err_exhibit_name">Required</div>
             </div>
             <div class="checkbox-group">
-              <label class="checkbox-item" onclick="toggleCheck(this, 'exhibit_agree')">
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'exhibit_agree')">
                 <input type="checkbox" id="exhibit_agree">
                 <div class="checkbox-custom"></div>
                 <div class="checkbox-text">
@@ -1544,21 +1544,21 @@
             <label class="form-label">Products Authorized to Sell <span class="req">*</span></label>
             <div id="prefill_products_notice" style="display:none" class="prefill-notice">✅ Pre-authorized by Chase Turnquest</div>
             <div class="checkbox-group" id="products_group">
-              <label class="checkbox-item" onclick="toggleCheck(this, 'prod_b2b')">
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'prod_b2b')">
                 <input type="checkbox" id="prod_b2b">
                 <div class="checkbox-custom"></div>
                 <div class="checkbox-text">
                   <div class="checkbox-label">CareCircle Network Partner Memberships (B2B)</div>
                 </div>
               </label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'prod_present_single')">
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'prod_present_single')">
                 <input type="checkbox" id="prod_present_single">
                 <div class="checkbox-custom"></div>
                 <div class="checkbox-text">
                   <div class="checkbox-label">CareCircle Present — Single Services</div>
                 </div>
               </label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'prod_guardian')">
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'prod_guardian')">
                 <input type="checkbox" id="prod_guardian">
                 <div class="checkbox-custom"></div>
                 <div class="checkbox-text">
@@ -1566,14 +1566,14 @@
                   <div class="checkbox-desc">Requires 2 confirmed Network Partner closes first</div>
                 </div>
               </label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'prod_assisting_seniors')">
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'prod_assisting_seniors')">
                 <input type="checkbox" id="prod_assisting_seniors">
                 <div class="checkbox-custom"></div>
                 <div class="checkbox-text">
                   <div class="checkbox-label">Assisting Seniors referrals (consult/meeting booking only)</div>
                 </div>
               </label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'prod_ai_saas')">
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'prod_ai_saas')">
                 <input type="checkbox" id="prod_ai_saas">
                 <div class="checkbox-custom"></div>
                 <div class="checkbox-text">
@@ -1590,15 +1590,15 @@
           <div class="form-group" style="margin-bottom:16px">
             <label class="form-label">Prior Experience (check all that apply)</label>
             <div class="checkbox-group">
-              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_homecare')"><input type="checkbox" id="exp_homecare"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Home care / non-medical senior care</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_alf')"><input type="checkbox" id="exp_alf"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Assisted living / memory care operations or sales</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_nursing')"><input type="checkbox" id="exp_nursing"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Nursing home / skilled nursing sales or management</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_hospice')"><input type="checkbox" id="exp_hospice"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Hospice sales or operations</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_pharma')"><input type="checkbox" id="exp_pharma"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Medical device or pharmaceutical sales</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_discharge')"><input type="checkbox" id="exp_discharge"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Hospital discharge planning or social work</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_placement')"><input type="checkbox" id="exp_placement"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Senior placement / referral services (A Place for Mom, etc.)</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_directsales')"><input type="checkbox" id="exp_directsales"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Direct sales / B2B sales (non-healthcare)</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_none')"><input type="checkbox" id="exp_none"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">No prior healthcare or sales experience</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'exp_homecare')"><input type="checkbox" id="exp_homecare"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Home care / non-medical senior care</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'exp_alf')"><input type="checkbox" id="exp_alf"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Assisted living / memory care operations or sales</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'exp_nursing')"><input type="checkbox" id="exp_nursing"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Nursing home / skilled nursing sales or management</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'exp_hospice')"><input type="checkbox" id="exp_hospice"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Hospice sales or operations</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'exp_pharma')"><input type="checkbox" id="exp_pharma"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Medical device or pharmaceutical sales</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'exp_discharge')"><input type="checkbox" id="exp_discharge"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Hospital discharge planning or social work</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'exp_placement')"><input type="checkbox" id="exp_placement"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Senior placement / referral services (A Place for Mom, etc.)</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'exp_directsales')"><input type="checkbox" id="exp_directsales"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Direct sales / B2B sales (non-healthcare)</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'exp_none')"><input type="checkbox" id="exp_none"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">No prior healthcare or sales experience</div></div></label>
             </div>
           </div>
           <div class="form-grid">
@@ -1671,11 +1671,11 @@
           <div class="form-group" style="margin-bottom:8px">
             <label class="form-label">Equipment Confirmed (check all you have)</label>
             <div class="checkbox-group">
-              <label class="checkbox-item" onclick="toggleCheck(this, 'equip_phone')"><input type="checkbox" id="equip_phone"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Smartphone with reliable data plan</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'equip_laptop')"><input type="checkbox" id="equip_laptop"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Laptop or desktop computer</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'equip_quiet')"><input type="checkbox" id="equip_quiet"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Quiet space for phone calls</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'equip_email')"><input type="checkbox" id="equip_email"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Email address checked daily</div></div></label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'equip_sheets')"><input type="checkbox" id="equip_sheets"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Access to Google Sheets or similar spreadsheet for call logging</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'equip_phone')"><input type="checkbox" id="equip_phone"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Smartphone with reliable data plan</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'equip_laptop')"><input type="checkbox" id="equip_laptop"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Laptop or desktop computer</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'equip_quiet')"><input type="checkbox" id="equip_quiet"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Quiet space for phone calls</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'equip_email')"><input type="checkbox" id="equip_email"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Email address checked daily</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'equip_sheets')"><input type="checkbox" id="equip_sheets"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Access to Google Sheets or similar spreadsheet for call logging</div></div></label>
             </div>
           </div>
           <div class="form-hint warn">⚠️ If you do not have a call logging system, one will be provided to you on Day 1.</div>
@@ -1741,21 +1741,21 @@
           <div class="signature-box" style="margin-top:20px">
             <div class="signature-title">Handbook Receipt Confirmation</div>
             <div class="checkbox-group">
-              <label class="checkbox-item" onclick="toggleCheck(this, 'handbook_received')">
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'handbook_received')">
                 <input type="checkbox" id="handbook_received">
                 <div class="checkbox-custom"></div>
                 <div class="checkbox-text">
                   <div class="checkbox-label">I confirm that I have received and read the CareCircle Network Independent Contractor Handbook (Version 1.0) in its entirety.</div>
                 </div>
               </label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'handbook_understand')">
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'handbook_understand')">
                 <input type="checkbox" id="handbook_understand">
                 <div class="checkbox-custom"></div>
                 <div class="checkbox-text">
                   <div class="checkbox-label">I understand the conduct standards, pricing rules, territory guidelines, and termination offenses described in the Handbook.</div>
                 </div>
               </label>
-              <label class="checkbox-item" onclick="toggleCheck(this, 'handbook_confidential')">
+              <label class="checkbox-item" onclick="toggleCheck(event, this, 'handbook_confidential')">
                 <input type="checkbox" id="handbook_confidential">
                 <div class="checkbox-custom"></div>
                 <div class="checkbox-text">
@@ -1807,14 +1807,14 @@
           </div>
 
           <div class="checkbox-group">
-            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_handbook')"><input type="checkbox" id="ack_handbook"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I have read and understood the Contractor Handbook in its entirety.</div></div></label>
-            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_commission')"><input type="checkbox" id="ack_commission"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I have read and understood Commission Schedule Exhibit A.</div></div></label>
-            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_commission_only')"><input type="checkbox" id="ack_commission_only"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand my compensation is 100% commission-based with no guaranteed minimum.</div></div></label>
-            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_clawback')"><input type="checkbox" id="ack_clawback"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand the clawback policy and activity reporting requirements.</div></div></label>
-            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_confidentiality')"><input type="checkbox" id="ack_confidentiality"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand the confidentiality rules, including that I may not share commission rates with any outside party.</div></div></label>
-            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_private_pay')"><input type="checkbox" id="ack_private_pay"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand that CareCircle Present is a private-pay service and I will never represent it as billable to Medicare or insurance.</div></div></label>
-            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_assisting_seniors')"><input type="checkbox" id="ack_assisting_seniors"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand that my role with Assisting Seniors is referral/consult booking only — not direct selling — until a formal compensation agreement is in place.</div></div></label>
-            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_conduct')"><input type="checkbox" id="ack_conduct"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand the conduct standards and that certain violations result in immediate termination.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(event, this, 'ack_handbook')"><input type="checkbox" id="ack_handbook"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I have read and understood the Contractor Handbook in its entirety.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(event, this, 'ack_commission')"><input type="checkbox" id="ack_commission"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I have read and understood Commission Schedule Exhibit A.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(event, this, 'ack_commission_only')"><input type="checkbox" id="ack_commission_only"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand my compensation is 100% commission-based with no guaranteed minimum.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(event, this, 'ack_clawback')"><input type="checkbox" id="ack_clawback"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand the clawback policy and activity reporting requirements.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(event, this, 'ack_confidentiality')"><input type="checkbox" id="ack_confidentiality"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand the confidentiality rules, including that I may not share commission rates with any outside party.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(event, this, 'ack_private_pay')"><input type="checkbox" id="ack_private_pay"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand that CareCircle Present is a private-pay service and I will never represent it as billable to Medicare or insurance.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(event, this, 'ack_assisting_seniors')"><input type="checkbox" id="ack_assisting_seniors"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand that my role with Assisting Seniors is referral/consult booking only — not direct selling — until a formal compensation agreement is in place.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(event, this, 'ack_conduct')"><input type="checkbox" id="ack_conduct"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand the conduct standards and that certain violations result in immediate termination.</div></div></label>
           </div>
           <div class="field-error" id="err_acks" style="margin-top:8px">All acknowledgments required before submitting</div>
 
@@ -2417,8 +2417,8 @@ function switchView(view, btn) {
 // ════════════════════════════════════════
 // FORM CONTROLS
 // ════════════════════════════════════════
-function toggleCheck(label, id) {
-  event.preventDefault();
+function toggleCheck(evt, label, id) {
+  evt.preventDefault();
   const cb = document.getElementById(id);
   cb.checked = !cb.checked;
   label.classList.toggle('checked', cb.checked);
