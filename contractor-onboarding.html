@@ -2184,22 +2184,22 @@
               <td class="tier-e">$599.40 setup + $149.63/mo</td>
               <td style="color:var(--gold);font-weight:700">$649.35 + $166.25/mo</td>
             </tr>
-            <tr><td colspan="6" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">B2B — Facility Intelligence Partner (Custom — Regional Manager or Corporate Approval Required)</td></tr>
+            <tr><td colspan="6" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">B2B — Facility Intelligence Partner (Regional Manager or Corporate Approval Required)</td></tr>
             <tr>
-              <td>Setup / Scoping</td><td>$2,995</td>
+              <td>Facility Intelligence Partner — Setup / Scoping</td><td>$2,995</td>
               <td class="tier-s">$1,198 <small style="color:var(--text-muted)">(40%)</small></td>
               <td class="tier-g">$1,198 <small style="color:var(--text-muted)">(40%)</small></td>
               <td class="tier-e">$1,198 <small style="color:var(--text-muted)">(40%)</small></td>
               <td style="color:var(--gold);font-weight:700">$1,198 <small>(40%)</small></td>
             </tr>
             <tr>
-              <td>Monthly Retainer</td><td>from $2,995/mo–$10,000/mo</td>
+              <td>Facility Intelligence Partner — Monthly Retainer</td><td>from $2,995/mo up to $10,000/mo</td>
               <td class="tier-s">from $748.75/mo <small style="color:var(--text-muted)">(25%)</small></td>
               <td class="tier-g">from $748.75/mo <small style="color:var(--text-muted)">(25%)</small></td>
               <td class="tier-e">from $748.75/mo <small style="color:var(--text-muted)">(25%)</small></td>
               <td style="color:var(--gold);font-weight:700">from $748.75/mo <small>(25%)</small></td>
             </tr>
-            <tr><td colspan="6" style="font-size:12px; color:var(--text-muted); padding:8px 16px; font-style:italic">Pricing above $2,995/mo requires Regional Manager or Corporate approval. Rep commission is 25% of whatever retainer is approved — no ceiling.</td></tr>
+            <tr><td colspan="6" style="font-size:12px; color:var(--text-muted); padding:8px 16px; font-style:italic">All Facility Intelligence Partner engagements require Regional Manager or Corporate approval. Rep commission is 25% of approved retainer — no ceiling. Includes: white-label Guardian Visit Algorithm, SEO campaign, dedicated blog content, trust badge, AI Care Intelligence platform access, consulting.</td></tr>
             <tr><td colspan="6" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">SaaS — memoia AI Care Intelligence Platform</td></tr>
             <tr>
               <td>SaaS Setup / Onboarding</td><td>$1,000</td>
@@ -2215,7 +2215,7 @@
               <td class="tier-e">$300/mo <small style="color:var(--text-muted)">(30%)</small></td>
               <td style="color:var(--gold);font-weight:700">$300/mo <small>(30%)</small></td>
             </tr>
-            <tr><td colspan="6" style="font-size:12px; color:var(--text-muted); padding:8px 16px; font-style:italic">Facility may resell access to residents and staff at any price they set. Unlimited reselling rights included. No additional rep commission on resale revenue.</td></tr>
+            <tr><td colspan="6" style="font-size:12px; color:var(--text-muted); padding:8px 16px; font-style:italic">Includes EHR, AI care intelligence tools, and unlimited reselling rights. Facility may resell access to residents and staff at any price they set. No additional rep commission on resale revenue.</td></tr>
             <tr><td colspan="6" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">B2C — CareCircle Present Single Services</td></tr>
             <tr>
               <td>Pre-Placement Assessment (from $295)</td><td>from $295</td>
@@ -3175,8 +3175,8 @@ function calcEarnings() {
   const rec_np = np * 179 * rates.rec_np;
   const rec_fp = fp * 399 * rates.rec_fp;
   const guardian = ge * 799 * rates.present + g * 1500 * rates.present + gelite * 2500 * rates.present;
-  const rec_saas = saas * 300; // fixed 30% regardless of tier
-  const rec_fip = fip * 748.75; // fixed 25% regardless of tier, from $2,995/mo base
+  const saas_income = saas * 1000 * 0.30;
+  const fip_income = fip * 2995 * 0.25;
   const setup = (np_new * 499 * rates.setup_np) + (fp_new * 999 * rates.setup_fp);
 
   let bonus = 0;
@@ -3184,14 +3184,14 @@ function calcEarnings() {
   else if (setups >= 6) bonus = 500;
   else if (setups >= 3) bonus = 200;
 
-  const total = rec_np + rec_fp + guardian + rec_saas + rec_fip + setup + bonus;
+  const total = rec_np + rec_fp + guardian + saas_income + fip_income + setup + bonus;
 
   const fmt = v => '$' + v.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
   document.getElementById('cr_np').textContent = fmt(rec_np);
   document.getElementById('cr_fp').textContent = fmt(rec_fp);
   document.getElementById('cr_guardian').textContent = fmt(guardian);
-  document.getElementById('cr_saas').textContent = fmt(rec_saas);
-  document.getElementById('cr_fip').textContent = fmt(rec_fip);
+  document.getElementById('cr_saas').textContent = fmt(saas_income);
+  document.getElementById('cr_fip').textContent = fmt(fip_income);
   document.getElementById('cr_setup').textContent = fmt(setup);
   document.getElementById('cr_bonus').textContent = bonus > 0 ? fmt(bonus) : '$0';
   document.getElementById('cr_total').textContent = fmt(total);
