@@ -1,0 +1,2824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareCircle Network — Contractor Onboarding Portal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+
+  :root {
+    --sage: #6B8C7A;
+    --sage-light: #E8F0EC;
+    --sage-dark: #3D5449;
+    --warm-dark: #1C1C1A;
+    --gold: #C4963A;
+    --gold-light: #FDF3E0;
+    --cream: #FAF8F4;
+    --terracotta: #C4633A;
+    --terra-light: #FDF0EB;
+    --navy: #1A2B3C;
+    --navy-light: #E8EEF5;
+    --border: rgba(28,28,26,0.12);
+    --border-strong: rgba(28,28,26,0.25);
+    --text-muted: #6B6860;
+    --success: #3B6D11;
+    --success-bg: #EAF3DE;
+    --warning: #854F0B;
+    --warning-bg: #FAEEDA;
+    --error: #8B1A1A;
+    --error-bg: #FDEAEA;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--warm-dark);
+    line-height: 1.6;
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .portal-header {
+    background: var(--warm-dark);
+    color: white;
+    padding: 32px 40px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .portal-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: var(--sage);
+    opacity: 0.08;
+  }
+  .portal-header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 40%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.06;
+  }
+  .header-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+  }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 14px;
+  }
+  .header-badge span { color: var(--gold); font-weight: 600; }
+
+  /* ── VIEWS ── */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── ADMIN TOGGLE ── */
+  .mode-switcher {
+    background: var(--warm-dark);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 10px 40px;
+  }
+  .mode-switcher-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    gap: 6px;
+  }
+  .mode-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mode-btn.active, .mode-btn:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-color: rgba(255,255,255,0.25);
+  }
+  .mode-btn.active { color: var(--gold); border-color: var(--gold); background: rgba(196,150,58,0.1); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 20px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .progress-inner {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .progress-steps {
+    display: flex;
+    gap: 0;
+    margin-bottom: 12px;
+  }
+  .step-pill {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 8px;
+  }
+  .step-pill:first-child { padding-left: 0; }
+  .step-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+    border: 2px solid var(--border-strong);
+    background: white;
+    color: var(--text-muted);
+    transition: all 0.3s;
+  }
+  .step-dot.done { background: var(--sage); border-color: var(--sage); color: white; }
+  .step-dot.active { background: var(--warm-dark); border-color: var(--warm-dark); color: white; }
+  .step-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .step-label.active { color: var(--warm-dark); font-weight: 600; }
+  .step-connector {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    align-self: center;
+    min-width: 8px;
+    max-width: 24px;
+  }
+  .step-connector.done { background: var(--sage); }
+  .progress-bar-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--sage);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .progress-pct {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sage);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .portal-body {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 36px 40px 60px;
+  }
+
+  /* ── SECTION CARD ── */
+  .section-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .card-header {
+    background: var(--warm-dark);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .card-header-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .card-header-text { flex: 1; }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.2;
+  }
+  .card-subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 2px;
+  }
+  .card-body { padding: 28px; }
+
+  /* ── DOCUMENT SCROLL BOX ── */
+  .doc-scroll {
+    background: #FAFAFA;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    padding: 24px 28px;
+    max-height: 380px;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.75;
+    color: #2a2a28;
+    margin-bottom: 20px;
+    font-family: Georgia, serif;
+  }
+  .doc-scroll h2 { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; margin: 18px 0 6px; letter-spacing: 0.03em; }
+  .doc-scroll h3 { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; margin: 14px 0 4px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+  .doc-scroll p { margin-bottom: 10px; }
+  .doc-scroll table { width: 100%; border-collapse: collapse; margin: 10px 0; font-family: 'DM Sans', sans-serif; font-size: 12px; }
+  .doc-scroll th { background: var(--warm-dark); color: white; padding: 6px 10px; text-align: left; font-weight: 600; font-size: 11px; }
+  .doc-scroll td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+  .doc-scroll tr:last-child td { border-bottom: none; }
+  .doc-scroll strong { font-weight: 700; }
+  .doc-scroll .article-header { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage-dark); margin: 22px 0 6px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  .doc-scroll .legal-note { background: var(--warning-bg); border: 1px solid rgba(133,79,11,0.2); border-radius: 6px; padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--warning); margin: 12px 0; font-style: normal; }
+  .doc-scroll::-webkit-scrollbar { width: 6px; }
+  .doc-scroll::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 3px; }
+  .doc-scroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+  .doc-scroll-indicator {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding: 8px;
+    background: var(--gold-light);
+    border-radius: 6px;
+    border: 1px solid rgba(196,150,58,0.2);
+  }
+
+  /* ── FORM ELEMENTS ── */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-grid.single { grid-template-columns: 1fr; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--warm-dark);
+  }
+  .form-label .req { color: var(--terracotta); }
+  .form-label .sensitive-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--warning-bg);
+    color: var(--warning);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-left: 6px;
+    text-transform: uppercase;
+    font-style: normal;
+  }
+  .form-input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 8px;
+    background: white;
+    color: var(--warm-dark);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  .form-input:focus {
+    border-color: var(--sage);
+    box-shadow: 0 0 0 3px rgba(107,140,122,0.12);
+  }
+  .form-input.prefilled {
+    background: var(--sage-light);
+    border-color: var(--sage);
+    color: var(--sage-dark);
+    font-weight: 500;
+  }
+  .form-input::placeholder { color: #bbb; }
+  .form-select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 8px;
+    background: white;
+    color: var(--warm-dark);
+    transition: border-color 0.2s;
+    outline: none;
+    width: 100%;
+    cursor: pointer;
+  }
+  .form-select:focus { border-color: var(--sage); box-shadow: 0 0 0 3px rgba(107,140,122,0.12); }
+  .form-hint { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  .form-hint.warn { color: var(--warning); background: var(--warning-bg); padding: 8px 12px; border-radius: 6px; }
+  .form-hint.secure { color: var(--sage-dark); background: var(--sage-light); padding: 8px 12px; border-radius: 6px; }
+  textarea.form-input { resize: vertical; min-height: 80px; }
+
+  /* ── CHECKBOXES ── */
+  .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+  .checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #FAFAFA;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .checkbox-item:hover { border-color: var(--sage); background: var(--sage-light); }
+  .checkbox-item.checked { border-color: var(--sage); background: var(--sage-light); }
+  .checkbox-item input[type="checkbox"] { display: none; }
+  .checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid var(--border-strong);
+    background: white;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+  .checkbox-item.checked .checkbox-custom { background: var(--sage); border-color: var(--sage); }
+  .checkbox-custom::after { content: '✓'; color: white; font-size: 12px; font-weight: 700; display: none; }
+  .checkbox-item.checked .checkbox-custom::after { display: block; }
+  .checkbox-text { flex: 1; }
+  .checkbox-label { font-size: 14px; font-weight: 500; color: var(--warm-dark); line-height: 1.4; }
+  .checkbox-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── RADIO GROUPS ── */
+  .radio-group { display: flex; flex-direction: column; gap: 8px; }
+  .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #FAFAFA;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .radio-item:hover, .radio-item.selected { border-color: var(--sage); background: var(--sage-light); }
+  .radio-item input { display: none; }
+  .radio-dot {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--border-strong);
+    background: white;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .radio-item.selected .radio-dot { border-color: var(--sage); }
+  .radio-dot::after {
+    content: ''; width: 8px; height: 8px;
+    border-radius: 50%; background: var(--sage);
+    display: none;
+  }
+  .radio-item.selected .radio-dot::after { display: block; }
+  .radio-label { font-size: 14px; font-weight: 500; }
+
+  /* ── SIGNATURE BOX ── */
+  .signature-box {
+    background: var(--gold-light);
+    border: 2px solid rgba(196,150,58,0.35);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-top: 20px;
+  }
+  .signature-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .signature-title::before { content: '✍'; font-size: 14px; }
+  .signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .sig-timestamp {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sig-timestamp strong { color: var(--warm-dark); }
+
+  /* ── ALERT BANNERS ── */
+  .alert {
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert.warn { background: var(--warning-bg); border: 1px solid rgba(133,79,11,0.2); color: var(--warning); }
+  .alert.secure { background: var(--sage-light); border: 1px solid rgba(107,140,122,0.25); color: var(--sage-dark); }
+  .alert.info { background: var(--navy-light); border: 1px solid rgba(26,43,60,0.15); color: var(--navy); }
+  .alert.error { background: var(--error-bg); border: 1px solid rgba(139,26,26,0.2); color: var(--error); }
+  .alert.success { background: var(--success-bg); border: 1px solid rgba(59,109,17,0.2); color: var(--success); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary { background: var(--warm-dark); color: white; }
+  .btn-primary:hover { background: #2e2e2b; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+  .btn-secondary { background: white; color: var(--warm-dark); border: 1.5px solid var(--border-strong); }
+  .btn-secondary:hover { background: var(--cream); }
+  .btn-sage { background: var(--sage); color: white; }
+  .btn-sage:hover { background: var(--sage-dark); transform: translateY(-1px); }
+  .btn-gold { background: var(--gold); color: white; }
+  .btn-gold:hover { background: #b5872e; }
+  .btn-danger { background: var(--terracotta); color: white; }
+  .btn-danger:hover { background: #b5572e; }
+  .btn-sm { font-size: 12px; padding: 7px 16px; }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none !important; }
+
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── STEP CONTAINERS ── */
+  .step-page { display: none; }
+  .step-page.active { display: block; }
+
+  /* ── PREFILL BADGE ── */
+  .prefill-notice {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--sage-light);
+    border: 1px solid var(--sage);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--sage-dark);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  /* ── CONFIRMATION SCREEN ── */
+  .confirm-hero {
+    text-align: center;
+    padding: 40px 20px 32px;
+  }
+  .confirm-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--success-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 20px;
+    border: 3px solid rgba(59,109,17,0.2);
+  }
+  .confirm-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--warm-dark);
+    margin-bottom: 10px;
+  }
+  .confirm-sub { font-size: 15px; color: var(--text-muted); max-width: 480px; margin: 0 auto; }
+  .confirm-summary {
+    background: #FAFAFA;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 24px;
+    text-align: left;
+  }
+  .confirm-summary h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .confirm-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .confirm-row:last-child { border-bottom: none; }
+  .confirm-key { color: var(--text-muted); font-weight: 500; }
+  .confirm-val { font-weight: 600; color: var(--warm-dark); }
+  .confirm-val.done { color: var(--success); }
+  .confirm-actions { display: flex; gap: 12px; justify-content: center; margin-top: 28px; flex-wrap: wrap; }
+
+  /* ── ADMIN VIEW ── */
+  .admin-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 36px 40px 60px;
+  }
+  .admin-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .admin-search {
+    flex: 1;
+    min-width: 200px;
+  }
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .admin-table th {
+    background: var(--warm-dark);
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .admin-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .admin-table tr:last-child td { border-bottom: none; }
+  .admin-table tr:hover td { background: var(--cream); }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .status-pill.complete { background: var(--success-bg); color: var(--success); }
+  .status-pill.pending { background: var(--warning-bg); color: var(--warning); }
+  .no-records {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  .no-records .no-icon { font-size: 40px; margin-bottom: 12px; }
+
+  /* ── ADMIN PRE-FILL PANEL ── */
+  .prefill-panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .prefill-panel-header {
+    background: var(--navy);
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .prefill-panel-header h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .prefill-panel-body { padding: 24px; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 14px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-head {
+    background: var(--warm-dark);
+    color: white;
+    padding: 20px 28px;
+    border-radius: 14px 14px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-head h2 { font-family: 'DM Serif Display', serif; font-size: 18px; font-weight: 400; }
+  .modal-close { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 22px; cursor: pointer; padding: 0 4px; }
+  .modal-body { padding: 28px; }
+  .modal-field { margin-bottom: 14px; }
+  .modal-field label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 4px; }
+  .modal-field .val { font-size: 14px; font-weight: 500; color: var(--warm-dark); }
+  .modal-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); margin: 20px 0 10px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+
+  /* ── COMMISSION MATRIX ── */
+  .matrix-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 36px 40px 60px;
+  }
+  .matrix-intro {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--warm-dark);
+    margin-bottom: 6px;
+  }
+  .matrix-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .tier-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .tier-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .tier-card.silver .tier-head { background: #787878; }
+  .tier-card.gold .tier-head { background: var(--gold); }
+  .tier-card.elite .tier-head { background: var(--warm-dark); }
+  .tier-card.gold { border-color: var(--gold); }
+  .tier-card.elite { border-color: var(--warm-dark); }
+  .tier-head {
+    padding: 16px 20px;
+    color: white;
+    text-align: center;
+  }
+  .tier-name { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 2px; }
+  .tier-thresh { font-size: 11px; opacity: 0.75; font-weight: 500; }
+  .tier-body { padding: 18px 20px; background: white; }
+  .tier-rate-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .tier-rate-row:last-child { border-bottom: none; }
+  .rate-label { color: var(--text-muted); }
+  .rate-val { font-weight: 700; color: var(--warm-dark); font-size: 15px; }
+  .tier-card.gold .rate-val { color: var(--gold); }
+  .tier-card.elite .rate-val { color: var(--sage-dark); }
+
+  .matrix-section {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .matrix-section-head {
+    background: var(--warm-dark);
+    color: white;
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .matrix-section-head h3 { font-family: 'DM Serif Display', serif; font-size: 16px; font-weight: 400; }
+  .matrix-section-body { padding: 0; }
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .matrix-table th {
+    background: #F5F4F0;
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .matrix-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .matrix-table tr:last-child td { border-bottom: none; }
+  .matrix-table .highlight { font-weight: 700; color: var(--sage-dark); }
+  .matrix-table .gold-text { color: var(--gold); font-weight: 700; }
+  .matrix-table .tier-s { background: rgba(120,120,120,0.06); }
+  .matrix-table .tier-g { background: rgba(196,150,58,0.06); }
+  .matrix-table .tier-e { background: rgba(28,28,26,0.04); }
+  .earnings-calc {
+    background: var(--gold-light);
+    border: 2px solid rgba(196,150,58,0.3);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .earnings-calc h3 { font-family: 'DM Serif Display', serif; font-size: 18px; margin-bottom: 16px; }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .calc-input-wrap { display: flex; flex-direction: column; gap: 5px; }
+  .calc-input-wrap label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+  .calc-input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 9px 12px;
+    border: 1.5px solid rgba(196,150,58,0.35);
+    border-radius: 7px;
+    background: white;
+    width: 100%;
+    outline: none;
+  }
+  .calc-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(196,150,58,0.12); }
+  .calc-results {
+    background: white;
+    border-radius: 8px;
+    padding: 16px 20px;
+    border: 1px solid rgba(196,150,58,0.2);
+  }
+  .calc-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .calc-result-row:last-child { border-bottom: none; font-size: 16px; font-weight: 700; }
+  .calc-result-row .val { font-weight: 600; color: var(--sage-dark); }
+  .calc-result-row:last-child .val { color: var(--gold); font-size: 18px; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 0 20px;
+  }
+  .section-divider span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); white-space: nowrap; }
+  .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── PAYMENT METHOD TOGGLE ── */
+  .payment-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .payment-tab {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    background: #FAFAFA;
+  }
+  .payment-tab:hover { border-color: var(--sage); }
+  .payment-tab.active { border-color: var(--sage); background: var(--sage-light); color: var(--sage-dark); }
+  .payment-panel { display: none; }
+  .payment-panel.active { display: block; }
+
+  /* ── VALIDATION ── */
+  .field-error {
+    font-size: 12px;
+    color: var(--terracotta);
+    margin-top: 4px;
+    display: none;
+  }
+  .form-input.invalid, .form-select.invalid { border-color: var(--terracotta); }
+
+  @media (max-width: 640px) {
+    .portal-header, .mode-switcher { padding: 24px 20px; }
+    .progress-wrap { padding: 16px 20px; }
+    .portal-body, .admin-wrap, .matrix-wrap { padding: 20px 16px 48px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .tier-grid { grid-template-columns: 1fr; }
+    .signature-grid { grid-template-columns: 1fr; }
+    .calc-grid { grid-template-columns: 1fr; }
+    .step-label { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     HEADER
+════════════════════════════════════════ -->
+<div class="portal-header">
+  <div class="header-inner">
+    <div class="header-eyebrow">CareCircle Network — TransBid LLC</div>
+    <div class="header-title">Contractor Onboarding Portal</div>
+    <div class="header-sub">Complete all sections in one session. Your submission is recorded automatically.</div>
+    <div class="header-badge">🔒 Secure Session &nbsp;|&nbsp; <span id="sessionId">Loading...</span></div>
+  </div>
+</div>
+
+<div class="mode-switcher">
+  <div class="mode-switcher-inner">
+    <button class="mode-btn active" onclick="switchView('onboarding')">📋 Contractor Onboarding</button>
+    <button class="mode-btn" onclick="switchView('admin')">🔐 Admin Dashboard</button>
+    <button class="mode-btn" onclick="switchView('matrix')">💰 Commission Matrix</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     ONBOARDING VIEW
+════════════════════════════════════════ -->
+<div id="view-onboarding" class="view active">
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-inner">
+      <div class="progress-steps" id="progressSteps"></div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progressFill" style="width:14%"></div>
+      </div>
+      <div class="progress-meta">
+        <div class="progress-label" id="progressLabel">Step 1 of 7 — Independent Contractor Agreement</div>
+        <div class="progress-pct" id="progressPct">14%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="portal-body">
+
+    <!-- ── STEP 1: ICA ── -->
+    <div class="step-page active" id="step-1">
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-header-icon">📄</div>
+          <div class="card-header-text">
+            <div class="card-title">Independent Contractor Agreement</div>
+            <div class="card-subtitle">Read the full agreement below, then provide your electronic signature</div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div id="prefillNotice" class="prefill-notice" style="display:none">
+            ✅ Pre-filled by Chase Turnquest — <span id="prefillName"></span>
+          </div>
+
+          <div class="alert info">
+            <div class="alert-icon">ℹ️</div>
+            <div>Scroll through the full agreement before signing. Your typed name, agreement checkbox, and timestamp constitute a legally binding electronic signature.</div>
+          </div>
+
+          <div class="doc-scroll-indicator">⬇ Scroll through the complete agreement below</div>
+
+          <div class="doc-scroll" id="icaDoc">
+            <div class="legal-note">⚠️ This agreement framework must be reviewed by a licensed Florida attorney before use. It does not constitute legal advice.</div>
+
+            <div class="article-header">CareCircle Network — Independent Contractor Agreement</div>
+            <p>This agreement is between <strong>TransBid LLC</strong> (operating as CareCircle Network) and the Contractor identified below.</p>
+
+            <div class="article-header">Article 1 — Parties</div>
+            <p>This Independent Contractor Agreement ("Agreement") is entered into between <strong>TransBid LLC</strong>, a Florida limited liability company operating under the trade name CareCircle Network, located in Pensacola, Florida ("Company"), and the individual or entity identified in this onboarding submission ("Contractor").</p>
+
+            <div class="article-header">Article 2 — Independent Contractor Relationship</div>
+            <p><strong>2.1</strong> Contractor is an independent contractor. Contractor is not an employee, agent, partner, or joint venturer of Company. Nothing in this Agreement creates an employment relationship.</p>
+            <p><strong>2.2</strong> Company shall not control the manner, method, or means by which Contractor performs services — only the results. Contractor sets their own hours and work schedule.</p>
+            <p><strong>2.3</strong> Contractor is not entitled to and will not receive any employee benefits, including health insurance, retirement benefits, paid leave, workers' compensation, or unemployment insurance.</p>
+            <p><strong>2.4</strong> Contractor shall supply their own tools, equipment, vehicle, phone, and any other resources required to perform services unless otherwise agreed in writing.</p>
+            <p><strong>2.5</strong> Contractor may work for other companies or clients, provided such work does not violate the Non-Solicitation or Confidentiality provisions of this Agreement.</p>
+
+            <div class="article-header">Article 3 — Scope of Services</div>
+            <p><strong>3.1</strong> Contractor agrees to market and solicit prospective customers for Company's products and services, which include but are not limited to: CareCircle Network Partner Memberships (Network Partner and Featured Partner tiers); CareCircle Present advocacy and monitoring services; Assisting Seniors LLC referrals (warm handoff and consult booking only — no direct sale); AI Care Intelligence platform (when authorized in writing by Company).</p>
+            <p><strong>3.2</strong> Contractor shall represent Company's products and services accurately, in accordance with the Contractor Handbook and all written sales materials provided by Company.</p>
+            <p><strong>3.3</strong> Contractor shall not make representations, promises, guarantees, or commitments on behalf of Company that are not documented in Company's official materials or specifically authorized by Chase Turnquest in writing.</p>
+            <p><strong>3.4</strong> Contractor is authorized to sell only the products listed in Article 3.1 and their current contractor role authorization. Selling unauthorized products or services is grounds for immediate termination.</p>
+
+            <div class="article-header">Article 4 — Compensation</div>
+            <p><strong>4.1</strong> All compensation under this Agreement is commission-based. There is no base salary, draw, guaranteed minimum payment, or hourly wage of any kind. Contractor acknowledges this explicitly.</p>
+            <p><strong>4.2</strong> Commission rates, structures, bonus eligibility, and payment timing are governed by the Commission Schedule attached as Exhibit A, incorporated herein by reference.</p>
+            <p><strong>4.3</strong> Setup commissions are earned upon cleared payment from the customer to Company — not upon contract signing, verbal agreement, or document execution.</p>
+            <p><strong>4.4</strong> Monthly recurring commissions are earned on the 1st of each month for all accounts that were active and paid in the prior calendar month.</p>
+            <p><strong>4.5</strong> Commission rates and structures may be amended by Company with 30 days written notice to Contractor. Changes apply prospectively only to deals closed after the effective date of the amendment. Existing active account recurring commissions are not reduced by rate changes — rate changes affect new deals only.</p>
+            <p><strong>4.6</strong> Contractor is responsible for all federal, state, and local taxes on all compensation received under this Agreement. Company will not withhold income taxes, FICA, or any other taxes. Company will issue IRS Form 1099-NEC for compensation of $600 or more in a calendar year. Contractor shall complete and return a W-9 prior to receiving any commission payment.</p>
+
+            <div class="article-header">Article 5 — Clawback</div>
+            <p><strong>5.1</strong> Company offers a 60-day refund guarantee to Network and Featured Partners. If a partner cancels their membership and Company issues a refund within 60 days of the partner's original payment, Company shall deduct the Contractor's setup commission for that account from Contractor's next commission cycle.</p>
+            <p><strong>5.2</strong> Monthly recurring commissions earned during the active period are not subject to clawback. Only setup commissions are subject to the 60-day clawback provision.</p>
+            <p><strong>5.3</strong> If Contractor waived the setup fee to close a deal, no setup commission was earned, and therefore no clawback applies to that transaction.</p>
+
+            <div class="article-header">Article 6 — Activity Reporting</div>
+            <p><strong>6.1</strong> Contractor shall submit a weekly activity report to Company in the format specified by Company. Reports must include: contacts made, outcomes (voicemail, conversation, demo, close), and scheduled follow-ups.</p>
+            <p><strong>6.2</strong> Failure to submit a weekly activity report will result in recurring commission payments being held until the overdue report is received. No commission is forfeited for late reporting — held commissions are released in full upon receipt of the report.</p>
+            <p><strong>6.3</strong> Repeated failure to submit activity reports (defined as 3 or more consecutive missed reports) is grounds for termination of this Agreement.</p>
+
+            <div class="article-header">Article 7 — Confidentiality</div>
+            <p><strong>7.1</strong> Contractor agrees to keep confidential all information provided by Company that is not publicly available, including but not limited to: commission rates and structures, internal pricing strategy, customer and prospect lists, sales playbooks and scripts, product development plans, and operational processes.</p>
+            <p><strong>7.2</strong> Contractor shall not disclose internal commission rates to any prospect, customer, partner agency, or third party under any circumstances.</p>
+            <p><strong>7.3</strong> Contractor shall not share, reproduce, or distribute Company's internal documents — including this Agreement, the Contractor Handbook, the Commission Schedule, or any sales materials — outside the contractor network without prior written authorization from Company.</p>
+            <p><strong>7.4</strong> These confidentiality obligations survive termination of this Agreement indefinitely.</p>
+
+            <div class="article-header">Article 8 — Non-Solicitation</div>
+            <p><strong>8.1</strong> During the term of this Agreement and for twelve (12) months following termination, Contractor agrees not to directly solicit any active CareCircle client or partner for the purpose of offering a competing senior care referral, care coordination, advocacy, or monitoring service.</p>
+            <p><strong>8.2</strong> "Active client or partner" means any family or agency that was paying for CareCircle services within the 90 days prior to the date of Contractor's termination.</p>
+            <p><strong>8.3</strong> Nothing in this section prohibits Contractor from working in the senior care industry generally, working for non-competing businesses, or continuing any pre-existing professional relationships that existed prior to this Agreement.</p>
+
+            <div class="article-header">Article 9 — Conduct Standards</div>
+            <p>The following constitute grounds for immediate termination without notice and may result in forfeiture of unearned commissions: Misrepresenting any product, service, price, or guarantee to a prospect, client, or partner; Disclosing internal commission rates to any outside party; Sharing, reproducing, or distributing internal Company documents without authorization; Making regulatory, compliance, or legal claims on behalf of Company not specifically authorized; Submitting false or fabricated activity reports; Contacting a prospect or client that Company has flagged as a direct Chase Turnquest relationship without prior authorization; Engaging in any conduct that damages the reputation of CareCircle Network, TransBid LLC, Assisting Seniors LLC, or any named partner.</p>
+
+            <div class="article-header">Article 10 — Territory</div>
+            <p><strong>10.1</strong> No exclusive territory is granted under this Agreement unless separately negotiated and attached as a written addendum.</p>
+            <p><strong>10.2</strong> In the event two contractors are working the same prospect, the contractor who produces a signed customer agreement with cleared payment first earns the commission on that account.</p>
+
+            <div class="article-header">Article 11 — Term and Termination</div>
+            <p><strong>11.1</strong> This Agreement begins on the date signed below and continues month-to-month until terminated.</p>
+            <p><strong>11.2</strong> Either party may terminate this Agreement with 14 days written notice (text or email to documented contact on file constitutes written notice).</p>
+            <p><strong>11.3</strong> Company may terminate immediately and without notice for cause, as defined in Article 9.</p>
+            <p><strong>11.4</strong> Upon termination for any reason other than cause, Contractor is entitled to all commissions earned on deals closed prior to the termination date. Monthly recurring commissions cease as of the termination date — Contractor does not continue to earn recurring commissions on active accounts after their contract ends.</p>
+            <p><strong>11.5</strong> Upon termination for cause, Company reserves the right to withhold commissions on pending deals subject to review. All confirmed cleared commissions prior to the termination event are paid.</p>
+
+            <div class="article-header">Article 12 — Indemnification</div>
+            <p>Contractor agrees to indemnify, defend, and hold harmless Company, its members, officers, and employees from any claims, damages, losses, or expenses (including reasonable attorney's fees) arising from: Contractor's misrepresentation to a prospect or client; Contractor's breach of this Agreement; or Contractor's negligent or wrongful acts in performing services under this Agreement.</p>
+
+            <div class="article-header">Article 13 — Limitation of Liability</div>
+            <p>Company's total liability to Contractor under this Agreement shall not exceed the total commissions paid to Contractor in the three months prior to the event giving rise to the claim.</p>
+
+            <div class="article-header">Article 14 — Governing Law</div>
+            <p>This Agreement shall be governed by the laws of the State of Florida. Any disputes shall be resolved in Escambia County, Florida.</p>
+
+            <div class="article-header">Article 15 — Entire Agreement</div>
+            <p>This Agreement and Exhibit A (Commission Schedule) constitute the entire agreement between the parties regarding the subject matter herein. All prior discussions, representations, and understandings are superseded. Amendments must be in writing and signed by both parties.</p>
+
+            <div class="legal-note">CareCircle Network — TransBid LLC — carecircle.fit | Confidential — Do Not Distribute</div>
+          </div>
+
+          <div class="signature-box">
+            <div class="signature-title">Electronic Signature — Independent Contractor Agreement</div>
+            <div class="signature-grid">
+              <div class="form-group">
+                <label class="form-label">Full Legal Name <span class="req">*</span></label>
+                <input type="text" class="form-input" id="ica_name" placeholder="Type your full legal name" oninput="updateSigTimestamp()">
+                <div class="field-error" id="err_ica_name">Required</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address <span class="req">*</span></label>
+                <input type="email" class="form-input" id="ica_email" placeholder="your@email.com">
+                <div class="field-error" id="err_ica_email">Required</div>
+              </div>
+            </div>
+            <div class="checkbox-group">
+              <label class="checkbox-item" onclick="toggleCheck(this, 'ica_agree')">
+                <input type="checkbox" id="ica_agree">
+                <div class="checkbox-custom"></div>
+                <div class="checkbox-text">
+                  <div class="checkbox-label">I have read the Independent Contractor Agreement in its entirety and agree to all terms and conditions.</div>
+                </div>
+              </label>
+            </div>
+            <div class="field-error" id="err_ica_agree" style="margin-top:8px">You must agree to the contract to continue</div>
+            <div class="sig-timestamp">🕐 Timestamp: <strong id="ica_timestamp">Will be recorded on submission</strong></div>
+          </div>
+
+          <div class="nav-row">
+            <div></div>
+            <button class="btn btn-primary" onclick="nextStep(1)">Continue to Commission Schedule →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: EXHIBIT A ── -->
+    <div class="step-page" id="step-2">
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-header-icon">💰</div>
+          <div class="card-header-text">
+            <div class="card-title">Commission Schedule — Exhibit A</div>
+            <div class="card-subtitle">Confirm receipt and understanding of your commission structure</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="doc-scroll-indicator">⬇ Scroll through the complete Commission Schedule below</div>
+          <div class="doc-scroll">
+            <div class="article-header">CareCircle Network — Commission Schedule Exhibit A</div>
+            <p><em>Effective date: as of contractor agreement signing date. All rates subject to 30 days written notice for prospective changes.</em></p>
+
+            <div class="article-header">Part 1A — CareCircle Network Partner Sales (B2B)</div>
+            <p><strong>Setup Commissions</strong> — paid once, when customer payment clears.</p>
+            <table>
+              <tr><th>Product</th><th>Customer Price</th><th>Your Commission</th><th>Rate</th></tr>
+              <tr><td>Network Partner Setup</td><td>$499</td><td>$249.50</td><td>50%</td></tr>
+              <tr><td>Featured Partner Setup</td><td>$999</td><td>$499.50</td><td>50%</td></tr>
+            </table>
+            <p><strong>Monthly Recurring Commissions</strong> — paid every month the account remains active and paid.</p>
+            <table>
+              <tr><th>Product</th><th>Customer Price</th><th>Your Commission</th><th>Rate</th></tr>
+              <tr><td>Network Partner Monthly</td><td>$179/mo</td><td>$62.65/mo</td><td>35%</td></tr>
+              <tr><td>Featured Partner Monthly</td><td>$399/mo</td><td>$139.65/mo</td><td>35%</td></tr>
+            </table>
+            <p><strong>Annual Plan Commissions</strong></p>
+            <table>
+              <tr><th>Product</th><th>Annual Price</th><th>Setup Commission</th><th>Monthly Recurring</th></tr>
+              <tr><td>Network Partner Annual</td><td>$1,790/yr</td><td>$249.50 (one-time)</td><td>$52.21/mo</td></tr>
+              <tr><td>Featured Partner Annual</td><td>$3,990/yr</td><td>$499.50 (one-time)</td><td>$116.38/mo</td></tr>
+            </table>
+
+            <div class="article-header">Part 1B — CareCircle Present — Family Services (B2C)</div>
+            <table>
+              <tr><th>Service</th><th>Starting Price</th><th>Your Commission</th><th>Rate</th></tr>
+              <tr><td>Pre-Placement Assessment</td><td>from $295</td><td>from $88.50</td><td>30%</td></tr>
+              <tr><td>Intelligence Visit</td><td>from $175</td><td>from $52.50</td><td>30%</td></tr>
+              <tr><td>Overnight / Evening Visit</td><td>from $250</td><td>from $75.00</td><td>30%</td></tr>
+            </table>
+            <p><strong>Guardian Plan Monthly Retainers:</strong></p>
+            <table>
+              <tr><th>Plan</th><th>Starting Price</th><th>Starting Commission</th><th>Rate</th></tr>
+              <tr><td>Guardian Essential</td><td>from $799/mo</td><td>from $239.70/mo</td><td>30%</td></tr>
+              <tr><td>Guardian</td><td>from $1,500/mo</td><td>from $450.00/mo</td><td>30%</td></tr>
+              <tr><td>Guardian Elite</td><td>from $2,500/mo</td><td>from $750.00/mo</td><td>30%</td></tr>
+            </table>
+            <p><strong>Important:</strong> Guardian plan prices are floors. Chase scopes each engagement individually. Your commission is always 30% of whatever price Chase closes — not just the starting price. There is no ceiling on your Guardian commission.</p>
+
+            <div class="article-header">Part 2 — Performance Tier Rates</div>
+            <p>Base rates apply in months 1–3 and until a performance tier is earned. Tiers are evaluated on the 1st of each month based on the prior month's activity.</p>
+            <table>
+              <tr><th>Tier</th><th>Threshold</th></tr>
+              <tr><td>Silver (default)</td><td>Months 1–3, or below Gold threshold</td></tr>
+              <tr><td>Gold</td><td>5+ active accounts OR $1,500 combined monthly recurring commission</td></tr>
+              <tr><td>Elite</td><td>10+ active accounts OR $3,500 combined monthly recurring commission</td></tr>
+            </table>
+            <table>
+              <tr><th>Product</th><th>Silver</th><th>Gold</th><th>Elite</th></tr>
+              <tr><td>Network/Featured — Setup</td><td>50%</td><td>55%</td><td>60%</td></tr>
+              <tr><td>Network/Featured — Monthly Recurring</td><td>35%</td><td>40%</td><td>45%</td></tr>
+              <tr><td>CareCircle Present — All Services</td><td>30%</td><td>35%</td><td>40%</td></tr>
+            </table>
+            <p><strong>Tier decay:</strong> If you fall below a tier's threshold in a given month, you drop to the next tier down in the following month. Tiers reset monthly. There is no grandfathering.</p>
+            <p><strong>Elite Status Lock:</strong> Contractors who earn $15,000+ in total commissions in a calendar year receive Elite Status Lock for the following 6 months.</p>
+
+            <div class="article-header">Part 3 — Relationship Closer Premium Rates</div>
+            <table>
+              <tr><th>Product</th><th>Standard Rate</th><th>Relationship Closer Rate</th></tr>
+              <tr><td>Network Partner Setup</td><td>50%</td><td>60%</td></tr>
+              <tr><td>Featured Partner Setup</td><td>50%</td><td>65%</td></tr>
+              <tr><td>Network Partner Recurring</td><td>35%</td><td>45%</td></tr>
+              <tr><td>Featured Partner Recurring</td><td>35%</td><td>50%</td></tr>
+              <tr><td>CareCircle Present — All</td><td>30%</td><td>40%</td></tr>
+            </table>
+            <p>Relationship Closer status requires: 5+ years healthcare/senior care experience, named existing relationships verified in onboarding call, and 2 closed deals within first 45 days.</p>
+
+            <div class="article-header">Part 4 — Bonus Structures</div>
+            <p><strong>Fast-Start Bonuses (First 30 Days Only):</strong></p>
+            <table>
+              <tr><th>Milestone</th><th>Bonus</th></tr>
+              <tr><td>3 paid deals closed in first 30 days</td><td>$250</td></tr>
+              <tr><td>5 paid deals closed in first 30 days</td><td>$500</td></tr>
+              <tr><td>8+ paid deals closed in first 30 days</td><td>$1,000</td></tr>
+              <tr><td>First Featured Partner closed (any month)</td><td>$150 one-time</td></tr>
+            </table>
+            <p><em>Only the highest Fast-Start tier is paid — they do not stack.</em></p>
+            <p><strong>Monthly Volume Bonuses:</strong></p>
+            <table>
+              <tr><th>Milestone</th><th>Bonus</th></tr>
+              <tr><td>3+ new closed deals in a single month</td><td>$200</td></tr>
+              <tr><td>6+ new closed deals in a single month</td><td>$500</td></tr>
+              <tr><td>10+ new closed deals in a single month</td><td>$1,000</td></tr>
+              <tr><td>All 3 revenue lines closed in one month</td><td>$350 Full Stack Bonus</td></tr>
+              <tr><td>Monthly to annual conversion (any account)</td><td>$100 per conversion</td></tr>
+            </table>
+            <p><strong>Specialty Bonuses (Stackable):</strong></p>
+            <table>
+              <tr><th>Milestone</th><th>Bonus</th></tr>
+              <tr><td>Veteran or men's care Guardian plan closed</td><td>$75 per family</td></tr>
+              <tr><td>Behavioral/combative-labeled resident Guardian plan closed</td><td>$100 per family</td></tr>
+              <tr><td>Streak: 2+ new deals for 3 consecutive months</td><td>$250/month starting month 3</td></tr>
+            </table>
+            <p><strong>Retention Bonuses:</strong></p>
+            <table>
+              <tr><th>Event</th><th>Bonus</th></tr>
+              <tr><td>Network Partner active at 90 days</td><td>$50</td></tr>
+              <tr><td>Featured Partner active at 90 days</td><td>$150</td></tr>
+              <tr><td>Network Partner — annual plan signed</td><td>$100</td></tr>
+              <tr><td>Featured Partner — annual plan signed</td><td>$300</td></tr>
+              <tr><td>Guardian plan family active at 90 days</td><td>$100</td></tr>
+            </table>
+
+            <div class="article-header">Part 5 — Override Structures (Management Roles)</div>
+            <p><strong>Team Lead Overrides (2–5 active reps):</strong></p>
+            <table>
+              <tr><th>Rep Type</th><th>Override Rate</th></tr>
+              <tr><td>Field or Phone Rep — setup commissions</td><td>8%</td></tr>
+              <tr><td>Field or Phone Rep — monthly recurring</td><td>5%</td></tr>
+              <tr><td>Any rep you personally recruited</td><td>+2% additional</td></tr>
+            </table>
+
+            <div class="article-header">Part 6 — Canvasser / Lead Gen Rates</div>
+            <table>
+              <tr><th>Activity</th><th>Pay</th></tr>
+              <tr><td>Qualified family lead (name + phone + stated concern)</td><td>$15</td></tr>
+              <tr><td>Family lead that closes into any service</td><td>+$50 bonus</td></tr>
+              <tr><td>Qualified agency lead (name + decision-maker + interest)</td><td>$25</td></tr>
+              <tr><td>Agency lead that closes into Network or Featured Partner</td><td>+$100 bonus</td></tr>
+              <tr><td>Confirmed flyer placement (photo proof required)</td><td>$5/location</td></tr>
+              <tr><td>Event table — half day</td><td>$75 flat</td></tr>
+              <tr><td>Event table — full day</td><td>$125 flat</td></tr>
+            </table>
+
+            <div class="article-header">Part 7 — Payment Rules</div>
+            <p><strong>Setup commissions:</strong> Paid when customer payment clears CareCircle's account. Typically 3–5 business days after collection.</p>
+            <p><strong>Monthly recurring:</strong> Paid on the 1st of each month for all accounts active and paid in the prior month.</p>
+            <p><strong>Payment method:</strong> ACH direct deposit preferred. Zelle accepted for amounts under $500.</p>
+            <p><strong>Activity report requirement:</strong> Weekly activity report must be on file to receive recurring commission payout.</p>
+
+            <div class="article-header">Part 8 — Clawback Policy</div>
+            <p><strong>60-day window:</strong> If a partner cancels and requests a refund within 60 days of their original payment, and CareCircle issues the refund, the contractor's setup commission on that deal is deducted from the next commission cycle.</p>
+            <p><strong>What is NOT clawed back:</strong> Monthly recurring commissions earned during the active period. Guardian plan families are not subject to clawback — recurring commission simply stops.</p>
+
+            <div class="article-header">Part 9 — Notes on Assisting Seniors</div>
+            <p>Assisting Seniors LLC is a separate company. A separate commission agreement covering Assisting Seniors placements will be issued when the inter-company arrangement is finalized. Current role: book consults or meetings with Charles Lillo for qualified families needing in-home care services.</p>
+          </div>
+
+          <div class="signature-box">
+            <div class="signature-title">Electronic Acknowledgment — Commission Schedule Exhibit A</div>
+            <div class="form-group" style="margin-bottom:14px">
+              <label class="form-label">Full Legal Name (confirm) <span class="req">*</span></label>
+              <input type="text" class="form-input" id="exhibit_name" placeholder="Type your full legal name">
+              <div class="field-error" id="err_exhibit_name">Required</div>
+            </div>
+            <div class="checkbox-group">
+              <label class="checkbox-item" onclick="toggleCheck(this, 'exhibit_agree')">
+                <input type="checkbox" id="exhibit_agree">
+                <div class="checkbox-custom"></div>
+                <div class="checkbox-text">
+                  <div class="checkbox-label">I acknowledge receipt and full understanding of Commission Schedule Exhibit A. I understand all compensation is commission-only with no guaranteed minimum. I understand the clawback policy, activity report requirements, and tier structure.</div>
+                </div>
+              </label>
+            </div>
+            <div class="field-error" id="err_exhibit_agree" style="margin-top:8px">Acknowledgment required to continue</div>
+            <div class="sig-timestamp">🕐 Timestamp: <strong id="exhibit_timestamp">Will be recorded on submission</strong></div>
+          </div>
+
+          <div class="nav-row">
+            <button class="btn btn-secondary" onclick="prevStep(2)">← Back</button>
+            <button class="btn btn-primary" onclick="nextStep(2)">Continue to W-9 Information →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: W-9 ── -->
+    <div class="step-page" id="step-3">
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-header-icon">🏦</div>
+          <div class="card-header-text">
+            <div class="card-title">W-9 Tax Information</div>
+            <div class="card-subtitle">Required before any commission payment can be issued</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="alert warn">
+            <div class="alert-icon">⚠️</div>
+            <div><strong>Sensitive Information.</strong> This section collects your tax identification information as required by the IRS. This data is encrypted in storage and accessible only to Chase Turnquest. Do not share this information with anyone other than authorized company representatives. CareCircle Network will use this information solely to issue IRS Form 1099-NEC.</div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group full">
+              <label class="form-label">Legal Name <span class="req">*</span> <em class="sensitive-badge">🔒 Sensitive</em></label>
+              <input type="text" class="form-input" id="w9_legal_name" placeholder="Exactly as it appears on your tax return">
+              <div class="form-hint">Must match your IRS records exactly. If filing as an individual, use your name as shown on your Social Security card.</div>
+              <div class="field-error" id="err_w9_legal_name">Required</div>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Business Name / DBA (if applicable)</label>
+              <input type="text" class="form-input" id="w9_business_name" placeholder="Leave blank if filing as an individual">
+            </div>
+          </div>
+
+          <div class="section-divider"><span>Tax ID</span></div>
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Tax ID Type <span class="req">*</span></label>
+            <div class="radio-group">
+              <label class="radio-item" onclick="selectRadio(this, 'taxid_type', 'ssn'); toggleTaxId('ssn')">
+                <input type="radio" name="taxid_type" value="ssn">
+                <div class="radio-dot"></div>
+                <div class="radio-label">Social Security Number (SSN) — Individual</div>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this, 'taxid_type', 'ein'); toggleTaxId('ein')">
+                <input type="radio" name="taxid_type" value="ein">
+                <div class="radio-dot"></div>
+                <div class="radio-label">Employer Identification Number (EIN) — Business Entity</div>
+              </label>
+            </div>
+            <div class="field-error" id="err_taxid_type">Select your tax ID type</div>
+          </div>
+          <div id="ssn_field" style="display:none" class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Social Security Number <span class="req">*</span> <em class="sensitive-badge">🔒 Sensitive</em></label>
+            <input type="password" class="form-input" id="w9_ssn" placeholder="XXX-XX-XXXX" maxlength="11" oninput="formatSSN(this)">
+            <div class="form-hint secure">🔒 Stored encrypted. Visible only to Chase Turnquest.</div>
+            <div class="field-error" id="err_w9_ssn">Required — enter your SSN</div>
+          </div>
+          <div id="ein_field" style="display:none" class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Employer Identification Number <span class="req">*</span> <em class="sensitive-badge">🔒 Sensitive</em></label>
+            <input type="password" class="form-input" id="w9_ein" placeholder="XX-XXXXXXX" maxlength="10" oninput="formatEIN(this)">
+            <div class="form-hint secure">🔒 Stored encrypted. Visible only to Chase Turnquest.</div>
+            <div class="field-error" id="err_w9_ein">Required — enter your EIN</div>
+          </div>
+
+          <div class="section-divider"><span>Entity Type</span></div>
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Federal Tax Classification <span class="req">*</span></label>
+            <select class="form-select" id="w9_entity">
+              <option value="">Select entity type...</option>
+              <option value="individual">Individual / Sole Proprietor</option>
+              <option value="single_member_llc">Single-Member LLC (disregarded entity)</option>
+              <option value="c_corp">C Corporation</option>
+              <option value="s_corp">S Corporation</option>
+              <option value="partnership">Partnership</option>
+              <option value="llc_c">LLC — taxed as C Corporation</option>
+              <option value="llc_s">LLC — taxed as S Corporation</option>
+              <option value="llc_p">LLC — taxed as Partnership</option>
+              <option value="trust">Trust/Estate</option>
+            </select>
+            <div class="field-error" id="err_w9_entity">Select your tax classification</div>
+          </div>
+
+          <div class="section-divider"><span>Address</span></div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label class="form-label">Street Address <span class="req">*</span></label>
+              <input type="text" class="form-input" id="w9_address" placeholder="Street address (no P.O. Box)">
+              <div class="field-error" id="err_w9_address">Required</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">City <span class="req">*</span></label>
+              <input type="text" class="form-input" id="w9_city" placeholder="City">
+              <div class="field-error" id="err_w9_city">Required</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">State <span class="req">*</span></label>
+              <input type="text" class="form-input" id="w9_state" placeholder="FL" maxlength="2">
+              <div class="field-error" id="err_w9_state">Required</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">ZIP Code <span class="req">*</span></label>
+              <input type="text" class="form-input" id="w9_zip" placeholder="32501" maxlength="10">
+              <div class="field-error" id="err_w9_zip">Required</div>
+            </div>
+          </div>
+
+          <div class="nav-row">
+            <button class="btn btn-secondary" onclick="prevStep(3)">← Back</button>
+            <button class="btn btn-primary" onclick="nextStep(3)">Continue to Banking Information →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 4: BANKING ── -->
+    <div class="step-page" id="step-4">
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-header-icon">🏧</div>
+          <div class="card-header-text">
+            <div class="card-title">Banking Information for Commission Payments</div>
+            <div class="card-subtitle">ACH direct deposit preferred — Zelle accepted under $500</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="alert secure">
+            <div class="alert-icon">🔒</div>
+            <div><strong>Secure.</strong> Banking information is stored encrypted and used exclusively for commission payments via ACH or Zelle. This information is never shared with third parties.</div>
+          </div>
+
+          <div class="payment-toggle">
+            <div class="payment-tab active" onclick="switchPayment('ach', this)">🏦 ACH Direct Deposit <small>(Preferred)</small></div>
+            <div class="payment-tab" onclick="switchPayment('zelle', this)">📱 Zelle <small>(Under $500)</small></div>
+          </div>
+
+          <div id="panel_ach" class="payment-panel active">
+            <div class="form-grid">
+              <div class="form-group full">
+                <label class="form-label">Bank Name <span class="req">*</span></label>
+                <input type="text" class="form-input" id="bank_name" placeholder="e.g. Wells Fargo, Chase, Navy Federal">
+                <div class="field-error" id="err_bank_name">Required for ACH</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Routing Number <span class="req">*</span> <em class="sensitive-badge">🔒 Sensitive</em></label>
+                <input type="password" class="form-input" id="bank_routing" placeholder="9-digit routing number" maxlength="9">
+                <div class="field-error" id="err_bank_routing">Required — 9 digits</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Account Number <span class="req">*</span> <em class="sensitive-badge">🔒 Sensitive</em></label>
+                <input type="password" class="form-input" id="bank_account" placeholder="Account number">
+                <div class="field-error" id="err_bank_account">Required for ACH</div>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Account Type <span class="req">*</span></label>
+                <div class="radio-group" style="flex-direction:row; gap:12px">
+                  <label class="radio-item" style="flex:1" onclick="selectRadio(this, 'acct_type', 'checking')">
+                    <input type="radio" name="acct_type" value="checking">
+                    <div class="radio-dot"></div>
+                    <div class="radio-label">Checking</div>
+                  </label>
+                  <label class="radio-item" style="flex:1" onclick="selectRadio(this, 'acct_type', 'savings')">
+                    <input type="radio" name="acct_type" value="savings">
+                    <div class="radio-dot"></div>
+                    <div class="radio-label">Savings</div>
+                  </label>
+                </div>
+                <div class="field-error" id="err_acct_type">Select account type</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="panel_zelle" class="payment-panel">
+            <div class="alert warn">
+              <div class="alert-icon">⚠️</div>
+              <div>Zelle is accepted for commission amounts <strong>under $500 only.</strong> For commissions exceeding $500, ACH direct deposit is required. Consider also providing ACH banking information to avoid payment delays on larger commission months.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Zelle Phone Number or Email <span class="req">*</span></label>
+              <input type="text" class="form-input" id="zelle_contact" placeholder="Phone or email registered with Zelle">
+              <div class="field-error" id="err_zelle_contact">Required if using Zelle</div>
+            </div>
+          </div>
+
+          <div class="nav-row">
+            <button class="btn btn-secondary" onclick="prevStep(4)">← Back</button>
+            <button class="btn btn-primary" onclick="nextStep(4)">Continue to Intake Form →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 5: INTAKE FORM ── -->
+    <div class="step-page" id="step-5">
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-header-icon">📝</div>
+          <div class="card-header-text">
+            <div class="card-title">New Contractor Intake Form</div>
+            <div class="card-subtitle">Role assignment, experience, logistics, and equipment</div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <!-- SECTION 1: Personal Info -->
+          <div class="section-divider"><span>Section 1 — Personal Information</span></div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Full Legal Name <span class="req">*</span></label>
+              <input type="text" class="form-input" id="intake_legal_name" placeholder="Full legal name">
+              <div class="field-error" id="err_intake_legal_name">Required</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Preferred Name</label>
+              <input type="text" class="form-input" id="intake_preferred_name" placeholder="What you go by">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone (Primary) <span class="req">*</span></label>
+              <input type="tel" class="form-input" id="intake_phone" placeholder="(850) 555-0100">
+              <div class="field-error" id="err_intake_phone">Required</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email <span class="req">*</span></label>
+              <input type="email" class="form-input" id="intake_email" placeholder="you@email.com">
+              <div class="field-error" id="err_intake_email">Required</div>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Mailing Address <span class="req">*</span></label>
+              <input type="text" class="form-input" id="intake_address" placeholder="Street, City, State, ZIP">
+              <div class="field-error" id="err_intake_address">Required</div>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Emergency Contact Name + Phone <span class="req">*</span></label>
+              <input type="text" class="form-input" id="intake_emergency" placeholder="Full name and phone number">
+              <div class="field-error" id="err_intake_emergency">Required</div>
+            </div>
+          </div>
+
+          <!-- SECTION 3: Role Assignment -->
+          <div class="section-divider"><span>Section 3 — Role Assignment</span></div>
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Assigned Role <span class="req">*</span></label>
+            <div id="prefill_role_notice" style="display:none" class="prefill-notice">✅ Pre-assigned by Chase Turnquest</div>
+            <select class="form-select" id="intake_role">
+              <option value="">Select assigned role...</option>
+              <option value="territory_field">Territory Field Representative (B2B in-person)</option>
+              <option value="assisting_seniors_bdr">Assisting Seniors Business Development Rep</option>
+              <option value="family_outreach">Family Outreach Representative (B2C phone/remote)</option>
+              <option value="relationship_closer">Healthcare Relationship Closer (premium — requires qualification)</option>
+              <option value="canvasser">Community Canvasser / Lead Generator</option>
+              <option value="team_lead">Sales Team Lead (requires prior approval)</option>
+              <option value="regional_manager">Regional Sales Manager (requires prior approval)</option>
+            </select>
+            <div class="field-error" id="err_intake_role">Select your assigned role</div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Products Authorized to Sell <span class="req">*</span></label>
+            <div id="prefill_products_notice" style="display:none" class="prefill-notice">✅ Pre-authorized by Chase Turnquest</div>
+            <div class="checkbox-group" id="products_group">
+              <label class="checkbox-item" onclick="toggleCheck(this, 'prod_b2b')">
+                <input type="checkbox" id="prod_b2b">
+                <div class="checkbox-custom"></div>
+                <div class="checkbox-text">
+                  <div class="checkbox-label">CareCircle Network Partner Memberships (B2B)</div>
+                </div>
+              </label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'prod_present_single')">
+                <input type="checkbox" id="prod_present_single">
+                <div class="checkbox-custom"></div>
+                <div class="checkbox-text">
+                  <div class="checkbox-label">CareCircle Present — Single Services</div>
+                </div>
+              </label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'prod_guardian')">
+                <input type="checkbox" id="prod_guardian">
+                <div class="checkbox-custom"></div>
+                <div class="checkbox-text">
+                  <div class="checkbox-label">CareCircle Present — Guardian Plans</div>
+                  <div class="checkbox-desc">Requires 2 confirmed Network Partner closes first</div>
+                </div>
+              </label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'prod_assisting_seniors')">
+                <input type="checkbox" id="prod_assisting_seniors">
+                <div class="checkbox-custom"></div>
+                <div class="checkbox-text">
+                  <div class="checkbox-label">Assisting Seniors referrals (consult/meeting booking only)</div>
+                </div>
+              </label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'prod_ai_saas')">
+                <input type="checkbox" id="prod_ai_saas">
+                <div class="checkbox-custom"></div>
+                <div class="checkbox-text">
+                  <div class="checkbox-label">AI Care Intelligence SaaS</div>
+                  <div class="checkbox-desc">Requires additional training — not authorized until complete</div>
+                </div>
+              </label>
+            </div>
+            <div class="field-error" id="err_products">Select at least one authorized product</div>
+          </div>
+
+          <!-- SECTION 4: Background -->
+          <div class="section-divider"><span>Section 4 — Background & Experience</span></div>
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Prior Experience (check all that apply)</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_homecare')"><input type="checkbox" id="exp_homecare"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Home care / non-medical senior care</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_alf')"><input type="checkbox" id="exp_alf"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Assisted living / memory care operations or sales</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_nursing')"><input type="checkbox" id="exp_nursing"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Nursing home / skilled nursing sales or management</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_hospice')"><input type="checkbox" id="exp_hospice"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Hospice sales or operations</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_pharma')"><input type="checkbox" id="exp_pharma"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Medical device or pharmaceutical sales</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_discharge')"><input type="checkbox" id="exp_discharge"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Hospital discharge planning or social work</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_placement')"><input type="checkbox" id="exp_placement"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Senior placement / referral services (A Place for Mom, etc.)</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_directsales')"><input type="checkbox" id="exp_directsales"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Direct sales / B2B sales (non-healthcare)</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'exp_none')"><input type="checkbox" id="exp_none"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">No prior healthcare or sales experience</div></div></label>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Years of Sales Experience (any industry) <span class="req">*</span></label>
+              <input type="text" class="form-input" id="intake_sales_yrs" placeholder="e.g. 3 years">
+              <div class="field-error" id="err_intake_sales_yrs">Required</div>
+            </div>
+          </div>
+          <div class="form-group" style="margin:12px 0">
+            <label class="form-label">Most Relevant Experience for This Role <span class="req">*</span></label>
+            <textarea class="form-input" id="intake_experience" placeholder="Briefly describe your background and why it's relevant..."></textarea>
+            <div class="field-error" id="err_intake_experience">Required</div>
+          </div>
+
+          <!-- SECTION 5: Logistics -->
+          <div class="section-divider"><span>Section 5 — Logistics</span></div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Reliable Personal Transportation? <span class="req">*</span></label>
+              <div class="radio-group">
+                <label class="radio-item" onclick="selectRadio(this, 'has_transport', 'yes')"><input type="radio" name="has_transport" value="yes"><div class="radio-dot"></div><div class="radio-label">Yes</div></label>
+                <label class="radio-item" onclick="selectRadio(this, 'has_transport', 'no')"><input type="radio" name="has_transport" value="no"><div class="radio-dot"></div><div class="radio-label">No</div></label>
+              </div>
+              <div class="field-error" id="err_has_transport">Required</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Vehicle Type (if applicable)</label>
+              <input type="text" class="form-input" id="intake_vehicle" placeholder="e.g. 2020 Honda Civic">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Primary Availability <span class="req">*</span></label>
+              <select class="form-select" id="intake_availability">
+                <option value="">Select availability...</option>
+                <option value="fulltime">Full-time (40+ hrs/week dedicated to CareCircle)</option>
+                <option value="parttime">Part-time (20–39 hrs/week)</option>
+                <option value="side">Side/flex (under 20 hrs/week)</option>
+              </select>
+              <div class="field-error" id="err_intake_availability">Required</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Preferred Working Hours <span class="req">*</span></label>
+              <select class="form-select" id="intake_hours">
+                <option value="">Select hours preference...</option>
+                <option value="standard">Standard business hours (8am–5pm)</option>
+                <option value="extended">Extended hours (willing to call evenings/weekends)</option>
+                <option value="flexible">Flexible / no preference</option>
+              </select>
+              <div class="field-error" id="err_intake_hours">Required</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Primary Work Method <span class="req">*</span></label>
+              <select class="form-select" id="intake_workmethod">
+                <option value="">Select work method...</option>
+                <option value="field">Field / in-person visits</option>
+                <option value="phone">Phone / remote</option>
+                <option value="both">Both equally</option>
+              </select>
+              <div class="field-error" id="err_intake_workmethod">Required</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Geographic Area You're Comfortable Working <span class="req">*</span></label>
+              <input type="text" class="form-input" id="intake_geo" placeholder="e.g. Pensacola, Escambia County, Gulf Coast">
+              <div class="field-error" id="err_intake_geo">Required</div>
+            </div>
+          </div>
+
+          <!-- SECTION 6: Equipment -->
+          <div class="section-divider"><span>Section 6 — Equipment & Setup</span></div>
+          <div class="form-group" style="margin-bottom:8px">
+            <label class="form-label">Equipment Confirmed (check all you have)</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item" onclick="toggleCheck(this, 'equip_phone')"><input type="checkbox" id="equip_phone"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Smartphone with reliable data plan</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'equip_laptop')"><input type="checkbox" id="equip_laptop"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Laptop or desktop computer</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'equip_quiet')"><input type="checkbox" id="equip_quiet"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Quiet space for phone calls</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'equip_email')"><input type="checkbox" id="equip_email"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Email address checked daily</div></div></label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'equip_sheets')"><input type="checkbox" id="equip_sheets"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">Access to Google Sheets or similar spreadsheet for call logging</div></div></label>
+            </div>
+          </div>
+          <div class="form-hint warn">⚠️ If you do not have a call logging system, one will be provided to you on Day 1.</div>
+
+          <div class="nav-row">
+            <button class="btn btn-secondary" onclick="prevStep(5)">← Back</button>
+            <button class="btn btn-primary" onclick="nextStep(5)">Continue to Handbook Receipt →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 6: HANDBOOK RECEIPT ── -->
+    <div class="step-page" id="step-6">
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-header-icon">📚</div>
+          <div class="card-header-text">
+            <div class="card-title">Contractor Handbook Receipt</div>
+            <div class="card-subtitle">Confirm you have received and read the Contractor Handbook</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="doc-scroll-indicator">⬇ Key provisions of the Contractor Handbook — scroll through before confirming</div>
+          <div class="doc-scroll">
+            <div class="article-header">CareCircle Network — Contractor Handbook (Version 1.0)</div>
+            <div class="legal-note">This handbook is confidential. It is provided to active CareCircle contractors only. Do not share pricing, commission rates, internal strategy, or product positioning with prospects, clients, partner agencies, or anyone outside the contractor network. Violation is grounds for immediate termination and commission forfeiture.</div>
+
+            <div class="article-header">Section 1 — Who We Are</div>
+            <p>CareCircle Network is a senior care coordination, advocacy, and intelligence platform serving Northwest Florida. We operate under TransBid LLC and are headquartered in Pensacola, FL.</p>
+            <p><strong>CareCircle Network</strong> — a transparency and coordination platform for senior care agencies and facilities. We publish quality intelligence on providers across the Gulf Coast and connect families with vetted partners.</p>
+            <p><strong>CareCircle Present</strong> — a boutique, private-pay strategic advocacy and consulting service for families with loved ones in care facilities. We go inside facilities — unannounced — and provide written intelligence reports, advocacy, and a personalized non-pharmacological care approach. Families pay us directly. We work for families, never for facilities.</p>
+
+            <div class="article-header">Section 2 — Our Mission</div>
+            <p>CareCircle works for families. Not facilities. Every competitor in this space — A Place for Mom, Senior Helpers, Visiting Angels, and every referral network — is paid by the facility. We don't take facility money for referrals. That alignment is your competitive weapon. Use it.</p>
+
+            <div class="article-header">Section 3 — Products You Are Authorized to Sell</div>
+            <p><strong>3A. CareCircle Network Partnerships (B2B)</strong> — Selling monthly membership plans to senior care agencies, assisted living facilities, memory care communities, hospice organizations, and home care providers.</p>
+            <table>
+              <tr><th></th><th>Network Partner</th><th>Featured Partner</th></tr>
+              <tr><td>Setup Fee</td><td>$499</td><td>$999</td></tr>
+              <tr><td>Monthly</td><td>from $179/mo</td><td>from $399/mo</td></tr>
+              <tr><td>Annual</td><td>$1,790/yr</td><td>$3,990/yr</td></tr>
+            </table>
+            <p><strong>3B. CareCircle Present (B2C — Family Services)</strong> — Private pay, boutique concierge advocacy service. We do not bill Medicare. We do not accept insurance.</p>
+            <p><strong>3C. Assisting Seniors LLC (Warm Referral — Not a Direct Sale)</strong> — Your role is lead generation and warm handoff only. When you identify a family who needs in-home care, book them a consult with Charles Lillo directly.</p>
+
+            <div class="article-header">Section 4 — Pricing Rules</div>
+            <p>1. Always say "starting at" or "from" on Guardian plans. 2. Never quote a ceiling publicly. 3. Never discount Guardian plans without authorization. 4. Network Partner setup fees can be reduced or waived — use to close, not as a first offer. 5. Never advertise internal commission rates. 6. CareCircle Present is never described as home care. 7. Do not make regulatory or compliance claims.</p>
+
+            <div class="article-header">Section 6 — What You Cannot Do (Termination Offenses)</div>
+            <p>Misrepresenting any product, price, or service. Quoting commission rates to anyone outside the contractor network. Sharing internal pricing strategy, sales materials, or operational documents externally. Making regulatory or compliance claims not specifically authorized. Promising services, timelines, or outcomes CareCircle has not committed to in writing. Soliciting CareCircle clients on behalf of a competing service during or within 12 months after your contract period. Submitting false activity reports.</p>
+
+            <div class="article-header">Section 7 — How to Get Help</div>
+            <p><strong>Chase Turnquest — Founder.</strong> Text preferred over call for non-urgent items. If a prospect is live and you need backup, call. If you're in a conversation and you don't know the answer — stop. Do not guess. Do not make something up. Say: "That's a great question and I want to make sure I give you the right answer — let me get that confirmed and follow up with you within the hour." Then contact Chase immediately.</p>
+
+            <div class="article-header">Section 8 — Territory & Market</div>
+            <p><strong>Primary territory:</strong> Pensacola / Escambia County, Santa Rosa County, Okaloosa County, Gulf Coast corridor. Territory is not exclusive. First rep to a signed agreement wins the commission.</p>
+            <p><strong>Target facility types for B2B:</strong> Non-medical home care agencies, assisted living facilities, memory care communities, skilled nursing facilities, hospice organizations, adult day care centers.</p>
+            <p><strong>Target family profiles for B2C:</strong> Adult children (40s–60s) with a parent in a Pensacola-area facility. Families where the resident has been labeled "behavioral," "combative," or "at risk." Out-of-state family members who cannot visit regularly. Veteran families. Families going through the placement process.</p>
+          </div>
+
+          <div class="signature-box" style="margin-top:20px">
+            <div class="signature-title">Handbook Receipt Confirmation</div>
+            <div class="checkbox-group">
+              <label class="checkbox-item" onclick="toggleCheck(this, 'handbook_received')">
+                <input type="checkbox" id="handbook_received">
+                <div class="checkbox-custom"></div>
+                <div class="checkbox-text">
+                  <div class="checkbox-label">I confirm that I have received and read the CareCircle Network Independent Contractor Handbook (Version 1.0) in its entirety.</div>
+                </div>
+              </label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'handbook_understand')">
+                <input type="checkbox" id="handbook_understand">
+                <div class="checkbox-custom"></div>
+                <div class="checkbox-text">
+                  <div class="checkbox-label">I understand the conduct standards, pricing rules, territory guidelines, and termination offenses described in the Handbook.</div>
+                </div>
+              </label>
+              <label class="checkbox-item" onclick="toggleCheck(this, 'handbook_confidential')">
+                <input type="checkbox" id="handbook_confidential">
+                <div class="checkbox-custom"></div>
+                <div class="checkbox-text">
+                  <div class="checkbox-label">I understand the Handbook is confidential and I will not share it, or any internal commission rates, pricing strategy, or sales materials, with anyone outside the CareCircle contractor network.</div>
+                </div>
+              </label>
+            </div>
+            <div class="field-error" id="err_handbook" style="margin-top:8px">All three confirmations required</div>
+          </div>
+
+          <div class="nav-row">
+            <button class="btn btn-secondary" onclick="prevStep(6)">← Back</button>
+            <button class="btn btn-primary" onclick="nextStep(6)">Continue to Final Review →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 7: FINAL REVIEW + SUBMIT ── -->
+    <div class="step-page" id="step-7">
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-header-icon">✅</div>
+          <div class="card-header-text">
+            <div class="card-title">Final Review & Onboarding Acknowledgments</div>
+            <div class="card-subtitle">Review your submission summary and confirm all acknowledgments</div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="confirm-summary">
+            <h3>Submission Summary</h3>
+            <div class="confirm-row"><span class="confirm-key">Contractor Name</span><span class="confirm-val" id="review_name">—</span></div>
+            <div class="confirm-row"><span class="confirm-key">Email</span><span class="confirm-val" id="review_email">—</span></div>
+            <div class="confirm-row"><span class="confirm-key">Assigned Role</span><span class="confirm-val" id="review_role">—</span></div>
+            <div class="confirm-row"><span class="confirm-key">ICA Signed</span><span class="confirm-val done" id="review_ica">✓ Signed</span></div>
+            <div class="confirm-row"><span class="confirm-key">Commission Schedule Acknowledged</span><span class="confirm-val done" id="review_exhibit">✓ Acknowledged</span></div>
+            <div class="confirm-row"><span class="confirm-key">W-9 Information</span><span class="confirm-val done" id="review_w9">✓ Submitted</span></div>
+            <div class="confirm-row"><span class="confirm-key">Banking Information</span><span class="confirm-val done" id="review_banking">✓ Submitted</span></div>
+            <div class="confirm-row"><span class="confirm-key">Intake Form</span><span class="confirm-val done">✓ Completed</span></div>
+            <div class="confirm-row"><span class="confirm-key">Handbook Receipt</span><span class="confirm-val done">✓ Confirmed</span></div>
+            <div class="confirm-row"><span class="confirm-key">Submission Timestamp</span><span class="confirm-val" id="review_ts">—</span></div>
+          </div>
+
+          <div class="section-divider"><span>Final Acknowledgments — Section 8</span></div>
+          <div class="alert info">
+            <div class="alert-icon">📋</div>
+            <div>By confirming the acknowledgments below, you are making all representations contained in the CareCircle Network New Contractor Intake Form, Section 8.</div>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_handbook')"><input type="checkbox" id="ack_handbook"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I have read and understood the Contractor Handbook in its entirety.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_commission')"><input type="checkbox" id="ack_commission"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I have read and understood Commission Schedule Exhibit A.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_commission_only')"><input type="checkbox" id="ack_commission_only"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand my compensation is 100% commission-based with no guaranteed minimum.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_clawback')"><input type="checkbox" id="ack_clawback"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand the clawback policy and activity reporting requirements.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_confidentiality')"><input type="checkbox" id="ack_confidentiality"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand the confidentiality rules, including that I may not share commission rates with any outside party.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_private_pay')"><input type="checkbox" id="ack_private_pay"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand that CareCircle Present is a private-pay service and I will never represent it as billable to Medicare or insurance.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_assisting_seniors')"><input type="checkbox" id="ack_assisting_seniors"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand that my role with Assisting Seniors is referral/consult booking only — not direct selling — until a formal compensation agreement is in place.</div></div></label>
+            <label class="checkbox-item" onclick="toggleCheck(this, 'ack_conduct')"><input type="checkbox" id="ack_conduct"><div class="checkbox-custom"></div><div class="checkbox-text"><div class="checkbox-label">I understand the conduct standards and that certain violations result in immediate termination.</div></div></label>
+          </div>
+          <div class="field-error" id="err_acks" style="margin-top:8px">All acknowledgments required before submitting</div>
+
+          <div class="nav-row">
+            <button class="btn btn-secondary" onclick="prevStep(7)">← Back</button>
+            <button class="btn btn-gold" onclick="submitOnboarding()" id="submitBtn">Submit Onboarding →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CONFIRMATION ── -->
+    <div class="step-page" id="step-confirm">
+      <div class="section-card">
+        <div class="card-body">
+          <div class="confirm-hero">
+            <div class="confirm-icon">🎉</div>
+            <div class="confirm-title">Onboarding Complete</div>
+            <div class="confirm-sub">Your submission has been recorded. Chase Turnquest will review your file and be in touch to confirm your start date.</div>
+          </div>
+          <div class="confirm-summary">
+            <h3>What Was Submitted</h3>
+            <div class="confirm-row"><span class="confirm-key">Contractor</span><span class="confirm-val" id="final_name">—</span></div>
+            <div class="confirm-row"><span class="confirm-key">Session ID</span><span class="confirm-val" id="final_session">—</span></div>
+            <div class="confirm-row"><span class="confirm-key">Submitted At</span><span class="confirm-val" id="final_ts">—</span></div>
+            <div class="confirm-row"><span class="confirm-key">Independent Contractor Agreement</span><span class="confirm-val done">✓ Signed Electronically</span></div>
+            <div class="confirm-row"><span class="confirm-key">Commission Schedule Exhibit A</span><span class="confirm-val done">✓ Acknowledged</span></div>
+            <div class="confirm-row"><span class="confirm-key">W-9 Tax Information</span><span class="confirm-val done">✓ Submitted (Encrypted)</span></div>
+            <div class="confirm-row"><span class="confirm-key">Banking / Payment Information</span><span class="confirm-val done">✓ Submitted (Encrypted)</span></div>
+            <div class="confirm-row"><span class="confirm-key">New Contractor Intake Form</span><span class="confirm-val done">✓ Completed</span></div>
+            <div class="confirm-row"><span class="confirm-key">Handbook Receipt</span><span class="confirm-val done">✓ Confirmed</span></div>
+            <div class="confirm-row"><span class="confirm-key">Final Acknowledgments</span><span class="confirm-val done">✓ All 8 Confirmed</span></div>
+          </div>
+          <div class="alert success" style="margin-top:20px">
+            <div class="alert-icon">✅</div>
+            <div><strong>Your record is complete.</strong> No back-and-forth needed. Chase has received everything required to activate your account and issue your first commission statement. Your Day 2 knowledge check and role-play session will be scheduled separately.</div>
+          </div>
+          <div class="confirm-actions">
+            <button class="btn btn-secondary" onclick="window.print()">🖨 Print Record</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /portal-body -->
+</div><!-- /view-onboarding -->
+
+
+<!-- ════════════════════════════════════════
+     ADMIN VIEW
+════════════════════════════════════════ -->
+<div id="view-admin" class="view">
+  <div class="admin-wrap">
+
+    <!-- PRE-FILL PANEL -->
+    <div class="prefill-panel">
+      <div class="prefill-panel-header">
+        <span>🔧</span>
+        <h3>Pre-Fill Contractor Link</h3>
+      </div>
+      <div class="prefill-panel-body">
+        <div class="alert info" style="margin-bottom:16px">
+          <div class="alert-icon">ℹ️</div>
+          <div>Pre-fill the contractor's name, role, and authorized products below. When you click "Generate Link," share the page URL — the contractor's onboarding will be pre-personalized when they open it.</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Contractor Full Name</label>
+            <input type="text" class="form-input" id="pf_name" placeholder="Full legal name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Assigned Role</label>
+            <select class="form-select" id="pf_role">
+              <option value="">Select role...</option>
+              <option value="territory_field">Territory Field Representative (B2B)</option>
+              <option value="assisting_seniors_bdr">Assisting Seniors BDR</option>
+              <option value="family_outreach">Family Outreach Representative (B2C)</option>
+              <option value="relationship_closer">Healthcare Relationship Closer</option>
+              <option value="canvasser">Community Canvasser / Lead Generator</option>
+              <option value="team_lead">Sales Team Lead</option>
+              <option value="regional_manager">Regional Sales Manager</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Authorized Products</label>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="pf_prod_b2b"> B2B Memberships</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="pf_prod_single"> Present Single Services</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="pf_prod_guardian"> Guardian Plans</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="pf_prod_as"> Assisting Seniors</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="pf_prod_ai"> AI Care Intelligence</label>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-sage" onclick="applyPrefill()" style="margin-top:8px">⚡ Apply Pre-fill & Go to Onboarding</button>
+      </div>
+    </div>
+
+    <!-- SUBMISSIONS TABLE -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+      <h2 style="font-family:'DM Serif Display',serif; font-size:22px">Submitted Onboarding Records</h2>
+      <button class="btn btn-sm btn-danger" onclick="clearAllRecords()">🗑 Clear All</button>
+    </div>
+
+    <div class="admin-controls">
+      <div class="admin-search">
+        <input type="text" class="form-input" id="adminSearch" placeholder="Search by name, role, or status..." oninput="renderTable()">
+      </div>
+      <select class="form-select" style="width:160px" id="statusFilter" onchange="renderTable()">
+        <option value="">All Status</option>
+        <option value="complete">Complete</option>
+        <option value="pending">Pending</option>
+      </select>
+    </div>
+
+    <div id="adminTableWrap">
+      <div class="no-records">
+        <div class="no-icon">📭</div>
+        No submissions yet. Share the onboarding link with a contractor to get started.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     COMMISSION MATRIX VIEW
+════════════════════════════════════════ -->
+<div id="view-matrix" class="view">
+  <div class="matrix-wrap">
+    <div class="matrix-intro">Sales Commission Pricing Matrix</div>
+    <div class="matrix-sub">All tiers, rates, bonuses, and earnings scenarios — CareCircle Network</div>
+
+    <!-- TIER CARDS -->
+    <div class="tier-grid">
+      <div class="tier-card silver">
+        <div class="tier-head">
+          <div class="tier-name">⚪ Silver</div>
+          <div class="tier-thresh">Default — Months 1–3 or below Gold threshold</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-rate-row"><span class="rate-label">Network/Featured Setup</span><span class="rate-val">50%</span></div>
+          <div class="tier-rate-row"><span class="rate-label">Network/Featured Recurring</span><span class="rate-val">35%</span></div>
+          <div class="tier-rate-row"><span class="rate-label">CareCircle Present</span><span class="rate-val">30%</span></div>
+          <div class="tier-rate-row"><span class="rate-label">Canvasser Lead Gen</span><span class="rate-val">Flat</span></div>
+          <div style="margin-top:12px; font-size:12px; color:var(--text-muted)">Threshold: Starting tier for all new contractors</div>
+        </div>
+      </div>
+      <div class="tier-card gold">
+        <div class="tier-head">
+          <div class="tier-name">🥇 Gold</div>
+          <div class="tier-thresh">5+ active accounts OR $1,500+ MRC</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-rate-row"><span class="rate-label">Network/Featured Setup</span><span class="rate-val">55%</span></div>
+          <div class="tier-rate-row"><span class="rate-label">Network/Featured Recurring</span><span class="rate-val">40%</span></div>
+          <div class="tier-rate-row"><span class="rate-label">CareCircle Present</span><span class="rate-val">35%</span></div>
+          <div class="tier-rate-row"><span class="rate-label">Canvasser Lead Gen</span><span class="rate-val">Flat</span></div>
+          <div style="margin-top:12px; font-size:12px; color:var(--text-muted)">Evaluated monthly. No grandfathering on tier decay.</div>
+        </div>
+      </div>
+      <div class="tier-card elite">
+        <div class="tier-head">
+          <div class="tier-name">💎 Elite</div>
+          <div class="tier-thresh">10+ active accounts OR $3,500+ MRC</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-rate-row"><span class="rate-label">Network/Featured Setup</span><span class="rate-val">60%</span></div>
+          <div class="tier-rate-row"><span class="rate-label">Network/Featured Recurring</span><span class="rate-val">45%</span></div>
+          <div class="tier-rate-row"><span class="rate-label">CareCircle Present</span><span class="rate-val">40%</span></div>
+          <div class="tier-rate-row"><span class="rate-label">Canvasser Lead Gen</span><span class="rate-val">Flat</span></div>
+          <div style="margin-top:12px; font-size:12px; color:var(--text-muted)">Elite Status Lock: $15K annual commissions → 6 months frozen Elite rates</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EARNINGS CALCULATOR -->
+    <div class="earnings-calc">
+      <h3>💰 Monthly Earnings Calculator</h3>
+      <div class="calc-grid">
+        <div class="calc-input-wrap">
+          <label>Tier</label>
+          <select class="calc-input" id="calc_tier" onchange="calcEarnings()">
+            <option value="silver">Silver</option>
+            <option value="gold">Gold</option>
+            <option value="elite">Elite</option>
+            <option value="rc">Relationship Closer</option>
+          </select>
+        </div>
+        <div class="calc-input-wrap">
+          <label>Network Partners (active accounts)</label>
+          <input type="number" class="calc-input" id="calc_np" value="0" min="0" oninput="calcEarnings()">
+        </div>
+        <div class="calc-input-wrap">
+          <label>Featured Partners (active accounts)</label>
+          <input type="number" class="calc-input" id="calc_fp" value="0" min="0" oninput="calcEarnings()">
+        </div>
+        <div class="calc-input-wrap">
+          <label>Guardian Essential plans</label>
+          <input type="number" class="calc-input" id="calc_ge" value="0" min="0" oninput="calcEarnings()">
+        </div>
+        <div class="calc-input-wrap">
+          <label>Guardian plans</label>
+          <input type="number" class="calc-input" id="calc_g" value="0" min="0" oninput="calcEarnings()">
+        </div>
+        <div class="calc-input-wrap">
+          <label>Guardian Elite plans</label>
+          <input type="number" class="calc-input" id="calc_gelite" value="0" min="0" oninput="calcEarnings()">
+        </div>
+        <div class="calc-input-wrap">
+          <label>New setup deals this month</label>
+          <input type="number" class="calc-input" id="calc_setups" value="0" min="0" oninput="calcEarnings()">
+        </div>
+        <div class="calc-input-wrap">
+          <label>Setup mix: Featured Partners (of new)</label>
+          <input type="number" class="calc-input" id="calc_fp_new" value="0" min="0" oninput="calcEarnings()">
+        </div>
+      </div>
+      <div class="calc-results" id="calcResults">
+        <div class="calc-result-row"><span>Network Partner recurring</span><span class="val" id="cr_np">$0</span></div>
+        <div class="calc-result-row"><span>Featured Partner recurring</span><span class="val" id="cr_fp">$0</span></div>
+        <div class="calc-result-row"><span>Guardian recurring (all plans)</span><span class="val" id="cr_guardian">$0</span></div>
+        <div class="calc-result-row"><span>Setup commissions</span><span class="val" id="cr_setup">$0</span></div>
+        <div class="calc-result-row"><span>Volume bonus (if applicable)</span><span class="val" id="cr_bonus">$0</span></div>
+        <div class="calc-result-row" style="font-weight:700"><span>Estimated Monthly Total</span><span class="val" id="cr_total">$0</span></div>
+      </div>
+    </div>
+
+    <!-- FULL RATE TABLE -->
+    <div class="matrix-section">
+      <div class="matrix-section-head">
+        <span>📊</span>
+        <h3>Complete Rate Table — All Products × All Tiers</h3>
+      </div>
+      <div class="matrix-section-body">
+        <table class="matrix-table">
+          <thead>
+            <tr><th>Product</th><th>Customer Price</th><th>⚪ Silver</th><th>🥇 Gold</th><th>💎 Elite</th><th>🌟 Rel. Closer</th></tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="6" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">B2B — Setup Commissions (one-time, on cleared payment)</td></tr>
+            <tr>
+              <td>Network Partner Setup ($499)</td><td>$499</td>
+              <td class="tier-s">$249.50 <small style="color:var(--text-muted)">(50%)</small></td>
+              <td class="tier-g">$274.45 <small style="color:var(--text-muted)">(55%)</small></td>
+              <td class="tier-e">$299.40 <small style="color:var(--text-muted)">(60%)</small></td>
+              <td style="color:var(--gold);font-weight:700">$299.40 <small>(60%)</small></td>
+            </tr>
+            <tr>
+              <td>Featured Partner Setup ($999)</td><td>$999</td>
+              <td class="tier-s">$499.50 <small style="color:var(--text-muted)">(50%)</small></td>
+              <td class="tier-g">$549.45 <small style="color:var(--text-muted)">(55%)</small></td>
+              <td class="tier-e">$599.40 <small style="color:var(--text-muted)">(60%)</small></td>
+              <td style="color:var(--gold);font-weight:700">$649.35 <small>(65%)</small></td>
+            </tr>
+            <tr><td colspan="6" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">B2B — Monthly Recurring</td></tr>
+            <tr>
+              <td>Network Partner Monthly ($179)</td><td>$179/mo</td>
+              <td class="tier-s">$62.65 <small style="color:var(--text-muted)">(35%)</small></td>
+              <td class="tier-g">$71.60 <small style="color:var(--text-muted)">(40%)</small></td>
+              <td class="tier-e">$80.55 <small style="color:var(--text-muted)">(45%)</small></td>
+              <td style="color:var(--gold);font-weight:700">$80.55 <small>(45%)</small></td>
+            </tr>
+            <tr>
+              <td>Featured Partner Monthly ($399)</td><td>$399/mo</td>
+              <td class="tier-s">$139.65 <small style="color:var(--text-muted)">(35%)</small></td>
+              <td class="tier-g">$159.60 <small style="color:var(--text-muted)">(40%)</small></td>
+              <td class="tier-e">$179.55 <small style="color:var(--text-muted)">(45%)</small></td>
+              <td style="color:var(--gold);font-weight:700">$199.50 <small>(50%)</small></td>
+            </tr>
+            <tr><td colspan="6" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">B2B — Annual Plans (setup + monthly recurring)</td></tr>
+            <tr>
+              <td>NP Annual Setup</td><td>$1,790/yr</td>
+              <td class="tier-s">$249.50 setup + $52.21/mo</td>
+              <td class="tier-g">$274.45 setup + $59.67/mo</td>
+              <td class="tier-e">$299.40 setup + $67.13/mo</td>
+              <td style="color:var(--gold);font-weight:700">$299.40 + $67.13/mo</td>
+            </tr>
+            <tr>
+              <td>FP Annual Setup</td><td>$3,990/yr</td>
+              <td class="tier-s">$499.50 setup + $116.38/mo</td>
+              <td class="tier-g">$549.45 setup + $133.00/mo</td>
+              <td class="tier-e">$599.40 setup + $149.63/mo</td>
+              <td style="color:var(--gold);font-weight:700">$649.35 + $166.25/mo</td>
+            </tr>
+            <tr><td colspan="6" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">B2C — CareCircle Present Single Services</td></tr>
+            <tr>
+              <td>Pre-Placement Assessment (from $295)</td><td>from $295</td>
+              <td class="tier-s">from $88.50 <small>(30%)</small></td>
+              <td class="tier-g">from $103.25 <small>(35%)</small></td>
+              <td class="tier-e">from $118.00 <small>(40%)</small></td>
+              <td style="color:var(--gold);font-weight:700">from $118.00 <small>(40%)</small></td>
+            </tr>
+            <tr>
+              <td>Intelligence Visit (from $175)</td><td>from $175</td>
+              <td class="tier-s">from $52.50 <small>(30%)</small></td>
+              <td class="tier-g">from $61.25 <small>(35%)</small></td>
+              <td class="tier-e">from $70.00 <small>(40%)</small></td>
+              <td style="color:var(--gold);font-weight:700">from $70.00 <small>(40%)</small></td>
+            </tr>
+            <tr>
+              <td>Overnight / Evening Visit (from $250)</td><td>from $250</td>
+              <td class="tier-s">from $75.00 <small>(30%)</small></td>
+              <td class="tier-g">from $87.50 <small>(35%)</small></td>
+              <td class="tier-e">from $100.00 <small>(40%)</small></td>
+              <td style="color:var(--gold);font-weight:700">from $100.00 <small>(40%)</small></td>
+            </tr>
+            <tr><td colspan="6" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">B2C — Guardian Plan Monthly Retainers (floor prices — actual set by Chase)</td></tr>
+            <tr>
+              <td>Guardian Essential (from $799/mo)</td><td>from $799/mo</td>
+              <td class="tier-s">from $239.70/mo <small>(30%)</small></td>
+              <td class="tier-g">from $279.65/mo <small>(35%)</small></td>
+              <td class="tier-e">from $319.60/mo <small>(40%)</small></td>
+              <td style="color:var(--gold);font-weight:700">from $319.60/mo <small>(40%)</small></td>
+            </tr>
+            <tr>
+              <td>Guardian (from $1,500/mo)</td><td>from $1,500/mo</td>
+              <td class="tier-s">from $450.00/mo <small>(30%)</small></td>
+              <td class="tier-g">from $525.00/mo <small>(35%)</small></td>
+              <td class="tier-e">from $600.00/mo <small>(40%)</small></td>
+              <td style="color:var(--gold);font-weight:700">from $600.00/mo <small>(40%)</small></td>
+            </tr>
+            <tr>
+              <td>Guardian Elite (from $2,500/mo)</td><td>from $2,500/mo</td>
+              <td class="tier-s">from $750.00/mo <small>(30%)</small></td>
+              <td class="tier-g">from $875.00/mo <small>(35%)</small></td>
+              <td class="tier-e">from $1,000.00/mo <small>(40%)</small></td>
+              <td style="color:var(--gold);font-weight:700">from $1,000.00/mo <small>(40%)</small></td>
+            </tr>
+            <tr><td colspan="6" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">Canvasser / Lead Gen — Flat Rates (all tiers)</td></tr>
+            <tr><td>Qualified Family Lead</td><td>—</td><td colspan="4">$15 flat</td></tr>
+            <tr><td>Family Lead that Closes</td><td>—</td><td colspan="4">+$50 bonus</td></tr>
+            <tr><td>Qualified Agency Lead</td><td>—</td><td colspan="4">$25 flat</td></tr>
+            <tr><td>Agency Lead → NP/FP Close</td><td>—</td><td colspan="4">+$100 bonus</td></tr>
+            <tr><td>Flyer Placement (photo proof)</td><td>—</td><td colspan="4">$5/location</td></tr>
+            <tr><td>Event Table — Half Day</td><td>—</td><td colspan="4">$75 flat</td></tr>
+            <tr><td>Event Table — Full Day</td><td>—</td><td colspan="4">$125 flat</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BONUS TABLE -->
+    <div class="matrix-section">
+      <div class="matrix-section-head">
+        <span>🏆</span>
+        <h3>Bonus Structures</h3>
+      </div>
+      <div class="matrix-section-body">
+        <table class="matrix-table">
+          <thead>
+            <tr><th>Category</th><th>Milestone</th><th>Payout</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="4" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">Fast-Start (First 30 Days Only — highest tier paid, no stacking)</td></tr>
+            <tr><td>Fast-Start</td><td>3 paid deals in first 30 days</td><td class="highlight">$250</td><td>—</td></tr>
+            <tr><td>Fast-Start</td><td>5 paid deals in first 30 days</td><td class="highlight">$500</td><td>—</td></tr>
+            <tr><td>Fast-Start</td><td>8+ paid deals in first 30 days</td><td class="highlight">$1,000</td><td>—</td></tr>
+            <tr><td>Fast-Start</td><td>First Featured Partner closed (any month)</td><td class="highlight">$150</td><td>One-time</td></tr>
+            <tr><td colspan="4" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">Monthly Volume (highest tier paid per month)</td></tr>
+            <tr><td>Volume</td><td>3+ new closed deals in a month</td><td class="highlight">$200</td><td>—</td></tr>
+            <tr><td>Volume</td><td>6+ new closed deals in a month</td><td class="highlight">$500</td><td>—</td></tr>
+            <tr><td>Volume</td><td>10+ new closed deals in a month</td><td class="highlight">$1,000</td><td>—</td></tr>
+            <tr><td>Full Stack</td><td>All 3 revenue lines in one month</td><td class="highlight">$350</td><td>Stackable with volume</td></tr>
+            <tr><td>Conversion</td><td>Monthly → Annual conversion</td><td class="highlight">$100</td><td>Per account converted</td></tr>
+            <tr><td colspan="4" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">Specialty Bonuses (Stackable)</td></tr>
+            <tr><td>Specialty</td><td>Veteran or men's care Guardian plan closed</td><td class="highlight">$75/family</td><td>Stackable</td></tr>
+            <tr><td>Specialty</td><td>Behavioral/combative-labeled resident Guardian</td><td class="highlight">$100/family</td><td>Stackable</td></tr>
+            <tr><td>Streak</td><td>2+ new deals for 3 consecutive months</td><td class="highlight">$250/mo</td><td>Starts month 3</td></tr>
+            <tr><td colspan="4" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">Retention Bonuses</td></tr>
+            <tr><td>Retention</td><td>Network Partner active at 90 days</td><td class="highlight">$50</td><td>—</td></tr>
+            <tr><td>Retention</td><td>Featured Partner active at 90 days</td><td class="highlight">$150</td><td>—</td></tr>
+            <tr><td>Retention</td><td>Network Partner — annual plan signed</td><td class="highlight">$100</td><td>—</td></tr>
+            <tr><td>Retention</td><td>Featured Partner — annual plan signed</td><td class="highlight">$300</td><td>—</td></tr>
+            <tr><td>Retention</td><td>Guardian plan family active at 90 days</td><td class="highlight">$100</td><td>—</td></tr>
+            <tr><td colspan="4" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">Quarterly & Annual</td></tr>
+            <tr><td>Quarterly</td><td>MRC grew 20%+ vs prior quarter</td><td class="highlight">$500</td><td>—</td></tr>
+            <tr><td>Quarterly</td><td>Highest MRC of any rep in the quarter</td><td class="gold-text">$1,000</td><td>—</td></tr>
+            <tr><td>Quarterly</td><td>Zero cancellations for full quarter</td><td class="highlight">$400</td><td>—</td></tr>
+            <tr><td>Annual</td><td>$15,000+ total commissions in calendar year</td><td class="gold-text">$2,500 + Elite Lock</td><td>6 months frozen Elite rates</td></tr>
+            <tr><td>Annual</td><td>Any month with $5,000+ total commission</td><td class="gold-text">$1,000</td><td>One-time recognition</td></tr>
+            <tr><td colspan="4" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">Override Structures (Management)</td></tr>
+            <tr><td>Team Lead (2–5 reps)</td><td>Rep setup commissions earned</td><td class="highlight">8% override</td><td>+2% if you recruited them</td></tr>
+            <tr><td>Team Lead (2–5 reps)</td><td>Rep monthly recurring earned</td><td class="highlight">5% override</td><td>+2% if you recruited them</td></tr>
+            <tr><td>Regional Manager</td><td>Direct Team Lead commissions (L1)</td><td class="highlight">6% override</td><td>—</td></tr>
+            <tr><td>Regional Manager</td><td>Team Lead's reps (L2)</td><td class="highlight">3% override</td><td>—</td></tr>
+            <tr><td colspan="4" style="background:#F0EFEB; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:8px 16px; color:var(--text-muted)">Recruiting Commissions (Any Contractor)</td></tr>
+            <tr><td>Recruiting</td><td>Recruit signs agreement + submits W-9</td><td class="highlight">$25</td><td>—</td></tr>
+            <tr><td>Recruiting</td><td>Recruit closes first paid deal</td><td class="highlight">$75</td><td>—</td></tr>
+            <tr><td>Recruiting</td><td>Recruit closes 3+ deals in first 60 days</td><td class="highlight">+$100</td><td>Bonus</td></tr>
+            <tr><td>Recruiting</td><td>Override on recruit's commissions</td><td class="highlight">3%</td><td>First 90 days only</td></tr>
+            <tr><td>Recruiting</td><td>Recruit earns Team Lead status</td><td class="gold-text">$200</td><td>One-time</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     ADMIN DETAIL MODAL
+════════════════════════════════════════ -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Onboarding Record</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+
+<script>
+// ════════════════════════════════════════
+// STORAGE & STATE
+// ════════════════════════════════════════
+const STORAGE_KEY = 'carecircle_onboarding_submissions';
+const SESSION_KEY = 'carecircle_session_' + Math.random().toString(36).substr(2,9);
+
+let currentStep = 1;
+const totalSteps = 7;
+let paymentMethod = 'ach';
+
+const stepLabels = [
+  'ICA Agreement',
+  'Commission Schedule',
+  'W-9 Information',
+  'Banking Info',
+  'Intake Form',
+  'Handbook',
+  'Final Review'
+];
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+function init() {
+  const sessionDisplay = SESSION_KEY.replace('carecircle_session_','');
+  document.getElementById('sessionId').textContent = 'Session: ' + sessionDisplay.toUpperCase();
+  buildProgressBar();
+  updateProgress(1);
+  setTimestamp('ica_timestamp');
+  setTimestamp('exhibit_timestamp');
+  checkUrlPrefill();
+  calcEarnings();
+  renderTable();
+}
+
+function setTimestamp(id) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = new Date().toLocaleString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+  });
+}
+
+// ════════════════════════════════════════
+// PROGRESS
+// ════════════════════════════════════════
+function buildProgressBar() {
+  const container = document.getElementById('progressSteps');
+  container.innerHTML = '';
+  stepLabels.forEach((label, i) => {
+    const num = i + 1;
+    const dot = document.createElement('div');
+    dot.className = 'step-dot';
+    dot.id = 'dot_' + num;
+    dot.textContent = num;
+
+    const labelEl = document.createElement('div');
+    labelEl.className = 'step-label';
+    labelEl.id = 'lbl_' + num;
+    labelEl.textContent = label;
+
+    const pill = document.createElement('div');
+    pill.className = 'step-pill';
+    pill.appendChild(dot);
+    pill.appendChild(labelEl);
+
+    container.appendChild(pill);
+
+    if (i < stepLabels.length - 1) {
+      const conn = document.createElement('div');
+      conn.className = 'step-connector';
+      conn.id = 'conn_' + num;
+      container.appendChild(conn);
+    }
+  });
+}
+
+function updateProgress(step) {
+  const pct = Math.round((step / (totalSteps + 1)) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressLabel').textContent = 
+    step <= totalSteps ? `Step ${step} of ${totalSteps} — ${stepLabels[step-1]}` : 'Complete';
+
+  for (let i = 1; i <= totalSteps; i++) {
+    const dot = document.getElementById('dot_' + i);
+    const lbl = document.getElementById('lbl_' + i);
+    const conn = document.getElementById('conn_' + i);
+    if (!dot) continue;
+    dot.className = 'step-dot' + (i < step ? ' done' : i === step ? ' active' : '');
+    lbl.className = 'step-label' + (i === step ? ' active' : '');
+    if (conn) conn.className = 'step-connector' + (i < step ? ' done' : '');
+    dot.textContent = i < step ? '✓' : i;
+  }
+}
+
+// ════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════
+function nextStep(fromStep) {
+  if (!validateStep(fromStep)) return;
+  document.getElementById('step-' + fromStep).classList.remove('active');
+  currentStep = fromStep + 1;
+  if (currentStep <= totalSteps) {
+    document.getElementById('step-' + currentStep).classList.add('active');
+    updateProgress(currentStep);
+    if (currentStep === 7) populateReview();
+  }
+  window.scrollTo(0, 0);
+}
+
+function prevStep(fromStep) {
+  document.getElementById('step-' + fromStep).classList.remove('active');
+  currentStep = fromStep - 1;
+  document.getElementById('step-' + currentStep).classList.add('active');
+  updateProgress(currentStep);
+  window.scrollTo(0, 0);
+}
+
+// ════════════════════════════════════════
+// VIEW SWITCHING
+// ════════════════════════════════════════
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('progressWrap').style.display = view === 'onboarding' ? 'block' : 'none';
+  if (view === 'admin') renderTable();
+  window.scrollTo(0, 0);
+}
+
+// ════════════════════════════════════════
+// FORM CONTROLS
+// ════════════════════════════════════════
+function toggleCheck(label, id) {
+  const cb = document.getElementById(id);
+  cb.checked = !cb.checked;
+  label.classList.toggle('checked', cb.checked);
+}
+
+function selectRadio(label, name, value) {
+  document.querySelectorAll(`[name="${name}"]`).forEach(r => {
+    r.closest('.radio-item').classList.remove('selected');
+  });
+  label.classList.add('selected');
+  label.querySelector('input').checked = true;
+}
+
+function switchPayment(method, tab) {
+  paymentMethod = method;
+  document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  document.querySelectorAll('.payment-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel_' + method).classList.add('active');
+}
+
+function toggleTaxId(type) {
+  document.getElementById('ssn_field').style.display = type === 'ssn' ? 'flex' : 'none';
+  document.getElementById('ein_field').style.display = type === 'ein' ? 'flex' : 'none';
+}
+
+function formatSSN(input) {
+  let v = input.value.replace(/\D/g, '');
+  if (v.length > 3) v = v.substr(0,3) + '-' + v.substr(3);
+  if (v.length > 6) v = v.substr(0,6) + '-' + v.substr(6);
+  input.value = v.substr(0, 11);
+}
+
+function formatEIN(input) {
+  let v = input.value.replace(/\D/g, '');
+  if (v.length > 2) v = v.substr(0,2) + '-' + v.substr(2);
+  input.value = v.substr(0, 10);
+}
+
+function updateSigTimestamp() {
+  const name = document.getElementById('ica_name').value;
+  if (name.trim()) setTimestamp('ica_timestamp');
+}
+
+// ════════════════════════════════════════
+// VALIDATION
+// ════════════════════════════════════════
+function showError(id, show) {
+  const el = document.getElementById('err_' + id);
+  const input = document.getElementById(id) || document.querySelector('#' + id);
+  if (el) el.style.display = show ? 'block' : 'none';
+  if (input && (input.tagName === 'INPUT' || input.tagName === 'SELECT' || input.tagName === 'TEXTAREA')) {
+    input.classList.toggle('invalid', show);
+  }
+}
+
+function validateStep(step) {
+  let valid = true;
+
+  if (step === 1) {
+    const name = document.getElementById('ica_name').value.trim();
+    const email = document.getElementById('ica_email').value.trim();
+    const agree = document.getElementById('ica_agree').checked;
+    if (!name) { showError('ica_name', true); valid = false; } else showError('ica_name', false);
+    if (!email) { showError('ica_email', true); valid = false; } else showError('ica_email', false);
+    if (!agree) { showError('ica_agree', true); valid = false; } else showError('ica_agree', false);
+    if (valid) setTimestamp('ica_timestamp');
+  }
+
+  if (step === 2) {
+    const name = document.getElementById('exhibit_name').value.trim();
+    const agree = document.getElementById('exhibit_agree').checked;
+    if (!name) { showError('exhibit_name', true); valid = false; } else showError('exhibit_name', false);
+    if (!agree) { showError('exhibit_agree', true); valid = false; } else showError('exhibit_agree', false);
+    if (valid) setTimestamp('exhibit_timestamp');
+  }
+
+  if (step === 3) {
+    const legalName = document.getElementById('w9_legal_name').value.trim();
+    const taxType = document.querySelector('[name="taxid_type"]:checked');
+    const entity = document.getElementById('w9_entity').value;
+    const address = document.getElementById('w9_address').value.trim();
+    const city = document.getElementById('w9_city').value.trim();
+    const state = document.getElementById('w9_state').value.trim();
+    const zip = document.getElementById('w9_zip').value.trim();
+    if (!legalName) { showError('w9_legal_name', true); valid = false; } else showError('w9_legal_name', false);
+    if (!taxType) { showError('taxid_type', true); valid = false; } else {
+      showError('taxid_type', false);
+      if (taxType.value === 'ssn') {
+        const ssn = document.getElementById('w9_ssn').value.trim();
+        if (!ssn) { showError('w9_ssn', true); valid = false; } else showError('w9_ssn', false);
+      } else {
+        const ein = document.getElementById('w9_ein').value.trim();
+        if (!ein) { showError('w9_ein', true); valid = false; } else showError('w9_ein', false);
+      }
+    }
+    if (!entity) { showError('w9_entity', true); valid = false; } else showError('w9_entity', false);
+    if (!address) { showError('w9_address', true); valid = false; } else showError('w9_address', false);
+    if (!city) { showError('w9_city', true); valid = false; } else showError('w9_city', false);
+    if (!state) { showError('w9_state', true); valid = false; } else showError('w9_state', false);
+    if (!zip) { showError('w9_zip', true); valid = false; } else showError('w9_zip', false);
+  }
+
+  if (step === 4) {
+    if (paymentMethod === 'ach') {
+      const bankName = document.getElementById('bank_name').value.trim();
+      const routing = document.getElementById('bank_routing').value.trim();
+      const account = document.getElementById('bank_account').value.trim();
+      const acctType = document.querySelector('[name="acct_type"]:checked');
+      if (!bankName) { showError('bank_name', true); valid = false; } else showError('bank_name', false);
+      if (!routing) { showError('bank_routing', true); valid = false; } else showError('bank_routing', false);
+      if (!account) { showError('bank_account', true); valid = false; } else showError('bank_account', false);
+      if (!acctType) { showError('acct_type', true); valid = false; } else showError('acct_type', false);
+    } else {
+      const zelle = document.getElementById('zelle_contact').value.trim();
+      if (!zelle) { showError('zelle_contact', true); valid = false; } else showError('zelle_contact', false);
+    }
+  }
+
+  if (step === 5) {
+    const fields = ['intake_legal_name','intake_phone','intake_email','intake_address','intake_emergency',
+                    'intake_role','intake_sales_yrs','intake_experience','intake_availability','intake_hours',
+                    'intake_workmethod','intake_geo'];
+    fields.forEach(f => {
+      const el = document.getElementById(f);
+      const val = el ? el.value.trim() : '';
+      if (!val) { showError(f, true); valid = false; } else showError(f, false);
+    });
+    const transport = document.querySelector('[name="has_transport"]:checked');
+    if (!transport) { showError('has_transport', true); valid = false; } else showError('has_transport', false);
+    const prods = ['prod_b2b','prod_present_single','prod_guardian','prod_assisting_seniors','prod_ai_saas'];
+    const anyProd = prods.some(p => document.getElementById(p).checked);
+    if (!anyProd) { document.getElementById('err_products').style.display = 'block'; valid = false; }
+    else document.getElementById('err_products').style.display = 'none';
+  }
+
+  if (step === 6) {
+    const h1 = document.getElementById('handbook_received').checked;
+    const h2 = document.getElementById('handbook_understand').checked;
+    const h3 = document.getElementById('handbook_confidential').checked;
+    if (!h1 || !h2 || !h3) {
+      document.getElementById('err_handbook').style.display = 'block';
+      valid = false;
+    } else {
+      document.getElementById('err_handbook').style.display = 'none';
+    }
+  }
+
+  if (step === 7) {
+    const acks = ['ack_handbook','ack_commission','ack_commission_only','ack_clawback',
+                  'ack_confidentiality','ack_private_pay','ack_assisting_seniors','ack_conduct'];
+    const allChecked = acks.every(a => document.getElementById(a).checked);
+    if (!allChecked) {
+      document.getElementById('err_acks').style.display = 'block';
+      valid = false;
+    } else {
+      document.getElementById('err_acks').style.display = 'none';
+    }
+  }
+
+  return valid;
+}
+
+// ════════════════════════════════════════
+// REVIEW POPULATION
+// ════════════════════════════════════════
+function populateReview() {
+  document.getElementById('review_name').textContent = document.getElementById('ica_name').value;
+  document.getElementById('review_email').textContent = document.getElementById('ica_email').value;
+  const roleEl = document.getElementById('intake_role');
+  document.getElementById('review_role').textContent = roleEl.options[roleEl.selectedIndex]?.text || '—';
+  document.getElementById('review_ts').textContent = new Date().toLocaleString();
+}
+
+// ════════════════════════════════════════
+// SUBMIT
+// ════════════════════════════════════════
+function submitOnboarding() {
+  if (!validateStep(7)) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  const ts = new Date().toISOString();
+  const roleEl = document.getElementById('intake_role');
+  const prods = [];
+  ['prod_b2b','prod_present_single','prod_guardian','prod_assisting_seniors','prod_ai_saas'].forEach(p => {
+    if (document.getElementById(p).checked) prods.push(p);
+  });
+
+  const record = {
+    id: 'OB-' + Date.now(),
+    session: SESSION_KEY,
+    timestamp: ts,
+    status: 'complete',
+    contractor: {
+      name: document.getElementById('ica_name').value,
+      email: document.getElementById('ica_email').value,
+      phone: document.getElementById('intake_phone').value,
+      address: document.getElementById('intake_address').value,
+      preferred_name: document.getElementById('intake_preferred_name').value,
+      emergency_contact: document.getElementById('intake_emergency').value,
+    },
+    role: roleEl.options[roleEl.selectedIndex]?.text || roleEl.value,
+    role_value: roleEl.value,
+    authorized_products: prods,
+    availability: document.getElementById('intake_availability').value,
+    work_method: document.getElementById('intake_workmethod').value,
+    geography: document.getElementById('intake_geo').value,
+    sales_years: document.getElementById('intake_sales_yrs').value,
+    experience: document.getElementById('intake_experience').value,
+    payment_method: paymentMethod,
+    bank_name: paymentMethod === 'ach' ? document.getElementById('bank_name').value : null,
+    zelle: paymentMethod === 'zelle' ? document.getElementById('zelle_contact').value : null,
+    w9_entity: document.getElementById('w9_entity').value,
+    ica_signed_at: document.getElementById('ica_timestamp').textContent,
+    exhibit_signed_at: document.getElementById('exhibit_timestamp').textContent,
+    equipment: {
+      phone: document.getElementById('equip_phone').checked,
+      laptop: document.getElementById('equip_laptop').checked,
+      quiet_space: document.getElementById('equip_quiet').checked,
+      email: document.getElementById('equip_email').checked,
+      sheets: document.getElementById('equip_sheets').checked,
+    },
+    // Sensitive fields are noted but not stored in plaintext in demo
+    w9_sensitive: '[ENCRYPTED — visible to Chase only]',
+    banking_sensitive: '[ENCRYPTED — visible to Chase only]',
+  };
+
+  // Save to storage
+  try {
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    existing.push(record);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+  } catch(e) {
+    console.warn('Storage error:', e);
+  }
+
+  // Show confirmation
+  document.getElementById('step-7').classList.remove('active');
+  document.getElementById('step-confirm').classList.add('active');
+  document.getElementById('final_name').textContent = record.contractor.name;
+  document.getElementById('final_session').textContent = record.id;
+  document.getElementById('final_ts').textContent = new Date(ts).toLocaleString();
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressPct').textContent = '100%';
+  document.getElementById('progressLabel').textContent = 'Onboarding Complete';
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════
+// ADMIN TABLE
+// ════════════════════════════════════════
+function getRecords() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch(e) { return []; }
+}
+
+function renderTable() {
+  const records = getRecords();
+  const search = (document.getElementById('adminSearch')?.value || '').toLowerCase();
+  const statusFilter = document.getElementById('statusFilter')?.value || '';
+
+  const filtered = records.filter(r => {
+    const matchSearch = !search ||
+      (r.contractor?.name || '').toLowerCase().includes(search) ||
+      (r.role || '').toLowerCase().includes(search) ||
+      (r.id || '').toLowerCase().includes(search);
+    const matchStatus = !statusFilter || r.status === statusFilter;
+    return matchSearch && matchStatus;
+  });
+
+  const wrap = document.getElementById('adminTableWrap');
+  if (filtered.length === 0) {
+    wrap.innerHTML = `<div class="no-records"><div class="no-icon">📭</div>${records.length === 0 ? 'No submissions yet. Share the onboarding link with a contractor to get started.' : 'No records match your search.'}</div>`;
+    return;
+  }
+
+  let html = `<table class="admin-table">
+    <thead><tr>
+      <th>ID</th><th>Name</th><th>Role</th><th>Submitted</th><th>Payment</th><th>Status</th><th>Actions</th>
+    </tr></thead><tbody>`;
+
+  filtered.slice().reverse().forEach(r => {
+    const ts = r.timestamp ? new Date(r.timestamp).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}) : '—';
+    html += `<tr>
+      <td><code style="font-size:11px;background:#f0f0f0;padding:2px 6px;border-radius:4px">${r.id}</code></td>
+      <td><strong>${r.contractor?.name || '—'}</strong><br><small style="color:var(--text-muted)">${r.contractor?.email || ''}</small></td>
+      <td style="font-size:12px">${r.role || '—'}</td>
+      <td style="font-size:12px">${ts}</td>
+      <td><span style="font-size:12px;text-transform:uppercase;font-weight:600">${r.payment_method === 'ach' ? '🏦 ACH' : '📱 Zelle'}</span></td>
+      <td><span class="status-pill complete">● Complete</span></td>
+      <td><button class="btn btn-sm btn-secondary" onclick="viewRecord('${r.id}')">View →</button></td>
+    </tr>`;
+  });
+
+  html += '</tbody></table>';
+  wrap.innerHTML = html;
+}
+
+function viewRecord(id) {
+  const records = getRecords();
+  const r = records.find(x => x.id === id);
+  if (!r) return;
+
+  const ts = r.timestamp ? new Date(r.timestamp).toLocaleString() : '—';
+  let html = `
+    <div class="modal-section-title">Contractor Information</div>
+    <div class="modal-field"><label>Submission ID</label><div class="val">${r.id}</div></div>
+    <div class="modal-field"><label>Full Legal Name</label><div class="val">${r.contractor?.name || '—'}</div></div>
+    <div class="modal-field"><label>Email</label><div class="val">${r.contractor?.email || '—'}</div></div>
+    <div class="modal-field"><label>Phone</label><div class="val">${r.contractor?.phone || '—'}</div></div>
+    <div class="modal-field"><label>Address</label><div class="val">${r.contractor?.address || '—'}</div></div>
+    <div class="modal-field"><label>Emergency Contact</label><div class="val">${r.contractor?.emergency_contact || '—'}</div></div>
+    <div class="modal-section-title">Role & Authorization</div>
+    <div class="modal-field"><label>Assigned Role</label><div class="val">${r.role || '—'}</div></div>
+    <div class="modal-field"><label>Authorized Products</label><div class="val">${(r.authorized_products || []).join(', ') || '—'}</div></div>
+    <div class="modal-section-title">Documents</div>
+    <div class="modal-field"><label>ICA Signed At</label><div class="val">${r.ica_signed_at || '—'}</div></div>
+    <div class="modal-field"><label>Exhibit A Acknowledged At</label><div class="val">${r.exhibit_signed_at || '—'}</div></div>
+    <div class="modal-field"><label>W-9 Entity Type</label><div class="val">${r.w9_entity || '—'}</div></div>
+    <div class="modal-field"><label>W-9 Sensitive Data</label><div class="val" style="color:var(--warning)">${r.w9_sensitive}</div></div>
+    <div class="modal-section-title">Payment</div>
+    <div class="modal-field"><label>Payment Method</label><div class="val">${r.payment_method === 'ach' ? 'ACH Direct Deposit' : 'Zelle'}</div></div>
+    ${r.bank_name ? `<div class="modal-field"><label>Bank Name</label><div class="val">${r.bank_name}</div></div>` : ''}
+    ${r.zelle ? `<div class="modal-field"><label>Zelle</label><div class="val">${r.zelle}</div></div>` : ''}
+    <div class="modal-field"><label>Banking Sensitive Data</label><div class="val" style="color:var(--warning)">${r.banking_sensitive}</div></div>
+    <div class="modal-section-title">Background & Logistics</div>
+    <div class="modal-field"><label>Sales Experience</label><div class="val">${r.sales_years || '—'} years</div></div>
+    <div class="modal-field"><label>Availability</label><div class="val">${r.availability || '—'}</div></div>
+    <div class="modal-field"><label>Work Method</label><div class="val">${r.work_method || '—'}</div></div>
+    <div class="modal-field"><label>Geography</label><div class="val">${r.geography || '—'}</div></div>
+    <div class="modal-field"><label>Experience Notes</label><div class="val">${r.experience || '—'}</div></div>
+    <div class="modal-section-title">Submitted</div>
+    <div class="modal-field"><label>Timestamp</label><div class="val">${ts}</div></div>
+    <div class="modal-field"><label>Session ID</label><div class="val">${r.session || '—'}</div></div>
+  `;
+
+  document.getElementById('modalBody').innerHTML = html;
+  document.getElementById('detailModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('detailModal').classList.remove('open');
+}
+
+function clearAllRecords() {
+  if (!confirm('Delete all onboarding records? This cannot be undone.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  renderTable();
+}
+
+// ════════════════════════════════════════
+// PRE-FILL
+// ════════════════════════════════════════
+function checkUrlPrefill() {
+  // Check localStorage for prefill data set by admin
+  const pf = JSON.parse(localStorage.getItem('carecircle_prefill') || 'null');
+  if (!pf) return;
+  
+  if (pf.name) {
+    document.getElementById('ica_name').value = pf.name;
+    document.getElementById('ica_name').classList.add('prefilled');
+    document.getElementById('exhibit_name').value = pf.name;
+    document.getElementById('exhibit_name').classList.add('prefilled');
+    document.getElementById('intake_legal_name').value = pf.name;
+    document.getElementById('prefillNotice').style.display = 'flex';
+    document.getElementById('prefillName').textContent = pf.name;
+  }
+  if (pf.role) {
+    document.getElementById('intake_role').value = pf.role;
+    document.getElementById('prefill_role_notice').style.display = 'flex';
+  }
+  if (pf.products) {
+    pf.products.forEach(p => {
+      const cb = document.getElementById(p);
+      if (cb) {
+        cb.checked = true;
+        cb.closest('.checkbox-item')?.classList.add('checked');
+      }
+    });
+    document.getElementById('prefill_products_notice').style.display = 'flex';
+  }
+}
+
+function applyPrefill() {
+  const name = document.getElementById('pf_name').value.trim();
+  const role = document.getElementById('pf_role').value;
+  const products = [];
+  if (document.getElementById('pf_prod_b2b').checked) products.push('prod_b2b');
+  if (document.getElementById('pf_prod_single').checked) products.push('prod_present_single');
+  if (document.getElementById('pf_prod_guardian').checked) products.push('prod_guardian');
+  if (document.getElementById('pf_prod_as').checked) products.push('prod_assisting_seniors');
+  if (document.getElementById('pf_prod_ai').checked) products.push('prod_ai_saas');
+
+  localStorage.setItem('carecircle_prefill', JSON.stringify({ name, role, products }));
+  switchView('onboarding');
+  document.querySelectorAll('.mode-btn')[0].classList.add('active');
+  document.querySelectorAll('.mode-btn')[1].classList.remove('active');
+  checkUrlPrefill();
+}
+
+// ════════════════════════════════════════
+// CALCULATOR
+// ════════════════════════════════════════
+const tierRates = {
+  silver: { setup_np: 0.50, setup_fp: 0.50, rec_np: 0.35, rec_fp: 0.35, present: 0.30 },
+  gold:   { setup_np: 0.55, setup_fp: 0.55, rec_np: 0.40, rec_fp: 0.40, present: 0.35 },
+  elite:  { setup_np: 0.60, setup_fp: 0.60, rec_np: 0.45, rec_fp: 0.45, present: 0.40 },
+  rc:     { setup_np: 0.60, setup_fp: 0.65, rec_np: 0.45, rec_fp: 0.50, present: 0.40 },
+};
+
+function calcEarnings() {
+  const tier = document.getElementById('calc_tier').value;
+  const rates = tierRates[tier];
+  const np = parseInt(document.getElementById('calc_np').value) || 0;
+  const fp = parseInt(document.getElementById('calc_fp').value) || 0;
+  const ge = parseInt(document.getElementById('calc_ge').value) || 0;
+  const g  = parseInt(document.getElementById('calc_g').value)  || 0;
+  const gelite = parseInt(document.getElementById('calc_gelite').value) || 0;
+  const setups = parseInt(document.getElementById('calc_setups').value) || 0;
+  const fp_new = parseInt(document.getElementById('calc_fp_new').value) || 0;
+  const np_new = Math.max(0, setups - fp_new);
+
+  const rec_np = np * 179 * rates.rec_np;
+  const rec_fp = fp * 399 * rates.rec_fp;
+  const guardian = ge * 799 * rates.present + g * 1500 * rates.present + gelite * 2500 * rates.present;
+  const setup = (np_new * 499 * rates.setup_np) + (fp_new * 999 * rates.setup_fp);
+
+  let bonus = 0;
+  if (setups >= 10) bonus = 1000;
+  else if (setups >= 6) bonus = 500;
+  else if (setups >= 3) bonus = 200;
+
+  const total = rec_np + rec_fp + guardian + setup + bonus;
+
+  const fmt = v => '$' + v.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+  document.getElementById('cr_np').textContent = fmt(rec_np);
+  document.getElementById('cr_fp').textContent = fmt(rec_fp);
+  document.getElementById('cr_guardian').textContent = fmt(guardian);
+  document.getElementById('cr_setup').textContent = fmt(setup);
+  document.getElementById('cr_bonus').textContent = bonus > 0 ? fmt(bonus) : '$0';
+  document.getElementById('cr_total').textContent = fmt(total);
+}
+
+// Click outside modal to close
+document.getElementById('detailModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+init();
+</script>
+</body>
+</html>
