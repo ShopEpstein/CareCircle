@@ -23,7 +23,7 @@ const ENCRYPTION_KEY = process.env.SENSITIVE_DATA_ENCRYPTION_KEY;
 
 module.exports = async function handler(req, res) {
   // CORS — allow from carecircle.fit and local dev
-  res.setHeader('Access-Control-Allow-Origin', 'https://care-circle-nu.vercel.app');
+  res.setHeader('Access-Control-Allow-Origin', 'https://carecircle.fit');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
