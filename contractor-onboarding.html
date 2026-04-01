@@ -1942,7 +1942,14 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-sage" onclick="applyPrefill()" style="margin-top:8px">⚡ Apply Pre-fill & Go to Onboarding</button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px">
+          <button class="btn btn-sage" onclick="applyPrefill()">⚡ Apply Pre-fill & Go to Onboarding</button>
+          <button class="btn btn-primary" onclick="generateLink()">🔗 Generate Link</button>
+        </div>
+        <div id="generatedLinkWrap" style="display:none;margin-top:12px;padding:10px 14px;background:var(--sage-light);border:1px solid var(--sage);border-radius:8px;font-size:13px">
+          <strong>Link copied to clipboard!</strong> Share this with the contractor:<br>
+          <code id="generatedLinkUrl" style="word-break:break-all;font-size:11px;color:var(--text-muted)"></code>
+        </div>
       </div>
     </div>
 
@@ -2992,7 +2999,13 @@ function clearAllRecords() {
 // ════════════════════════════════════════
 function checkUrlPrefill() {
   // Check localStorage for prefill data set by admin
-  const pf = JSON.parse(localStorage.getItem('carecircle_prefill') || 'null');
+  // Check URL param first (?pf=base64json), then fall back to localStorage
+  let pf = null;
+  const urlParam = new URLSearchParams(window.location.search).get('pf');
+  if (urlParam) {
+    try { pf = JSON.parse(atob(urlParam)); } catch(e) {}
+  }
+  if (!pf) pf = JSON.parse(localStorage.getItem('carecircle_prefill') || 'null');
   if (!pf) return;
   
   if (pf.name) {
@@ -3020,7 +3033,7 @@ function checkUrlPrefill() {
   }
 }
 
-function applyPrefill() {
+function getPrefillData() {
   const name = document.getElementById('pf_name').value.trim();
   const role = document.getElementById('pf_role').value;
   const products = [];
@@ -3029,10 +3042,27 @@ function applyPrefill() {
   if (document.getElementById('pf_prod_guardian').checked) products.push('prod_guardian');
   if (document.getElementById('pf_prod_as').checked) products.push('prod_assisting_seniors');
   if (document.getElementById('pf_prod_ai').checked) products.push('prod_ai_saas');
+  return { name, role, products };
+}
 
-  localStorage.setItem('carecircle_prefill', JSON.stringify({ name, role, products }));
+function applyPrefill() {
+  const pf = getPrefillData();
+  localStorage.setItem('carecircle_prefill', JSON.stringify(pf));
   switchView('onboarding', document.querySelector(".mode-btn[onclick*=\"'onboarding'\"]"));
   checkUrlPrefill();
+}
+
+function generateLink() {
+  const pf = getPrefillData();
+  if (!pf.name && !pf.role) {
+    alert('Enter at least a name or role before generating a link.');
+    return;
+  }
+  const encoded = btoa(JSON.stringify(pf));
+  const url = window.location.origin + window.location.pathname + '?pf=' + encoded;
+  navigator.clipboard.writeText(url).catch(() => {});
+  document.getElementById('generatedLinkUrl').textContent = url;
+  document.getElementById('generatedLinkWrap').style.display = 'block';
 }
 
 // ════════════════════════════════════════
