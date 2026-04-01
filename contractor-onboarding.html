@@ -946,9 +946,9 @@
 
 <div class="mode-switcher">
   <div class="mode-switcher-inner">
-    <button class="mode-btn active" onclick="switchView('onboarding')">📋 Contractor Onboarding</button>
-    <button class="mode-btn" onclick="switchView('admin')">🔐 Admin Dashboard</button>
-    <button class="mode-btn" onclick="switchView('matrix')">💰 Commission Matrix</button>
+    <button class="mode-btn active" onclick="switchView('onboarding', this)">📋 Contractor Onboarding</button>
+    <button class="mode-btn" onclick="switchView('admin', this)">🔐 Admin Dashboard</button>
+    <button class="mode-btn" onclick="switchView('matrix', this)">💰 Commission Matrix</button>
   </div>
 </div>
 
@@ -2404,12 +2404,11 @@ function prevStep(fromStep) {
 // ════════════════════════════════════════
 // VIEW SWITCHING
 // ════════════════════════════════════════
-function switchView(view) {
+function switchView(view, btn) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + view).classList.add('active');
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-  const activeBtn = document.querySelector(`.mode-btn[onclick*="'${view}'"]`);
-  if (activeBtn) activeBtn.classList.add('active');
+  if (btn) btn.classList.add('active');
   document.getElementById('progressWrap').style.display = view === 'onboarding' ? 'block' : 'none';
   if (view === 'admin') renderTable();
   window.scrollTo(0, 0);
@@ -2419,6 +2418,7 @@ function switchView(view) {
 // FORM CONTROLS
 // ════════════════════════════════════════
 function toggleCheck(label, id) {
+  event.preventDefault();
   const cb = document.getElementById(id);
   cb.checked = !cb.checked;
   label.classList.toggle('checked', cb.checked);
@@ -2957,7 +2957,7 @@ function applyPrefill() {
   if (document.getElementById('pf_prod_ai').checked) products.push('prod_ai_saas');
 
   localStorage.setItem('carecircle_prefill', JSON.stringify({ name, role, products }));
-  switchView('onboarding');
+  switchView('onboarding', document.querySelector(".mode-btn[onclick*=\"'onboarding'\"]"));
   checkUrlPrefill();
 }
 
@@ -3009,7 +3009,7 @@ document.getElementById('detailModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-init();
+document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
