@@ -2473,9 +2473,13 @@ async function adminLogin() {
       document.getElementById('adminGate').style.display = 'none';
       document.getElementById('adminContent').style.display = 'block';
       renderTable();
-    } else {
+    } else if (res.status === 401) {
+      errEl.textContent = 'Incorrect password. Try again.';
       errEl.style.display = 'block';
       document.getElementById('adminPwInput').value = '';
+    } else {
+      errEl.textContent = 'Server error (' + res.status + '): ADMIN_PASSWORD may not be set in Vercel environment variables.';
+      errEl.style.display = 'block';
     }
   } catch(e) {
     errEl.textContent = 'Connection error. Try again.';
