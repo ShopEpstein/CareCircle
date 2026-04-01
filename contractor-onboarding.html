@@ -2816,7 +2816,7 @@ async function renderTable() {
         '<td><span style="font-size:12px;font-weight:600">' + (r.payment_method==='ach'?'🏦 ACH':'📱 Zelle') + '</span></td>' +
         '<td style="font-size:12px">' + docs + '/3' + allOk + '</td>' +
         '<td><span class="status-pill complete">● Complete</span></td>' +
-        '<td><button class="btn btn-sm btn-secondary" onclick="viewRecord('' + r.internal_id + '','' + r.submission_id + '')">View →</button></td>' +
+        '<td><button class="btn btn-sm btn-secondary" onclick="viewRecord(\'' + r.internal_id + '\',\'' + r.submission_id + '\')">View →</button></td>' +
         '</tr>';
     });
 
@@ -2909,8 +2909,7 @@ function closeModal() {
 }
 
 function clearAllRecords() {
-  alert('Records can only be deleted from the Supabase dashboard (service_role required).
-Go to: app.supabase.com → Table Editor → contractor_submissions.');
+  alert('Records can only be deleted from the Supabase dashboard (service_role required).\nGo to: app.supabase.com → Table Editor → contractor_submissions.');
 }
 
 // ════════════════════════════════════════
