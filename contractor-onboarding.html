@@ -622,6 +622,23 @@
     margin: 0 auto;
     padding: 36px 40px 60px;
   }
+  .admin-gate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 40px 20px;
+  }
+  .admin-gate-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px 36px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
   .admin-controls {
     display: flex;
     gap: 12px;
@@ -1867,6 +1884,22 @@
      ADMIN VIEW
 ════════════════════════════════════════ -->
 <div id="view-admin" class="view">
+
+  <!-- Auth gate — shown when not logged in -->
+  <div id="adminGate" class="admin-gate">
+    <div class="admin-gate-card">
+      <div style="font-size:36px;margin-bottom:12px">🔐</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:8px">Admin Access</h2>
+      <p style="color:var(--text-muted);margin-bottom:20px;font-size:14px">This area is restricted to CareCircle administrators.</p>
+      <input type="password" id="adminPwInput" class="form-input" placeholder="Admin password"
+        onkeydown="if(event.key==='Enter')adminLogin()">
+      <div id="adminPwError" class="field-error" style="display:none;margin-top:8px">Incorrect password. Try again.</div>
+      <button class="btn btn-primary" style="margin-top:14px;width:100%" onclick="adminLogin()">Sign In →</button>
+    </div>
+  </div>
+
+  <!-- Admin content — shown after authentication -->
+  <div id="adminContent" style="display:none">
   <div class="admin-wrap">
 
     <!-- PRE-FILL PANEL -->
@@ -1938,6 +1971,7 @@
     </div>
 
   </div>
+  </div><!-- /adminContent -->
 </div>
 
 <!-- ════════════════════════════════════════
@@ -2291,6 +2325,7 @@ const SESSION_KEY = 'carecircle_session_' + Math.random().toString(36).substr(2,
 let currentStep = 1;
 const totalSteps = 7;
 let paymentMethod = 'ach';
+let adminToken = sessionStorage.getItem('cc_admin_token') || null;
 
 const stepLabels = [
   'ICA Agreement',
@@ -2410,8 +2445,42 @@ function switchView(view, btn) {
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   document.getElementById('progressWrap').style.display = view === 'onboarding' ? 'block' : 'none';
-  if (view === 'admin') renderTable();
+  if (view === 'admin') {
+    const authed = !!adminToken;
+    document.getElementById('adminGate').style.display = authed ? 'none' : 'flex';
+    document.getElementById('adminContent').style.display = authed ? 'block' : 'none';
+    if (authed) renderTable();
+  }
   window.scrollTo(0, 0);
+}
+
+// ════════════════════════════════════════
+// ADMIN AUTH
+// ════════════════════════════════════════
+async function adminLogin() {
+  const pw = document.getElementById('adminPwInput').value;
+  const errEl = document.getElementById('adminPwError');
+  errEl.style.display = 'none';
+  if (!pw) return;
+
+  try {
+    const res = await fetch('/api/admin-data?action=verify', {
+      headers: { 'x-admin-token': pw }
+    });
+    if (res.ok) {
+      adminToken = pw;
+      sessionStorage.setItem('cc_admin_token', pw);
+      document.getElementById('adminGate').style.display = 'none';
+      document.getElementById('adminContent').style.display = 'block';
+      renderTable();
+    } else {
+      errEl.style.display = 'block';
+      document.getElementById('adminPwInput').value = '';
+    }
+  } catch(e) {
+    errEl.textContent = 'Connection error. Try again.';
+    errEl.style.display = 'block';
+  }
 }
 
 // ════════════════════════════════════════
@@ -2773,15 +2842,18 @@ async function renderTable() {
   const statusFilter = document.getElementById('statusFilter')?.value || '';
 
   try {
-    let params = 'order=submitted_at.desc&limit=200';
-    if (statusFilter) params += '&status=eq.' + statusFilter;
+    let params = 'action=list';
+    if (statusFilter) params += '&status=' + statusFilter;
 
-    const res = await fetch(SUPABASE_URL + '/rest/v1/admin_onboarding_view?' + params, {
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-      }
+    const res = await fetch('/api/admin-data?' + params, {
+      headers: { 'x-admin-token': adminToken }
     });
+    if (res.status === 401) {
+      adminToken = null;
+      sessionStorage.removeItem('cc_admin_token');
+      switchView('admin', null);
+      return;
+    }
     const records = await res.json();
 
     if (!res.ok) throw new Error(JSON.stringify(records));
@@ -2837,22 +2909,21 @@ async function viewRecord(internalId, submissionId) {
   document.getElementById('detailModal').classList.add('open');
 
   try {
-    const rRes = await fetch(SUPABASE_URL + '/rest/v1/contractor_submissions?id=eq.' + internalId + '&select=*', {
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+    const res = await fetch('/api/admin-data?action=record&id=' + internalId, {
+      headers: { 'x-admin-token': adminToken }
     });
-    const rData = await rRes.json();
-    if (!rRes.ok || !rData.length) throw new Error('Record not found');
-    const r = rData[0];
-
-    const dRes = await fetch(SUPABASE_URL + '/rest/v1/document_acknowledgments?submission_id=eq.' + internalId + '&select=document_type,signer_legal_name,agreed,signed_at_display', {
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
-    });
-    const docs = await dRes.json();
-
-    const aRes = await fetch(SUPABASE_URL + '/rest/v1/onboarding_final_acknowledgments?submission_id=eq.' + internalId + '&select=all_confirmed,confirmed_at', {
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
-    });
-    const acks = await aRes.json();
+    if (res.status === 401) {
+      adminToken = null;
+      sessionStorage.removeItem('cc_admin_token');
+      document.getElementById('detailModal').classList.remove('open');
+      switchView('admin', null);
+      return;
+    }
+    if (!res.ok) throw new Error('Record not found');
+    const payload = await res.json();
+    const r = payload.record;
+    const docs = payload.docs;
+    const acks = payload.acks;
 
     const docMap = {};
     (Array.isArray(docs)?docs:[]).forEach(function(d){ docMap[d.document_type]=d; });
