@@ -408,7 +408,9 @@ function selAns(qi,oi,correct){
   });
 }
 
-function runQuiz(modId,qs){
+function runQuiz(modId){
+  const qs=window._quizData&&window._quizData[modId];
+  if(!qs)return;
   if(qSubmitted)return;
   if(Object.keys(qA).length<qs.length){notif('Answer all questions first.');return}
   qSubmitted=true;
@@ -434,6 +436,8 @@ function runQuiz(modId,qs){
 }
 
 function buildQuizHTML(qs,modId){
+  window._quizData=window._quizData||{};
+  window._quizData[modId]=qs;
   let h='<div class="quiz-wrap"><h2>Knowledge Check</h2><p class="sub">Answer all questions to complete this module. 70% to pass.</p>';
   qs.forEach((q,qi)=>{
     h+=`<div class="quiz-question"><div class="q-num">Question ${qi+1}</div><div class="q-text">${q.q}</div><div class="q-opts-${qi}">`;
@@ -442,8 +446,7 @@ function buildQuizHTML(qs,modId){
     });
     h+=`</div></div>`;
   });
-  const qsJson=JSON.stringify(qs).replace(/</g,'\\x3c').replace(/>/g,'\\x3e');
-  h+=`<div style="text-align:center;margin-top:8px"><button class="btn btn-primary" style="width:auto;padding:12px 32px" onclick="runQuiz('${modId}',${qsJson})">Submit Answers →</button></div>
+  h+=`<div style="text-align:center;margin-top:8px"><button class="btn btn-primary" style="width:auto;padding:12px 32px" onclick="runQuiz('${modId}')">Submit Answers →</button></div>
       <div id="quiz-result" class="quiz-result"></div></div>`;
   return h;
 }
