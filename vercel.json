@@ -1,5 +1,10 @@
 {
   "cleanUrls": true,
+  "functions": {
+    "api/research-provider.js": {
+      "maxDuration": 120
+    }
+  },
   "redirects": [
     {
       "source": "/:path*",

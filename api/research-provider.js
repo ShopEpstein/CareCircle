@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
 
-  const { providerName, city, type, context, submittedBy } = req.body || {};
+  const { providerName, city, type, context, submittedBy, force } = req.body || {};
   if (!providerName) return res.status(400).json({ error: 'providerName required' });
 
   const location = city || 'Northwest Florida';
@@ -24,6 +24,33 @@ export default async function handler(req, res) {
   const TWILIO_AUTH = process.env.TWILIO_AUTH_TOKEN;
   const TWILIO_FROM = '+18559600110';
   const CHASE_PHONE = '+18503414324';
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  // Step 0: Check Supabase cache — return existing profile instantly if found (skip Claude)
+  if (supabaseKey && !force) {
+    try {
+      const supabase = createClient(SUPABASE_URL, supabaseKey, { auth: { persistSession: false } });
+      const providerKey = providerName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const { data: cached } = await supabase
+        .from('providers')
+        .select('*')
+        .eq('provider_key', providerKey)
+        .maybeSingle();
+      if (cached) {
+        return res.status(200).json({
+          success: true,
+          parsed: true,
+          savedToDb: true,
+          cached: true,
+          provider: cached,
+          key: providerKey
+        });
+      }
+    } catch (cacheErr) {
+      // Cache lookup failed — fall through to fresh research
+      console.error('Cache lookup error:', cacheErr.message);
+    }
+  }
 
   if (!ANTHROPIC_API_KEY) {
     return res.status(500).json({ error: 'ANTHROPIC_API_KEY not configured' });
@@ -145,7 +172,7 @@ Return ONLY the JSON object. No other text.`;
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-6',
         max_tokens: 4000,
         tools: [{ type: 'web_search_20250305', name: 'web_search' }],
         system: systemPrompt,
@@ -199,7 +226,6 @@ Return ONLY the JSON object. No other text.`;
 
     // Step 4: Save to Supabase providers table
     let savedToDb = false;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (supabaseKey) {
       try {
         const supabase = createClient(SUPABASE_URL, supabaseKey, {
