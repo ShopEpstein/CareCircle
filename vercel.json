@@ -1,5 +1,8 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/men", "destination": "/care-advocacy-for-men", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/blog/:slug", "destination": "/blog/:slug.html" }
   ],
