@@ -1,7 +1,11 @@
 // /api/research-provider.js
 // AI-powered provider research endpoint for CareCircle Network
-// Calls Claude with web search to research a senior care provider
-// Returns formatted JSON for providers.json + sends SMS alert to Chase
+// Calls Claude with web search using the 7-dimension scoring algorithm
+// Saves results to Supabase providers table and sends SMS alert to Chase
+
+import { createClient } from '@supabase/supabase-js';
+
+const SUPABASE_URL = 'https://dzbhoycmgaofvrpfajpc.supabase.co';
 
 export default async function handler(req, res) {
   // CORS headers
@@ -11,7 +15,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
 
-  const { providerName, city, submittedBy } = req.body || {};
+  const { providerName, city, type, context, submittedBy } = req.body || {};
   if (!providerName) return res.status(400).json({ error: 'providerName required' });
 
   const location = city || 'Northwest Florida';
@@ -26,7 +30,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Step 1: Send Chase an SMS that research is starting
+    // Step 1: SMS Chase that research is starting
     if (TWILIO_SID && TWILIO_AUTH) {
       await sendSMS(
         TWILIO_SID, TWILIO_AUTH, TWILIO_FROM, CHASE_PHONE,
@@ -34,60 +38,104 @@ export default async function handler(req, res) {
       );
     }
 
-    // Step 2: Call Claude API with web search to research the provider
-    const researchPrompt = `Research the senior care provider "${providerName}" in ${location}, Florida. 
+    // Step 2: Call Claude with web search — 7-dimension scoring algorithm
+    const systemPrompt = `You are a senior healthcare intelligence analyst building a high-integrity provider profile for CareCircle.
 
-Search for and compile data from these sources:
-1. Google Reviews - star rating, review count, 2-3 representative family quotes
-2. FL AHCA (Agency for Health Care Administration) - license status, enforcement actions, complaints
-3. CMS Medicare Compare - star ratings, health inspection results (if applicable)
-4. BBB - accreditation, complaint count
-5. Employee reviews on Indeed/Glassdoor (if available)
-6. ProPublica Nursing Home Inspector (if nursing home/rehab)
-7. Ownership info - independent vs chain, founded year, owner name
+Your objective is NOT to summarize. Your objective is to EXPOSE REALITY using public, semi-public, and inferable data.
 
-Based on your research, create a JSON object in this EXACT format. Use ONLY real data you found. If data is unavailable, say so in the gaps field. Score 0-10 based on what you found:
+STRICT RULES:
+- Do NOT fabricate data. If unknown → say UNKNOWN.
+- Prefer patterns over anecdotes.
+- Highlight contradictions clearly.
+- Be skeptical of marketing claims.
+- Assume families are making high-stakes decisions.
+- Unknown data must penalize scores. Do not inflate.
+- Safety and staffing must be heavily weighted.
+
+SCORING FORMULA (weights):
+- Compliance & Safety: 25%
+- Clinical Risk: 20%
+- Staffing Stability: 20%
+- Family Experience: 15%
+- Pricing Fairness: 8%
+- Transparency: 7%
+- Ownership Risk: 5%
+- Penalty: −0.5 per significant unknown data gap
+- Overall score cannot exceed 10.0, cannot be below 1.0
+
+DATA SCHEMA — Return ONLY a valid JSON object matching this exact schema. No markdown, no commentary, no extra text. Only the JSON object.
 
 {
-  "key": "lowercase-hyphenated-name",
-  "name": "Full Legal Name",
-  "loc": "City, FL",
-  "type": "Type of care · Ownership type",
-  "founded": YEAR_OR_NULL,
-  "ownership": "Ownership details",
+  "name": "Full provider name",
+  "loc": "City, State",
+  "type": "Provider type",
+  "founded": null or year as number,
+  "ownership": "Description of ownership type and owner",
   "scores": {
-    "overall": "X.X",
-    "google": "X.X★ (N reviews)",
-    "staff": "X.X★ or Not found",
-    "complaints": "Description"
+    "compliance": "X.X/10",
+    "clinical": "X.X/10",
+    "staffing": "X.X/10",
+    "family_experience": "X.X/10",
+    "pricing": "X.X/10",
+    "transparency": "X.X/10",
+    "ownership_risk": "X.X/10",
+    "overall": "X.X"
   },
-  "sc": {
-    "overall": "sc-good|sc-warn|sc-bad",
-    "google": "sc-good|sc-warn|sc-bad",
-    "staff": "sc-good|sc-warn|sc-bad",
-    "complaints": "sc-good|sc-warn|sc-bad"
+  "score_colors": {
+    "compliance": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "clinical": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "staffing": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "family_experience": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "pricing": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "transparency": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "ownership_risk": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "overall": "sc-good|sc-warn|sc-bad"
   },
+  "clinical_risk_level": "LOW|MODERATE|HIGH|UNKNOWN",
+  "recommendation": "RECOMMEND|RECOMMEND_WITH_CAUTION|DO_NOT_RECOMMEND",
+  "confidence_pct": 0-100,
   "green": [
-    {"t": "Short strength title", "b": "Detailed explanation with specific evidence"}
+    {"t": "Short strength title", "b": "Evidence-backed detail"}
   ],
   "red": [
-    {"t": "Short concern title", "b": "Detailed explanation with specific evidence"}
+    {"t": "Short concern title", "b": "Evidence-backed detail"}
   ],
   "findings": [
-    {"t": "good|warn|bad|info", "title": "Finding title", "detail": "Details", "src": "Source name"}
+    {"t": "good|warn|bad|info", "title": "Finding title", "detail": "Specific detail", "src": "Source name"}
   ],
   "quotes": [
-    {"t": "Actual quote text", "a": "Attribution - Source, Date"}
+    {"t": "Quote text (real if findable, skip if not)", "a": "Attribution — platform, stars, reviewer"}
   ],
-  "compare": "2-3 sentence overall assessment",
-  "gaps": "What data was unavailable"
+  "marketing_claims": ["Claim 1", "Claim 2", "Claim 3"],
+  "reality_signals": ["Reality 1", "Reality 2", "Reality 3"],
+  "staffing_risk_patterns": ["Pattern 1", "Pattern 2"],
+  "best_for": "One sentence: who this provider is best for",
+  "avoid_if": "One sentence: who should avoid this provider",
+  "compare_note": "2-3 sentence competitive context and summary",
+  "gaps": "What we cannot verify — specific data gaps",
+  "alternatives_note": "Any better alternatives to suggest, or null"
 }
 
-IMPORTANT: 
-- Only include REAL data you found via search. Do not fabricate reviews, scores, or quotes.
-- If you can't find much data, say so honestly in the gaps field and lower the overall score.
-- Score guide: 8.5+ = Excellent (strong across all sources), 7-8.4 = Good, 5.5-6.9 = Mixed signals, below 5.5 = High concern
-- Return ONLY the JSON object, no other text.`;
+Score color rules:
+- sc-good: 7.5+
+- sc-warn: 5.0–7.4
+- sc-bad: below 5.0
+- sc-unknown: data genuinely unavailable
+
+Recommendation rules:
+- RECOMMEND: overall 8.0+
+- RECOMMEND_WITH_CAUTION: 5.5–7.9
+- DO_NOT_RECOMMEND: below 5.5
+
+Use web search to find real data before scoring. Cross-reference: FL AHCA/FHF (quality.healthfinder.fl.gov), CMS Care Compare (medicare.gov/care-compare), Google reviews, Indeed/Glassdoor, Caring.com, A Place for Mom, Seniorly, BBB, news articles, OIG exclusion list.`;
+
+    const userMessage = `Analyze this provider:
+Provider Name: ${providerName}
+Location: ${location}
+${type ? `Type: ${type}` : ''}
+${context ? `Additional context: ${context}` : ''}
+
+Return ONLY the JSON object. No other text.`;
 
     const claudeResponse = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -99,14 +147,9 @@ IMPORTANT:
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 4000,
-        tools: [{
-          type: 'web_search_20250305',
-          name: 'web_search'
-        }],
-        messages: [{
-          role: 'user',
-          content: researchPrompt
-        }]
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userMessage }]
       })
     });
 
@@ -116,62 +159,118 @@ IMPORTANT:
     }
 
     const claudeData = await claudeResponse.json();
-    
-    // Extract the text response (may have multiple content blocks due to tool use)
+
+    // Extract text blocks (tool use produces multiple content blocks)
     let responseText = '';
     for (const block of claudeData.content || []) {
-      if (block.type === 'text') {
-        responseText += block.text;
-      }
+      if (block.type === 'text') responseText += block.text;
     }
 
-    // Parse the JSON from the response
+    // Parse the JSON response
     let providerData;
     try {
-      // Clean up potential markdown code fences
-      const cleaned = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      providerData = JSON.parse(cleaned);
+      let clean = responseText.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+      const startIdx = clean.indexOf('{');
+      const endIdx = clean.lastIndexOf('}');
+      if (startIdx !== -1 && endIdx !== -1) {
+        clean = clean.substring(startIdx, endIdx + 1);
+      }
+      providerData = JSON.parse(clean);
     } catch (parseErr) {
-      // If parsing fails, send the raw response to Chase
       if (TWILIO_SID && TWILIO_AUTH) {
         await sendSMS(
           TWILIO_SID, TWILIO_AUTH, TWILIO_FROM, CHASE_PHONE,
           `⚠️ RESEARCH COMPLETE (parse issue)\n${providerName}\nCouldn't auto-parse JSON. Check logs.\nRaw length: ${responseText.length} chars`
         );
       }
-      return res.status(200).json({ 
-        success: true, 
-        parsed: false, 
+      return res.status(200).json({
+        success: true,
+        parsed: false,
         raw: responseText,
-        message: 'Research complete but JSON parse failed. Raw response included.' 
+        message: 'Research complete but JSON parse failed. Raw response included.'
       });
     }
 
-    // Step 3: Send Chase the summary SMS
+    // Step 3: Generate URL-safe provider key
+    const providerKey = (providerData.name || providerName)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+
+    // Step 4: Save to Supabase providers table
+    let savedToDb = false;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (supabaseKey) {
+      try {
+        const supabase = createClient(SUPABASE_URL, supabaseKey, {
+          auth: { persistSession: false }
+        });
+
+        const { error: upsertError } = await supabase
+          .from('providers')
+          .upsert({
+            provider_key: providerKey,
+            name: providerData.name || providerName,
+            loc: providerData.loc,
+            type: providerData.type || type,
+            founded: providerData.founded,
+            ownership: providerData.ownership,
+            overall_score: parseFloat(providerData.scores?.overall) || null,
+            recommendation: providerData.recommendation,
+            clinical_risk_level: providerData.clinical_risk_level,
+            confidence_pct: providerData.confidence_pct,
+            scores: providerData.scores,
+            score_colors: providerData.score_colors,
+            green: providerData.green,
+            red: providerData.red,
+            findings: providerData.findings,
+            quotes: providerData.quotes,
+            marketing_claims: providerData.marketing_claims,
+            reality_signals: providerData.reality_signals,
+            staffing_risk_patterns: providerData.staffing_risk_patterns,
+            best_for: providerData.best_for,
+            avoid_if: providerData.avoid_if,
+            compare_note: providerData.compare_note,
+            gaps: providerData.gaps,
+            alternatives_note: providerData.alternatives_note,
+            researched_by: submittedBy || 'admin',
+            researched_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          }, { onConflict: 'provider_key' });
+
+        if (upsertError) {
+          console.error('Supabase upsert error:', upsertError.message);
+        } else {
+          savedToDb = true;
+        }
+      } catch (dbErr) {
+        console.error('DB save error:', dbErr.message);
+      }
+    }
+
+    // Step 5: SMS Chase the summary
     const score = providerData.scores?.overall || '?';
     const greenCount = providerData.green?.length || 0;
     const redCount = providerData.red?.length || 0;
-    
+
     if (TWILIO_SID && TWILIO_AUTH) {
       await sendSMS(
         TWILIO_SID, TWILIO_AUTH, TWILIO_FROM, CHASE_PHONE,
-        `✅ RESEARCH DONE\n${providerData.name || providerName}\nScore: ${score}/10\n🟢 ${greenCount} strengths\n🔴 ${redCount} concerns\nGoogle: ${providerData.scores?.google || 'N/A'}\nComplaints: ${providerData.scores?.complaints || 'N/A'}\n\nJSON ready to add to providers.json`
+        `✅ RESEARCH DONE\n${providerData.name || providerName}\nScore: ${score}/10\nRec: ${providerData.recommendation || 'N/A'}\n🟢 ${greenCount} strengths · 🔴 ${redCount} concerns\nConfidence: ${providerData.confidence_pct || '?'}%\n${savedToDb ? '✓ Saved to DB' : '⚠ DB save failed'}`
       );
     }
 
-    // Return the formatted provider data
     return res.status(200).json({
       success: true,
       parsed: true,
+      savedToDb,
       provider: providerData,
-      key: providerData.key || providerName.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, '-'),
-      message: `Research complete for ${providerData.name}. Add to providers.json under key "${providerData.key}".`
+      key: providerKey
     });
 
   } catch (err) {
     console.error('Research error:', err);
-    
-    // Alert Chase of failure
+
     if (TWILIO_SID && TWILIO_AUTH) {
       try {
         await sendSMS(
