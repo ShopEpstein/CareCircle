@@ -1,6 +1,17 @@
 {
   "cleanUrls": true,
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.carecircle.fit" }],
+      "destination": "https://carecircle.fit/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path(.*)\\.html",
+      "destination": "/:path",
+      "permanent": true
+    },
     { "source": "/men", "destination": "/care-advocacy-for-men", "permanent": true }
   ],
   "rewrites": [
