@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareCircle — Provider Intelligence Engine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+
+  :root {
+    --sage: #6B8C7A;
+    --sage-light: #E8F0EC;
+    --sage-dark: #3D5449;
+    --warm-dark: #1C1C1A;
+    --gold: #C4963A;
+    --gold-light: #FDF3E0;
+    --cream: #FAF8F4;
+    --terracotta: #C4633A;
+    --terra-light: #FDF0EB;
+    --navy: #1A2B3C;
+    --navy-light: #E8EEF5;
+    --border: rgba(28,28,26,0.12);
+    --border-strong: rgba(28,28,26,0.25);
+    --text-muted: #6B6860;
+    --success: #2D6A2D;
+    --success-bg: #E8F5E8;
+    --warning: #854F0B;
+    --warning-bg: #FAEEDA;
+    --danger: #8B1A1A;
+    --danger-bg: #FDEAEA;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--warm-dark);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  .doc-header {
+    background: var(--warm-dark);
+    padding: 40px 60px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(107,140,122,0.12);
+  }
+  .doc-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: 160px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(196,150,58,0.08);
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: #FAF8F4;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(250,248,244,0.55);
+    max-width: 480px;
+  }
+
+  /* LAYOUT */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 0;
+    min-height: calc(100vh - 120px);
+  }
+
+  /* LEFT PANEL — INPUT */
+  .input-panel {
+    background: white;
+    border-right: 1px solid var(--border);
+    padding: 32px 28px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .panel-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .field-group {
+    margin-bottom: 18px;
+  }
+  .field-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .field-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--warm-dark);
+    background: var(--cream);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .field-input:focus {
+    border-color: var(--sage);
+    background: white;
+  }
+  select.field-input {
+    cursor: pointer;
+  }
+
+  /* ANALYZE BUTTON */
+  .analyze-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: var(--warm-dark);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .analyze-btn:hover { background: #2a2a28; }
+  .analyze-btn:active { transform: scale(0.99); }
+  .analyze-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+  .btn-icon { font-size: 16px; }
+
+  /* SCORING LEGEND */
+  .legend-block {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .legend-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--warm-dark);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-green { background: var(--success); }
+  .dot-gold { background: var(--gold); }
+  .dot-red { background: var(--terracotta); }
+  .dot-grey { background: #aaa; }
+
+  /* FORMULA NOTE */
+  .formula-block {
+    margin-top: 20px;
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+  }
+  .formula-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .formula-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--warm-dark);
+    padding: 3px 0;
+  }
+  .formula-weight {
+    font-weight: 600;
+    color: var(--sage-dark);
+  }
+
+  /* RIGHT PANEL — OUTPUT */
+  .output-panel {
+    padding: 32px 40px;
+    min-height: 100%;
+  }
+
+  /* STATES */
+  .state-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  .state-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
+  .state-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--warm-dark); margin-bottom: 8px; }
+  .state-desc { font-size: 14px; max-width: 320px; line-height: 1.6; }
+
+  .state-loading {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    text-align: center;
+  }
+  .loading-spinner {
+    width: 44px; height: 44px;
+    border: 3px solid var(--border);
+    border-top-color: var(--sage);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+  /* RESULTS */
+  .results-wrap { display: none; }
+
+  /* PROVIDER HEADER */
+  .provider-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    gap: 20px;
+  }
+  .provider-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--warm-dark);
+    margin-bottom: 4px;
+  }
+  .provider-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .meta-tag {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--sage-light);
+    color: var(--sage-dark);
+  }
+
+  /* MASTER SCORE */
+  .master-score-block {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .master-score-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--warm-dark);
+  }
+  .master-score-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .score-band {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .band-green { background: var(--success-bg); color: var(--success); }
+  .band-gold { background: var(--gold-light); color: var(--warning); }
+  .band-red { background: var(--danger-bg); color: var(--danger); }
+
+  /* RECOMMENDATION BANNER */
+  .rec-banner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    border-left: 4px solid;
+  }
+  .rec-banner.rec-yes { background: var(--success-bg); border-color: var(--success); }
+  .rec-banner.rec-caution { background: var(--gold-light); border-color: var(--gold); }
+  .rec-banner.rec-no { background: var(--danger-bg); border-color: var(--terracotta); }
+  .rec-icon { font-size: 20px; }
+  .rec-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .rec-text { font-size: 13px; color: var(--warm-dark); margin-top: 1px; }
+
+  /* SCORE GRID */
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .score-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .score-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .score-card.sc-good::after { background: var(--success); }
+  .score-card.sc-warn::after { background: var(--gold); }
+  .score-card.sc-bad::after { background: var(--terracotta); }
+  .score-card.sc-unknown::after { background: #ccc; }
+  .score-card-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--warm-dark);
+    line-height: 1.1;
+  }
+  .score-card-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .score-card-weight {
+    font-size: 10px;
+    color: var(--sage);
+    margin-top: 2px;
+  }
+
+  /* SECTION BLOCKS */
+  .section-block {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--cream);
+  }
+  .section-icon { font-size: 16px; }
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--warm-dark);
+  }
+  .section-body { padding: 18px 20px; }
+
+  /* FINDINGS */
+  .finding-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .finding-item:last-child { border-bottom: none; }
+  .finding-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .fd-good { background: var(--success); }
+  .fd-warn { background: var(--gold); }
+  .fd-bad { background: var(--terracotta); }
+  .fd-info { background: var(--navy); }
+  .finding-content {}
+  .finding-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--warm-dark);
+    margin-bottom: 2px;
+  }
+  .finding-detail {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .finding-src {
+    font-size: 11px;
+    color: var(--sage);
+    margin-top: 3px;
+  }
+
+  /* SIGNAL PILLS */
+  .signals-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .signal-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+  .sp-green { background: var(--success-bg); border-color: rgba(45,106,45,0.3); color: var(--success); }
+  .sp-red { background: var(--danger-bg); border-color: rgba(139,26,26,0.3); color: var(--danger); }
+  .sp-gold { background: var(--gold-light); border-color: rgba(196,150,58,0.3); color: var(--warning); }
+  .sp-grey { background: #f5f5f5; border-color: #ddd; color: #666; }
+
+  /* POSITIONING BLOCK */
+  .positioning-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .pos-card {
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .pos-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .pos-best .pos-card-label { color: var(--success); }
+  .pos-avoid .pos-card-label { color: var(--terracotta); }
+  .pos-card-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--warm-dark);
+    font-style: italic;
+  }
+
+  /* GAPS */
+  .gaps-list {
+    list-style: none;
+  }
+  .gaps-list li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .gaps-list li:last-child { border-bottom: none; }
+  .gap-icon { font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+
+  /* QUOTES */
+  .quote-block {
+    background: var(--cream);
+    border-left: 3px solid var(--sage);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 10px;
+  }
+  .quote-block:last-child { margin-bottom: 0; }
+  .quote-text {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--warm-dark);
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+  .quote-attr {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* MARKETING GAP */
+  .gap-analysis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .gap-col-header {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .gap-claims .gap-col-header { color: var(--navy); }
+  .gap-reality .gap-col-header { color: var(--terracotta); }
+  .gap-item {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 6px;
+  }
+  .gap-item:last-child { border-bottom: none; }
+
+  /* EXPORT */
+  .export-bar {
+    display: flex;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+  .export-btn {
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .export-btn-primary {
+    background: var(--warm-dark);
+    color: white;
+    border-color: var(--warm-dark);
+  }
+  .export-btn-primary:hover { background: #2a2a28; }
+  .export-btn-secondary {
+    background: white;
+    color: var(--warm-dark);
+    border-color: var(--border-strong);
+  }
+  .export-btn-secondary:hover { background: var(--cream); }
+
+  /* CONFIDENCE BADGE */
+  .confidence-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .confidence-bar-wrap {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .confidence-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--sage);
+    transition: width 0.6s ease;
+  }
+
+  /* RISK LEVEL TAG */
+  .risk-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .risk-low { background: var(--success-bg); color: var(--success); }
+  .risk-moderate { background: var(--gold-light); color: var(--warning); }
+  .risk-high { background: var(--danger-bg); color: var(--danger); }
+  .risk-unknown { background: #f0f0f0; color: #666; }
+
+  /* ERROR STATE */
+  .error-banner {
+    background: var(--danger-bg);
+    border: 1px solid rgba(196,99,58,0.3);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--danger);
+    display: none;
+  }
+
+  @media print {
+    .input-panel { display: none; }
+    .main-layout { grid-template-columns: 1fr; }
+    .output-panel { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="header-eyebrow">CareCircle · Internal Intelligence System</div>
+  <div class="header-title">Provider Intelligence Engine</div>
+  <div class="header-sub">Multi-source triangulation. Regulatory + clinical + staffing + experience analysis. Evidence-only scoring.</div>
+</div>
+
+<div class="main-layout">
+
+  <!-- LEFT: INPUT PANEL -->
+  <div class="input-panel">
+    <div class="panel-label">Provider Input</div>
+
+    <div class="field-group">
+      <label class="field-label">Provider Name</label>
+      <input class="field-input" id="providerName" type="text" placeholder="e.g. Sunrise Senior Living">
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">City, State</label>
+      <input class="field-input" id="providerLocation" type="text" placeholder="e.g. Pensacola, FL">
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Provider Type</label>
+      <select class="field-input" id="providerType">
+        <option value="">Select type...</option>
+        <option>Assisted Living Facility (ALF)</option>
+        <option>Skilled Nursing Facility (SNF)</option>
+        <option>Memory Care</option>
+        <option>Non-Medical Home Care</option>
+        <option>Home Health Agency</option>
+        <option>Hospice</option>
+        <option>Adult Day Services</option>
+        <option>Independent Living</option>
+        <option>Continuing Care Retirement Community (CCRC)</option>
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Additional Context <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <textarea class="field-input" id="providerContext" rows="3" placeholder="Known pricing, referrals, concerns, ownership details..." style="resize:vertical;"></textarea>
+    </div>
+
+    <button class="analyze-btn" id="analyzeBtn" onclick="runAnalysis()">
+      <span class="btn-icon">⚡</span> Run Intelligence Analysis
+    </button>
+
+    <div class="error-banner" id="errorBanner"></div>
+
+    <!-- SCORING FORMULA -->
+    <div class="formula-block">
+      <div class="formula-title">Scoring Formula — Weights</div>
+      <div class="formula-row"><span>Compliance & Safety</span><span class="formula-weight">25%</span></div>
+      <div class="formula-row"><span>Clinical Risk</span><span class="formula-weight">20%</span></div>
+      <div class="formula-row"><span>Staffing Stability</span><span class="formula-weight">20%</span></div>
+      <div class="formula-row"><span>Family Experience</span><span class="formula-weight">15%</span></div>
+      <div class="formula-row"><span>Pricing Fairness</span><span class="formula-weight">8%</span></div>
+      <div class="formula-row"><span>Transparency</span><span class="formula-weight">7%</span></div>
+      <div class="formula-row"><span>Ownership Risk</span><span class="formula-weight">5%</span></div>
+      <div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;" class="formula-row"><span><strong>Unknown data penalty</strong></span><span class="formula-weight" style="color:var(--terracotta)">−0.5 ea.</span></div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend-block">
+      <div class="legend-title">Score Legend</div>
+      <div class="legend-row"><div class="legend-dot dot-green"></div>8.0–10.0 · Recommend</div>
+      <div class="legend-row"><div class="legend-dot dot-gold"></div>5.5–7.9 · Recommend with Caution</div>
+      <div class="legend-row"><div class="legend-dot dot-red"></div>Below 5.5 · Do Not Recommend</div>
+      <div class="legend-row"><div class="legend-dot dot-grey"></div>Unknown = Penalized as Risk</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: OUTPUT PANEL -->
+  <div class="output-panel" id="outputPanel">
+
+    <!-- EMPTY STATE -->
+    <div class="state-empty" id="stateEmpty">
+      <div class="state-icon">🔍</div>
+      <div class="state-title">No Analysis Running</div>
+      <div class="state-desc">Enter a provider name, location, and type. The engine will pull and score across regulatory, clinical, staffing, experience, pricing, and ownership signals.</div>
+    </div>
+
+    <!-- LOADING STATE -->
+    <div class="state-loading" id="stateLoading">
+      <div class="loading-spinner"></div>
+      <div class="loading-text" id="loadingText">Pulling regulatory data...</div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-wrap" id="stateResults"></div>
+
+  </div>
+</div>
+
+<script>
+const LOADING_MESSAGES = [
+  "Pulling AHCA license status...",
+  "Cross-referencing CMS inspection records...",
+  "Analyzing staffing signals...",
+  "Scanning family reviews across platforms...",
+  "Checking ownership structure...",
+  "Detecting clinical risk patterns...",
+  "Pricing intelligence scan...",
+  "Running marketing vs reality gap analysis...",
+  "Triangulating findings...",
+  "Generating CareCircle score..."
+];
+
+let loadingInterval;
+let msgIndex = 0;
+
+function startLoading() {
+  msgIndex = 0;
+  document.getElementById('loadingText').textContent = LOADING_MESSAGES[0];
+  loadingInterval = setInterval(() => {
+    msgIndex = (msgIndex + 1) % LOADING_MESSAGES.length;
+    document.getElementById('loadingText').textContent = LOADING_MESSAGES[msgIndex];
+  }, 2200);
+}
+
+function stopLoading() {
+  clearInterval(loadingInterval);
+}
+
+function showState(state) {
+  document.getElementById('stateEmpty').style.display = state === 'empty' ? 'flex' : 'none';
+  document.getElementById('stateLoading').style.display = state === 'loading' ? 'flex' : 'none';
+  document.getElementById('stateResults').style.display = state === 'results' ? 'block' : 'none';
+}
+
+async function runAnalysis() {
+  const name = document.getElementById('providerName').value.trim();
+  const location = document.getElementById('providerLocation').value.trim();
+  const type = document.getElementById('providerType').value.trim();
+  const context = document.getElementById('providerContext').value.trim();
+  const errBanner = document.getElementById('errorBanner');
+
+  errBanner.style.display = 'none';
+
+  if (!name || !location || !type) {
+    errBanner.textContent = 'Please enter provider name, location, and type before running analysis.';
+    errBanner.style.display = 'block';
+    return;
+  }
+
+  document.getElementById('analyzeBtn').disabled = true;
+  showState('loading');
+  startLoading();
+
+  const systemPrompt = `You are a senior healthcare intelligence analyst building a high-integrity provider profile for CareCircle.
+
+Your objective is NOT to summarize. Your objective is to EXPOSE REALITY using public, semi-public, and inferable data.
+
+STRICT RULES:
+- Do NOT fabricate data. If unknown → say UNKNOWN.
+- Prefer patterns over anecdotes.
+- Highlight contradictions clearly.
+- Be skeptical of marketing claims.
+- Assume families are making high-stakes decisions.
+- Unknown data must penalize scores. Do not inflate.
+- Safety and staffing must be heavily weighted.
+
+SCORING FORMULA (weights):
+- Compliance & Safety: 25%
+- Clinical Risk: 20%
+- Staffing Stability: 20%
+- Family Experience: 15%
+- Pricing Fairness: 8%
+- Transparency: 7%
+- Ownership Risk: 5%
+- Penalty: −0.5 per significant unknown data gap
+- Overall score cannot exceed 10.0, cannot be below 1.0
+
+DATA SCHEMA — Return ONLY a valid JSON object matching this exact schema. No markdown, no commentary, no extra text. Only the JSON object.
+
+{
+  "name": "Full provider name",
+  "loc": "City, State",
+  "type": "Provider type",
+  "founded": null or year as number,
+  "ownership": "Description of ownership type and owner",
+  "scores": {
+    "compliance": "X.X/10",
+    "clinical": "X.X/10",
+    "staffing": "X.X/10",
+    "family_experience": "X.X/10",
+    "pricing": "X.X/10",
+    "transparency": "X.X/10",
+    "ownership_risk": "X.X/10",
+    "overall": "X.X"
+  },
+  "score_colors": {
+    "compliance": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "clinical": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "staffing": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "family_experience": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "pricing": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "transparency": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "ownership_risk": "sc-good|sc-warn|sc-bad|sc-unknown",
+    "overall": "sc-good|sc-warn|sc-bad"
+  },
+  "clinical_risk_level": "LOW|MODERATE|HIGH|UNKNOWN",
+  "recommendation": "RECOMMEND|RECOMMEND_WITH_CAUTION|DO_NOT_RECOMMEND",
+  "confidence_pct": 0-100,
+  "green": [
+    {"t": "Short strength title", "b": "Evidence-backed detail"}
+  ],
+  "red": [
+    {"t": "Short concern title", "b": "Evidence-backed detail"}
+  ],
+  "findings": [
+    {"t": "good|warn|bad|info", "title": "Finding title", "detail": "Specific detail", "src": "Source name"}
+  ],
+  "quotes": [
+    {"t": "Quote text (real if findable, skip if not)", "a": "Attribution — platform, stars, reviewer"}
+  ],
+  "marketing_claims": ["Claim 1", "Claim 2", "Claim 3"],
+  "reality_signals": ["Reality 1", "Reality 2", "Reality 3"],
+  "staffing_risk_patterns": ["Pattern 1", "Pattern 2"],
+  "best_for": "One sentence: who this provider is best for",
+  "avoid_if": "One sentence: who should avoid this provider",
+  "compare_note": "2-3 sentence competitive context and summary",
+  "gaps": "What we cannot verify — specific data gaps",
+  "alternatives_note": "Any better alternatives to suggest, or null"
+}
+
+Score color rules:
+- sc-good: 7.5+
+- sc-warn: 5.0–7.4
+- sc-bad: below 5.0
+- sc-unknown: data genuinely unavailable
+
+Recommendation rules:
+- RECOMMEND: overall 8.0+
+- RECOMMEND_WITH_CAUTION: 5.5–7.9
+- DO_NOT_RECOMMEND: below 5.5
+
+Use web search to find real data before scoring. Cross-reference: FL AHCA/FHF (quality.healthfinder.fl.gov), CMS Care Compare (medicare.gov/care-compare), Google reviews, Indeed/Glassdoor, Caring.com, A Place for Mom, Seniorly, BBB, news articles, OIG exclusion list.`;
+
+  const userMessage = `Analyze this provider:
+Provider Name: ${name}
+Location: ${location}
+Type: ${type}
+${context ? `Additional context: ${context}` : ''}
+
+Return ONLY the JSON object. No other text.`;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 4000,
+        tools: [{ "type": "web_search_20250305", "name": "web_search" }],
+        system: systemPrompt,
+        messages: [{ role: "user", content: userMessage }]
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error.message || 'API error');
+    }
+
+    // Extract text from content blocks
+    const fullText = data.content
+      .map(block => block.type === 'text' ? block.text : '')
+      .filter(Boolean)
+      .join('\n');
+
+    // Parse JSON — strip any markdown fences if present
+    let clean = fullText.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+    // Find first { to last }
+    const startIdx = clean.indexOf('{');
+    const endIdx = clean.lastIndexOf('}');
+    if (startIdx === -1 || endIdx === -1) throw new Error('No JSON found in response');
+    clean = clean.substring(startIdx, endIdx + 1);
+
+    const profile = JSON.parse(clean);
+
+    stopLoading();
+    renderResults(profile);
+
+  } catch (err) {
+    stopLoading();
+    showState('empty');
+    errBanner.textContent = `Analysis failed: ${err.message}. Check provider name and try again.`;
+    errBanner.style.display = 'block';
+    document.getElementById('analyzeBtn').disabled = false;
+  }
+}
+
+function getScClass(sc) {
+  if (!sc) return 'sc-unknown';
+  return sc;
+}
+
+function getBandClass(overall) {
+  const n = parseFloat(overall);
+  if (n >= 8.0) return 'band-green';
+  if (n >= 5.5) return 'band-gold';
+  return 'band-red';
+}
+
+function getBandLabel(overall) {
+  const n = parseFloat(overall);
+  if (n >= 8.0) return 'Strong';
+  if (n >= 7.0) return 'Acceptable';
+  if (n >= 5.5) return 'Caution';
+  return 'Risk';
+}
+
+function getRecClass(rec) {
+  if (rec === 'RECOMMEND') return 'rec-yes';
+  if (rec === 'RECOMMEND_WITH_CAUTION') return 'rec-caution';
+  return 'rec-no';
+}
+
+function getRecIcon(rec) {
+  if (rec === 'RECOMMEND') return '✅';
+  if (rec === 'RECOMMEND_WITH_CAUTION') return '⚠️';
+  return '🚫';
+}
+
+function getRecLabel(rec) {
+  if (rec === 'RECOMMEND') return 'Recommend';
+  if (rec === 'RECOMMEND_WITH_CAUTION') return 'Recommend with Caution';
+  return 'Do Not Recommend';
+}
+
+function getRiskClass(level) {
+  if (!level) return 'risk-unknown';
+  const l = level.toUpperCase();
+  if (l === 'LOW') return 'risk-low';
+  if (l === 'MODERATE') return 'risk-moderate';
+  if (l === 'HIGH') return 'risk-high';
+  return 'risk-unknown';
+}
+
+function findingDotClass(t) {
+  if (t === 'good') return 'fd-good';
+  if (t === 'warn') return 'fd-warn';
+  if (t === 'bad') return 'fd-bad';
+  return 'fd-info';
+}
+
+function renderResults(p) {
+  const container = document.getElementById('stateResults');
+  const overall = p.scores?.overall || '?';
+  const rec = p.recommendation || 'RECOMMEND_WITH_CAUTION';
+  const confidence = p.confidence_pct || 50;
+
+  let html = `
+    <!-- PROVIDER HEADER -->
+    <div class="provider-header">
+      <div>
+        <div class="provider-name">${p.name || 'Unknown Provider'}</div>
+        <div class="provider-meta">
+          <span class="meta-tag">${p.loc || ''}</span>
+          <span class="meta-tag">${p.type || ''}</span>
+          ${p.founded ? `<span class="meta-tag">Est. ${p.founded}</span>` : ''}
+          ${p.ownership ? `<span class="meta-tag" style="background:var(--navy-light);color:var(--navy)">${p.ownership}</span>` : ''}
+        </div>
+        <div class="confidence-wrap">
+          <span>Data confidence:</span>
+          <div class="confidence-bar-wrap">
+            <div class="confidence-bar-fill" style="width:${confidence}%"></div>
+          </div>
+          <span><strong>${confidence}%</strong></span>
+        </div>
+      </div>
+      <div class="master-score-block">
+        <div class="master-score-num">${overall}</div>
+        <div class="master-score-label">CareCircle Score</div>
+        <div class="score-band ${getBandClass(overall)}">${getBandLabel(overall)}</div>
+      </div>
+    </div>
+
+    <!-- RECOMMENDATION BANNER -->
+    <div class="rec-banner ${getRecClass(rec)}">
+      <div class="rec-icon">${getRecIcon(rec)}</div>
+      <div>
+        <div class="rec-label">${getRecLabel(rec)}</div>
+        <div class="rec-text">${p.compare_note || ''}</div>
+      </div>
+    </div>
+
+    <!-- SCORE CARDS -->
+    <div class="score-grid">
+      ${[
+        {key:'compliance', label:'Compliance & Safety', weight:'25%'},
+        {key:'clinical', label:'Clinical Risk', weight:'20%'},
+        {key:'staffing', label:'Staffing Stability', weight:'20%'},
+        {key:'family_experience', label:'Family Experience', weight:'15%'},
+        {key:'pricing', label:'Pricing Fairness', weight:'8%'},
+        {key:'transparency', label:'Transparency', weight:'7%'},
+        {key:'ownership_risk', label:'Ownership Risk', weight:'5%'},
+      ].map(s => `
+        <div class="score-card ${getScClass(p.score_colors?.[s.key])}">
+          <div class="score-card-num">${p.scores?.[s.key] || 'N/A'}</div>
+          <div class="score-card-label">${s.label}</div>
+          <div class="score-card-weight">${s.weight}</div>
+        </div>
+      `).join('')}
+      <div class="score-card" style="background:var(--warm-dark);">
+        <div class="score-card-num" style="color:white">${overall}</div>
+        <div class="score-card-label" style="color:rgba(255,255,255,0.6)">Overall Score</div>
+        <div class="score-card-weight" style="color:rgba(255,255,255,0.4)">Weighted</div>
+      </div>
+    </div>
+
+    <!-- CLINICAL RISK + STAFFING -->
+    ${(p.clinical_risk_level || p.staffing_risk_patterns?.length) ? `
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-icon">⚕️</span>
+        <span class="section-title">Clinical Risk & Staffing Signals</span>
+        ${p.clinical_risk_level ? `<span class="risk-tag ${getRiskClass(p.clinical_risk_level)}" style="margin-left:auto">Clinical Risk: ${p.clinical_risk_level}</span>` : ''}
+      </div>
+      <div class="section-body">
+        ${p.staffing_risk_patterns?.length ? `
+          <div class="signals-row">
+            ${p.staffing_risk_patterns.map(sp => `
+              <span class="signal-pill sp-gold">⚠ ${sp}</span>
+            `).join('')}
+          </div>
+        ` : '<div style="font-size:13px;color:var(--text-muted)">No staffing risk patterns identified or data unavailable.</div>'}
+      </div>
+    </div>` : ''}
+
+    <!-- GREEN SIGNALS -->
+    ${p.green?.length ? `
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-icon">✓</span>
+        <span class="section-title">Verified Strengths</span>
+      </div>
+      <div class="section-body">
+        <div class="signals-row">
+          ${p.green.map(g => `<span class="signal-pill sp-green">✓ ${g.t}</span>`).join('')}
+        </div>
+        ${p.green.map(g => `
+          <div class="finding-item">
+            <div class="finding-dot fd-good"></div>
+            <div class="finding-content">
+              <div class="finding-title">${g.t}</div>
+              <div class="finding-detail">${g.b}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>` : ''}
+
+    <!-- RED FLAGS -->
+    ${p.red?.length ? `
+    <div class="section-block" style="border-color:rgba(196,99,58,0.25)">
+      <div class="section-header" style="background:var(--terra-light)">
+        <span class="section-icon">🚩</span>
+        <span class="section-title" style="color:var(--terracotta)">Concerns & Red Flags</span>
+      </div>
+      <div class="section-body">
+        ${p.red.map(r => `
+          <div class="finding-item">
+            <div class="finding-dot fd-bad"></div>
+            <div class="finding-content">
+              <div class="finding-title">${r.t}</div>
+              <div class="finding-detail">${r.b}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>` : ''}
+
+    <!-- ALL FINDINGS -->
+    ${p.findings?.length ? `
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-icon">📋</span>
+        <span class="section-title">Intelligence Findings</span>
+      </div>
+      <div class="section-body">
+        ${p.findings.map(f => `
+          <div class="finding-item">
+            <div class="finding-dot ${findingDotClass(f.t)}"></div>
+            <div class="finding-content">
+              <div class="finding-title">${f.title}</div>
+              <div class="finding-detail">${f.detail}</div>
+              ${f.src ? `<div class="finding-src">Source: ${f.src}</div>` : ''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>` : ''}
+
+    <!-- FAMILY QUOTES -->
+    ${p.quotes?.length ? `
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-icon">💬</span>
+        <span class="section-title">Family & Staff Voices</span>
+      </div>
+      <div class="section-body">
+        ${p.quotes.map(q => `
+          <div class="quote-block">
+            <div class="quote-text">"${q.t}"</div>
+            <div class="quote-attr">${q.a}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>` : ''}
+
+    <!-- MARKETING vs REALITY -->
+    ${(p.marketing_claims?.length || p.reality_signals?.length) ? `
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-icon">🔎</span>
+        <span class="section-title">Marketing vs Reality Gap</span>
+      </div>
+      <div class="section-body">
+        <div class="gap-analysis">
+          <div class="gap-claims">
+            <div class="gap-col-header">What They Claim</div>
+            ${(p.marketing_claims || []).map(c => `<div class="gap-item"><span>→</span>${c}</div>`).join('')}
+          </div>
+          <div class="gap-reality">
+            <div class="gap-col-header">What Data Shows</div>
+            ${(p.reality_signals || []).map(r => `<div class="gap-item"><span>↳</span>${r}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>` : ''}
+
+    <!-- CareCircle POSITIONING -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-icon">🎯</span>
+        <span class="section-title">CareCircle Positioning</span>
+      </div>
+      <div class="section-body">
+        <div class="positioning-grid">
+          <div class="pos-card pos-best" style="background:var(--success-bg);border-color:rgba(45,106,45,0.2)">
+            <div class="pos-card-label">Best For</div>
+            <div class="pos-card-text">${p.best_for || 'UNKNOWN'}</div>
+          </div>
+          <div class="pos-card pos-avoid" style="background:var(--terra-light);border-color:rgba(196,99,58,0.2)">
+            <div class="pos-card-label">Avoid If</div>
+            <div class="pos-card-text">${p.avoid_if || 'UNKNOWN'}</div>
+          </div>
+        </div>
+        ${p.alternatives_note ? `<div style="font-size:13px;color:var(--text-muted);padding:10px 0;border-top:1px solid var(--border);margin-top:8px"><strong style="color:var(--warm-dark)">Alternatives:</strong> ${p.alternatives_note}</div>` : ''}
+      </div>
+    </div>
+
+    <!-- DATA GAPS -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-icon">⚠</span>
+        <span class="section-title">Data Gaps — What We Cannot Verify</span>
+      </div>
+      <div class="section-body">
+        <ul class="gaps-list">
+          ${(p.gaps || 'No gaps noted.').split('.').filter(g => g.trim().length > 5).map(g => `
+            <li><span class="gap-icon">◻</span>${g.trim()}</li>
+          `).join('')}
+        </ul>
+      </div>
+    </div>
+
+    <!-- EXPORT BAR -->
+    <div class="export-bar">
+      <button class="export-btn export-btn-primary" onclick="window.print()">🖨 Print / PDF Report</button>
+      <button class="export-btn export-btn-secondary" onclick="copyJSON()">📋 Copy Raw JSON</button>
+      <button class="export-btn export-btn-secondary" onclick="resetForm()" style="margin-left:auto">↩ New Analysis</button>
+    </div>
+  `;
+
+  container.innerHTML = html;
+  // Store last profile for copy
+  container._lastProfile = p;
+
+  showState('results');
+  document.getElementById('analyzeBtn').disabled = false;
+}
+
+function copyJSON() {
+  const container = document.getElementById('stateResults');
+  if (container._lastProfile) {
+    navigator.clipboard.writeText(JSON.stringify(container._lastProfile, null, 2));
+  }
+}
+
+function resetForm() {
+  document.getElementById('providerName').value = '';
+  document.getElementById('providerLocation').value = '';
+  document.getElementById('providerType').value = '';
+  document.getElementById('providerContext').value = '';
+  document.getElementById('errorBanner').style.display = 'none';
+  document.getElementById('analyzeBtn').disabled = false;
+  showState('empty');
+}
+</script>
+
+</body>
+</html>
