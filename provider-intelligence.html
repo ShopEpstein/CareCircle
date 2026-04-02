@@ -871,6 +871,7 @@ async function runAnalysis() {
     }
 
     renderResults(data.provider);
+    document.getElementById('analyzeBtn').disabled = false;
 
   } catch (err) {
     stopLoading();
