@@ -377,7 +377,7 @@ textarea{resize:vertical;min-height:90px}
 
 <script>
 const SK='cc_guardian_v1';
-let S={name:'',email:'',bg:'',done:[],scheduled:false};
+let S={name:'',email:'',bg:'',done:[],scheduled:false,onboarded:false,contractAck:false,bgAck:false,payMethod:'',payDetail:''};
 let qA={},qSubmitted=false,schedType='';
 
 function save(){localStorage.setItem(SK+'_'+S.email,JSON.stringify(S))}
@@ -404,6 +404,7 @@ function goBack(){showScreen('screen-dashboard');renderDash()}
 
 // ── MODULES ──────────────────────────────────────────
 const MODS=[
+  {id:'onboarding',title:'Onboarding & Contractor Agreement',desc:'Compensation structure, background screening acknowledgment, contract confirmation, and payment setup. Required before training unlocks.',time:'5 min',order:0,build:buildOnboarding},
   {id:'mission',title:'Mission, Role & What You Are Not',desc:'Why this work matters, what a Guardian actually is, and the boundaries that protect everyone.',time:'10 min',order:1,build:buildMission},
   {id:'legal',title:'Legal Framework & Facility Access',desc:'Florida law, essential caregiver designation, and exactly what to say when staff challenge your presence.',time:'12 min',order:2,build:buildLegal},
   {id:'conduct',title:'Facility Conduct & Neutrality',desc:'How to move through a facility, how to interact with staff, and why building alliances destroys your value.',time:'10 min',order:3,build:buildConduct},
@@ -553,6 +554,83 @@ function notif(msg,type){
 }
 
 // ── MODULE CONTENT ────────────────────────────────────
+
+function buildOnboarding(){
+  const qs=[
+    {q:"Your standard hourly rate as a CareCircle Guardian is:",opts:["$15/hr","$18/hr","$20/hr","$25/hr"],c:2},
+    {q:"Overnight visits (11pm–6am) are paid at:",opts:["$20/hr standard","$25/hr","$30/hr","$34/hr"],c:1},
+    {q:"Overtime (over 40 hours in a calendar week) is paid at:",opts:["1.5x — $30/hr","1.7x — $34/hr","2x — $40/hr","Same as standard"],c:1},
+    {q:"Performance bonuses are:",opts:["Guaranteed after every visit","Awarded at corporate discretion based on report quality and engagement","Paid weekly automatically","A fixed monthly amount"],c:1},
+    {q:"Which is a hard disqualifier for Guardian work?",opts:["A speeding ticket","A misdemeanor from 10 years ago","Any conviction involving elder abuse, neglect, or exploitation","Prior bankruptcy"],c:2}
+  ];
+  return `<div class="eyebrow">Module 0 · Before You Begin</div>
+  <h1>Onboarding &amp; Contractor Agreement</h1>
+  <p class="intro">Complete this module first. Nothing else unlocks until it is done. This covers your pay, your contractor status, background screening requirements, and payment setup.</p>
+  <div class="content-section">
+    <h2>Your Compensation</h2>
+    <table class="data-table">
+      <thead><tr><th>Rate Type</th><th>Amount</th><th>Condition</th></tr></thead>
+      <tbody>
+        <tr><td>Standard</td><td style="font-weight:700;color:var(--green)">$20.00 / hr</td><td>All standard visits</td></tr>
+        <tr class="hl"><td>Overnight</td><td style="font-weight:700;color:var(--green)">$25.00 / hr</td><td>11pm – 6am visits</td></tr>
+        <tr><td>Overtime</td><td style="font-weight:700;color:var(--green)">$34.00 / hr (1.7x)</td><td>Hours over 40 in a calendar week</td></tr>
+        <tr class="hl"><td>Performance Bonus</td><td style="font-weight:600">Corporate discretion</td><td>Report quality, engagement, escalation accuracy</td></tr>
+      </tbody>
+    </table>
+    <div class="callout gold"><strong>Rate review at Beacon rank</strong><p>Guardians who earn Beacon status through field performance are eligible for a comp review. Seraph territory leads receive override compensation on top of visit pay.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Your Contractor Status</h2>
+    <ul>
+      <li>You are a <strong>1099 independent contractor</strong> — not an employee of CareCircle or TransBid LLC.</li>
+      <li>CareCircle does not withhold taxes. You are responsible for all self-employment taxes.</li>
+      <li>No employee benefits, workers compensation, or unemployment insurance.</li>
+      <li>You set your own schedule within assignments you accept.</li>
+      <li>1099-NEC issued for all earnings of $600+ in a calendar year.</li>
+    </ul>
+    <div class="callout red"><strong>Required before your first visit</strong><p>Signed Independent Contractor Agreement + W9 must be submitted to Chase. No payment can be issued without both on file.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Background Screening</h2>
+    <p>The following are hard disqualifiers — no exceptions:</p>
+    <ul>
+      <li>Any conviction involving elder abuse, neglect, or exploitation</li>
+      <li>Any violent felony conviction</li>
+      <li>Any theft or fraud conviction in the last 7 years</li>
+      <li>Sex offender registry listing</li>
+    </ul>
+    <p>All other findings reviewed case-by-case by Chase before clearance is granted.</p>
+  </div>
+  <div class="content-section">
+    <h2>Confirm Your Setup</h2>
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:24px;margin-top:8px">
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Payment Method</label>
+        <select id="ob-pay" onchange="S.payMethod=this.value;save()">
+          <option value="">— Select payment method —</option>
+          <option value="ACH">ACH Direct Deposit (preferred)</option>
+          <option value="Zelle">Zelle (amounts under $500 only)</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Payment Detail (bank name or Zelle phone/email)</label>
+        <input type="text" id="ob-detail" placeholder="e.g. Chase Bank or 850-555-0100" oninput="S.payDetail=this.value;save()">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:14px;font-weight:400;color:var(--text)">
+          <input type="checkbox" id="ob-contract" onchange="S.contractAck=this.checked;save()" style="width:18px;height:18px;margin-top:2px;flex-shrink:0">
+          I confirm I have signed my Independent Contractor Agreement and submitted my W9 to Chase.
+        </label>
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:14px;font-weight:400;color:var(--text)">
+          <input type="checkbox" id="ob-bg" onchange="S.bgAck=this.checked;save()" style="width:18px;height:18px;margin-top:2px;flex-shrink:0">
+          I confirm I do not have any of the four hard disqualifying background conditions listed above.
+        </label>
+      </div>
+    </div>
+  </div>
+  ${buildQuizHTML(qs,'onboarding')}`;
+}
+
 
 function buildMission(){
   const qs=[
