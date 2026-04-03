@@ -331,7 +331,7 @@ const MODS=[
   {id:'b2b_obj',title:'B2B Objection Handling',desc:"Every objection you'll hear and exactly how to move past it — including A Place for Mom.",time:'15 min',roles:['b2b','rsm'],order:5,build:buildB2BObj},
   {id:'b2c_pitch',title:'The B2C Family Outreach Script',desc:"Cold call script and warm lead handling for families with loved ones in facilities.",time:'20 min',roles:['b2c','rsm'],order:4,build:buildB2CPitch},
   {id:'b2c_obj',title:'B2C Objection Handling',desc:"Price pushback, trust objections, and converting hesitant families to a first visit.",time:'15 min',roles:['b2c','rsm'],order:5,build:buildB2CObj},
-  {id:'as_mod',title:'Assisting Seniors: Referral & Handoff',desc:"Who Charles is, what AS offers, and your script for booking the consult.",time:'12 min',roles:['as','b2b','b2c','rsm'],order:4,build:buildAS},
+  {id:'as_mod',title:'Assisting Seniors: Warm Handoff & Placement',desc:"Who Charles is, what AS offers, and your script for booking the consult.",time:'12 min',roles:['as','b2b','b2c','rsm'],order:4,build:buildAS},
   {id:'activity',title:'Activity Tracking & Weekly Reporting',desc:"Reporting requirements, hit list setup, and call log standards.",time:'8 min',roles:['b2b','b2c','as','rsm'],order:6,build:buildActivity},
   {id:'roleplay',title:'Role-Play Prep & Practice Assignment',desc:"What to practice before your live session — do this with a friend or family member.",time:'15 min',roles:['b2b','b2c','as','rsm'],order:7,build:buildRoleplay},
 ];
@@ -482,8 +482,8 @@ function notif(msg,type){
 function buildOrientation(){
   const qs=[
     {q:"CareCircle earns money from facilities the same way A Place for Mom does. True or false?",opts:["True — we earn per placement","False — families pay for advocacy, partners pay for visibility"],c:1},
-    {q:"When a prospect says 'You're just like A Place for Mom,' your first move is:",opts:["Agree and pivot to price","Ask what A Place for Mom charges them per placement","Lead with our 60-day guarantee","Explain our platform features"],c:1},
-    {q:"CareCircle Present is best described as:",opts:["A licensed home care agency","A Medicare billing service","A private-pay advocacy and monitoring service for families","A senior facility referral network"],c:2},
+    {q:"When a prospect says 'You're just like A Place for Mom,' your first move is:",opts:["Agree and pivot to price","Ask what A Place for Mom charges them per placement","Lead with our 30-day satisfaction guarantee","Explain our platform features"],c:1},
+    {q:"CareCircle Present is best described as:",opts:["A licensed home care agency","A Medicare billing service","A private-pay advocacy and monitoring service for families","A senior care placement directory"],c:2},
     {q:"You should never apologize for CareCircle Present being private pay because:",opts:["It sounds unprofessional","Private pay is what keeps us working for the family — not a billing department","Most families prefer private pay","Insurance is too complicated to explain"],c:1}
   ];
   return `<div class="eyebrow">Module 1 · Universal</div>
@@ -491,13 +491,13 @@ function buildOrientation(){
   <p class="intro">Before your first call, you need to understand what CareCircle actually is — and why the mission matters more than any script. Reps who sell from belief close more than reps who sell from a pitch deck.</p>
   <div class="content-section">
     <h2>Two Businesses Under One Brand</h2>
-    <p><strong>CareCircle Network</strong> is a transparency and coordination platform for senior care agencies and facilities on the Gulf Coast. We publish quality intelligence on providers and connect families with vetted partners. Agencies pay monthly membership fees for visibility and positioning — not for referrals.</p>
+    <p><strong>CareCircle Network</strong> is a transparency and coordination platform for senior care agencies and facilities on the Gulf Coast. We publish quality intelligence on providers and connect families with vetted partners through our own aggressive marketing. Agencies pay monthly membership fees for visibility and positioning — not per placement.</p>
     <p><strong>CareCircle Present</strong> is a boutique, private-pay strategic advocacy service for families with loved ones in care facilities. We go inside facilities — unannounced — and provide written intelligence reports and advocacy. Families pay us directly. We work for families, never facilities.</p>
   </div>
   <div class="content-section">
     <h2>The One Sentence That Wins Deals</h2>
     <div class="callout"><strong>Say this and mean it</strong><p>"CareCircle works for families. Not facilities."</p></div>
-    <p>Every competitor — A Place for Mom, Senior Helpers, every referral network — is paid by the facility. They have a financial incentive to place people, not advocate for them. We don't take facility money for referrals. That alignment is your competitive weapon. Use it.</p>
+    <p>Every competitor — A Place for Mom, Senior Helpers, every placement network — is paid by the facility. They have a financial incentive to place people, not advocate for them. We don't take facility money for placements. That alignment is your competitive weapon. Use it.</p>
   </div>
   <div class="content-section">
     <h2>Our Founding Partner</h2>
@@ -515,7 +515,7 @@ function buildProducts(){
   const qs=[
     {q:"The Network Partner setup fee is:",opts:["$299","$499","$999","$179/mo"],c:1},
     {q:"The Featured Partner setup fee is:",opts:["$499","$699","$999","$1,499"],c:2},
-    {q:"To close a B2B deal, you CAN:",opts:["Reduce the monthly rate","Waive or reduce the setup fee","Promise a specific referral count","Make HIPAA compliance claims"],c:1},
+    {q:"To close a B2B deal, you CAN:",opts:["Reduce the monthly rate","Waive or reduce the setup fee","Promise a guaranteed family inquiry count","Make HIPAA compliance claims"],c:1},
     {q:"When quoting Guardian plan prices, you must:",opts:["Give exact figures","Say 'starting at' or 'from' — Chase scopes each engagement","Give the full range $799–$2,500","Wait for Chase to quote"],c:1},
     {q:"CareCircle Present is:",opts:["Billable to Medicare","Covered by most LTC insurance","100% private pay by design","Medicaid waiver eligible"],c:2}
   ];
@@ -535,7 +535,7 @@ function buildProducts(){
     <p>Free Directory Listing exists — no commission, but use it as a foot in the door.</p>
     <h3>What You Can Negotiate</h3>
     <ul><li><strong>Setup fee:</strong> Can be reduced or waived. If you waive it, you waive your commission on it.</li><li><strong>Annual plan:</strong> Pitch as "two months free."</li><li><strong>Monthly rate:</strong> Fixed. Cannot be changed.</li></ul>
-    <div class="callout red"><strong>Never promise these things</strong><p>A specific referral count. A live AI demo. HIPAA compliance claims. That we are a referral service.</p></div>
+    <div class="callout red"><strong>Never promise these things</strong><p>A guaranteed family inquiry count. A live AI demo. HIPAA compliance claims. That we are a placement service.</p></div>
   </div>
   <div class="content-section">
     <h2>Product 2 — CareCircle Present (B2C)</h2>
@@ -554,7 +554,7 @@ function buildProducts(){
     <div class="callout"><strong>Pricing rules — no exceptions</strong><p>Always say "from" or "starting at." Never quote a ceiling. Never discount without Chase's approval. Chase scopes every Guardian engagement personally.</p></div>
   </div>
   <div class="content-section">
-    <h2>Product 3 — Assisting Seniors Referrals</h2>
+    <h2>Product 3 — Assisting Seniors Warm Handoff</h2>
     <p>Your role: <strong>lead generation and warm handoff only.</strong> When a family needs in-home care, book a consult with Charles Lillo. Do not quote pricing. Do not describe packages. Make the introduction and book the call.</p>
     <div class="callout green"><strong>The hybrid play — two commissions, one conversation</strong><p>Assisting Seniors bills Medicare and LTC insurance. CareCircle Present does not. When a family has both needs, you can earn on both lines simultaneously.</p></div>
   </div>
@@ -680,7 +680,7 @@ If unavailable:
 
 "Network Partner — $499 setup, $179/month. Verified badge, standard placement, coordination tools."
 "Featured Partner — $999 setup, $399/month. Priority placement, curated profile, AI platform access."
-"Both backed by a 60-day guarantee — if we don't send you a single referral in 60 days, full refund."
+"Both backed by a 30-day satisfaction guarantee — if you're not satisfied with the value in the first 30 days, full refund."
 
 [Pause. Let them respond.]
 
@@ -692,9 +692,9 @@ If unavailable:
 function buildB2BObj(){
   const qs=[
     {q:"'We already work with A Place for Mom.' Your opener is:",opts:["Tell them APLM is bad","Ask what A Place for Mom charges them per placement","Immediately pitch our pricing","Lead with the 60-day guarantee"],c:1},
-    {q:"'We don't need a referral service.' Your reframe is:",opts:["We are a referral service, just cheaper","We're not a referral service — we're a visibility and positioning platform","We'll send more referrals than anyone","Agree and end the call"],c:1},
+    {q:"'We don't need another marketing partner.' Your reframe is:",opts:["We're a marketing vendor, just cheaper","We're not a marketing vendor — we're a care intelligence and positioning platform","We'll drive more volume than anyone","Agree and end the call"],c:1},
     {q:"'I need to run this by my owner.' You should:",opts:["Say call me when they decide","Offer to send a one-pager and get a specific follow-up date","Push to close now","Ask for the owner's direct number"],c:1},
-    {q:"The 60-day guarantee is:",opts:["A credit if no referrals in 60 days","A full refund if no qualified referral in 60 days","30 days free service","A rate reduction"],c:1}
+    {q:"The 30-day satisfaction guarantee means:",opts:["A credit if they're not happy","A full refund if they're not satisfied with the value in the first 30 days","30 days of free service before billing","A rate reduction after 30 days"],c:1}
   ];
   return `<div class="eyebrow">Module 5 · B2B Track</div>
   <h1>B2B Objection Handling</h1>
@@ -708,13 +708,13 @@ function buildB2BObj(){
 
 "This isn't replacing what you have — it's a second channel that costs a fraction."</div>
 
-    <h3>2. "We don't need a referral service."</h3>
-    <div class="script-block"><span class="script-label">Response</span>"I want to clarify — we're not a referral service in the traditional sense. We publish quality intelligence about providers. Families research facilities on our platform before they make a decision. Your profile is already there whether you're a member or not."
+    <h3>2. "We don't need another marketing partner."</h3>
+    <div class="script-block"><span class="script-label">Response</span>"Understood — we're not a marketing vendor or a placement service. We're a care intelligence platform. Families research facilities on our platform before they make a decision. Your profile is already there whether you're a member or not. We also run our own aggressive outreach to connect families with the best-fit providers in our network."
 
 "The question is whether you control how you show up when families are researching you. Right now, competitors who are Featured Partners show up above you in every family search."</div>
 
-    <h3>3. "How do I know you'll actually send referrals?"</h3>
-    <div class="script-block"><span class="script-label">Response</span>"Here's our answer: 60-day guarantee. If we don't send you a single qualified referral in your first 60 days, you get a full refund. Not a credit — a refund. I'm confident enough to put that in writing."</div>
+    <h3>3. "How do I know families will actually find me through you?"</h3>
+    <div class="script-block"><span class="script-label">Response</span>"Here's our answer: 30-day satisfaction guarantee. If you're not satisfied with the value in your first 30 days, you get a full refund. Not a credit — a refund. I'm confident enough to put that in writing."</div>
 
     <h3>4. "Your price is too high."</h3>
     <div class="script-block"><span class="script-label">Response</span>"For a home care agency, average client lifetime value is around $11,000. One family we send you — one — more than covers your entire year of Network membership ($2,147 total). That's 20% of one client."
@@ -722,14 +722,14 @@ function buildB2BObj(){
 [Still stuck on setup fee:] "I have some flexibility on the setup fee if that's the friction point. I'd rather get you started and prove value than lose you on the entry cost. What would it take to make this a yes today?"</div>
 
     <h3>5. "I need to run this by my owner."</h3>
-    <div class="script-block"><span class="script-label">Response</span>"Absolutely — let me send you a one-page summary with our pricing, the 60-day guarantee, and your profile link. What's the best email? And when will you have a chance to discuss it — I'll follow up [specific day]."
+    <div class="script-block"><span class="script-label">Response</span>"Absolutely — let me send you a one-page summary with our pricing, the 30-day satisfaction guarantee, and your profile link. What's the best email? And when will you have a chance to discuss it — I'll follow up [specific day]."
 
 [Get the specific follow-up date. Call on that exact day.]</div>
 
     <h3>6. "We tried something like this before and it didn't work."</h3>
     <div class="script-block"><span class="script-label">Response</span>"I appreciate you telling me that — what happened?"
 
-[Listen fully. Then:] "What you're describing is exactly why we do two things differently: first, we use real quality data from AHCA citations and CMS records — not paid placement. Second, the 60-day guarantee. We put the risk on ourselves."</div>
+[Listen fully. Then:] "What you're describing is exactly why we do two things differently: first, we use real quality data from AHCA citations and CMS records — not paid placement. Second, the 30-day satisfaction guarantee. We put the risk on ourselves."</div>
   </div>
   <div class="callout green"><strong>Universal rule</strong><p>Never say "I'll follow up later" to "I need to think about it." Ask: "What specifically is giving you pause?" Get a specific follow-up date before hanging up.</p></div>
   ${buildQuizHTML(qs,'b2b_obj')}`;
@@ -822,7 +822,7 @@ function buildAS(){
     {q:"Charles Lillo has operated Assisting Seniors for:",opts:["5 years","17+ years","3 years","10 years"],c:1}
   ];
   return `<div class="eyebrow">Module 4 · Assisting Seniors Track</div>
-  <h1>Assisting Seniors: Referral &amp; Handoff</h1>
+  <h1>Assisting Seniors: Warm Handoff &amp; Placement</h1>
   <p class="intro">Charles Lillo's 17 years of credibility on the Gulf Coast is your credibility on every family call. Know when to deploy this and how to make the handoff clean.</p>
   <div class="content-section">
     <h2>Who Charles Is</h2>
