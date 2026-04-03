@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareCircle Training Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0f1f2e;--navy-mid:#1a3248;--gold:#c8933a;--gold-light:#e8b05a;--cream:#f5f0e8;--cream-dark:#ede5d4;--green:#2e7d5a;--green-light:#3aa870;--red:#c0392b;--text:#1a1a1a;--text-muted:#5a6a78;--border:#ddd5c4;--white:#ffffff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);min-height:100vh;color:var(--text)}
+.screen{display:none;min-height:100vh}
+.screen.active{display:flex;flex-direction:column}
+
+/* LOGIN */
+#screen-login{background:var(--navy);align-items:center;justify-content:center;padding:40px 20px}
+.login-wrap{width:100%;max-width:420px}
+.login-logo{text-align:center;margin-bottom:40px}
+.login-mark{width:56px;height:56px;background:var(--gold);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:26px}
+.login-logo h1{font-family:'Playfair Display',serif;color:#fff;font-size:26px;font-weight:600}
+.login-logo p{color:rgba(255,255,255,.45);font-size:13px;margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
+.login-card{background:var(--cream);border-radius:18px;padding:36px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.login-card h2{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:6px}
+.login-card .sub{font-size:13px;color:var(--text-muted);margin-bottom:28px}
+.form-group{margin-bottom:18px}
+label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:7px}
+input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+textarea{resize:vertical;min-height:90px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;border:none;transition:all .2s;text-decoration:none}
+.btn-primary{background:var(--navy);color:#fff;width:100%}
+.btn-primary:hover{background:var(--navy-mid)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:var(--gold-light)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-light)}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--navy);background:var(--cream)}
+.btn-sm{padding:7px 14px;font-size:13px;border-radius:8px}
+.login-note{text-align:center;margin-top:20px;font-size:13px;color:rgba(255,255,255,.4)}
+
+/* TOPBAR */
+.topbar{background:var(--navy);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-logo{font-family:'Playfair Display',serif;color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;gap:10px}
+.topbar-dot{width:8px;height:8px;background:var(--gold);border-radius:50%}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.topbar-user{color:rgba(255,255,255,.7);font-size:13px}
+.topbar-user span{color:var(--gold-light);font-weight:600}
+
+/* DASHBOARD */
+#screen-dashboard{background:var(--cream)}
+.dash-body{flex:1;padding:36px 32px;max-width:1100px;margin:0 auto;width:100%}
+.dash-header{margin-bottom:32px}
+.dash-header h2{font-family:'Playfair Display',serif;font-size:30px;color:var(--navy);font-weight:700}
+.dash-header p{color:var(--text-muted);font-size:15px;margin-top:6px}
+.role-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:.3px;margin-top:10px}
+.badge-b2b{background:#dbeafe;color:#1e40af}
+.badge-b2c{background:#d1fae5;color:#065f46}
+.badge-as{background:#ede9fe;color:#5b21b6}
+.badge-rsm{background:#fef3c7;color:#92400e}
+
+/* PROGRESS */
+.progress-wrap{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;gap:20px}
+.progress-info{flex:1}
+.progress-info h4{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px}
+.progress-bar-track{width:100%;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--gold);border-radius:4px;transition:width .5s ease}
+.progress-pct{font-size:22px;font-family:'Playfair Display',serif;font-weight:700;color:var(--gold);flex-shrink:0}
+
+/* MODULE CARDS */
+.section-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px}
+.module-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;margin-bottom:36px}
+.module-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:22px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.module-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.module-card.locked{opacity:.55;cursor:not-allowed}
+.module-card.locked:hover{transform:none;border-color:var(--border);box-shadow:none}
+.module-card.completed{border-color:var(--green);background:#f0faf5}
+.module-card.completed::after{content:'✓';position:absolute;top:14px;right:14px;width:24px;height:24px;background:var(--green);color:#fff;border-radius:50%;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.module-num{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.module-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.3}
+.module-desc{font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
+.module-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--text-muted)}
+.module-meta .pill{background:var(--cream);padding:3px 9px;border-radius:20px;font-weight:500}
+
+/* SCHEDULE CARD */
+.schedule-card{background:var(--navy);border-radius:14px;padding:28px;color:#fff;display:flex;align-items:center;gap:24px;margin-bottom:36px}
+.schedule-icon{font-size:36px;flex-shrink:0}
+.schedule-info h3{font-family:'Playfair Display',serif;font-size:20px;color:#fff;margin-bottom:6px}
+.schedule-info p{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:16px}
+
+/* MODULE SCREEN */
+#screen-module{background:var(--cream)}
+.module-topbar{background:var(--navy);padding:0 32px;height:60px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.back-btn{background:none;border:none;color:rgba(255,255,255,.6);font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px;padding:0;transition:color .2s}
+.back-btn:hover{color:#fff}
+.module-topbar-title{color:#fff;font-size:15px;font-weight:600;flex:1}
+.module-content-wrap{flex:1;overflow-y:auto;padding:40px 32px}
+.module-content{max-width:760px;margin:0 auto}
+.module-content h1{font-family:'Playfair Display',serif;font-size:32px;color:var(--navy);margin-bottom:8px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.intro{font-size:16px;color:var(--text-muted);line-height:1.7;margin-bottom:32px;padding-bottom:32px;border-bottom:1.5px solid var(--border)}
+.content-section{margin-bottom:32px}
+.content-section h2{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:14px}
+.content-section h3{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:10px;margin-top:20px}
+.content-section p{font-size:15px;line-height:1.75;color:#333;margin-bottom:12px}
+.content-section ul{margin-left:20px;margin-bottom:16px}
+.content-section ul li{font-size:15px;line-height:1.7;color:#333;margin-bottom:6px}
+.callout{border-left:4px solid var(--gold);background:#fffbf3;border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+.callout.red{border-color:var(--red);background:#fff5f5}
+.callout.green{border-color:var(--green);background:#f0faf5}
+.callout.navy{border-color:var(--navy);background:#f0f4f8}
+.callout strong{display:block;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;color:var(--navy)}
+.callout p{margin:0;font-size:14px;line-height:1.6}
+.script-block{background:var(--navy);color:#fff;border-radius:12px;padding:24px;margin:20px 0;font-size:14px;line-height:1.85;white-space:pre-wrap;font-family:'DM Sans',sans-serif}
+.script-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:block}
+.price-table{width:100%;border-collapse:collapse;margin:16px 0;border-radius:10px;overflow:hidden;border:1.5px solid var(--border)}
+.price-table th{background:var(--navy);color:#fff;padding:11px 16px;font-size:12px;font-weight:600;text-align:left}
+.price-table td{padding:11px 16px;font-size:14px;border-bottom:1px solid var(--border);background:#fff}
+.price-table tr:last-child td{border-bottom:none}
+.price-table td.money{font-weight:700;color:var(--green)}
+.price-table tr.hl td{background:#fffbf3}
+
+/* QUIZ */
+.quiz-wrap{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:32px;margin-top:32px}
+.quiz-wrap h2{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:6px}
+.quiz-wrap .sub{font-size:14px;color:var(--text-muted);margin-bottom:28px}
+.quiz-question{margin-bottom:28px}
+.q-num{font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:700;color:var(--gold);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:14px;line-height:1.5}
+.option-btn{display:block;width:100%;text-align:left;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;margin-bottom:8px;transition:all .18s;color:var(--text)}
+.option-btn:hover{border-color:var(--gold);background:#fffbf3}
+.option-btn.selected{border-color:var(--navy);background:var(--navy);color:#fff}
+.option-btn.correct{border-color:var(--green);background:#f0faf5;color:var(--green);pointer-events:none;font-weight:600}
+.option-btn.wrong{border-color:var(--red);background:#fff5f5;color:var(--red);pointer-events:none}
+.quiz-result{padding:20px;border-radius:12px;text-align:center;margin-top:20px;display:none}
+.quiz-result.pass{background:#f0faf5;border:2px solid var(--green)}
+.quiz-result.fail{background:#fff5f5;border:2px solid var(--red)}
+.quiz-result h3{font-size:22px;font-weight:700;margin-bottom:6px}
+.quiz-result.pass h3{color:var(--green)}
+.quiz-result.fail h3{color:var(--red)}
+.quiz-result p{font-size:14px;color:var(--text-muted);margin-bottom:16px}
+
+/* SCHEDULE */
+#screen-schedule{background:var(--cream)}
+.schedule-body{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.schedule-modal{background:#fff;border-radius:20px;padding:48px;max-width:560px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.1);text-align:center}
+.schedule-modal .big-icon{font-size:52px;margin-bottom:20px}
+.schedule-modal h2{font-family:'Playfair Display',serif;font-size:28px;color:var(--navy);margin-bottom:10px}
+.schedule-modal p{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:28px}
+.sched-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.sched-option{border:1.5px solid var(--border);border-radius:12px;padding:18px 16px;cursor:pointer;transition:all .2s;text-align:center}
+.sched-option:hover{border-color:var(--gold);background:#fffbf3}
+.sched-option.selected{border-color:var(--navy);background:var(--navy);color:#fff}
+.sched-icon{font-size:24px;margin-bottom:8px}
+.sched-label{font-size:13px;font-weight:600}
+.sched-option.selected .sched-label{color:#fff}
+.sched-desc{font-size:11px;color:var(--text-muted);margin-top:4px}
+.sched-option.selected .sched-desc{color:rgba(255,255,255,.6)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sent-confirm{text-align:center;padding:20px 0}
+.big-check{width:64px;height:64px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:28px;color:#fff}
+.sent-confirm h3{font-family:'Playfair Display',serif;font-size:24px;color:var(--navy);margin-bottom:8px}
+.sent-confirm p{font-size:14px;color:var(--text-muted);line-height:1.7}
+
+/* NOTIF */
+.notif{position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:14px 20px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(80px);opacity:0;transition:all .3s;z-index:9999;max-width:320px}
+.notif.show{transform:translateY(0);opacity:1}
+.notif.green{background:var(--green)}
+
+@media(max-width:640px){
+  .dash-body{padding:24px 16px}
+  .module-grid{grid-template-columns:1fr}
+  .sched-options{grid-template-columns:1fr}
+  .form-2col{grid-template-columns:1fr}
+  .schedule-card{flex-direction:column;text-align:center}
+  .schedule-modal{padding:32px 24px}
+  .topbar,.module-topbar{padding:0 16px}
+  .module-content-wrap{padding:28px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="screen-login" class="screen active">
+  <div id="screen-login" style="display:flex;flex:1;align-items:center;justify-content:center;padding:40px 20px">
+  <div class="login-wrap">
+    <div class="login-logo">
+      <div class="login-mark">🛡</div>
+      <h1>CareCircle Network</h1>
+      <p>Contractor Training Portal</p>
+    </div>
+    <div class="login-card">
+      <h2>Welcome</h2>
+      <p class="sub">Enter your details to access your personalized training track.</p>
+      <div class="form-group"><label>First &amp; Last Name</label><input type="text" id="ln" placeholder="Your full name"></div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="le" placeholder="your@email.com"></div>
+      <div class="form-group">
+        <label>Your Role</label>
+        <select id="lr">
+          <option value="">— Select your role —</option>
+          <option value="b2b">Territory Field Representative (B2B)</option>
+          <option value="b2c">Family Outreach Representative (B2C)</option>
+          <option value="as">Assisting Seniors BDR</option>
+          <option value="rsm">Regional Sales Manager</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="doLogin()" style="margin-top:8px">Access My Training →</button>
+    </div>
+    <p class="login-note">Questions? Text Chase · <span style="color:var(--gold-light)">850-341-4324</span></p>
+  </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="screen-dashboard" class="screen">
+  <div class="topbar">
+    <div class="topbar-logo"><div class="topbar-dot"></div>CareCircle Training Portal</div>
+    <div class="topbar-right">
+      <div class="topbar-user">Welcome, <span id="tb-name">—</span></div>
+      <button class="btn btn-outline btn-sm" onclick="doLogout()">Log out</button>
+    </div>
+  </div>
+  <div class="dash-body">
+    <div class="dash-header">
+      <h2 id="dash-greet">Good morning</h2>
+      <p id="dash-sub">Select a module below. Complete them in order.</p>
+      <div class="role-badge" id="role-badge"></div>
+    </div>
+    <div class="progress-wrap">
+      <div style="font-size:28px">📈</div>
+      <div class="progress-info">
+        <h4>Your Training Progress</h4>
+        <div class="progress-bar-track"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+      <div class="progress-pct" id="prog-pct">0%</div>
+    </div>
+    <div class="section-label">TRAINING MODULES</div>
+    <div class="module-grid" id="mod-grid"></div>
+    <div class="schedule-card" id="sched-card" style="display:none">
+      <div class="schedule-icon">🎯</div>
+      <div class="schedule-info">
+        <h3>You're Ready for Live Training</h3>
+        <p>All modules complete. Schedule your live session with Chase or a Team Lead — role-plays, Q&amp;A, and go-live approval.</p>
+        <button class="btn btn-gold" style="width:auto;padding:12px 28px" onclick="showScreen('screen-schedule')">Schedule My Session →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE VIEWER -->
+<div id="screen-module" class="screen">
+  <div class="module-topbar">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="module-topbar-title" id="mod-topbar-title">Module</div>
+    <div id="mod-status-pill"></div>
+  </div>
+  <div class="module-content-wrap">
+    <div class="module-content" id="mod-body"></div>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<div id="screen-schedule" class="screen">
+  <div class="module-topbar">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="module-topbar-title">Schedule Live Training Session</div>
+  </div>
+  <div class="schedule-body">
+    <div class="schedule-modal" id="sched-modal">
+      <div class="big-icon">📅</div>
+      <h2>Schedule Your Live Session</h2>
+      <p>Pick the format that works best. Chase or a Team Lead will confirm within 24 hours with a calendar invite.</p>
+      <div class="sched-options">
+        <div class="sched-option" onclick="selSched(this,'1:1 with Chase')"><div class="sched-icon">👤</div><div class="sched-label">1:1 with Chase</div><div class="sched-desc">Personal coaching, 30–45 min</div></div>
+        <div class="sched-option" onclick="selSched(this,'Team Lead Session')"><div class="sched-icon">👥</div><div class="sched-label">Team Lead Session</div><div class="sched-desc">With your assigned team lead</div></div>
+        <div class="sched-option" onclick="selSched(this,'Group Zoom Training')"><div class="sched-icon">🖥️</div><div class="sched-label">Group Zoom</div><div class="sched-desc">Next scheduled group session</div></div>
+        <div class="sched-option" onclick="selSched(this,'No Preference')"><div class="sched-icon">🤷</div><div class="sched-label">No Preference</div><div class="sched-desc">Chase assigns best fit</div></div>
+      </div>
+      <div class="form-2col" style="margin-bottom:14px">
+        <div class="form-group"><label>Best Day(s)</label><input type="text" id="s-day" placeholder="Mon, Tue, Wed…"></div>
+        <div class="form-group"><label>Best Time</label><input type="text" id="s-time" placeholder="Mornings, 2–4pm…"></div>
+      </div>
+      <div class="form-group"><label>Anything Chase should know coming in?</label><textarea id="s-notes" placeholder="e.g. I've done role-plays with a friend. Struggling with objection 4. Ready to go live."></textarea></div>
+      <button class="btn btn-gold" style="width:100%;margin-top:8px" onclick="submitSched()">Submit Request →</button>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────
+const ROLE_LABELS={b2b:'Territory Field Rep (B2B)',b2c:'Family Outreach Rep (B2C)',as:'Assisting Seniors BDR',rsm:'Regional Sales Manager'};
+const ROLE_BADGE={b2b:'badge-b2b',b2c:'badge-b2c',as:'badge-as',rsm:'badge-rsm'};
+const SK='cc_train_v3';
+
+let S={name:'',email:'',role:'',done:[],scheduled:false,contractAck:false,payMethod:'',payDetail:''};
+let curMod=null, qA={}, qSubmitted=false, schedType='';
+
+function save(){localStorage.setItem(SK+'_'+S.email,JSON.stringify(S))}
+function load(e){const r=localStorage.getItem(SK+'_'+e);if(r){S=JSON.parse(r);return true}return false}
+
+// ─── AUTH ────────────────────────────────────────────
+function doLogin(){
+  const n=document.getElementById('ln').value.trim();
+  const e=document.getElementById('le').value.trim().toLowerCase();
+  const r=document.getElementById('lr').value;
+  if(!n||!e||!r){notif('Please fill in all fields.');return}
+  if(!e.includes('@')){notif('Enter a valid email.');return}
+  if(!load(e)){S={name:n,email:e,role:r,done:[],scheduled:false};save()}
+  else{S.name=n;if(!S.role)S.role=r;save()}
+  showScreen('screen-dashboard');renderDash();
+}
+function doLogout(){showScreen('screen-login')}
+
+// ─── SCREENS ─────────────────────────────────────────
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function goBack(){showScreen('screen-dashboard');renderDash()}
+
+// ─── MODULE DEFINITIONS ──────────────────────────────
+const MODS=[
+  {id:'orientation',title:'Company Orientation & Mission',desc:"Who we are, what we stand for, and why that matters on every call.",time:'10 min',roles:['b2b','b2c','as','rsm'],order:1,build:buildOrientation},
+  {id:'products',title:'Products & Pricing',desc:"Every product, what it costs, and exactly what you can and cannot say.",time:'15 min',roles:['b2b','b2c','as','rsm'],order:2,build:buildProducts},
+  {id:'commission',title:'Your Commission Structure',desc:"How you get paid, tiers, bonuses, clawbacks, and the math on earnings.",time:'10 min',roles:['b2b','b2c','as','rsm'],order:3,build:buildCommission},
+  {id:'b2b_pitch',title:'The B2B Cold Call & Drop-In',desc:"Full script for phone cold calls and in-person drop-ins to agencies and facilities.",time:'20 min',roles:['b2b','rsm'],order:4,build:buildB2BPitch},
+  {id:'b2b_obj',title:'B2B Objection Handling',desc:"Every objection you'll hear and exactly how to move past it — including A Place for Mom.",time:'15 min',roles:['b2b','rsm'],order:5,build:buildB2BObj},
+  {id:'b2c_pitch',title:'The B2C Family Outreach Script',desc:"Cold call script and warm lead handling for families with loved ones in facilities.",time:'20 min',roles:['b2c','rsm'],order:4,build:buildB2CPitch},
+  {id:'b2c_obj',title:'B2C Objection Handling',desc:"Price pushback, trust objections, and converting hesitant families to a first visit.",time:'15 min',roles:['b2c','rsm'],order:5,build:buildB2CObj},
+  {id:'as_mod',title:'Assisting Seniors: Referral & Handoff',desc:"Who Charles is, what AS offers, and your script for booking the consult.",time:'12 min',roles:['as','b2b','b2c','rsm'],order:4,build:buildAS},
+  {id:'activity',title:'Activity Tracking & Weekly Reporting',desc:"Reporting requirements, hit list setup, and call log standards.",time:'8 min',roles:['b2b','b2c','as','rsm'],order:6,build:buildActivity},
+  {id:'roleplay',title:'Role-Play Prep & Practice Assignment',desc:"What to practice before your live session — do this with a friend or family member.",time:'15 min',roles:['b2b','b2c','as','rsm'],order:7,build:buildRoleplay},
+];
+
+function getMyMods(){return MODS.filter(m=>m.roles.includes(S.role)).sort((a,b)=>a.order-b.order)}
+
+// ─── DASHBOARD ───────────────────────────────────────
+function renderDash(){
+  const h=new Date().getHours();
+  const g=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  document.getElementById('dash-greet').textContent=`${g}, ${S.name.split(' ')[0]}.`;
+  document.getElementById('tb-name').textContent=S.name.split(' ')[0];
+  const b=document.getElementById('role-badge');
+  b.textContent=ROLE_LABELS[S.role]||S.role;
+  b.className='role-badge '+(ROLE_BADGE[S.role]||'');
+
+  const mods=getMyMods();
+  const total=mods.length, done=mods.filter(m=>S.done.includes(m.id)).length;
+  const pct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('dash-sub').textContent=done===total
+    ?'🎉 All modules complete! Schedule your live training session below.'
+    :`Complete all ${total} modules to unlock your live training session.`;
+
+  const grid=document.getElementById('mod-grid');
+  grid.innerHTML='';
+  mods.forEach((mod,i)=>{
+    const isDone=S.done.includes(mod.id);
+    const prevOk=mods.slice(0,i).every(m=>S.done.includes(m.id));
+    const locked=i>0&&!prevOk&&!isDone;
+    const card=document.createElement('div');
+    card.className='module-card'+(isDone?' completed':'')+(locked?' locked':'');
+    card.innerHTML=`
+      <div class="module-num">Module ${i+1}</div>
+      <div class="module-title">${mod.title}</div>
+      <div class="module-desc">${mod.desc}</div>
+      <div class="module-meta">
+        <span class="pill">⏱ ${mod.time}</span>
+        ${isDone?'<span style="color:var(--green);font-weight:600">✓ Complete</span>':''}
+        ${locked?'<span style="color:var(--red);font-weight:600">🔒 Complete previous first</span>':''}
+      </div>`;
+    if(!locked) card.onclick=()=>openMod(mod.id);
+    grid.appendChild(card);
+  });
+
+  const allDone=mods.every(m=>S.done.includes(m.id));
+  document.getElementById('sched-card').style.display=allDone?'flex':'none';
+}
+
+// ─── MODULE VIEWER ───────────────────────────────────
+function openMod(id){
+  const mod=MODS.find(m=>m.id===id);if(!mod)return;
+  curMod=id; qA={}; qSubmitted=false;
+  document.getElementById('mod-topbar-title').textContent=mod.title;
+  const isDone=S.done.includes(id);
+  document.getElementById('mod-status-pill').innerHTML=isDone
+    ?'<span style="background:var(--green);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">✓ Completed</span>':'';
+  document.getElementById('mod-body').innerHTML=mod.build(isDone);
+  showScreen('screen-module');
+}
+
+function markDone(id){
+  if(!S.done.includes(id)){S.done.push(id);save();notif('Module complete! ✓','green');
+    document.getElementById('mod-status-pill').innerHTML='<span style="background:var(--green);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">✓ Completed</span>';}
+}
+
+// ─── QUIZ ─────────────────────────────────────────────
+function selAns(qi,oi,correct){
+  if(qSubmitted)return;
+  qA[qi]={oi,correct};
+  document.querySelectorAll('.q-opts-'+qi+' .option-btn').forEach((b,i)=>{
+    b.className='option-btn'+(i===oi?' selected':'');
+  });
+}
+
+function runQuiz(modId,qs){
+  if(qSubmitted)return;
+  if(Object.keys(qA).length<qs.length){notif('Answer all questions first.');return}
+  qSubmitted=true;
+  let correct=0;
+  qs.forEach((q,qi)=>{
+    const a=qA[qi];
+    document.querySelectorAll('.q-opts-'+qi+' .option-btn').forEach((b,i)=>{
+      if(i===q.c)b.className='option-btn correct';
+      else if(i===a.oi&&i!==q.c)b.className='option-btn wrong';
+      else b.className='option-btn';
+    });
+    if(a.correct)correct++;
+  });
+  const pct=Math.round(correct/qs.length*100), pass=pct>=70;
+  const r=document.getElementById('quiz-result');
+  r.className='quiz-result '+(pass?'pass':'fail');
+  r.style.display='block';
+  r.innerHTML=`<h3>${pass?'✓ Passed':'✗ Not Quite'}</h3>
+    <p>${correct} of ${qs.length} correct (${pct}%). ${pass?'Module complete!':'Review the content above and try again.'}</p>
+    ${pass?`<button class="btn btn-green" style="width:auto;padding:10px 24px" onclick="markDone('${modId}');setTimeout(goBack,1400)">Continue →</button>`
+          :`<button class="btn btn-outline" style="width:auto;padding:10px 24px" onclick="openMod('${modId}')">Retry</button>`}`;
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function buildQuizHTML(qs,modId){
+  let h='<div class="quiz-wrap"><h2>Knowledge Check</h2><p class="sub">Answer all questions to complete this module. 70% to pass.</p>';
+  qs.forEach((q,qi)=>{
+    h+=`<div class="quiz-question"><div class="q-num">Question ${qi+1}</div><div class="q-text">${q.q}</div><div class="q-opts-${qi}">`;
+    q.opts.forEach((o,oi)=>{
+      h+=`<button class="option-btn" onclick="selAns(${qi},${oi},${oi===q.c})">${o}</button>`;
+    });
+    h+=`</div></div>`;
+  });
+  const qsJson=JSON.stringify(qs).replace(/</g,'\\x3c').replace(/>/g,'\\x3e');
+  h+=`<div style="text-align:center;margin-top:8px"><button class="btn btn-primary" style="width:auto;padding:12px 32px" onclick="runQuiz('${modId}',${qsJson})">Submit Answers →</button></div>
+      <div id="quiz-result" class="quiz-result"></div></div>`;
+  return h;
+}
+
+// ─── SCHEDULE ────────────────────────────────────────
+function selSched(el,val){
+  document.querySelectorAll('.sched-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected'); schedType=val;
+}
+function submitSched(){
+  if(!schedType){notif('Select a session type first.');return}
+  S.scheduled=true;S.schedData={type:schedType,day:document.getElementById('s-day').value,time:document.getElementById('s-time').value,notes:document.getElementById('s-notes').value,ts:new Date().toLocaleDateString()};save();
+  document.getElementById('sched-modal').innerHTML=`<div class="sent-confirm">
+    <div class="big-check">✓</div>
+    <h3>Request Submitted</h3>
+    <p>Your session request has been logged. Chase will reach out within 24 hours with a calendar invite.</p>
+    <p style="margin-top:12px"><strong>Session type:</strong> ${schedType}</p>
+    <p style="margin-top:16px;font-size:13px;color:var(--text-muted)">Keep running role-plays. You'll be on live calls soon.</p>
+    <button class="btn btn-outline" style="width:auto;padding:10px 24px;margin-top:24px" onclick="goBack()">Back to Dashboard</button>
+  </div>`;
+}
+
+// ─── NOTIF ────────────────────────────────────────────
+let nTimer;
+function notif(msg,type){
+  const el=document.getElementById('notif');
+  el.textContent=msg; el.className='notif show'+(type?' '+type:'');
+  clearTimeout(nTimer); nTimer=setTimeout(()=>el.classList.remove('show'),3000);
+}
+
+// ─── MODULE CONTENT ──────────────────────────────────
+
+
+function buildSalesOnboarding(isDone) {
+  quizAnswers = {}; quizSubmitted = false;
+  const qs = [
+    {q:"Your default commission tier when you start is:",opts:["Gold","Elite","Silver","Bronze"],correct:2},
+    {q:"Setup commissions are paid:",opts:["When the contract is signed","When customer payment clears","On the 1st of next month","After 30 days"],correct:1},
+    {q:"Sharing your internal commission rates with prospects or partners is:",opts:["Acceptable if it helps close","A termination offense","Required for transparency","Optional"],correct:1},
+    {q:"You are a 1099 independent contractor. This means:",opts:["CareCircle withholds your taxes","You receive employee benefits","You are responsible for all self-employment taxes","CareCircle pays your health insurance"],correct:2}
+  ];
+
+  return `<div class="eyebrow">Module 0 · Before You Begin</div>
+  <h1>Onboarding &amp; Contractor Agreement</h1>
+  <p class="intro">Complete this before anything else unlocks. Covers your compensation structure, 1099 contractor status, and payment setup.</p>
+  <div class="content-section">
+    <h2>Your Compensation — Silver Tier (Default)</h2>
+    <table class="price-table">
+      <thead><tr><th>Product</th><th>Your Commission</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td>Network Partner Setup</td><td class="money">$249.50 (50%)</td><td>One-time</td></tr>
+        <tr class="hl"><td>Featured Partner Setup</td><td class="money">$499.50 (50%)</td><td>One-time</td></tr>
+        <tr><td>Network Partner Monthly</td><td class="money">$62.65/mo (35%)</td><td>Recurring</td></tr>
+        <tr class="hl"><td>Featured Partner Monthly</td><td class="money">$139.65/mo (35%)</td><td>Recurring</td></tr>
+        <tr><td>Guardian Plans</td><td class="money">30% of sale</td><td>Recurring</td></tr>
+        <tr><td>Single Visits / Assessments</td><td class="money">30% of sale</td><td>One-time</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>Tiers unlock as you build your book</strong><p>Gold at 5+ accounts or $1,500 MRC. Elite at 10+ accounts or $3,500 MRC. Every tier increase applies to all active and future accounts.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Your Contractor Status</h2>
+    <ul>
+      <li>You are a <strong>1099 independent contractor</strong> — not an employee of CareCircle or TransBid LLC.</li>
+      <li>CareCircle does not withhold taxes. You are responsible for all self-employment taxes.</li>
+      <li>No employee benefits, workers compensation, or unemployment insurance.</li>
+      <li>You set your own hours and schedule.</li>
+      <li>1099-NEC issued for all earnings of $600+ in a calendar year.</li>
+    </ul>
+    <div class="callout red"><strong>Required before your first call</strong><p>Signed Independent Contractor Agreement + W9 must be submitted to Chase. No commission can be paid without both on file.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Confirm Your Setup</h2>
+    <div style="background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:24px;margin-top:8px">
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Payment Method</label>
+        <select id="ob-pay" onchange="S.payMethod=this.value;saveState()">
+          <option value="">— Select payment method —</option>
+          <option value="ACH">ACH Direct Deposit (preferred)</option>
+          <option value="Zelle">Zelle (amounts under $500 only)</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Payment Detail (bank name or Zelle phone/email)</label>
+        <input type="text" id="ob-detail" placeholder="e.g. Chase Bank or 850-555-0100" oninput="S.payDetail=this.value;saveState()">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:14px;font-weight:400;color:var(--text)">
+          <input type="checkbox" id="ob-contract" onchange="S.contractAck=this.checked;saveState()" style="width:18px;height:18px;margin-top:2px;flex-shrink:0">
+          I confirm I have signed my Independent Contractor Agreement and submitted my W9 to Chase.
+        </label>
+      </div>
+    </div>
+  </div>
+  ${buildQuizHTML(qs, 'onboarding')}`;
+}
+
+function buildOrientation(){
+  const qs=[
+    {q:"CareCircle earns money from facilities the same way A Place for Mom does. True or false?",opts:["True — we earn per placement","False — families pay for advocacy, partners pay for visibility"],c:1},
+    {q:"When a prospect says 'You're just like A Place for Mom,' your first move is:",opts:["Agree and pivot to price","Ask what A Place for Mom charges them per placement","Lead with our 60-day guarantee","Explain our platform features"],c:1},
+    {q:"CareCircle Present is best described as:",opts:["A licensed home care agency","A Medicare billing service","A private-pay advocacy and monitoring service for families","A senior facility referral network"],c:2},
+    {q:"You should never apologize for CareCircle Present being private pay because:",opts:["It sounds unprofessional","Private pay is what keeps us working for the family — not a billing department","Most families prefer private pay","Insurance is too complicated to explain"],c:1}
+  ];
+  return `<div class="eyebrow">Module 1 · Universal</div>
+  <h1>Company Orientation &amp; Mission</h1>
+  <p class="intro">Before your first call, you need to understand what CareCircle actually is — and why the mission matters more than any script. Reps who sell from belief close more than reps who sell from a pitch deck.</p>
+  <div class="content-section">
+    <h2>Two Businesses Under One Brand</h2>
+    <p><strong>CareCircle Network</strong> is a transparency and coordination platform for senior care agencies and facilities on the Gulf Coast. We publish quality intelligence on providers and connect families with vetted partners. Agencies pay monthly membership fees for visibility and positioning — not for referrals.</p>
+    <p><strong>CareCircle Present</strong> is a boutique, private-pay strategic advocacy service for families with loved ones in care facilities. We go inside facilities — unannounced — and provide written intelligence reports and advocacy. Families pay us directly. We work for families, never facilities.</p>
+  </div>
+  <div class="content-section">
+    <h2>The One Sentence That Wins Deals</h2>
+    <div class="callout"><strong>Say this and mean it</strong><p>"CareCircle works for families. Not facilities."</p></div>
+    <p>Every competitor — A Place for Mom, Senior Helpers, every referral network — is paid by the facility. They have a financial incentive to place people, not advocate for them. We don't take facility money for referrals. That alignment is your competitive weapon. Use it.</p>
+  </div>
+  <div class="content-section">
+    <h2>Our Founding Partner</h2>
+    <p><strong>Charles Lillo of Assisting Seniors LLC</strong> — 17+ years on the Gulf Coast, 5.0-star Google rating, Florida licensed, bonded, and insured. Their credibility transfers to ours on every call.</p>
+  </div>
+  <div class="content-section">
+    <h2>Why the Mission Matters for Sales</h2>
+    <p>CareCircle Present exists specifically for the residents that facilities have written off — labeled "difficult," "combative," or "behavioral risks." Those labels often mean: this person is suffering, nobody is listening, and the facility has decided chemical restraint is easier than dignity.</p>
+    <div class="callout navy"><strong>Remember this</strong><p>We go in for those residents. We advocate loudly and document everything. That is not a niche — that is a mission. Reps who understand why this matters close more than reps who are just moving a product.</p></div>
+  </div>
+  ${buildQuizHTML(qs,'orientation')}`;
+}
+
+function buildProducts(){
+  const qs=[
+    {q:"The Network Partner setup fee is:",opts:["$299","$499","$999","$179/mo"],c:1},
+    {q:"The Featured Partner setup fee is:",opts:["$499","$699","$999","$1,499"],c:2},
+    {q:"To close a B2B deal, you CAN:",opts:["Reduce the monthly rate","Waive or reduce the setup fee","Promise a specific referral count","Make HIPAA compliance claims"],c:1},
+    {q:"When quoting Guardian plan prices, you must:",opts:["Give exact figures","Say 'starting at' or 'from' — Chase scopes each engagement","Give the full range $799–$2,500","Wait for Chase to quote"],c:1},
+    {q:"CareCircle Present is:",opts:["Billable to Medicare","Covered by most LTC insurance","100% private pay by design","Medicaid waiver eligible"],c:2}
+  ];
+  return `<div class="eyebrow">Module 2 · Universal</div>
+  <h1>Products &amp; Pricing</h1>
+  <p class="intro">Know every product cold before your first call. Know what you can and can't promise. Misrepresenting products is a termination offense.</p>
+  <div class="content-section">
+    <h2>Product 1 — CareCircle Network Partnerships (B2B)</h2>
+    <p>Monthly membership plans for home care agencies, ALFs, memory care, hospice.</p>
+    <table class="price-table">
+      <thead><tr><th>Tier</th><th>Setup Fee</th><th>Monthly</th><th>Annual</th></tr></thead>
+      <tbody>
+        <tr><td>Network Partner</td><td>$499</td><td>$179/mo</td><td>$1,790/yr</td></tr>
+        <tr class="hl"><td><strong>Featured Partner</strong></td><td><strong>$999</strong></td><td><strong>$399/mo</strong></td><td><strong>$3,990/yr</strong></td></tr>
+      </tbody>
+    </table>
+    <p>Free Directory Listing exists — no commission, but use it as a foot in the door.</p>
+    <h3>What You Can Negotiate</h3>
+    <ul><li><strong>Setup fee:</strong> Can be reduced or waived. If you waive it, you waive your commission on it.</li><li><strong>Annual plan:</strong> Pitch as "two months free."</li><li><strong>Monthly rate:</strong> Fixed. Cannot be changed.</li></ul>
+    <div class="callout red"><strong>Never promise these things</strong><p>A specific referral count. A live AI demo. HIPAA compliance claims. That we are a referral service.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Product 2 — CareCircle Present (B2C)</h2>
+    <p>Private pay, boutique concierge advocacy. <strong>Never apologize for private pay.</strong> That independence is what makes our advocacy meaningful.</p>
+    <table class="price-table">
+      <thead><tr><th>Service</th><th>Starting Price</th></tr></thead>
+      <tbody>
+        <tr><td>Pre-Placement Assessment</td><td>from $295</td></tr>
+        <tr><td>Intelligence Visit</td><td>from $175</td></tr>
+        <tr><td>Overnight / Evening Visit</td><td>from $250</td></tr>
+        <tr class="hl"><td><strong>Guardian Essential (monthly)</strong></td><td><strong>from $799/mo</strong></td></tr>
+        <tr class="hl"><td><strong>Guardian (monthly)</strong></td><td><strong>from $1,500/mo</strong></td></tr>
+        <tr class="hl"><td><strong>Guardian Elite (monthly)</strong></td><td><strong>from $2,500/mo</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>Pricing rules — no exceptions</strong><p>Always say "from" or "starting at." Never quote a ceiling. Never discount without Chase's approval. Chase scopes every Guardian engagement personally.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Product 3 — Assisting Seniors Referrals</h2>
+    <p>Your role: <strong>lead generation and warm handoff only.</strong> When a family needs in-home care, book a consult with Charles Lillo. Do not quote pricing. Do not describe packages. Make the introduction and book the call.</p>
+    <div class="callout green"><strong>The hybrid play — two commissions, one conversation</strong><p>Assisting Seniors bills Medicare and LTC insurance. CareCircle Present does not. When a family has both needs, you can earn on both lines simultaneously.</p></div>
+  </div>
+  ${buildQuizHTML(qs,'products')}`;
+}
+
+function buildCommission(){
+  const qs=[
+    {q:"You close a Featured Partner at full price ($999 setup + $399/mo). Your setup commission is:",opts:["$299.50","$399.00","$499.50","$599.00"],c:2},
+    {q:"Your monthly recurring on a Network Partner ($179/mo) is:",opts:["$89.50","$62.65","$44.75","$71.60"],c:1},
+    {q:"Setup commissions are paid:",opts:["When the contract is signed","When customer payment clears","On the 1st of next month","After 30 days of service"],c:1},
+    {q:"Gold tier activates at:",opts:["10+ accounts OR $3,500 MRC","5+ accounts OR $1,500 MRC","3+ accounts","$1,000 MRC"],c:1},
+    {q:"If a partner cancels within 60 days and a refund is issued:",opts:["You keep your full commission","Your setup commission is clawbacked from next cycle","All commissions are forfeit","Nothing happens"],c:1}
+  ];
+  return `<div class="eyebrow">Module 3 · Universal</div>
+  <h1>Your Commission Structure</h1>
+  <p class="intro">Every deal you close keeps paying you every month it stays active. Understand the math before your first call.</p>
+  <div class="content-section">
+    <h2>Base Rates — Silver Tier (Default)</h2>
+    <table class="price-table">
+      <thead><tr><th>Product</th><th>Your Commission</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td>Network Partner Setup</td><td class="money">$249.50 (50%)</td><td>One-time</td></tr>
+        <tr class="hl"><td>Featured Partner Setup</td><td class="money">$499.50 (50%)</td><td>One-time</td></tr>
+        <tr><td>Network Partner Monthly</td><td class="money">$62.65/mo (35%)</td><td>Recurring</td></tr>
+        <tr class="hl"><td>Featured Partner Monthly</td><td class="money">$139.65/mo (35%)</td><td>Recurring</td></tr>
+        <tr><td>Guardian Essential</td><td class="money">from $239.70/mo (30%)</td><td>Recurring</td></tr>
+        <tr class="hl"><td>Guardian / Elite</td><td class="money">from $450–$750/mo (30%)</td><td>Recurring</td></tr>
+        <tr><td>Single Visit / Assessment</td><td class="money">30% of sale price</td><td>One-time</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="content-section">
+    <h2>Performance Tiers</h2>
+    <table class="price-table">
+      <thead><tr><th>Tier</th><th>Qualifier</th><th>Recurring Rate</th></tr></thead>
+      <tbody>
+        <tr><td>Silver (default)</td><td>Months 1–3</td><td>35% / 30%</td></tr>
+        <tr class="hl"><td>Gold</td><td>5+ accounts OR $1,500 MRC</td><td>40% / 35%</td></tr>
+        <tr class="hl"><td>Elite</td><td>10+ accounts OR $3,500 MRC</td><td>45% / 40%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="content-section">
+    <h2>Fast-Start Bonuses (First 30 Days)</h2>
+    <table class="price-table">
+      <thead><tr><th>Milestone</th><th>Bonus</th></tr></thead>
+      <tbody>
+        <tr><td>3 paid deals in 30 days</td><td class="money">$250</td></tr>
+        <tr class="hl"><td>5 paid deals in 30 days</td><td class="money">$500</td></tr>
+        <tr class="hl"><td>8+ paid deals in 30 days</td><td class="money">$1,000</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>The compounding reality</strong><p>Every month you delay closing a deal is a month of recurring income you'll never get back. A Featured Partner closed in month 1 vs month 3 is a $279.30 permanent difference. Build the book fast.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Payment Rules</h2>
+    <ul>
+      <li>Setup commissions paid when customer payment clears — not when they sign.</li>
+      <li>Recurring commissions paid on the 1st of each month.</li>
+      <li>Activity report required to receive recurring payout. Zero report = commissions held.</li>
+      <li>60-day clawback on setup commissions if a refund is issued.</li>
+      <li>Never share your commission rates with anyone outside the contractor network.</li>
+    </ul>
+  </div>
+  ${buildQuizHTML(qs,'commission')}`;
+}
+
+function buildB2BPitch(){
+  const qs=[
+    {q:"On your first cold call, your opening hook is:",opts:["List all platform features","Tell them their agency already has a live profile on CareCircle","Lead with the pricing tiers","Ask if they know A Place for Mom"],c:1},
+    {q:"You leave a voicemail only after:",opts:["The first missed call","Two missed calls","Three unanswered calls","Every attempt"],c:2},
+    {q:"After the demo, your closing question is:",opts:["'Do you want to sign up?'","'Which one makes more sense for where you are right now?'","'What's your budget?'","'Can I email you the contract?'"],c:1},
+    {q:"Best drop-in arrival windows are:",opts:["8–9am","10am–11:30am and 2pm–4pm","12pm–1pm","Friday afternoons"],c:1}
+  ];
+  return `<div class="eyebrow">Module 4 · B2B Track</div>
+  <h1>The B2B Cold Call &amp; Drop-In</h1>
+  <p class="intro">Your weapon is the fact that their profile is already live on our platform. Use it on every first contact. This is your door opener.</p>
+  <div class="content-section">
+    <h2>Phone Cold Call</h2>
+    <h3>Getting Past the Receptionist</h3>
+    <div class="script-block"><span class="script-label">Script — Receptionist</span>"Hi, this is [your name] calling — could I speak with [Admin/Director Name]? It's regarding your agency's profile on CareCircle."
+
+If they ask what it's about:
+"We publish quality profiles on senior care providers in the Pensacola area — [Agency Name] already has a profile on our platform and I wanted to make sure the right person knew about it."
+
+If unavailable:
+"No problem — what's the best time to reach them? And do you have their direct line?"
+[Log it. Call back at the exact time they give you. Don't leave a voicemail on attempt 1 or 2.]</div>
+    <h3>When the Decision-Maker Answers</h3>
+    <div class="script-block"><span class="script-label">Script — Cold Opener</span>"Hi [Name], this is [your name] with CareCircle Network — quick question, do you have about 90 seconds?"
+
+[Wait for yes]
+
+"We run a senior care transparency platform here on the Gulf Coast — we publish quality intelligence reports on local providers so families can make informed decisions before placing a loved one. Your agency already has a profile on our site. I wanted to make sure you'd actually seen it, because it shows up when families search for [service type] in [their area]."
+
+[Pause — let them respond]
+
+"Go to carecircle.fit/research right now and search your agency name — takes 30 seconds. I'll hold."
+
+[Let them search. This is your door opener.]
+
+"What you're seeing is what families see when they research you. The basic profile is free — but families are also seeing your competitors' Featured profiles. What I'm calling about is giving you control over that."</div>
+    <div class="callout"><strong>If they push back early</strong><p>"Totally fair — I'm not asking you to drop anything that's working. Can I ask, are you familiar with what we charge compared to A Place for Mom? Because that's usually where the conversation gets interesting."</p></div>
+  </div>
+  <div class="content-section">
+    <h2>In-Person Drop-In</h2>
+    <div class="callout navy"><strong>Timing rules</strong><p>10am–11:30am and 2–4pm only. Never Mondays before 10am or Fridays after 2pm. Group drop-ins by zip code — never cross-city driving.</p></div>
+    <div class="script-block"><span class="script-label">Script — Front Desk</span>"Hi, my name is [Name] with CareCircle Network — I'm not here to sell anything today, I just wanted to drop off some information for [Admin Name] and introduce myself. Is there a good time to catch them for five minutes?"</div>
+    <div class="script-block"><span class="script-label">Script — Decision Maker</span>"[Name], thanks for a few minutes — I'll be quick. Pull up carecircle.fit/research on your phone and search [Facility Name]."
+
+[Let them look.]
+
+"That's what families see when they Google your facility. The profile is already live — I'm here because we have two options: let it sit as a free listing, or activate it as a paid partnership where you get priority placement in family matching."
+
+"I don't want to take more of your time today — can I come back Thursday at 2 and walk you through both options in 15 minutes? I'll bring the numbers."
+
+[Always ask for a specific return time — not "I'll call you."]</div>
+  </div>
+  <div class="content-section">
+    <h2>The Demo &amp; Close</h2>
+    <div class="script-block"><span class="script-label">Script — Closing</span>"Here's the math: A Place for Mom charges you one full month of a resident's rate per placement — $4,500 to $7,000 every time they send you someone. We charge $150 per qualified referral. One client we send you in a year covers your entire annual membership."
+
+"Network Partner — $499 setup, $179/month. Verified badge, standard placement, coordination tools."
+"Featured Partner — $999 setup, $399/month. Priority placement, curated profile, AI platform access."
+"Both backed by a 60-day guarantee — if we don't send you a single referral in 60 days, full refund."
+
+[Pause. Let them respond.]
+
+"Which one makes more sense for where you are right now?"</div>
+  </div>
+  ${buildQuizHTML(qs,'b2b_pitch')}`;
+}
+
+function buildB2BObj(){
+  const qs=[
+    {q:"'We already work with A Place for Mom.' Your opener is:",opts:["Tell them APLM is bad","Ask what A Place for Mom charges them per placement","Immediately pitch our pricing","Lead with the 60-day guarantee"],c:1},
+    {q:"'We don't need a referral service.' Your reframe is:",opts:["We are a referral service, just cheaper","We're not a referral service — we're a visibility and positioning platform","We'll send more referrals than anyone","Agree and end the call"],c:1},
+    {q:"'I need to run this by my owner.' You should:",opts:["Say call me when they decide","Offer to send a one-pager and get a specific follow-up date","Push to close now","Ask for the owner's direct number"],c:1},
+    {q:"The 60-day guarantee is:",opts:["A credit if no referrals in 60 days","A full refund if no qualified referral in 60 days","30 days free service","A rate reduction"],c:1}
+  ];
+  return `<div class="eyebrow">Module 5 · B2B Track</div>
+  <h1>B2B Objection Handling</h1>
+  <p class="intro">Most objections are not rejections — they're requests for information or reassurance. The goal is never to win an argument. It's to move the conversation forward.</p>
+  <div class="content-section">
+    <h2>The 6 Core B2B Objections</h2>
+    <h3>1. "We already work with A Place for Mom."</h3>
+    <div class="script-block"><span class="script-label">Response</span>"That's fair — I'm not asking you to drop anything that's working. Can I ask one question? What does A Place for Mom charge you per placement?"
+
+[If they don't know:] "They charge one full month of the resident's rate — $4,500 to $7,000 every time. We charge $150 per qualified referral. Even two families a year and one converts, you've covered your entire annual membership."
+
+"This isn't replacing what you have — it's a second channel that costs a fraction."</div>
+
+    <h3>2. "We don't need a referral service."</h3>
+    <div class="script-block"><span class="script-label">Response</span>"I want to clarify — we're not a referral service in the traditional sense. We publish quality intelligence about providers. Families research facilities on our platform before they make a decision. Your profile is already there whether you're a member or not."
+
+"The question is whether you control how you show up when families are researching you. Right now, competitors who are Featured Partners show up above you in every family search."</div>
+
+    <h3>3. "How do I know you'll actually send referrals?"</h3>
+    <div class="script-block"><span class="script-label">Response</span>"Here's our answer: 60-day guarantee. If we don't send you a single qualified referral in your first 60 days, you get a full refund. Not a credit — a refund. I'm confident enough to put that in writing."</div>
+
+    <h3>4. "Your price is too high."</h3>
+    <div class="script-block"><span class="script-label">Response</span>"For a home care agency, average client lifetime value is around $11,000. One family we send you — one — more than covers your entire year of Network membership ($2,147 total). That's 20% of one client."
+
+[Still stuck on setup fee:] "I have some flexibility on the setup fee if that's the friction point. I'd rather get you started and prove value than lose you on the entry cost. What would it take to make this a yes today?"</div>
+
+    <h3>5. "I need to run this by my owner."</h3>
+    <div class="script-block"><span class="script-label">Response</span>"Absolutely — let me send you a one-page summary with our pricing, the 60-day guarantee, and your profile link. What's the best email? And when will you have a chance to discuss it — I'll follow up [specific day]."
+
+[Get the specific follow-up date. Call on that exact day.]</div>
+
+    <h3>6. "We tried something like this before and it didn't work."</h3>
+    <div class="script-block"><span class="script-label">Response</span>"I appreciate you telling me that — what happened?"
+
+[Listen fully. Then:] "What you're describing is exactly why we do two things differently: first, we use real quality data from AHCA citations and CMS records — not paid placement. Second, the 60-day guarantee. We put the risk on ourselves."</div>
+  </div>
+  <div class="callout green"><strong>Universal rule</strong><p>Never say "I'll follow up later" to "I need to think about it." Ask: "What specifically is giving you pause?" Get a specific follow-up date before hanging up.</p></div>
+  ${buildQuizHTML(qs,'b2b_obj')}`;
+}
+
+function buildB2CPitch(){
+  const qs=[
+    {q:"After a B2C prospect engages, your most important discovery question is:",opts:["What's your budget?","What's the thing you worry about most — the thing you can't check on?","How long has your loved one been there?","Have you heard of CareCircle?"],c:1},
+    {q:"A family hesitates at Guardian plan pricing. Your move:",opts:["Discount the plan","Push harder on value","Pivot to the $175 single visit as a risk-free first step","End the call and follow up later"],c:2},
+    {q:"The key to closing a warm/inbound lead is:",opts:["Send pricing page","Listen to their situation, find the fear, connect it to our service","Pitch all three Guardian tiers","Ask Chase to do the call"],c:1},
+    {q:"Post-visit follow-up should happen:",opts:["One week later","Within 48 hours","After the next billing cycle","Next month"],c:1}
+  ];
+  return `<div class="eyebrow">Module 4 · B2C Track</div>
+  <h1>B2C Family Outreach</h1>
+  <p class="intro">This is an emotional sale. Every family you call has a fear they haven't been able to name yet. Your job is to surface it, name it, and solve it. Don't sell the service — sell the outcome.</p>
+  <div class="content-section">
+    <h2>Cold Call Script</h2>
+    <div class="script-block"><span class="script-label">Script — Cold Open</span>"Hi [Name], my name is [Your Name] — I'm reaching out from CareCircle Network in Pensacola. I'll be upfront — this is a cold call, but it's a short one. Do you have about two minutes?"
+
+[Wait for yes]
+
+"We provide in-person advocacy and monitoring for families who have a loved one in an assisted living facility or nursing home here on the Gulf Coast. Not phone check-ins — actual unannounced visits, with a written report after every single one. I'm calling because [how you found them] and I wanted to see if that's something your family has thought about."
+
+[Pause. Do not keep talking.]</div>
+    <h3>Discovery Questions — Use These Every Time</h3>
+    <div class="script-block"><span class="script-label">When They Engage</span>"Can I ask — how long has [Mom/Dad] been at [facility], and are you able to visit regularly yourself?"
+
+[Listen fully. Find the fear.]
+
+"What's the thing you worry about most — the thing you can't check on from where you are?"
+
+[They will tell you. That answer is your close.]</div>
+    <div class="script-block"><span class="script-label">Connecting to the Service</span>"That's exactly what we show up for. We go in unannounced — day shift, evening, overnight. We observe, document, and report. If we see something that needs your attention, you hear from us that day."
+
+"Can I ask Chase to give you a call? He's the founder, he does discovery conversations personally. 15 minutes — no pressure, just to understand your situation and tell you honestly if we can help."</div>
+  </div>
+  <div class="content-section">
+    <h2>The Single Visit Bridge</h2>
+    <p>The most reliable path to a Guardian Plan is the single visit first. Families who hesitate at $799/month almost always say yes to a $175 visit. That visit is your product demo.</p>
+    <div class="callout"><strong>When they hesitate at monthly pricing</strong><p>"Before you commit to anything monthly, let us do one visit. $175, full written report within 24 hours. You'll see exactly what we do. Then you decide. No commitment beyond that one visit."</p></div>
+    <h3>Post-Visit Follow-Up (within 48 hours)</h3>
+    <div class="script-block"><span class="script-label">Follow-Up Call</span>"[Name], I wanted to follow up on the report — did you get a chance to read through it?"
+
+[Listen. Let them react.]
+
+"What stood out to you?"
+
+[Their answer tells you how to frame the monthly plan.]</div>
+  </div>
+  ${buildQuizHTML(qs,'b2c_pitch')}`;
+}
+
+function buildB2CObj(){
+  const qs=[
+    {q:"A family says '$799 is too much.' Your first response:",opts:["Offer a discount","Tell them it's worth it","Pivot to the $175 single visit","Ask them to think about it"],c:2},
+    {q:"'My loved one is in a good facility — we trust the staff.' You:",opts:["Agree and end the call","Ask what gives them that confidence, then offer documented confirmation — not alarm","Tell them facilities can't be trusted","Quote AHCA statistics at them"],c:1},
+    {q:"'I need to talk to my siblings.' You:",opts:["Say call me back when you decide","Get a specific follow-up time and offer to be on a family call if helpful","Send pricing and wait","Ask which sibling makes decisions"],c:1},
+    {q:"A good analogy for CareCircle Present is:",opts:["A Place for Mom","Home security — not because you expect a break-in, but because you sleep better knowing","A Medicare supplement","A nursing facility inspection service"],c:1}
+  ];
+  return `<div class="eyebrow">Module 5 · B2C Track</div>
+  <h1>B2C Objection Handling</h1>
+  <p class="intro">B2C objections are emotional, not logical. The family isn't resisting the price — they're resisting the acknowledgment that something might be wrong. Handle the emotion first.</p>
+  <div class="content-section">
+    <h2>Core B2C Objections</h2>
+    <h3>1. "I can't afford it / $799 is too much."</h3>
+    <div class="script-block"><span class="script-label">Response</span>"I understand — let me suggest something. Let us do one visit. $175, full written report within 24 hours. You'll see exactly what we do and how we document it. Then you decide if the monthly plan makes sense. No commitment beyond the one visit."</div>
+    <h3>2. "We trust the facility / everything seems fine."</h3>
+    <div class="script-block"><span class="script-label">Response</span>"That's the best possible situation to be in. Can I ask — what gives you that confidence? How often are you able to visit?"
+
+[Listen. Then:]
+
+"Most families we work with felt exactly the same way before they started. What CareCircle does is give you documented confirmation of what you already believe — or catches something while it's still small."
+
+"Think of it like a home security system — not because you expect a break-in, but because you sleep better knowing."</div>
+    <h3>3. "I need to talk to my siblings."</h3>
+    <div class="script-block"><span class="script-label">Response</span>"Absolutely — this is a family decision. When do you think you'd have a chance to talk it through? I can even be on a call with everyone if that would help. Let's find a specific time."</div>
+    <h3>4. "I don't want to upset the facility."</h3>
+    <div class="script-block"><span class="script-label">Response</span>"That's a real concern. Here's the reality: our advocates enter as authorized visitors — it's a legal right under Florida law. Facilities that are doing things right actually benefit. We document good care too, and families who see good reports feel more confident."
+
+"The facilities that resist are the ones with something to hide. That's usually not your situation — and if it's not, our visits just confirm what you already believe."</div>
+  </div>
+  ${buildQuizHTML(qs,'b2c_obj')}`;
+}
+
+function buildAS(){
+  const qs=[
+    {q:"When a family needs in-home care, your job is to:",opts:["Quote Assisting Seniors pricing","Close the deal yourself","Book a consult with Charles Lillo — nothing else","Refer them to Medicaid"],c:2},
+    {q:"Assisting Seniors can bill:",opts:["CareCircle Present services","Medicare and most LTC insurance for in-home care hours","Private pay only","Medicaid exclusively"],c:1},
+    {q:"The hybrid play allows a family to:",opts:["Replace CareCircle Present with Assisting Seniors","Use Assisting Seniors for covered care hours AND CareCircle Present for advocacy simultaneously","Get a discount on both services","Avoid private pay entirely"],c:1},
+    {q:"Charles Lillo has operated Assisting Seniors for:",opts:["5 years","17+ years","3 years","10 years"],c:1}
+  ];
+  return `<div class="eyebrow">Module 4 · Assisting Seniors Track</div>
+  <h1>Assisting Seniors: Referral &amp; Handoff</h1>
+  <p class="intro">Charles Lillo's 17 years of credibility on the Gulf Coast is your credibility on every family call. Know when to deploy this and how to make the handoff clean.</p>
+  <div class="content-section">
+    <h2>Who Charles Is</h2>
+    <p>Charles Lillo founded Assisting Seniors LLC — 17+ years serving Escambia and Santa Rosa counties. 5.0-star Google rating. Florida licensed, bonded, and insured. He personally matches caregivers to clients. When a family talks to Assisting Seniors, they're talking to the owner.</p>
+    <div class="callout green"><strong>What Assisting Seniors provides</strong><p>Non-medical home care: companion care, homemaking, relief care, memory care support. Accepts Medicare and most long-term care insurance for qualifying services.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Your Role — Warm Handoff Only</h2>
+    <div class="callout red"><strong>Do not do these things</strong><p>Do not quote Assisting Seniors pricing. Do not describe specific service packages. Do not attempt to close the sale. Your job: lead generation and consult booking. Period.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>The Hybrid Play — Two Commissions, One Conversation</h2>
+    <p>When a family needs both advocacy (CareCircle Present) AND in-home care hours, you earn on both lines simultaneously from the same conversation.</p>
+    <div class="script-block"><span class="script-label">The Hybrid Pitch</span>"Our advocacy service is private pay — that's by design. It keeps us working for you, not a billing department. But if [loved one] has Medicare or long-term care insurance, there's a companion service we work closely with that can cover in-home care hours through their benefits."
+
+"You don't have to choose. A lot of families use both: Assisting Seniors for covered care hours, and us for the advocacy and monitoring that insurance doesn't pay for — and never will."</div>
+  </div>
+  <div class="content-section">
+    <h2>Booking the Consult</h2>
+    <div class="script-block"><span class="script-label">Script — Booking Charles</span>"[Name], based on what you've shared, I want to connect you with our home care partner. His name is Charles Lillo. He runs Assisting Seniors LLC — 17 years in Pensacola, 5-star rated, Florida licensed, and he personally handles caregiver matching. This isn't a call center — you'd be talking to the owner."
+
+"They accept most long-term care insurance and Medicare-qualifying services. It's a free call, no obligation, and he can tell you in 15 minutes whether they're the right fit."
+
+"What does your schedule look like this week?"</div>
+    <p><strong>After they agree:</strong> Text Charles immediately — name, phone, one-sentence situation. That's the full handoff.</p>
+  </div>
+  ${buildQuizHTML(qs,'as_mod')}`;
+}
+
+function buildActivity(){
+  const qs=[
+    {q:"What happens if you don't submit your weekly activity report?",opts:["Commissions are forfeited","Commissions are held until the report is received","You receive a warning only","Nothing — they pay automatically"],c:1},
+    {q:"Your weekly outreach target (B2B field) is:",opts:["20 touches","35 touches","50+ touches","10 touches"],c:2},
+    {q:"Before your first outreach calls, your hit list should include:",opts:["5 prospects","10 prospects","20 priority prospects","50 prospects"],c:2},
+    {q:"Your weekly activity report must include:",opts:["Just the number of calls","Contacts made, outcomes (VM/conversation/demo/close), and follow-up dates","Only closed deals","Just pipeline value"],c:1}
+  ];
+  return `<div class="eyebrow">Module 6 · Universal</div>
+  <h1>Activity Tracking &amp; Weekly Reporting</h1>
+  <p class="intro">Your activity report is tied to your commission payout. It also enforces the discipline that separates reps who build a real book from reps who flame out in month two.</p>
+  <div class="content-section">
+    <h2>Weekly Activity Report</h2>
+    <p>Submit every week. Include: contacts made, outcomes (voicemail / conversation / demo / close), and scheduled follow-ups.</p>
+    <div class="callout red"><strong>No report = commissions held</strong><p>3+ consecutive missed reports is grounds for termination. Don't let this be the thing that costs you your book.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Build Your Hit List Before First Call</h2>
+    <p>20 priority targets minimum before any outreach. B2B: home care agencies, ALFs, memory care, hospice in Escambia, Santa Rosa, and Okaloosa counties. B2C: community groups, hospital discharge contacts, churches, senior centers.</p>
+    <p><strong>Format:</strong> Agency Name | Contact Name | Phone | Address (B2B) or Lead Source (B2C)</p>
+  </div>
+  <div class="content-section">
+    <h2>Weekly Activity Targets</h2>
+    <table class="price-table">
+      <thead><tr><th>Role</th><th>Weekly Minimum</th></tr></thead>
+      <tbody>
+        <tr><td>B2B Territory Field Rep</td><td>50+ total touches (drop-ins + calls)</td></tr>
+        <tr><td>B2C Family Outreach</td><td>50+ calls/contacts</td></tr>
+        <tr><td>Assisting Seniors BDR</td><td>40+ outreach contacts</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="content-section">
+    <h2>Call Log Standards</h2>
+    <p>Log every single contact. Columns: <strong>Agency/Contact Name | Phone | Date | Outcome | Follow-Up Date</strong>. Voicemail counts as a touch. If there's no log, it didn't happen.</p>
+  </div>
+  ${buildQuizHTML(qs,'activity')}`;
+}
+
+function buildRoleplay(){
+  return `<div class="eyebrow">Module 7 · Universal</div>
+  <h1>Role-Play Prep &amp; Practice Assignment</h1>
+  <p class="intro">Before your live session, you need to have run through your core scenarios at least twice with a real person. This module tells you exactly what to practice.</p>
+  <div class="content-section">
+    <h2>Your Assignment Before the Live Session</h2>
+    <p>Find a friend, family member, or fellow contractor. They play the prospect. You run the full call — twice per scenario. Once with a cooperative prospect, once with a skeptical one.</p>
+    <div class="callout"><strong>What Chase will test in your live session</strong><p>At least one full role-play. You won't know which scenario in advance. You do not get on live calls until you've passed the live session.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>B2B Rep Scenarios</h2>
+    <h3>Scenario 1 — Cold Call, Cooperative</h3>
+    <p>Prospect answers, listens through the profile reveal, books a demo. <strong>Pass:</strong> Used "your profile is already live" hook. Got them to search the site. Booked a specific demo time.</p>
+    <h3>Scenario 2 — Cold Call, Skeptical</h3>
+    <p>"We already work with A Place for Mom and I'm happy." <strong>Pass:</strong> Asked what APLM charges per placement. Reframed as a second channel. No defensiveness.</p>
+    <h3>Scenario 3 — Demo &amp; Close</h3>
+    <p>Run full demo script. Handle "price is too high" with setup fee as lever. Close on "which tier makes more sense?"</p>
+  </div>
+  <div class="content-section">
+    <h2>B2C Rep Scenarios</h2>
+    <h3>Scenario 1 — Family Opens Up</h3>
+    <p>Parent in a facility, hasn't visited in 3 weeks. Ask discovery questions, find the fear, bridge to the service. Book the call with Chase.</p>
+    <h3>Scenario 2 — Guardian Plan Objection</h3>
+    <p>"$799 is too much." Pivot to $175 single visit. Explain the visit as a product demo. Close on the visit.</p>
+    <h3>Scenario 3 — "We trust the facility"</h3>
+    <p>Reframe with the home security analogy. No alarm — documented peace of mind.</p>
+  </div>
+  <div class="content-section">
+    <h2>Self-Check Before Marking Complete</h2>
+    <ul>
+      <li>Can I run the full cold call script from memory without reading?</li>
+      <li>Do I know every product's pricing cold?</li>
+      <li>Can I handle the A Place for Mom objection without flinching?</li>
+      <li>Do I know exactly what I can and cannot promise?</li>
+      <li>Have I practiced with a real person at least twice per scenario?</li>
+    </ul>
+    <p>If yes to all five — you're ready.</p>
+  </div>
+  <div style="margin-top:32px;text-align:center;padding:28px;background:var(--navy);border-radius:14px;color:#fff">
+    <div style="font-size:32px;margin-bottom:12px">✅</div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:8px">Ready to Mark Complete?</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,.6);margin-bottom:20px">Confirm you've completed role-plays with a real person before proceeding.</p>
+    <button class="btn btn-gold" style="width:auto;padding:12px 28px" onclick="markDone('roleplay');setTimeout(goBack,1400)">I've Completed My Role-Plays →</button>
+  </div>`;
+}
+
+// ─── INIT ─────────────────────────────────────────────
+(function(){
+  const keys=Object.keys(localStorage).filter(k=>k.startsWith(SK+'_'));
+  if(keys.length===1){
+    try{
+      const saved=JSON.parse(localStorage.getItem(keys[0]));
+      if(saved&&saved.email&&saved.name&&saved.role){
+        S=saved;showScreen('screen-dashboard');renderDash();
+      }
+    }catch(e){}
+  }
+})();
+</script>
+</body>
+</html>
