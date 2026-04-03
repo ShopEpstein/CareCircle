@@ -44,7 +44,9 @@ async function sendEmail(subject, htmlContent) {
 }
 
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://carecircle.fit');
+  const origin = req.headers.origin || '';
+  const allowed = ['https://carecircle.fit', 'https://www.carecircle.fit'];
+  res.setHeader('Access-Control-Allow-Origin', allowed.includes(origin) ? origin : 'https://carecircle.fit');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
