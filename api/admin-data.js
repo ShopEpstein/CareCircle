@@ -73,5 +73,15 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ record: r1.data, docs: r2.data || [], acks: r3.data || [] });
   }
 
-  return res.status(400).json({ error: 'Invalid action. Use: verify, list, or record' });
+  // ── Training progress ─────────────────────────────────
+  if (action === 'training') {
+    const { data, error } = await supabase
+      .from('training_progress')
+      .select('*')
+      .order('completed_at', { ascending: false });
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json(data || []);
+  }
+
+  return res.status(400).json({ error: 'Invalid action. Use: verify, list, record, or training' });
 };

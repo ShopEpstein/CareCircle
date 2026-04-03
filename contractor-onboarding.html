@@ -965,6 +965,7 @@
   <div class="mode-switcher-inner">
     <button class="mode-btn active" onclick="switchView('onboarding', this)">📋 Contractor Onboarding</button>
     <button class="mode-btn" onclick="switchView('admin', this)">🔐 Admin Dashboard</button>
+    <button class="mode-btn" onclick="switchView('training', this)">📊 Training Progress</button>
     <button class="mode-btn" onclick="switchView('matrix', this)">💰 Commission Matrix</button>
   </div>
 </div>
@@ -2346,6 +2347,43 @@
 </div>
 
 <!-- ════════════════════════════════════════
+     TRAINING PROGRESS VIEW
+════════════════════════════════════════ -->
+<div id="view-training" class="view">
+  <div class="admin-wrap">
+
+    <!-- Auth gate — reuses admin password -->
+    <div id="trainingGate" class="admin-gate">
+      <div class="admin-gate-card">
+        <div style="font-size:36px;margin-bottom:12px">📊</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:8px">Training Progress</h2>
+        <p style="color:var(--text-muted);margin-bottom:20px;font-size:14px">Admin access required.</p>
+        <input type="password" id="trainingPwInput" class="form-input" placeholder="Admin password"
+          onkeydown="if(event.key==='Enter')trainingLogin()">
+        <div id="trainingPwError" class="field-error" style="display:none;margin-top:8px">Incorrect password.</div>
+        <button class="btn btn-primary" style="margin-top:14px;width:100%" onclick="trainingLogin()">Sign In →</button>
+      </div>
+    </div>
+
+    <!-- Training content — shown after auth -->
+    <div id="trainingContent" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <h2 style="font-family:'DM Serif Display',serif;font-size:22px">Training Progress</h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="text" class="form-input" id="trainingSearch" placeholder="Search by name or email…"
+            oninput="filterTrainingTable()" style="width:220px">
+          <button class="btn btn-sm btn-outline" onclick="renderTrainingTable()">↻ Refresh</button>
+        </div>
+      </div>
+      <div id="trainingTableWrap">
+        <p style="color:var(--text-muted);padding:20px 0">Loading…</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
      ADMIN DETAIL MODAL
 ════════════════════════════════════════ -->
 <div class="modal-overlay" id="detailModal">
@@ -2547,6 +2585,12 @@ function switchView(view, btn) {
     document.getElementById('adminContent').style.display = authed ? 'block' : 'none';
     if (authed) renderTable();
   }
+  if (view === 'training') {
+    const authed = !!adminToken;
+    document.getElementById('trainingGate').style.display = authed ? 'none' : 'flex';
+    document.getElementById('trainingContent').style.display = authed ? 'block' : 'none';
+    if (authed) renderTrainingTable();
+  }
   window.scrollTo(0, 0);
 }
 
@@ -2581,6 +2625,136 @@ async function adminLogin() {
     errEl.textContent = 'Connection error. Try again.';
     errEl.style.display = 'block';
   }
+}
+
+// ════════════════════════════════════════
+// TRAINING PROGRESS
+// ════════════════════════════════════════
+const TRAINING_MODULE_LABELS = {
+  orientation: 'Company Orientation & Mission',
+  products:    'Products & Pricing',
+  commission:  'Your Commission Structure',
+  b2b_pitch:   'The B2B Cold Call & Drop-In',
+  b2b_obj:     'B2B Objection Handling',
+  b2c_pitch:   'The B2C Family Outreach Script',
+  b2c_obj:     'B2C Objection Handling',
+  as_mod:      'Assisting Seniors: Warm Handoff & Placement',
+  activity:    'Activity Tracking & Weekly Reporting',
+  roleplay:    'Role-Play Prep & Practice',
+  schedule_request: 'Session Request Submitted'
+};
+const TRAINING_ROLE_LABELS = { b2b:'Field Rep (B2B)', b2c:'Family Outreach (B2C)', as:'Assisting Seniors BDR', rsm:'Regional Manager' };
+
+let allTrainingRows = [];
+
+async function trainingLogin() {
+  const pw = document.getElementById('trainingPwInput').value;
+  const errEl = document.getElementById('trainingPwError');
+  errEl.style.display = 'none';
+  if (!pw) return;
+  // Reuse the same admin token mechanism
+  try {
+    const res = await fetch('/api/admin-data?action=verify', { headers: { 'x-admin-token': pw } });
+    if (res.ok) {
+      adminToken = pw;
+      sessionStorage.setItem('cc_admin_token', pw);
+      document.getElementById('trainingGate').style.display = 'none';
+      document.getElementById('trainingContent').style.display = 'block';
+      renderTrainingTable();
+    } else {
+      errEl.style.display = 'block';
+      document.getElementById('trainingPwInput').value = '';
+    }
+  } catch(e) { errEl.textContent = 'Connection error.'; errEl.style.display = 'block'; }
+}
+
+async function renderTrainingTable() {
+  const wrap = document.getElementById('trainingTableWrap');
+  wrap.innerHTML = '<p style="color:var(--text-muted);padding:20px 0">Loading…</p>';
+  try {
+    const res = await fetch('/api/admin-data?action=training', { headers: { 'x-admin-token': adminToken } });
+    if (res.status === 401) { adminToken = null; sessionStorage.removeItem('cc_admin_token'); switchView('training', null); return; }
+    allTrainingRows = await res.json();
+    buildTrainingTable(allTrainingRows);
+  } catch(e) { wrap.innerHTML = '<p style="color:#ef4444;padding:20px 0">Error loading data. Try refreshing.</p>'; }
+}
+
+function filterTrainingTable() {
+  const q = (document.getElementById('trainingSearch').value || '').toLowerCase();
+  const filtered = q ? allTrainingRows.filter(r => r.name.toLowerCase().includes(q) || r.email.toLowerCase().includes(q)) : allTrainingRows;
+  buildTrainingTable(filtered);
+}
+
+function buildTrainingTable(rows) {
+  const wrap = document.getElementById('trainingTableWrap');
+  if (!rows.length) { wrap.innerHTML = '<p style="color:var(--text-muted);padding:20px 0">No training activity yet.</p>'; return; }
+
+  // Group by email
+  const byEmail = {};
+  rows.forEach(r => {
+    if (!byEmail[r.email]) byEmail[r.email] = { name: r.name, email: r.email, role: r.role, modules: [] };
+    byEmail[r.email].modules.push(r);
+  });
+
+  const people = Object.values(byEmail).sort((a, b) => {
+    const la = Math.max(...a.modules.map(m => new Date(m.completed_at)));
+    const lb = Math.max(...b.modules.map(m => new Date(m.completed_at)));
+    return lb - la;
+  });
+
+  let html = `<table class="admin-table"><thead><tr>
+    <th>Name</th><th>Email</th><th>Role</th><th>Modules Done</th><th>Avg Score</th><th>Last Active</th><th></th>
+  </tr></thead><tbody>`;
+
+  people.forEach(p => {
+    const scored = p.modules.filter(m => m.quiz_score != null);
+    const avg = scored.length ? Math.round(scored.reduce((s, m) => s + m.quiz_score, 0) / scored.length) : null;
+    const lastTs = Math.max(...p.modules.map(m => new Date(m.completed_at)));
+    const lastStr = new Date(lastTs).toLocaleDateString('en-US', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
+    const scoreStyle = avg == null ? '' : avg >= 90 ? 'color:#22c55e;font-weight:700' : avg >= 70 ? 'color:#f59e0b;font-weight:700' : 'color:#ef4444;font-weight:700';
+    const emailSafe = p.email.replace(/'/g, "\\'");
+    html += `<tr>
+      <td><strong>${p.name}</strong></td>
+      <td style="font-size:12px;color:var(--text-muted)">${p.email}</td>
+      <td>${TRAINING_ROLE_LABELS[p.role] || p.role}</td>
+      <td>${p.modules.length} module${p.modules.length !== 1 ? 's' : ''}</td>
+      <td style="${scoreStyle}">${avg != null ? avg + '%' : '—'}</td>
+      <td style="font-size:12px;color:var(--text-muted)">${lastStr}</td>
+      <td><button class="btn btn-sm" onclick="showTrainingDetail('${emailSafe}')">Details →</button></td>
+    </tr>`;
+  });
+
+  html += '</tbody></table>';
+  html += `<p style="font-size:12px;color:var(--text-muted);margin-top:12px">${people.length} contractor${people.length !== 1 ? 's' : ''} · ${rows.length} total events</p>`;
+  wrap.innerHTML = html;
+}
+
+function showTrainingDetail(email) {
+  const rows = allTrainingRows.filter(r => r.email === email);
+  if (!rows.length) return;
+  const name = rows[0].name, role = rows[0].role;
+
+  let html = `<div style="margin-bottom:16px">
+    <strong style="font-size:15px">${name}</strong>
+    <span style="color:var(--text-muted);font-size:13px;margin-left:8px">${email} · ${TRAINING_ROLE_LABELS[role] || role}</span>
+  </div>`;
+
+  html += `<table class="admin-table"><thead><tr><th>Module</th><th>Score</th><th>Completed</th></tr></thead><tbody>`;
+  rows.sort((a, b) => new Date(a.completed_at) - new Date(b.completed_at)).forEach(m => {
+    const sc = m.quiz_score;
+    const scoreStyle = sc == null ? '' : sc >= 90 ? 'color:#22c55e;font-weight:700' : sc >= 70 ? 'color:#f59e0b;font-weight:700' : 'color:#ef4444;font-weight:700';
+    const scoreStr = sc != null ? sc + '%' : '✓';
+    const ts = new Date(m.completed_at).toLocaleString('en-US', {month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit'});
+    html += `<tr>
+      <td>${TRAINING_MODULE_LABELS[m.module_id] || m.module_title}</td>
+      <td style="${scoreStyle}">${scoreStr}</td>
+      <td style="font-size:12px;color:var(--text-muted)">${ts}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+
+  document.getElementById('modalBody').innerHTML = html;
+  document.getElementById('detailModal').classList.add('open');
 }
 
 // ════════════════════════════════════════
