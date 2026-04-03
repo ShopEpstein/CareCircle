@@ -474,9 +474,20 @@ function openMod(id){
   showScreen('screen-module');
 }
 
-function markDone(id){
+function markDone(id,score){
   if(!S.done.includes(id)){S.done.push(id);save();notif('Module complete! ✓','teal');
-    document.getElementById('mod-status-pill').innerHTML='<span style="background:var(--green);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">✓ Completed</span>';}
+    document.getElementById('mod-status-pill').innerHTML='<span style="background:var(--green);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">✓ Completed</span>';
+    const mod=MODS.find(m=>m.id===id);
+    const allDone=MODS.every(m=>S.done.includes(m.id));
+    fetch('/api/training-progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      email:S.email,name:S.name,role:'guardian',
+      module_id:id,module_title:mod?mod.title:id,
+      quiz_score:score??null,
+      modules_completed:S.done.length,
+      total_modules:MODS.length,
+      all_complete:allDone
+    })}).catch(()=>{});
+  }
 }
 
 // ── QUIZ ENGINE ───────────────────────────────────────
@@ -508,7 +519,7 @@ function runQuiz(modId,qs){
   r.style.display='block';
   r.innerHTML=`<h3>${pass?'✓ Passed':'✗ Not Quite'}</h3>
     <p>${correct} of ${qs.length} correct (${pct}%). ${pass?'Module complete!':'Review the content above and try again.'}</p>
-    ${pass?`<button class="btn btn-green" style="width:auto;padding:10px 24px" onclick="markDone('${modId}');setTimeout(goBack,1400)">Continue →</button>`
+    ${pass?`<button class="btn btn-green" style="width:auto;padding:10px 24px" onclick="markDone('${modId}',${pct});setTimeout(goBack,1400)">Continue →</button>`
           :`<button class="btn btn-outline" style="width:auto;padding:10px 24px" onclick="openMod('${modId}')">Retry</button>`}`;
   r.scrollIntoView({behavior:'smooth',block:'center'});
 }
@@ -534,7 +545,13 @@ function selSched(el,val){
 }
 function submitSched(){
   if(!schedType){notif('Select a session type first.');return}
-  S.scheduled=true;S.schedData={type:schedType,day:document.getElementById('s-day').value,time:document.getElementById('s-time').value,notes:document.getElementById('s-notes').value,ts:new Date().toLocaleDateString()};save();
+  const sDay=document.getElementById('s-day').value,sTime=document.getElementById('s-time').value,sNotes=document.getElementById('s-notes').value;
+  S.scheduled=true;S.schedData={type:schedType,day:sDay,time:sTime,notes:sNotes,ts:new Date().toLocaleDateString()};save();
+  fetch('/api/training-progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    email:S.email,name:S.name,role:'guardian',
+    module_id:'schedule_request',module_title:'Shadow Visit Requested',
+    quiz_score:null,schedule_data:{type:schedType,day:sDay,time:sTime,notes:sNotes}
+  })}).catch(()=>{});
   document.getElementById('sched-modal').innerHTML=`<div class="sent-confirm">
     <div class="big-check">🛡</div>
     <h3>Shadow Visit Requested</h3>

@@ -206,6 +206,7 @@ textarea{resize:vertical;min-height:90px}
         </select>
       </div>
       <button id="login-btn" class="btn btn-primary" onclick="doLogin()" style="margin-top:8px">Access My Training →</button>
+      <div id="login-err" style="display:none;margin-top:14px;padding:12px 16px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:8px;font-size:13px;color:#fca5a5;line-height:1.5"></div>
     </div>
     <p class="login-note">Questions? Text Chase · <span style="color:var(--gold-light)">850-341-4324</span></p>
   </div>
@@ -313,9 +314,15 @@ async function doLogin(){
   try{
     const resp=await fetch('/api/training-auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e})});
     const data=await resp.json();
-    if(!data.allowed){notif(data.reason||'Email not found. Complete onboarding first or contact Chase.');btn.disabled=false;btn.textContent='Access My Training →';return;}
+    if(!data.allowed){
+      const errEl=document.getElementById('login-err');
+      errEl.innerHTML=(data.reason||'Email not found.')+'<br><a href="/contractor-onboarding" style="color:#fbbf24;font-weight:600">Complete onboarding first →</a>';
+      errEl.style.display='block';
+      btn.disabled=false;btn.textContent='Access My Training →';return;
+    }
   }catch(err){notif('Unable to verify account. Try again or contact Chase.');btn.disabled=false;btn.textContent='Access My Training →';return;}
   btn.disabled=false;btn.textContent='Access My Training →';
+  document.getElementById('login-err').style.display='none';
   if(!load(e)){S={name:n,email:e,role:r,done:[],scheduled:false};save()}
   else{S.name=n;if(!S.role)S.role=r;save()}
   showScreen('screen-dashboard');renderDash();
