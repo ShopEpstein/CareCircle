@@ -394,9 +394,19 @@ function openMod(id){
   showScreen('screen-module');
 }
 
-function markDone(id){
+function markDone(id,score){
   if(!S.done.includes(id)){S.done.push(id);save();notif('Module complete! ✓','green');
-    document.getElementById('mod-status-pill').innerHTML='<span style="background:var(--green);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">✓ Completed</span>';}
+    document.getElementById('mod-status-pill').innerHTML='<span style="background:var(--green);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">✓ Completed</span>';
+    const mod=MODS.find(m=>m.id===id);
+    const myMods=getMyMods();
+    const allDone=myMods.every(m=>S.done.includes(m.id));
+    fetch('/api/training-progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      email:S.email,name:S.name,role:S.role,
+      module_id:id,module_title:mod?mod.title:id,
+      quiz_score:score??null,
+      modules_completed:S.done.length,total_modules:myMods.length,all_complete:allDone
+    })}).catch(()=>{});
+  }
 }
 
 // ─── QUIZ ─────────────────────────────────────────────
@@ -408,7 +418,9 @@ function selAns(qi,oi,correct){
   });
 }
 
-function runQuiz(modId,qs){
+function runQuiz(modId){
+  const qs=window._quizData&&window._quizData[modId];
+  if(!qs)return;
   if(qSubmitted)return;
   if(Object.keys(qA).length<qs.length){notif('Answer all questions first.');return}
   qSubmitted=true;
@@ -428,12 +440,14 @@ function runQuiz(modId,qs){
   r.style.display='block';
   r.innerHTML=`<h3>${pass?'✓ Passed':'✗ Not Quite'}</h3>
     <p>${correct} of ${qs.length} correct (${pct}%). ${pass?'Module complete!':'Review the content above and try again.'}</p>
-    ${pass?`<button class="btn btn-green" style="width:auto;padding:10px 24px" onclick="markDone('${modId}');setTimeout(goBack,1400)">Continue →</button>`
+    ${pass?`<button class="btn btn-green" style="width:auto;padding:10px 24px" onclick="markDone('${modId}',${pct});setTimeout(goBack,1400)">Continue →</button>`
           :`<button class="btn btn-outline" style="width:auto;padding:10px 24px" onclick="openMod('${modId}')">Retry</button>`}`;
   r.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
 function buildQuizHTML(qs,modId){
+  window._quizData=window._quizData||{};
+  window._quizData[modId]=qs;
   let h='<div class="quiz-wrap"><h2>Knowledge Check</h2><p class="sub">Answer all questions to complete this module. 70% to pass.</p>';
   qs.forEach((q,qi)=>{
     h+=`<div class="quiz-question"><div class="q-num">Question ${qi+1}</div><div class="q-text">${q.q}</div><div class="q-opts-${qi}">`;
@@ -442,8 +456,7 @@ function buildQuizHTML(qs,modId){
     });
     h+=`</div></div>`;
   });
-  const qsJson=JSON.stringify(qs).replace(/</g,'\\x3c').replace(/>/g,'\\x3e');
-  h+=`<div style="text-align:center;margin-top:8px"><button class="btn btn-primary" style="width:auto;padding:12px 32px" onclick="runQuiz('${modId}',${qsJson})">Submit Answers →</button></div>
+  h+=`<div style="text-align:center;margin-top:8px"><button class="btn btn-primary" style="width:auto;padding:12px 32px" onclick="runQuiz('${modId}')">Submit Answers →</button></div>
       <div id="quiz-result" class="quiz-result"></div></div>`;
   return h;
 }

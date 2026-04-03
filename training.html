@@ -326,6 +326,7 @@ async function doLogin(){
   if(!load(e)){S={name:n,email:e,role:r,done:[],scheduled:false};save()}
   else{S.name=n;if(!S.role)S.role=r;save()}
   showScreen('screen-dashboard');renderDash();
+  syncCompletedToSupabase();
 }
 function doLogout(){showScreen('screen-login')}
 
@@ -971,6 +972,21 @@ function buildRoleplay(){
 }
 
 // ─── INIT ─────────────────────────────────────────────
+function syncCompletedToSupabase(){
+  if(!S.email||!S.done||!S.done.length)return;
+  const myMods=getMyMods();
+  const allDone=myMods.every(m=>S.done.includes(m.id));
+  S.done.forEach(id=>{
+    const mod=MODS.find(m=>m.id===id);
+    fetch('/api/training-progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      email:S.email,name:S.name,role:S.role,
+      module_id:id,module_title:mod?mod.title:id,
+      quiz_score:null,
+      modules_completed:S.done.length,total_modules:myMods.length,all_complete:allDone
+    })}).catch(()=>{});
+  });
+}
+
 (function(){
   const keys=Object.keys(localStorage).filter(k=>k.startsWith(SK+'_'));
   if(keys.length===1){
@@ -978,6 +994,7 @@ function buildRoleplay(){
       const saved=JSON.parse(localStorage.getItem(keys[0]));
       if(saved&&saved.email&&saved.name&&saved.role){
         S=saved;showScreen('screen-dashboard');renderDash();
+        syncCompletedToSupabase();
       }
     }catch(e){}
   }
