@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareCircle Guardian Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deep:#0a1628;
+  --deep-mid:#112035;
+  --deep-light:#1a3050;
+  --teal:#1a7a6e;
+  --teal-light:#22a090;
+  --teal-glow:#2dc4b0;
+  --gold:#c8933a;
+  --gold-light:#e8b05a;
+  --cream:#f4f0e8;
+  --cream-dark:#e8e0d0;
+  --green:#2e7d5a;
+  --green-light:#3aa870;
+  --yellow:#d4a017;
+  --red:#c0392b;
+  --text:#1a1a1a;
+  --text-muted:#5a6878;
+  --border:#ddd5c4;
+  --white:#ffffff;
+  --initiate:#6b7280;
+  --guardian:#1a7a6e;
+  --beacon:#c8933a;
+  --seraph:#8b5cf6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--deep);min-height:100vh;color:var(--text)}
+.screen{display:none;min-height:100vh}
+.screen.active{display:flex;flex-direction:column}
+
+/* ── LOGIN ── */
+#screen-login{background:var(--deep);align-items:center;justify-content:center;padding:40px 20px;position:relative;overflow:hidden}
+#screen-login::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(26,122,110,.18) 0%,transparent 70%);pointer-events:none}
+.login-wrap{width:100%;max-width:440px;position:relative;z-index:1}
+.login-logo{text-align:center;margin-bottom:40px}
+.shield-mark{width:64px;height:64px;background:linear-gradient(135deg,var(--teal),var(--teal-glow));border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:28px;box-shadow:0 0 40px rgba(44,196,176,.25)}
+.login-logo h1{font-family:'Cormorant Garamond',serif;color:#fff;font-size:28px;font-weight:600;letter-spacing:.5px}
+.login-logo p{color:rgba(255,255,255,.4);font-size:12px;margin-top:5px;letter-spacing:1.5px;text-transform:uppercase}
+.login-card{background:rgba(255,255,255,.97);border-radius:20px;padding:38px;box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.login-card h2{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--deep);margin-bottom:6px}
+.login-card .sub{font-size:13px;color:var(--text-muted);margin-bottom:28px;line-height:1.6}
+.form-group{margin-bottom:18px}
+label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted);margin-bottom:7px}
+input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--teal)}
+textarea{resize:vertical;min-height:90px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.btn-teal{background:linear-gradient(135deg,var(--teal),var(--teal-light));color:#fff;width:100%}
+.btn-teal:hover{background:linear-gradient(135deg,var(--teal-light),var(--teal-glow))}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:var(--gold-light)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-light)}
+.btn-outline{background:transparent;color:var(--deep);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--deep);background:var(--cream)}
+.btn-sm{padding:7px 14px;font-size:13px;border-radius:8px}
+.login-note{text-align:center;margin-top:20px;font-size:13px;color:rgba(255,255,255,.35)}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--deep-mid);border-bottom:1px solid rgba(255,255,255,.07);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-logo{font-family:'Cormorant Garamond',serif;color:#fff;font-size:18px;font-weight:600;display:flex;align-items:center;gap:10px}
+.topbar-dot{width:8px;height:8px;background:var(--teal-glow);border-radius:50%;box-shadow:0 0 8px var(--teal-glow)}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.topbar-user{color:rgba(255,255,255,.6);font-size:13px}
+.topbar-user span{color:var(--teal-glow);font-weight:600}
+
+/* ── RANK BADGE ── */
+.rank-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.5px}
+.rank-initiate{background:rgba(107,114,128,.15);color:var(--initiate);border:1px solid rgba(107,114,128,.3)}
+.rank-guardian{background:rgba(26,122,110,.15);color:var(--guardian);border:1px solid rgba(26,122,110,.3)}
+.rank-beacon{background:rgba(200,147,58,.15);color:var(--beacon);border:1px solid rgba(200,147,58,.3)}
+.rank-seraph{background:rgba(139,92,246,.15);color:var(--seraph);border:1px solid rgba(139,92,246,.3)}
+
+/* ── DASHBOARD ── */
+#screen-dashboard{background:var(--cream)}
+.dash-body{flex:1;padding:36px 32px;max-width:1100px;margin:0 auto;width:100%}
+.dash-header{margin-bottom:32px}
+.dash-header h2{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--deep);font-weight:700}
+.dash-header p{color:var(--text-muted);font-size:15px;margin-top:6px;line-height:1.6}
+
+/* ── RANK PROGRESSION ── */
+.rank-track{background:var(--deep);border-radius:16px;padding:24px 28px;margin-bottom:28px;display:flex;align-items:center;gap:0;overflow:hidden;position:relative}
+.rank-track::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 30% 50%,rgba(26,122,110,.12) 0%,transparent 60%);pointer-events:none}
+.rank-step{flex:1;text-align:center;position:relative;z-index:1}
+.rank-step-icon{font-size:22px;margin-bottom:6px}
+.rank-step-name{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:3px}
+.rank-step-xp{font-size:10px;color:rgba(255,255,255,.35)}
+.rank-step.active .rank-step-name{color:var(--teal-glow)}
+.rank-step.active .rank-step-xp{color:rgba(44,196,176,.6)}
+.rank-step.locked .rank-step-name{color:rgba(255,255,255,.25)}
+.rank-step.done .rank-step-name{color:rgba(255,255,255,.5)}
+.rank-connector{width:40px;height:1px;background:rgba(255,255,255,.1);flex-shrink:0}
+.rank-connector.done{background:rgba(44,196,176,.4)}
+
+/* ── PROGRESS ── */
+.progress-wrap{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;gap:20px}
+.progress-info{flex:1}
+.progress-info h4{font-size:14px;font-weight:600;color:var(--deep);margin-bottom:8px}
+.progress-bar-track{width:100%;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-glow));border-radius:4px;transition:width .5s ease}
+.progress-pct{font-size:22px;font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--teal);flex-shrink:0}
+
+/* ── MODULE CARDS ── */
+.section-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px}
+.module-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;margin-bottom:36px}
+.module-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:22px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.module-card:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.module-card.locked{opacity:.5;cursor:not-allowed}
+.module-card.locked:hover{transform:none;border-color:var(--border);box-shadow:none}
+.module-card.completed{border-color:var(--green);background:#f0faf5}
+.module-card.completed::after{content:'✓';position:absolute;top:14px;right:14px;width:24px;height:24px;background:var(--green);color:#fff;border-radius:50%;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.module-num{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.module-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--deep);margin-bottom:6px;line-height:1.3}
+.module-desc{font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
+.module-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--text-muted)}
+.module-meta .pill{background:var(--cream);padding:3px 9px;border-radius:20px;font-weight:500}
+
+/* ── CERT CARD ── */
+.cert-card{background:var(--deep);border-radius:16px;padding:28px;color:#fff;display:flex;align-items:center;gap:24px;margin-bottom:36px;position:relative;overflow:hidden}
+.cert-card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(44,196,176,.15),transparent 70%);pointer-events:none}
+.cert-icon{font-size:40px;flex-shrink:0}
+.cert-info h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;margin-bottom:6px}
+.cert-info p{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:16px;line-height:1.6}
+
+/* ── MODULE SCREEN ── */
+#screen-module{background:var(--cream)}
+.module-topbar{background:var(--deep-mid);border-bottom:1px solid rgba(255,255,255,.07);padding:0 32px;height:60px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.back-btn{background:none;border:none;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px;padding:0;transition:color .2s}
+.back-btn:hover{color:#fff}
+.module-topbar-title{color:#fff;font-size:15px;font-weight:600;flex:1}
+.module-content-wrap{flex:1;overflow-y:auto;padding:40px 32px}
+.module-content{max-width:760px;margin:0 auto}
+.module-content h1{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--deep);margin-bottom:8px;line-height:1.2}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.intro{font-size:16px;color:var(--text-muted);line-height:1.75;margin-bottom:32px;padding-bottom:32px;border-bottom:1.5px solid var(--border)}
+.content-section{margin-bottom:32px}
+.content-section h2{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--deep);margin-bottom:14px}
+.content-section h3{font-size:15px;font-weight:700;color:var(--deep);margin-bottom:10px;margin-top:22px}
+.content-section p{font-size:15px;line-height:1.8;color:#2a2a2a;margin-bottom:12px}
+.content-section ul{margin-left:20px;margin-bottom:16px}
+.content-section ul li{font-size:15px;line-height:1.75;color:#2a2a2a;margin-bottom:6px}
+.callout{border-left:4px solid var(--teal);background:#f0fdfb;border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+.callout.red{border-color:var(--red);background:#fff5f5}
+.callout.gold{border-color:var(--gold);background:#fffbf3}
+.callout.green{border-color:var(--green);background:#f0faf5}
+.callout.deep{border-color:var(--deep);background:#f0f4f8}
+.callout strong{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;color:var(--deep)}
+.callout p{margin:0;font-size:14px;line-height:1.65}
+.protocol-block{background:var(--deep);color:#fff;border-radius:12px;padding:24px;margin:20px 0;font-size:14px;line-height:1.85;font-family:'DM Sans',sans-serif}
+.protocol-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal-glow);margin-bottom:12px;display:block}
+.checklist-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.checklist-item:last-child{border-bottom:none}
+.check-circle{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;margin-top:2px}
+.checklist-item p{font-size:14px;line-height:1.6;color:#2a2a2a;margin:0}
+.score-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0}
+.score-card{border-radius:12px;padding:16px;text-align:center}
+.score-card.green{background:#f0faf5;border:2px solid var(--green)}
+.score-card.yellow{background:#fffbeb;border:2px solid var(--yellow)}
+.score-card.red{background:#fff5f5;border:2px solid var(--red)}
+.score-card .score-icon{font-size:24px;margin-bottom:8px}
+.score-card .score-label{font-size:13px;font-weight:700;margin-bottom:6px}
+.score-card.green .score-label{color:var(--green)}
+.score-card.yellow .score-label{color:var(--yellow)}
+.score-card.red .score-label{color:var(--red)}
+.score-card .score-desc{font-size:12px;color:var(--text-muted);line-height:1.5}
+.data-table{width:100%;border-collapse:collapse;margin:16px 0;border-radius:10px;overflow:hidden;border:1.5px solid var(--border)}
+.data-table th{background:var(--deep);color:#fff;padding:10px 14px;font-size:12px;font-weight:600;text-align:left}
+.data-table td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);background:#fff;line-height:1.5}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr.hl td{background:#f0fdfb}
+
+/* ── QUIZ ── */
+.quiz-wrap{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:32px;margin-top:32px}
+.quiz-wrap h2{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--deep);margin-bottom:6px}
+.quiz-wrap .sub{font-size:14px;color:var(--text-muted);margin-bottom:28px}
+.quiz-question{margin-bottom:28px}
+.q-num{font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:700;color:var(--teal);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:600;color:var(--deep);margin-bottom:14px;line-height:1.5}
+.option-btn{display:block;width:100%;text-align:left;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;margin-bottom:8px;transition:all .18s;color:var(--text)}
+.option-btn:hover{border-color:var(--teal);background:#f0fdfb}
+.option-btn.selected{border-color:var(--deep);background:var(--deep);color:#fff}
+.option-btn.correct{border-color:var(--green);background:#f0faf5;color:var(--green);pointer-events:none;font-weight:600}
+.option-btn.wrong{border-color:var(--red);background:#fff5f5;color:var(--red);pointer-events:none}
+.quiz-result{padding:20px;border-radius:12px;text-align:center;margin-top:20px;display:none}
+.quiz-result.pass{background:#f0faf5;border:2px solid var(--green)}
+.quiz-result.fail{background:#fff5f5;border:2px solid var(--red)}
+.quiz-result h3{font-size:22px;font-weight:700;margin-bottom:6px}
+.quiz-result.pass h3{color:var(--green)}
+.quiz-result.fail h3{color:var(--red)}
+.quiz-result p{font-size:14px;color:var(--text-muted);margin-bottom:16px}
+
+/* ── SCHEDULE ── */
+#screen-schedule{background:var(--cream)}
+.schedule-body{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.schedule-modal{background:#fff;border-radius:20px;padding:48px;max-width:560px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.1);text-align:center}
+.schedule-modal .big-icon{font-size:52px;margin-bottom:20px}
+.schedule-modal h2{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--deep);margin-bottom:10px}
+.schedule-modal p{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:28px}
+.sched-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.sched-option{border:1.5px solid var(--border);border-radius:12px;padding:18px 16px;cursor:pointer;transition:all .2s;text-align:center}
+.sched-option:hover{border-color:var(--teal);background:#f0fdfb}
+.sched-option.selected{border-color:var(--deep);background:var(--deep);color:#fff}
+.sched-icon{font-size:24px;margin-bottom:8px}
+.sched-label{font-size:13px;font-weight:600}
+.sched-option.selected .sched-label{color:#fff}
+.sched-desc{font-size:11px;color:var(--text-muted);margin-top:4px}
+.sched-option.selected .sched-desc{color:rgba(255,255,255,.55)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sent-confirm{text-align:center;padding:20px 0}
+.big-check{width:64px;height:64px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:28px;color:#fff;box-shadow:0 0 30px rgba(26,122,110,.3)}
+.sent-confirm h3{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--deep);margin-bottom:8px}
+.sent-confirm p{font-size:14px;color:var(--text-muted);line-height:1.7}
+
+/* ── NOTIF ── */
+.notif{position:fixed;bottom:24px;right:24px;background:var(--deep);color:#fff;padding:14px 20px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.3);transform:translateY(80px);opacity:0;transition:all .3s;z-index:9999;max-width:320px}
+.notif.show{transform:translateY(0);opacity:1}
+.notif.green{background:var(--green)}
+.notif.teal{background:var(--teal)}
+
+@media(max-width:640px){
+  .dash-body{padding:24px 16px}
+  .module-grid{grid-template-columns:1fr}
+  .sched-options{grid-template-columns:1fr}
+  .form-2col{grid-template-columns:1fr}
+  .cert-card{flex-direction:column;text-align:center}
+  .schedule-modal{padding:32px 24px}
+  .topbar,.module-topbar{padding:0 16px}
+  .module-content-wrap{padding:28px 16px}
+  .score-grid{grid-template-columns:1fr}
+  .rank-track{flex-wrap:wrap;gap:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="screen-login" class="screen active">
+  <div class="login-wrap">
+    <div class="login-logo">
+      <div class="shield-mark">🛡</div>
+      <h1>CareCircle Network</h1>
+      <p>Guardian Training Portal</p>
+    </div>
+    <div class="login-card">
+      <h2>Begin Your Training</h2>
+      <p class="sub">Complete all modules to earn Guardian certification and be cleared for your first solo visit. Your progress saves automatically.</p>
+      <div class="form-group"><label>Full Name</label><input type="text" id="ln" placeholder="Your full name"></div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="le" placeholder="your@email.com"></div>
+      <div class="form-group">
+        <label>Background</label>
+        <select id="lr">
+          <option value="">— Select your background —</option>
+          <option value="care">Home care / senior care worker</option>
+          <option value="medical">Medical / clinical background</option>
+          <option value="family">Personal caregiving experience</option>
+          <option value="other">Other / no prior care experience</option>
+        </select>
+      </div>
+      <button class="btn btn-teal" onclick="doLogin()" style="margin-top:8px">Begin Training →</button>
+    </div>
+    <p class="login-note">Questions? Text Chase · <span style="color:rgba(44,196,176,.7)">850-341-4324</span></p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="screen-dashboard" class="screen">
+  <div class="topbar">
+    <div class="topbar-logo"><div class="topbar-dot"></div>CareCircle Guardian Training</div>
+    <div class="topbar-right">
+      <div class="topbar-user">Welcome, <span id="tb-name">—</span></div>
+      <div class="rank-badge rank-initiate" id="tb-rank">⚡ Initiate</div>
+      <button class="btn btn-outline btn-sm" onclick="doLogout()">Log out</button>
+    </div>
+  </div>
+  <div class="dash-body">
+    <div class="dash-header">
+      <h2 id="dash-greet">Good morning</h2>
+      <p id="dash-sub">Complete all modules to earn your Guardian certification and be cleared for your first visit.</p>
+    </div>
+
+    <!-- Rank track -->
+    <div class="rank-track">
+      <div class="rank-step active" id="rank-initiate">
+        <div class="rank-step-icon">⚡</div>
+        <div class="rank-step-name" style="color:rgba(255,255,255,.9)">Initiate</div>
+        <div class="rank-step-xp">In training</div>
+      </div>
+      <div class="rank-connector" id="conn-1"></div>
+      <div class="rank-step locked" id="rank-guardian">
+        <div class="rank-step-icon">🛡</div>
+        <div class="rank-step-name">Guardian</div>
+        <div class="rank-step-xp">Complete training</div>
+      </div>
+      <div class="rank-connector"></div>
+      <div class="rank-step locked" id="rank-beacon">
+        <div class="rank-step-icon">💡</div>
+        <div class="rank-step-name">Beacon</div>
+        <div class="rank-step-xp">Field experience</div>
+      </div>
+      <div class="rank-connector"></div>
+      <div class="rank-step locked" id="rank-seraph">
+        <div class="rank-step-icon">🔥</div>
+        <div class="rank-step-name">Seraph</div>
+        <div class="rank-step-xp">Territory lead</div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div style="font-size:28px">🎯</div>
+      <div class="progress-info">
+        <h4>Training Progress — Initiate → Guardian</h4>
+        <div class="progress-bar-track"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+      <div class="progress-pct" id="prog-pct">0%</div>
+    </div>
+
+    <div class="section-label">TRAINING MODULES</div>
+    <div class="module-grid" id="mod-grid"></div>
+
+    <div class="cert-card" id="cert-card" style="display:none">
+      <div class="cert-icon">🎖</div>
+      <div class="cert-info">
+        <h3>Ready for Guardian Certification</h3>
+        <p>You've completed all training modules. The final step is a shadow visit with Chase or a certified Beacon. Schedule yours below to earn your Guardian rank and be cleared for solo visits.</p>
+        <button class="btn btn-teal" style="width:auto;padding:12px 28px" onclick="showScreen('screen-schedule')">Schedule My Shadow Visit →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE VIEWER -->
+<div id="screen-module" class="screen">
+  <div class="module-topbar">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="module-topbar-title" id="mod-topbar-title">Module</div>
+    <div id="mod-status-pill"></div>
+  </div>
+  <div class="module-content-wrap">
+    <div class="module-content" id="mod-body"></div>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<div id="screen-schedule" class="screen">
+  <div class="module-topbar">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="module-topbar-title">Schedule Shadow Visit</div>
+  </div>
+  <div class="schedule-body">
+    <div class="schedule-modal" id="sched-modal">
+      <div class="big-icon">🛡</div>
+      <h2>Schedule Your Shadow Visit</h2>
+      <p>Your shadow visit is the final step before Guardian certification. You'll accompany Chase or a certified Beacon on a live visit. Chase will confirm within 24 hours.</p>
+      <div class="sched-options">
+        <div class="sched-option" onclick="selSched(this,'Shadow with Chase')"><div class="sched-icon">👤</div><div class="sched-label">Shadow Chase</div><div class="sched-desc">Directly with the founder</div></div>
+        <div class="sched-option" onclick="selSched(this,'Shadow a Beacon')"><div class="sched-icon">💡</div><div class="sched-label">Shadow a Beacon</div><div class="sched-desc">Certified senior guardian</div></div>
+      </div>
+      <div class="form-2col" style="margin-bottom:14px">
+        <div class="form-group"><label>Best Day(s)</label><input type="text" id="s-day" placeholder="Mon, Tue, Wed…"></div>
+        <div class="form-group"><label>Best Time</label><input type="text" id="s-time" placeholder="Mornings, evenings…"></div>
+      </div>
+      <div class="form-group"><label>Anything to share before your shadow visit?</label><textarea id="s-notes" placeholder="e.g. I've reviewed all modules. I have questions about the Red escalation protocol. I have prior care experience with memory patients."></textarea></div>
+      <button class="btn btn-teal" style="width:100%;margin-top:8px" onclick="submitSched()">Submit Request →</button>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+const SK='cc_guardian_v1';
+let S={name:'',email:'',bg:'',done:[],scheduled:false};
+let qA={},qSubmitted=false,schedType='';
+
+function save(){localStorage.setItem(SK+'_'+S.email,JSON.stringify(S))}
+function load(e){const r=localStorage.getItem(SK+'_'+e);if(r){S=JSON.parse(r);return true}return false}
+
+function doLogin(){
+  const n=document.getElementById('ln').value.trim();
+  const e=document.getElementById('le').value.trim().toLowerCase();
+  const bg=document.getElementById('lr').value;
+  if(!n||!e||!bg){notif('Please fill in all fields.');return}
+  if(!e.includes('@')){notif('Enter a valid email.');return}
+  if(!load(e)){S={name:n,email:e,bg,done:[],scheduled:false};save()}
+  else{S.name=n;if(!S.bg)S.bg=bg;save()}
+  showScreen('screen-dashboard');renderDash();
+}
+function doLogout(){showScreen('screen-login')}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function goBack(){showScreen('screen-dashboard');renderDash()}
+
+// ── MODULES ──────────────────────────────────────────
+const MODS=[
+  {id:'mission',title:'Mission, Role & What You Are Not',desc:'Why this work matters, what a Guardian actually is, and the boundaries that protect everyone.',time:'10 min',order:1,build:buildMission},
+  {id:'legal',title:'Legal Framework & Facility Access',desc:'Florida law, essential caregiver designation, and exactly what to say when staff challenge your presence.',time:'12 min',order:2,build:buildLegal},
+  {id:'conduct',title:'Facility Conduct & Neutrality',desc:'How to move through a facility, how to interact with staff, and why building alliances destroys your value.',time:'10 min',order:3,build:buildConduct},
+  {id:'checklist',title:'The Observation Checklist',desc:'Every category you observe and document on every single visit — environment, staffing, resident, medication, documentation.',time:'20 min',order:4,build:buildChecklist},
+  {id:'phases',title:'The Visit Algorithm — Phases 1, 2 & 3',desc:'How the three-phase guardian protocol works, what deterrence means in practice, and how visit cadence is determined.',time:'20 min',order:5,build:buildPhases},
+  {id:'escalation',title:'Escalation Protocol — Green, Yellow, Red',desc:'What each rating means, your exact response timeline, and when to call the family versus when to call Chase.',time:'15 min',order:6,build:buildEscalation},
+  {id:'reporting',title:'Logging & Report Standards',desc:'How to log in real time, what goes in the written report, and what never goes in a report under any circumstances.',time:'12 min',order:7,build:buildReporting},
+  {id:'shadow',title:'Shadow Visit Prep',desc:'What to observe, how to behave, and what you need to demonstrate before you are cleared for solo visits.',time:'10 min',order:8,build:buildShadow},
+];
+
+function renderDash(){
+  const h=new Date().getHours();
+  const g=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  document.getElementById('dash-greet').textContent=`${g}, ${S.name.split(' ')[0]}.`;
+  document.getElementById('tb-name').textContent=S.name.split(' ')[0];
+
+  const total=MODS.length,done=MODS.filter(m=>S.done.includes(m.id)).length;
+  const pct=Math.round(done/total*100);
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('dash-sub').textContent=done===total
+    ?'All modules complete. Schedule your shadow visit to earn your Guardian rank.'
+    :`${done} of ${total} modules complete. Complete all modules to unlock your shadow visit.`;
+
+  // Rank track
+  if(pct===100){
+    document.getElementById('rank-guardian').className='rank-step active';
+    document.getElementById('rank-guardian').querySelector('.rank-step-xp').textContent='Training complete';
+    document.getElementById('conn-1').className='rank-connector done';
+    document.getElementById('tb-rank').textContent='🛡 Guardian (Pending Shadow)';
+    document.getElementById('tb-rank').className='rank-badge rank-guardian';
+  }
+
+  const grid=document.getElementById('mod-grid');
+  grid.innerHTML='';
+  MODS.forEach((mod,i)=>{
+    const isDone=S.done.includes(mod.id);
+    const prevOk=MODS.slice(0,i).every(m=>S.done.includes(m.id));
+    const locked=i>0&&!prevOk&&!isDone;
+    const card=document.createElement('div');
+    card.className='module-card'+(isDone?' completed':'')+(locked?' locked':'');
+    card.innerHTML=`
+      <div class="module-num">Module ${i+1}</div>
+      <div class="module-title">${mod.title}</div>
+      <div class="module-desc">${mod.desc}</div>
+      <div class="module-meta">
+        <span class="pill">⏱ ${mod.time}</span>
+        ${isDone?'<span style="color:var(--green);font-weight:600">✓ Complete</span>':''}
+        ${locked?'<span style="color:var(--red);font-weight:600">🔒 Complete previous first</span>':''}
+      </div>`;
+    if(!locked)card.onclick=()=>openMod(mod.id);
+    grid.appendChild(card);
+  });
+
+  const allDone=MODS.every(m=>S.done.includes(m.id));
+  document.getElementById('cert-card').style.display=allDone?'flex':'none';
+}
+
+function openMod(id){
+  const mod=MODS.find(m=>m.id===id);if(!mod)return;
+  qA={};qSubmitted=false;
+  document.getElementById('mod-topbar-title').textContent=mod.title;
+  const isDone=S.done.includes(id);
+  document.getElementById('mod-status-pill').innerHTML=isDone
+    ?'<span style="background:var(--green);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">✓ Completed</span>':'';
+  document.getElementById('mod-body').innerHTML=mod.build(isDone);
+  showScreen('screen-module');
+}
+
+function markDone(id){
+  if(!S.done.includes(id)){S.done.push(id);save();notif('Module complete! ✓','teal');
+    document.getElementById('mod-status-pill').innerHTML='<span style="background:var(--green);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">✓ Completed</span>';}
+}
+
+// ── QUIZ ENGINE ───────────────────────────────────────
+function selAns(qi,oi,correct){
+  if(qSubmitted)return;
+  qA[qi]={oi,correct};
+  document.querySelectorAll('.q-opts-'+qi+' .option-btn').forEach((b,i)=>{
+    b.className='option-btn'+(i===oi?' selected':'');
+  });
+}
+
+function runQuiz(modId,qs){
+  if(qSubmitted)return;
+  if(Object.keys(qA).length<qs.length){notif('Answer all questions first.');return}
+  qSubmitted=true;
+  let correct=0;
+  qs.forEach((q,qi)=>{
+    const a=qA[qi];
+    document.querySelectorAll('.q-opts-'+qi+' .option-btn').forEach((b,i)=>{
+      if(i===q.c)b.className='option-btn correct';
+      else if(i===a.oi&&i!==q.c)b.className='option-btn wrong';
+      else b.className='option-btn';
+    });
+    if(a.correct)correct++;
+  });
+  const pct=Math.round(correct/qs.length*100),pass=pct>=70;
+  const r=document.getElementById('quiz-result');
+  r.className='quiz-result '+(pass?'pass':'fail');
+  r.style.display='block';
+  r.innerHTML=`<h3>${pass?'✓ Passed':'✗ Not Quite'}</h3>
+    <p>${correct} of ${qs.length} correct (${pct}%). ${pass?'Module complete!':'Review the content above and try again.'}</p>
+    ${pass?`<button class="btn btn-green" style="width:auto;padding:10px 24px" onclick="markDone('${modId}');setTimeout(goBack,1400)">Continue →</button>`
+          :`<button class="btn btn-outline" style="width:auto;padding:10px 24px" onclick="openMod('${modId}')">Retry</button>`}`;
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function buildQuizHTML(qs,modId){
+  let h='<div class="quiz-wrap"><h2>Knowledge Check</h2><p class="sub">Answer all questions to complete this module. 70% to pass.</p>';
+  qs.forEach((q,qi)=>{
+    h+=`<div class="quiz-question"><div class="q-num">Question ${qi+1}</div><div class="q-text">${q.q}</div><div class="q-opts-${qi}">`;
+    q.opts.forEach((o,oi)=>h+=`<button class="option-btn" onclick="selAns(${qi},${oi},${oi===q.c})">${o}</button>`);
+    h+=`</div></div>`;
+  });
+  const qsJson=JSON.stringify(qs);
+  window['_quiz_'+modId]=qs;
+  h+=`<div style="text-align:center;margin-top:8px"><button class="btn btn-teal" style="width:auto;padding:12px 32px" onclick="runQuiz('${modId}',window['_quiz_${modId}'])">Submit Answers →</button></div>
+      <div id="quiz-result" class="quiz-result"></div></div>`;
+  return h;
+}
+
+// ── SCHEDULE ─────────────────────────────────────────
+function selSched(el,val){
+  document.querySelectorAll('.sched-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');schedType=val;
+}
+function submitSched(){
+  if(!schedType){notif('Select a session type first.');return}
+  S.scheduled=true;S.schedData={type:schedType,day:document.getElementById('s-day').value,time:document.getElementById('s-time').value,notes:document.getElementById('s-notes').value,ts:new Date().toLocaleDateString()};save();
+  document.getElementById('sched-modal').innerHTML=`<div class="sent-confirm">
+    <div class="big-check">🛡</div>
+    <h3>Shadow Visit Requested</h3>
+    <p>Chase will confirm your shadow visit within 24 hours. Once you complete it, you will be officially certified as a CareCircle Guardian.</p>
+    <p style="margin-top:12px"><strong>Session type:</strong> ${schedType}</p>
+    <p style="margin-top:16px;font-size:13px;color:var(--text-muted)">Review your modules one more time before the visit. You will be observed applying the algorithm live.</p>
+    <button class="btn btn-outline" style="width:auto;padding:10px 24px;margin-top:24px" onclick="goBack()">Back to Dashboard</button>
+  </div>`;
+}
+
+// ── NOTIF ─────────────────────────────────────────────
+let nT;
+function notif(msg,type){
+  const el=document.getElementById('notif');
+  el.textContent=msg;el.className='notif show'+(type?' '+type:'');
+  clearTimeout(nT);nT=setTimeout(()=>el.classList.remove('show'),3000);
+}
+
+// ── MODULE CONTENT ────────────────────────────────────
+
+function buildMission(){
+  const qs=[
+    {q:"A CareCircle Guardian is best described as:",opts:["A licensed caregiver providing direct care","A family-authorized advocate who observes, documents, and reports","An inspector working on behalf of the state","A social worker employed by the facility"],c:1},
+    {q:"Who does a Guardian work for?",opts:["The facility","The state regulator","The family — exclusively","CareCircle and the family equally"],c:2},
+    {q:"What is the single most important quality for this role?",opts:["Medical training","Sales ability","Being fully present and human","Speed of documentation"],c:2},
+    {q:"Guardians should NOT:",opts:["Take notes after leaving the facility","Visit unannounced","Build personal alliances with facility staff","Observe resident physical condition"],c:2}
+  ];
+  return `<div class="eyebrow">Module 1 · Foundation</div>
+  <h1>Mission, Role &amp; What You Are Not</h1>
+  <p class="intro">This role exists because most people in care facilities are processed, not seen. Your job is to show up and actually look at someone. That is more powerful than any protocol.</p>
+  <div class="content-section">
+    <h2>What You Are</h2>
+    <p>A CareCircle Guardian is a <strong>family-authorized advocate</strong>. You are retained by a family to visit their loved one in a care facility — unannounced, at variable times, across all shifts — and produce honest documentation of what you observe.</p>
+    <p>You work for the family. Not the facility. Not CareCircle. Not the state. The family. That alignment is what makes everything you do meaningful.</p>
+    <div class="callout">
+      <strong>The one sentence that defines this role</strong>
+      <p>"I show up when nobody expects it, I see what's actually happening, and I tell the family the truth."</p>
+    </div>
+  </div>
+  <div class="content-section">
+    <h2>What You Are Not</h2>
+    <ul>
+      <li>You are <strong>not a caregiver.</strong> You do not provide direct care. You do not assist with hygiene, medication, or physical needs unless a resident is in immediate danger.</li>
+      <li>You are <strong>not an inspector.</strong> You have no regulatory authority. You observe and document. You do not issue citations or demand corrective action on-site.</li>
+      <li>You are <strong>not an investigator.</strong> You do not interrogate staff. You do not search records. You observe what is visible and accessible.</li>
+      <li>You are <strong>not an employee of the facility.</strong> You have no reporting obligation to facility management.</li>
+    </ul>
+    <div class="callout red">
+      <strong>The line you do not cross</strong>
+      <p>If you ever provide direct care, you change your legal status. If you ever confront staff aggressively, you compromise access. If you ever form close alliances with staff, you compromise your objectivity. Stay on your side of the line.</p>
+    </div>
+  </div>
+  <div class="content-section">
+    <h2>Why the Mission Matters</h2>
+    <p>Research on facility inspections consistently shows that the quality of care improves when staff know observation is possible — not just when an inspection is happening. Your presence, by itself, raises the standard of care for every resident in that facility, not just the one you visit.</p>
+    <p>The families who hire CareCircle Present cannot be there. Distance, work, their own health, or the sheer emotional weight of the situation — they can't show up consistently. You are their eyes. Own that.</p>
+  </div>
+  <div class="content-section">
+    <h2>The Rank System</h2>
+    <p>Your rank reflects your experience and capability in this role.</p>
+    <table class="data-table">
+      <thead><tr><th>Rank</th><th>Status</th><th>What It Means</th></tr></thead>
+      <tbody>
+        <tr><td>⚡ Initiate</td><td>In training</td><td>Completing modules. Not yet cleared for solo visits.</td></tr>
+        <tr class="hl"><td>🛡 Guardian</td><td>Certified</td><td>Completed training + shadow visit. Cleared for solo visits.</td></tr>
+        <tr><td>💡 Beacon</td><td>Experienced</td><td>Field-seasoned. Can shadow and mentor Initiates.</td></tr>
+        <tr><td>🔥 Seraph</td><td>Territory lead</td><td>Manages Guardians across a market. Override compensation.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  ${buildQuizHTML(qs,'mission')}`;
+}
+
+function buildLegal(){
+  const qs=[
+    {q:"Your legal basis for entering a facility is:",opts:["A CareCircle business license","Florida's essential caregiver and authorized visitor designation","A court order","The facility's permission"],c:1},
+    {q:"When staff challenge your presence, you say:",opts:["'I'm from CareCircle and I have a right to be here'","'I'm here visiting [resident name] as their designated essential caregiver. I have the family's written authorization.'","'Call your administrator'","'I don't have to explain myself'"],c:1},
+    {q:"If a facility physically blocks your access, you should:",opts:["Force entry","Argue with staff until they comply","Do not escalate on-site. Leave, document the incident, and contact Chase immediately.","Call the police immediately"],c:2},
+    {q:"Repeated access challenges from a facility are:",opts:["Normal and expected","A reportable pattern that belongs in your documentation","A reason to stop visiting","A sign you should change your approach"],c:1}
+  ];
+  return `<div class="eyebrow">Module 2 · Legal Framework</div>
+  <h1>Legal Framework &amp; Facility Access</h1>
+  <p class="intro">You need to know your legal standing before your first visit. Confidence in this area protects you, protects the family, and keeps you in the building.</p>
+  <div class="content-section">
+    <h2>Your Legal Designation</h2>
+    <p>Florida law protects residents' rights to designate <strong>authorized visitors</strong> and <strong>essential caregivers</strong>. You enter every facility under one of these designations, authorized in writing by the family.</p>
+    <p>This is not a loophole. It is an explicit legal right. Facilities cannot prohibit authorized visitors or essential caregivers from accessing residents without violating state law.</p>
+    <div class="callout">
+      <strong>What you carry on every visit</strong>
+      <p>Written family authorization naming you as their designated visitor or essential caregiver for the resident. Chase provides this document as part of the family onboarding. You carry it. You do not wave it around — but you have it.</p>
+    </div>
+  </div>
+  <div class="content-section">
+    <h2>What to Say When Challenged</h2>
+    <div class="protocol-block"><span class="protocol-label">The only response you need</span>"I'm here visiting [resident name] as their designated essential caregiver. I have the family's written authorization."
+
+That is the complete statement. Do not elaborate. Do not argue. Do not explain CareCircle. If they ask for documentation, show the authorization letter. If they continue to resist, remain calm and say: "I understand. I'm going to step outside and contact the family. I'll be back shortly." Then leave, document, and call Chase.</div>
+    <div class="callout red">
+      <strong>Never do this</strong>
+      <p>Do not mention CareCircle by name to facility staff unless specifically asked. Do not say you're conducting an inspection. Do not identify yourself as anything other than a visitor or essential caregiver. Do not escalate on-site under any circumstances.</p>
+    </div>
+  </div>
+  <div class="content-section">
+    <h2>Access Challenges as Intelligence</h2>
+    <p>Every time a facility challenges your access, document it in your report. The date, time, who challenged you, what they said, and how you responded. <strong>A pattern of access challenges is itself a Red flag.</strong> Facilities that consistently resist family-authorized visits are facilities with something to protect.</p>
+    <p>This data goes to Chase, who determines next steps — which may include family notification, advocacy communication to administration, or AHCA complaint referral.</p>
+  </div>
+  <div class="content-section">
+    <h2>What You Are Not Authorized to Do</h2>
+    <ul>
+      <li>You cannot access private resident records without facility cooperation and family authorization.</li>
+      <li>You cannot demand that staff stop what they're doing to speak with you.</li>
+      <li>You cannot remove any documentation from the facility.</li>
+      <li>You cannot make any statements on behalf of CareCircle to facility administration without Chase's authorization.</li>
+    </ul>
+  </div>
+  ${buildQuizHTML(qs,'legal')}`;
+}
+
+function buildConduct(){
+  const qs=[
+    {q:"You should enter a facility wearing CareCircle-branded clothing:",opts:["Yes — it signals professionalism","Yes — it helps families recognize you","Never — you enter as a visitor, not a branded representative","Only if the family requests it"],c:2},
+    {q:"A staff member is friendly and starts sharing concerns about other residents. You should:",opts:["Engage fully — this is valuable intelligence","Listen briefly, be polite, redirect your attention back to your visit purpose, document nothing they said about other residents","Report them to administration","Share what you've observed at other facilities"],c:1},
+    {q:"'Build familiarity without building alliance' means:",opts:["Be rude to staff to maintain distance","Be friendly and normal, but don't become close or dependent on any staff member's perspective","Only interact with the resident, never staff","Don't visit the same facility twice"],c:1},
+    {q:"Your notes from a visit should be taken:",opts:["During the visit on a visible clipboard","On your phone during the visit","After you leave the facility","Only if you see something concerning"],c:2}
+  ];
+  return `<div class="eyebrow">Module 3 · Conduct</div>
+  <h1>Facility Conduct &amp; Neutrality</h1>
+  <p class="intro">How you move through a facility determines what you're able to see. Neutrality is not coldness — it's the discipline that keeps your observations honest.</p>
+  <div class="content-section">
+    <h2>Entering the Facility</h2>
+    <ul>
+      <li><strong>Never announce your purpose.</strong> Enter as an authorized visitor or designated essential caregiver.</li>
+      <li><strong>No CareCircle branding inside any facility.</strong> No branded clothing, lanyards, or materials visible on your person.</li>
+      <li><strong>Notes are taken after the visit</strong>, not during — unless a specific situation requires immediate on-site documentation. Your observations live in your eyes and memory until you're outside.</li>
+      <li><strong>Your phone is normal.</strong> You can use your phone. Everyone uses their phone. Don't make it conspicuous.</li>
+    </ul>
+  </div>
+  <div class="content-section">
+    <h2>Relationship with Staff</h2>
+    <div class="callout">
+      <strong>The guiding principle</strong>
+      <p>"Build familiarity without building alliance. Alliance creates bias, and bias destroys the integrity of the report."</p>
+    </div>
+    <p>Be friendly. Be normal. You are someone visiting a resident. Greet staff. Make small talk if it's natural. But do not cultivate relationships, do not seek information from staff about the facility, and do not share what you observe at other facilities.</p>
+    <p>A staff member who trusts you may tell you things. That information belongs to you — it does not go in a report unless you can independently observe or verify it. You are documenting what you see, not what you're told.</p>
+  </div>
+  <div class="content-section">
+    <h2>Focus: The Resident Comes First</h2>
+    <p>Everything in the algorithm serves the resident. Every decision about timing, focus, and documentation is subordinate to that specific resident's situation. If something about the resident's condition tells you to stay longer, stay longer. If it tells you to come back tomorrow, that goes in your report as a recommendation.</p>
+    <div class="callout deep">
+      <strong>The observation is in your eyes, not your clipboard</strong>
+      <p>The checklist is a memory aid, not a script. Know it so well that you're not thinking about it during the visit. Your attention should be on the resident and the environment — not on remembering what to look for.</p>
+    </div>
+  </div>
+  <div class="content-section">
+    <h2>When You Leave</h2>
+    <p>Begin logging immediately after leaving — in your car, in a nearby parking lot, before you drive. Memory degrades. The specificity of your observations is what makes your reports valuable. Times, staff counts, specific interactions observed, exact quotes if a resident said something notable — get it out of your head and into the log while it's fresh.</p>
+  </div>
+  ${buildQuizHTML(qs,'conduct')}`;
+}
+
+function buildChecklist(){
+  const qs=[
+    {q:"The observation checklist is valuable because:",opts:["It makes visits faster","The consistency across visits is what creates pattern detection — variation from a prior entry is the signal","It satisfies legal requirements","It makes reports look professional"],c:1},
+    {q:"A resident's lips are visibly cracked, no water within reach, no beverage present. This is documented under:",opts:["Staffing","Environment","Resident Physical Condition — Hydration indicators","Documentation Spot-Check"],c:2},
+    {q:"You observe a staff member speaking to a resident in a dismissive, infantilizing tone. This is rated:",opts:["Respectful","Functional","Concerning","Flagged"],c:2},
+    {q:"A 'Flag' on the observation checklist means:",opts:["Something you're unsure about","A standard finding","Something requiring immediate documentation and potential escalation","A positive observation"],c:2}
+  ];
+  return `<div class="eyebrow">Module 4 · Core Protocol</div>
+  <h1>The Observation Checklist</h1>
+  <p class="intro">This checklist is used on every visit, every time, without exception. Its power comes from consistency — the same questions answered at every visit creates a longitudinal record where deviation becomes visible.</p>
+  <div class="content-section">
+    <h2>A — Environment</h2>
+    <p><em>Score each item: Meets Standard / Concern / Flag</em></p>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Hallways</strong> — clear and free of hazards</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Nursing station</strong> — occupied and active</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Call lights</strong> — count active lights visible; time one response from activation to staff arrival</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Odors</strong> — urine, feces, cleaning products; note type and location specifically</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Temperature</strong> — comfortable or extremes noted</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Common areas</strong> — residents present / engaged / unattended / empty</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Dining area</strong> (if applicable) — clean and cleared</p></div>
+  </div>
+  <div class="content-section">
+    <h2>B — Staffing</h2>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Staff count</strong> — visible in hallways; estimate staff-to-resident ratio</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Staff engagement</strong> — actively working / passive / absent from floor</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Supervisory presence</strong> — any charge nurse or supervisor identifiable</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Staff mood and affect</strong> — calm / rushed / visibly fatigued / irritable</p></div>
+  </div>
+  <div class="content-section">
+    <h2>C — Resident Physical Condition</h2>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Alertness</strong> — awake / asleep / sedated-appearing</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Hygiene</strong> — hair, clothing, cleanliness appropriate to time of day</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Positioning</strong> — appropriate for time of day; signs of prolonged same-position</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Skin check</strong> — any visible redness, breakdown, or marks on accessible areas</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Hydration</strong> — lips cracked / water accessible / beverage present</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Unexplained injuries</strong> — any new marks, bruising, or injuries; document precisely (location, size, color)</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Weight change</strong> — any visible change from prior visit</p></div>
+  </div>
+  <div class="content-section">
+    <h2>D — Resident Behavioral &amp; Emotional</h2>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Recognition</strong> — resident recognition of you: positive / neutral / negative / non-responsive</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Communication</strong> — verbal / nonverbal / both / absent</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Expressed concerns</strong> — anything the resident communicates during the visit</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Affect compared to prior visit</strong> — same / improved / declined</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Distress indicators</strong> — fear, anxiety, depression, behavioral patterns inconsistent with baseline</p></div>
+  </div>
+  <div class="content-section">
+    <h2>E — Medication &amp; Clinical</h2>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Medication cart</strong> — active pass in progress / not in progress</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>PRN medications</strong> — any administered since last visit; what, when, documented reason</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Behavioral change</strong> — consistent with sedation or new psychotropic medication</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Incidents</strong> — any documented incident since last visit; note and obtain copy if possible</p></div>
+    <div class="callout gold"><strong>PRN medication pattern — pay close attention</strong><p>Repeated PRN (as-needed) medication use — especially for behavioral reasons — is one of the primary indicators of chemical restraint. Document every instance. The pattern across visits is what matters.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>F — Documentation Spot-Check</h2>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Care log</strong> — last entry within expected timeframe for visit time</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Incident log</strong> — any new entries since last visit</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Medication record</strong> — consistent with observed resident condition</p></div>
+    <div class="checklist-item"><div class="check-circle"></div><p><strong>Anomalies</strong> — documentation appearing incomplete, vague, or inconsistent with what you observed</p></div>
+  </div>
+  <div class="content-section">
+    <h2>G — Staff-Resident Interaction Ratings</h2>
+    <table class="data-table">
+      <thead><tr><th>Rating</th><th>What It Means</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Respectful</strong></td><td>Staff addresses resident by name, eye contact, calm tone</td></tr>
+        <tr><td><strong>Functional</strong></td><td>Task completed without positive or negative interaction</td></tr>
+        <tr class="hl"><td><strong>Concerning</strong></td><td>Dismissive tone, infantilizing language, or rough physical contact</td></tr>
+        <tr class="hl"><td><strong>Flagged</strong></td><td>Any interaction requiring immediate documentation and potential escalation</td></tr>
+      </tbody>
+    </table>
+  </div>
+  ${buildQuizHTML(qs,'checklist')}`;
+}
+
+function buildPhases(){
+  const qs=[
+    {q:"Phase 1 (Days 1–14) is primarily about:",opts:["Catching problems immediately","Establishing baseline across all shifts — day, evening, overnight, weekend, shift change","Testing staff response to your presence","Introducing yourself to facility management"],c:1},
+    {q:"Why does the algorithm include a deliberate 'silent period' with no visits?",opts:["To give staff a break from observation","Facilities that experience gaps cannot confirm the gap is intentional — they remain behaviorally uncertain","To save the family money","To reset the baseline"],c:1},
+    {q:"The 'Double Tap' protocol means:",opts:["Visiting twice per week","Two visits within 24 hours at maximally different times, producing a single comparative report","Calling the family twice per visit","Documenting each observation twice"],c:1},
+    {q:"Phase 2 (Days 15–30) focuses on:",opts:["Repeating Phase 1 visits identically","Using Phase 1 data to target the facility's specific weakness windows","Reducing visit frequency","Introducing yourself to family members"],c:1}
+  ];
+  return `<div class="eyebrow">Module 5 · The Algorithm</div>
+  <h1>The Visit Algorithm — Phases 1, 2 &amp; 3</h1>
+  <p class="intro">The algorithm is not a schedule. It's a strategic framework for building the most accurate picture of a facility's actual care quality while maintaining maximum deterrence effect.</p>
+  <div class="content-section">
+    <h2>Phase 1 — Days 1–14: Baseline</h2>
+    <p><strong>Objective:</strong> Build a complete baseline across every shift, every time of day, every day type. You are not looking for problems in Phase 1 — you are building the standard against which everything else is measured.</p>
+    <table class="data-table">
+      <thead><tr><th>Visit</th><th>Time Window</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Day 1</td><td>Morning 9–11am</td><td>Facility at its best face — establish the ceiling</td></tr>
+        <tr><td>Day 2</td><td>Evening 6:30–8:30pm</td><td>Back-to-back creates deterrence; compare evening to morning</td></tr>
+        <tr><td>Day 4</td><td>Overnight 11pm–1am</td><td>Highest-risk window. Skip Day 3 intentionally to maintain unpredictability</td></tr>
+        <tr><td>Day 5</td><td>Shift change 7am</td><td>Transition risk — overnight to day handoff</td></tr>
+        <tr><td>Day 7</td><td>Weekend afternoon</td><td>Weekend understaffing is documented and common</td></tr>
+        <tr class="hl"><td>Day 9</td><td>Deep night 2am</td><td>The real facility. Most staff behavior is unobserved at this hour.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout red"><strong>Day 9 overnight — the most important visit</strong><p>This is the delta visit. The difference between Day 1 morning and Day 9 deep night is the most honest measure of care consistency in the facility. Document everything. Take your time.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Phase 2 — Days 15–30: Pattern Identification</h2>
+    <p><strong>Objective:</strong> Use Phase 1 data to find the facility's weakness windows. Concentrate visits there. Begin comparing reports across visits to identify patterns.</p>
+    <p>Before Phase 2, review all Phase 1 reports and score the facility:</p>
+    <div class="score-grid">
+      <div class="score-card green"><div class="score-icon">🟢</div><div class="score-label">Green Windows</div><div class="score-desc">Performing consistently. Maintain standard frequency.</div></div>
+      <div class="score-card yellow"><div class="score-icon">🟡</div><div class="score-label">Yellow Windows</div><div class="score-desc">Decline noted. Increase visits at this window.</div></div>
+      <div class="score-card red"><div class="score-icon">🔴</div><div class="score-card red"><div class="score-icon">🔴</div><div class="score-label">Red Windows</div><div class="score-desc">Immediate concern. Escalate visit frequency here.</div></div>
+    </div>
+  </div>
+  <div class="content-section">
+    <h2>Phase 3 — Day 31 Forward: Sustained Deterrence</h2>
+    <p><strong>Objective:</strong> Maintain unpredictable presence. Build the longitudinal record. Create an environment where consistent care is the only rational response.</p>
+    <h3>The Double Tap</h3>
+    <p>Two visits within the same 24-hour period at maximally different times — 8am and 11:30pm, for example. Produces a single comparative report. The contrast between the two visits within one day is the most powerful pattern-detection tool available. Used at minimum once per month.</p>
+    <h3>The Silent Period</h3>
+    <p>A deliberate gap of 3–5 days with no visits, followed immediately by an overnight visit. Facilities cannot confirm the gap is intentional — behavioral uncertainty persists through the silence. The overnight visit after the silence sends the strongest possible deterrence signal.</p>
+    <div class="callout"><strong>The deterrence principle</strong><p>Care quality improves when staff cannot predict whether the next hour will bring an observer. The algorithm exists to maintain that uncertainty permanently. An unpredictable schedule is more effective than a frequent one.</p></div>
+  </div>
+  ${buildQuizHTML(qs,'phases')}`;
+}
+
+function buildEscalation(){
+  const qs=[
+    {q:"A Yellow rating requires family notification within:",opts:["24 hours","12 hours — with a phone call within 4 hours","1 hour","48 hours"],c:1},
+    {q:"A Red rating requires family notification within:",opts:["24 hours","12 hours","4 hours","1 hour of visit completion"],c:3},
+    {q:"An AHCA complaint referral is triggered when:",opts:["Any concern is observed","A Yellow finding persists across two visits","A Red finding meets threshold — Chase makes this determination","The family requests it"],c:2},
+    {q:"If you observe a resident with a new unexplained injury showing signs they are at risk of immediate harm, you:",opts:["Document and file a standard report","Wait for the written report process","Immediately notify Chase by phone — this is a Red finding requiring same-day response","Ask staff what happened"],c:2}
+  ];
+  return `<div class="eyebrow">Module 6 · Escalation</div>
+  <h1>Escalation Protocol — Green, Yellow, Red</h1>
+  <p class="intro">Every visit ends with a rating. The rating determines your response timeline. Know these thresholds cold — in a Red situation, you will not have time to look them up.</p>
+  <div class="content-section">
+    <h2>The Three Ratings</h2>
+    <div class="score-grid">
+      <div class="score-card green"><div class="score-icon">🟢</div><div class="score-label">Green</div><div class="score-desc">Conditions consistent with or improved from baseline. Report within 24 hours. No immediate action.</div></div>
+      <div class="score-card yellow"><div class="score-icon">🟡</div><div class="score-label">Yellow</div><div class="score-desc">Concern-level findings representing a pattern or change from baseline. Escalated timeline.</div></div>
+      <div class="score-card red"><div class="score-icon">🔴</div><div class="score-label">Red</div><div class="score-desc">Resident at risk of harm, has experienced harm, or shows signs of abuse, neglect, or inappropriate medication.</div></div>
+    </div>
+  </div>
+  <div class="content-section">
+    <h2>Green — Response Protocol</h2>
+    <ul>
+      <li>Written report delivered within 24 hours</li>
+      <li>No immediate phone call required</li>
+      <li>Next visit scheduled per standard cadence</li>
+    </ul>
+  </div>
+  <div class="content-section">
+    <h2>Yellow — Response Protocol</h2>
+    <ul>
+      <li>Report delivered within <strong>12 hours</strong></li>
+      <li>Family notification by phone within <strong>4 hours</strong></li>
+      <li>Follow-up visit within 5 days at the same time window that produced the concern</li>
+      <li>Document the specific concern clearly — it becomes the focus of the Phase 2 targeting</li>
+    </ul>
+    <div class="callout gold"><strong>Yellow examples</strong><p>Call light consistently unanswered 8+ minutes. Resident affect significantly declined from baseline. Weekend staffing visibly reduced vs weekday. PRN medication pattern emerging without documented justification.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Red — Immediate Escalation Protocol</h2>
+    <div class="callout red"><strong>These are your exact steps in order</strong>
+    <p>1. Family notification by phone within <strong>1 hour</strong> of leaving the facility.<br>
+    2. Call Chase immediately after the family call.<br>
+    3. Begin written documentation immediately — do not wait until morning.<br>
+    4. Return visit within 24 hours.<br>
+    5. Chase initiates advocacy communication to facility administration within 48 hours.<br>
+    6. AHCA complaint referral if findings meet threshold — Chase determines this, not you.</p></div>
+    <div class="callout red"><strong>Red examples</strong><p>Resident showing signs of physical abuse. New unexplained injury. Evidence of chemical restraint (behavioral change consistent with sedation, undocumented PRN). Resident expressing fear of specific staff member. Active neglect — unanswered calls, unaddressed incontinence, hydration failure. Fewer staff present than legally required minimum.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>One Rule Above All Others</h2>
+    <div class="callout deep"><strong>When in doubt, it's Yellow. When it's clearly bad, it's Red.</strong><p>Do not underrate to avoid inconveniencing the family. The family hired CareCircle because they want the truth. A false Green is a failure of the service. Rate what you see.</p></div>
+  </div>
+  ${buildQuizHTML(qs,'escalation')}`;
+}
+
+function buildReporting(){
+  const qs=[
+    {q:"Real-time logging during a visit should happen:",opts:["Loudly and visibly, so staff know you're documenting","After leaving the facility, as quickly as possible","Only for Red findings","In the car before driving away — memory degrades fast"],c:3},
+    {q:"The written report is produced:",opts:["Only for Yellow and Red visits","Only when the family requests it","After every visit, no exceptions","Weekly as a summary"],c:2},
+    {q:"Which of these should NEVER appear in a report?",opts:["Call light response times","Staff name and role of observed interactions","Your personal opinion that a specific staff member is 'a bad person'","Resident physical condition compared to prior visit"],c:2},
+    {q:"The standard report sections include (among others):",opts:["Only Green/Yellow/Red rating","Visit metadata, all checklist categories, overall rating, and recommended follow-up","A narrative story of the visit","A comparison to other facilities"],c:1}
+  ];
+  return `<div class="eyebrow">Module 7 · Documentation</div>
+  <h1>Logging &amp; Report Standards</h1>
+  <p class="intro">Your documentation is the product. The family pays for the truth, documented clearly. A visit without a report did not happen.</p>
+  <div class="content-section">
+    <h2>Real-Time Logging</h2>
+    <p>Log immediately after leaving — in your car, before driving. The portal captures your entries with timestamps. Families can see your visit log in real time. The written report is the formal record; the live log is the transparency layer.</p>
+    <p>Log: time in, time out, visit phase, overall conditions, any specific observations. Use plain, factual language. Write what you saw, not what you think it means.</p>
+    <div class="callout"><strong>The memory rule</strong><p>Specific details — exact times, staff counts, specific staff interactions, direct quotes from residents — degrade within 30 minutes. Get out of the building and log immediately. Every time.</p></div>
+  </div>
+  <div class="content-section">
+    <h2>Standard Report Structure</h2>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Section</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Visit metadata — date, time in, time out, phase, visit number</td></tr>
+        <tr><td>2</td><td>Environment score with notes</td></tr>
+        <tr><td>3</td><td>Staffing observations with notes</td></tr>
+        <tr><td>4</td><td>Resident physical condition — compared to prior baseline</td></tr>
+        <tr><td>5</td><td>Resident behavioral and emotional status — compared to prior</td></tr>
+        <tr><td>6</td><td>Medication and clinical observations</td></tr>
+        <tr><td>7</td><td>Documentation spot-check findings</td></tr>
+        <tr><td>8</td><td>Staff-resident interaction log</td></tr>
+        <tr class="hl"><td>9</td><td><strong>Overall visit rating: Green / Yellow / Red</strong></td></tr>
+        <tr class="hl"><td>10</td><td><strong>Recommended follow-up — next visit timing, any immediate actions</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="content-section">
+    <h2>Language Standards</h2>
+    <ul>
+      <li><strong>Write what you observed, not what you concluded.</strong> "Resident's lips were visibly cracked. No water glass within reach." Not: "Resident was dehydrated and staff were neglecting her."</li>
+      <li><strong>Be specific.</strong> "Call light activated at 10:14pm. Staff response at 10:27pm — 13 minutes." Not: "Call light was unanswered for a long time."</li>
+      <li><strong>Name staff only by role and description</strong> unless a name badge is visible and directly relevant. "Female staff member, mid-30s, blue scrubs, name badge not visible."</li>
+    </ul>
+    <div class="callout red"><strong>What never goes in a report</strong><p>Personal opinions about staff character. Speculation about causes. Inflammatory language. Anything you were told by staff that you cannot independently verify. Conclusions that go beyond what you directly observed.</p></div>
+  </div>
+  ${buildQuizHTML(qs,'reporting')}`;
+}
+
+function buildShadow(){
+  return `<div class="eyebrow">Module 8 · Certification</div>
+  <h1>Shadow Visit Prep</h1>
+  <p class="intro">Your shadow visit is the final step before Guardian certification. You will accompany Chase or a certified Beacon on a live visit and be observed applying the algorithm in a real facility.</p>
+  <div class="content-section">
+    <h2>What Happens on the Shadow Visit</h2>
+    <ul>
+      <li>You observe the full visit alongside a certified Guardian or Beacon.</li>
+      <li>You run the observation checklist mentally and independently — do not compare notes during the visit.</li>
+      <li>After the visit, you and your shadow debrief. You share your observations first. They share theirs. Discrepancies are discussed.</li>
+      <li>Your shadow assesses your readiness for solo visits and reports to Chase.</li>
+    </ul>
+    <div class="callout"><strong>What you're being assessed on</strong><p>Do you move naturally through the facility without drawing attention? Do you observe the right things? Do you know the checklist without looking it up? Do you maintain neutrality? Do you correctly identify the visit rating?</p></div>
+  </div>
+  <div class="content-section">
+    <h2>What to Prepare</h2>
+    <ul>
+      <li>Know the full observation checklist from memory — all 7 categories, all items.</li>
+      <li>Know the escalation thresholds cold — Green, Yellow, Red and their response timelines.</li>
+      <li>Know what to say if staff challenge your presence.</li>
+      <li>Know what never goes in a report.</li>
+      <li>Come with questions. The debrief is a learning session, not a test you can fail.</li>
+    </ul>
+  </div>
+  <div class="content-section">
+    <h2>After Your Shadow Visit</h2>
+    <p>If your shadow clears you: Chase is notified, your rank updates to <strong>Guardian</strong>, and you are added to the active dispatch pool. You will receive your first solo assignment within the week.</p>
+    <p>If your shadow recommends additional preparation: you'll get specific feedback and a second shadow visit. This is not a failure — it's the system working correctly. The standard exists to protect the residents you'll be visiting.</p>
+    <div class="callout green"><strong>Guardian rank means:</strong><p>You are trusted to walk into a facility alone, observe without bias, document with precision, and tell a family the truth about their loved one's care. That is not a small thing. Earn it fully.</p></div>
+  </div>
+  <div style="margin-top:32px;text-align:center;padding:28px;background:var(--deep);border-radius:14px;color:#fff;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(44,196,176,.12),transparent 70%)"></div>
+    <div style="font-size:36px;margin-bottom:12px;position:relative">🛡</div>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:8px;position:relative">Ready to Schedule Your Shadow Visit?</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,.55);margin-bottom:20px;position:relative">Confirm you have reviewed all modules and know the checklist before proceeding.</p>
+    <button class="btn btn-teal" style="width:auto;padding:12px 28px;position:relative" onclick="markDone('shadow');setTimeout(goBack,1400)">Mark Complete &amp; Schedule →</button>
+  </div>`;
+}
+
+// ── INIT ──────────────────────────────────────────────
+(function(){
+  const keys=Object.keys(localStorage).filter(k=>k.startsWith(SK+'_'));
+  if(keys.length===1){
+    try{
+      const saved=JSON.parse(localStorage.getItem(keys[0]));
+      if(saved&&saved.email&&saved.name){S=saved;showScreen('screen-dashboard');renderDash();}
+    }catch(e){}
+  }
+})();
+</script>
+</body>
+</html>
