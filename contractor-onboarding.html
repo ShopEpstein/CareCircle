@@ -1905,6 +1905,7 @@
           </div>
           <div class="confirm-actions">
             <button class="btn btn-secondary" onclick="window.print()">🖨 Print Record</button>
+            <a href="/training" class="btn btn-primary" style="text-decoration:none">Access Training Portal →</a>
           </div>
         </div>
       </div>
@@ -2641,9 +2642,19 @@ const TRAINING_MODULE_LABELS = {
   as_mod:      'Assisting Seniors: Warm Handoff & Placement',
   activity:    'Activity Tracking & Weekly Reporting',
   roleplay:    'Role-Play Prep & Practice',
-  schedule_request: 'Session Request Submitted'
+  schedule_request: 'Session Request Submitted',
+  // Guardian portal modules
+  onboarding:  'Onboarding & Contractor Agreement',
+  mission:     'Mission, Role & What You Are Not',
+  legal:       'Legal Framework & Facility Access',
+  conduct:     'Facility Conduct & Neutrality',
+  checklist:   'The Observation Checklist',
+  phases:      'The Visit Algorithm — Phases 1, 2 & 3',
+  escalation:  'Escalation Protocol — Green, Yellow, Red',
+  reporting:   'Logging & Report Standards',
+  shadow:      'Shadow Visit Prep'
 };
-const TRAINING_ROLE_LABELS = { b2b:'Field Rep (B2B)', b2c:'Family Outreach (B2C)', as:'Assisting Seniors BDR', rsm:'Regional Manager' };
+const TRAINING_ROLE_LABELS = { b2b:'Field Rep (B2B)', b2c:'Family Outreach (B2C)', as:'Assisting Seniors BDR', rsm:'Regional Manager', guardian:'Guardian' };
 
 let allTrainingRows = [];
 
