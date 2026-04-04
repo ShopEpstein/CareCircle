@@ -2703,14 +2703,14 @@ async function renderTrainingTable() {
     const res = await fetch('/api/admin-data?action=training', { headers: { 'x-admin-token': adminToken } });
     if (res.status === 401) { adminToken = null; sessionStorage.removeItem('cc_admin_token'); switchView('training', null); return; }
     allTrainingRows = await res.json();
-    buildTrainingTable(allTrainingRows);
+    filterTrainingTable();
   } catch(e) { wrap.innerHTML = '<p style="color:#ef4444;padding:20px 0">Error loading data. Try refreshing.</p>'; }
 }
 
 function filterTrainingTable() {
   const q = (document.getElementById('trainingSearch').value || '').toLowerCase();
   let filtered = allTrainingRows.filter(r =>
-    activeTrainingTab === 'sales' ? SALES_ROLES.has(r.role) : r.role === 'guardian'
+    activeTrainingTab === 'sales' ? r.role !== 'guardian' : r.role === 'guardian'
   );
   if (q) filtered = filtered.filter(r => r.name.toLowerCase().includes(q) || r.email.toLowerCase().includes(q));
   buildTrainingTable(filtered);
