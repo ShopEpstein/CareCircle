@@ -393,6 +393,24 @@ function doLogin(){
   if(!load(e)){S={name:n,email:e,bg,done:[],scheduled:false};save()}
   else{S.name=n;if(!S.bg)S.bg=bg;save()}
   showScreen('screen-dashboard');renderDash();
+  syncCompletedModules();
+}
+
+function syncCompletedModules(){
+  if(!S.done.length)return;
+  const allDone=MODS.every(m=>S.done.includes(m.id));
+  S.done.forEach((id,i)=>{
+    const mod=MODS.find(m=>m.id===id);
+    if(!mod)return;
+    fetch('/api/training-progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      email:S.email,name:S.name,role:'guardian',
+      module_id:id,module_title:mod.title,
+      quiz_score:null,
+      modules_completed:S.done.length,
+      total_modules:MODS.length,
+      all_complete:allDone
+    })}).catch(()=>{});
+  });
 }
 function doLogout(){showScreen('screen-login')}
 
