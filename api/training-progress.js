@@ -15,10 +15,11 @@ const { createClient } = require('@supabase/supabase-js');
 
 const SUPABASE_URL = 'https://dzbhoycmgaofvrpfajpc.supabase.co';
 const ROLE_LABELS = {
-  b2b: 'Territory Field Rep (B2B)',
-  b2c: 'Family Outreach Rep (B2C)',
-  as:  'Assisting Seniors BDR',
-  rsm: 'Regional Sales Manager'
+  b2b:      'Territory Field Rep (B2B)',
+  b2c:      'Family Outreach Rep (B2C)',
+  as:       'Assisting Seniors BDR',
+  rsm:      'Regional Sales Manager',
+  guardian: 'CareCircle Guardian'
 };
 
 async function sendEmail(subject, htmlContent) {
