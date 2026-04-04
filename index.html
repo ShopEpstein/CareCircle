@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CareCircle Network — Boutique Senior Care Coordination, Gulf Coast Florida</title>
-<meta name="description" content="CareCircle is Northwest Florida's boutique senior care coordination and advocacy service. Real data. In-person visits. On your side — not the industry's.">
-<link rel="canonical" href="https://carecircle.fit/">
+<title>CareCircle Network — Trusted Senior Care, Gulf Coast Florida</title>
+<meta name="description" content="Find vetted, licensed senior home care providers in Pensacola, Gulf Breeze, Milton, Pace and across Northwest Florida. Free matching. Real families. Real caregivers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -163,9 +162,9 @@
 
   /* ─── HERO ─── */
   .hero {
-    min-height: 100vh; display: grid;
+    min-height: 0; display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: center; padding: 100px 5% 60px; gap: 60px;
+    align-items: center; padding: clamp(90px, 12vw, 130px) 5% clamp(60px, 8vw, 90px); gap: 60px;
     position: relative; overflow: hidden;
   }
   .hero::before {
@@ -788,7 +787,60 @@
   .modal-box ul { margin: 8px 0 12px 18px; }
   .modal-box li { font-size: 0.86rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 4px; }
 
-  /* ─── ANIMATIONS ─── */
+  /* ─── STICKY MOBILE CALL BAR ─── */
+  .mobile-call-bar {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+    background: var(--sage); padding: 14px 20px;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    box-shadow: 0 -4px 20px rgba(28,36,25,0.2);
+  }
+  .mobile-call-bar a {
+    color: white; text-decoration: none; font-weight: 700; font-size: 1rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .mobile-call-bar .bar-divider { color: rgba(255,255,255,0.4); font-size: 1.2rem; }
+  @media (min-width: 768px) { .mobile-call-bar { display: none !important; } }
+  @media (max-width: 767px) { .mobile-call-bar { display: flex; } body { padding-bottom: 64px; } }
+
+  /* ─── HERO FORM — concierge simplified ─── */
+  .hero-simple-form {
+    background: white; border-radius: var(--radius-lg); padding: 28px 28px 20px;
+    box-shadow: var(--shadow-soft), 0 0 0 1px rgba(92,122,95,0.08);
+  }
+  .hero-simple-form h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.15rem;
+    color: var(--warm-dark); margin-bottom: 4px;
+  }
+  .hero-simple-form > p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 18px; }
+  .simple-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 600px) { .simple-form-row { grid-template-columns: 1fr; } }
+  .simple-form-btn {
+    width: 100%; background: var(--sage); color: white;
+    padding: 14px; border-radius: 10px; font-size: 0.95rem; font-weight: 600;
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .simple-form-btn:hover { background: var(--warm-mid); }
+  .simple-form-divider {
+    text-align: center; font-size: 0.75rem; color: var(--text-muted);
+    margin: 16px 0 14px; display: flex; align-items: center; gap: 10px;
+  }
+  .simple-form-divider::before, .simple-form-divider::after {
+    content: ''; flex: 1; height: 1px; background: rgba(92,122,95,0.15);
+  }
+  .simple-form-call-row {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding-bottom: 8px;
+  }
+  .scfr-btn {
+    display: flex; align-items: center; gap: 7px; padding: 11px 20px;
+    border-radius: 100px; font-size: 0.88rem; font-weight: 700;
+    text-decoration: none; transition: all 0.2s; white-space: nowrap;
+  }
+  .scfr-call { background: var(--sage); color: white; }
+  .scfr-call:hover { background: var(--warm-mid); }
+  .scfr-text { background: transparent; color: var(--sage); border: 1.5px solid rgba(92,122,95,0.3); }
+  .scfr-text:hover { border-color: var(--sage); background: var(--sage-pale); }
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
   /* ─── RESPONSIVE ─── */
@@ -800,8 +852,8 @@
     .spotlight-creds { grid-template-columns: repeat(2,1fr) !important; }
     .spotlight-two-col { grid-template-columns: 1fr !important; gap: 28px !important; }
     .spotlight-services { grid-template-columns: repeat(2,1fr) !important; }
-    .hero { grid-template-columns: 1fr; padding-top: 100px; }
-    .hero-visual { display: none; }
+    .hero { grid-template-columns: 1fr; padding-top: 88px; gap: 36px; }
+    .hero-visual { display: block; }
     .stats-bar { grid-template-columns: repeat(2,1fr); }
     .steps-grid, .providers-grid, .testimonials-grid { grid-template-columns: 1fr; }
     .mm-inner, .agencies-section, .about-section { grid-template-columns: 1fr; gap: 40px; }
@@ -827,15 +879,6 @@
     h1 { font-size: 2.2rem; }
   }
 
-  /* ─── New section responsive overrides ─── */
-  @media (max-width: 768px) {
-    .why-exist-grid, .advocacy-grid, .veterans-grid,
-    .present-singles-grid, .present-guardian-grid,
-    .present-guarantees-grid, .advocacy-cards-grid {
-      grid-template-columns: 1fr !important;
-    }
-  }
-
 </style>
 </head>
 <body>
@@ -856,7 +899,7 @@
           <div class="nav-dropdown-icon">👁️</div>
           <div>
             <span class="nav-dropdown-label">CareCircle Present</span>
-            <span class="nav-dropdown-desc">Unannounced facility monitoring &amp; advocacy — day, evening &amp; overnight</span>
+            <span class="nav-dropdown-desc">Unannounced visits — day, evening & overnight</span>
           </div>
         </a>
         <div class="nav-dropdown-divider"></div>
@@ -875,7 +918,7 @@
   </div>
   <div class="nav-right">
     <a href="tel:8503414324" class="nav-phone">📞 Call Now</a>
-    <a href="#find-care" class="nav-cta">Talk to an Advisor</a>
+    <a href="#find-care" class="nav-cta">Get Matched Free</a>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -892,89 +935,68 @@
   <a href="/blog" onclick="closeMobile()">Blog</a>
   <a href="#for-agencies" onclick="closeMobile()">For Agencies</a>
   <a href="tel:8503414324" class="mobile-phone">📞 Call Now</a>
-  <a href="#find-care" class="mobile-cta" onclick="closeMobile()">Talk to an Advisor →</a>
+  <a href="#find-care" class="mobile-cta" onclick="closeMobile()">Get Matched Free →</a>
 </div>
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="find-care" style="margin-top: 0;">
   <div class="hero-content">
-    <div class="hero-badge">Northwest Florida's Boutique Care Coordination &amp; Strategic Advocacy Service</div>
-    <h1>Families often face a system built around speed, occupancy, and fragmented information. <em>CareCircle is built for advocacy, transparency, and follow-through.</em></h1>
-    <p class="hero-sub">CareCircle is a boutique care coordination and advocacy service. We research providers, visit facilities in person, match families personally, and stay involved — because someone should. We charge for professional guidance. We work within every budget.</p>
-    <div class="hero-actions">
-      <button onclick="scrollToForm()" class="btn-primary">Start a Conversation →</button>
-      <a href="#for-agencies" class="btn-secondary">For Agencies</a>
+    <div class="hero-badge">Northwest Florida's Senior Care Network</div>
+    <h1>Find care you can <em>actually</em> trust for your loved one</h1>
+    <p class="hero-sub">We connect Gulf Coast families with vetted, licensed senior home care providers — for free. One call. Real humans. No pressure.</p>
+
+    <!-- Primary CTA: Call first, concierge model -->
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:32px;animation: fadeUp 0.6s 0.3s ease both;">
+      <a href="tel:8503414324" class="btn-primary" style="display:inline-flex;align-items:center;gap:10px;font-size:1.05rem;padding:18px 32px;width:fit-content;">
+        📞 Call Us — (850) 341-4324
+      </a>
+      <a href="sms:8503414324" style="display:inline-flex;align-items:center;gap:8px;font-size:0.9rem;font-weight:600;color:var(--sage);text-decoration:none;">
+        💬 Prefer to text? We respond fast →
+      </a>
     </div>
+
     <div class="hero-trust">
       <div class="trust-text" style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">
-        <strong style="color:var(--warm-dark);display:block;margin-bottom:3px;">Built after firsthand exposure to the gaps families face when navigating care decisions and facility oversight.</strong>
-        CareCircle was built because families deserved better than a call center handing them a list of whoever paid the most. We show up in person. We read the reports. We advocate for the people nobody else will.
+        <strong style="color:var(--warm-dark);display:block;margin-bottom:3px;">Built on 17 years of Gulf Coast care.</strong>
+        Assisting Seniors has served Pensacola families since 2008. CareCircle exists to connect more families to that level of care — and to hold everyone accountable to it.
       </div>
-    </div>
-    <div class="hero-phone-row">
-      <span class="hero-phone-label">Prefer to talk?</span>
-      <a href="tel:8503414324" class="hero-phone-link">📞 Call Now</a> &nbsp; <a href="sms:8503414324" class="hero-phone-link" style="background:var(--sage);color:white;padding:6px 16px;border-radius:100px;text-decoration:none;font-size:0.88rem;font-weight:600;">💬 Text Us</a>
     </div>
   </div>
 
   <div class="hero-visual">
-    <div class="care-finder-card" id="hero-form">
-      <h3>Find Care Near You</h3>
-      <p>Tell us what you need. We'll take it from there.</p>
-      <div class="form-row">
-        <div class="form-group">
-          <label>City / Zip</label>
-          <input type="text" id="hero-zip" placeholder="Pensacola, 32501…">
-        </div>
-        <div class="form-group">
-          <label>Care Type</label>
-          <select id="hero-care-type">
-            <option>Companion Care</option>
-            <option>Homemaker Services</option>
-            <option>Respite / Relief</option>
-            <option>Memory Care Support</option>
-            <option>24/7 Care</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Who needs care?</label>
-        <select id="hero-who">
-          <option>My parent or grandparent</option>
-          <option>My spouse or partner</option>
-          <option>Myself</option>
-          <option>Another loved one</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>When do you need care?</label>
-        <select id="hero-when">
-          <option>As soon as possible</option>
-          <option>Within 1–2 weeks</option>
-          <option>Within a month</option>
-          <option>Just exploring options</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
+    <div class="hero-simple-form" id="hero-form">
+      <h3>Get matched in minutes</h3>
+      <p>Leave your name and number — we call you back today.</p>
+      <div class="simple-form-row">
+        <div class="form-group" style="margin-bottom:0;">
           <label>Your Name</label>
           <input type="text" id="hero-name" placeholder="First name">
         </div>
-        <div class="form-group">
+        <div class="form-group" style="margin-bottom:0;">
           <label>Best Phone / Text</label>
           <input type="tel" id="hero-contact-phone" placeholder="(850) 555-0100">
         </div>
       </div>
-      <button class="find-care-btn" onclick="showMatches()">
-        <span>Find My Fit</span><span>→</span>
+      <div class="form-group" style="margin-top:12px;">
+        <label>Type of Care Needed</label>
+        <select id="hero-care-type">
+          <option>Companion Care</option>
+          <option>Homemaker Services</option>
+          <option>Respite / Relief</option>
+          <option>Memory Care Support</option>
+          <option>24/7 Care</option>
+          <option>Not sure — help me figure it out</option>
+        </select>
+      </div>
+      <button class="simple-form-btn" onclick="showMatches()" style="margin-top:4px;">
+        <span>Request a Callback</span><span>→</span>
       </button>
-      <p class="card-note">🔒 Confidential · No pressure · We never sell your info</p>
-    </div>
-    <div class="mm-float-badge">
-      <div class="mm-badge-icon">🧠</div>
-      <div class="mm-badge-text">
-        <strong>AI Care Intelligence</strong>
-        <span>Proprietary tech for CareCircle partners</span>
+      <p class="card-note" style="margin-top:10px;">🔒 Free · No spam · We never sell your info</p>
+
+      <div class="simple-form-divider">or call / text directly</div>
+      <div class="simple-form-call-row">
+        <a href="tel:8503414324" class="scfr-btn scfr-call">📞 Call Now</a>
+        <a href="sms:8503414324" class="scfr-btn scfr-text">💬 Text Us</a>
       </div>
     </div>
   </div>
@@ -1059,12 +1081,12 @@
 <!-- ═══ STATS ═══ -->
 <div class="stats-bar">
   <div class="stat-item">
-    <span class="stat-num">17</span>
+    <span class="stat-num">17+</span>
     <span class="stat-label">Years our top partner has served Gulf Coast families</span>
   </div>
   <div class="stat-item">
-    <span class="stat-num">Personal</span>
-    <span class="stat-label">Coordination on every case — in person, not just online</span>
+    <span class="stat-num">Free</span>
+    <span class="stat-label">Matching service — always, for families</span>
   </div>
   <div class="stat-item">
     <span class="stat-num">FL</span>
@@ -1072,33 +1094,14 @@
   </div>
   <div class="stat-item">
     <span class="stat-num">AI</span>
-    <span class="stat-label">Intelligence sources cross-referenced on every provider we list</span>
+    <span class="stat-label">Intelligence on every provider we list</span>
   </div>
 </div>
-
-<!-- ═══ WHY WE EXIST ═══ -->
-<section style="padding: 80px 5%; background: var(--warm-dark);">
-  <div style="max-width: 900px; margin: 0 auto;">
-    <div style="font-size: 0.73rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 20px;">Why CareCircle Exists</div>
-    <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); color: white; line-height: 1.25; margin-bottom: 28px;">The "free" referral services aren't free. They're just billing someone else.</h2>
-    <div class="why-exist-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;">
-      <div>
-        <p style="font-size: 0.95rem; color: rgba(255,255,255,0.72); line-height: 1.85; margin-bottom: 18px;">Referral platforms that charge per placement are paid by the facilities — not the families. That relationship shapes recommendations in ways families may not realize.</p>
-        <p style="font-size: 0.95rem; color: rgba(255,255,255,0.72); line-height: 1.85;">The Senate has investigated A Place for Mom for referring families to facilities with active neglect violations on record. Families should not assume a referral platform has independently reviewed inspection history, staffing concerns, or complaint patterns. That is exactly the work we do — and we go in person when it matters.</p>
-      </div>
-      <div>
-        <p style="font-size: 0.95rem; color: rgba(255,255,255,0.72); line-height: 1.85; margin-bottom: 18px;">We are retained by families. That is who we answer to. We cross-reference AHCA inspection records, CMS data, employee reviews, BBB complaints, and ownership history. Families hire us for advocacy, coordination, and monitoring. We may receive compensation from some partner providers, but those relationships do not affect our scoring, editorial content, or recommendations.</p>
-        <p style="font-size: 0.95rem; color: rgba(255,255,255,0.72); line-height: 1.85; margin-bottom: 24px;">Budget should never stop a family from getting honest guidance. When full-service support is not the right fit, we offer lower-cost guidance options and practical next steps.</p>
-        <a href="#find-care" style="display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--warm-dark); padding: 13px 26px; border-radius: 100px; font-size: 0.9rem; font-weight: 700; text-decoration: none;">Talk to an Advisor →</a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ═══ HOW IT WORKS ═══ -->
 <section class="section" id="how-it-works">
   <div class="section-label">The Process</div>
-  <h2 class="section-title">From first call to the right care — personally guided, every step</h2>
+  <h2 class="section-title">From search to caregiver<br>in 3 simple steps</h2>
   <p class="section-sub">Finding the right caregiver shouldn't be a second job. We do the vetting so you can focus on your family.</p>
 
   <div class="steps-grid">
@@ -1107,7 +1110,7 @@
       <div class="step-num">01</div>
       <h3>Tell us what you need</h3>
       <p>Fill out a quick form — location, care type, schedule, any special considerations. Or just call us. Takes under 2 minutes either way.</p>
-      <span class="step-tag">No account required · In-person when it matters</span>
+      <span class="step-tag">Free · No account required</span>
     </div>
     <div class="step-card">
       <div class="step-icon">🤝</div>
@@ -1146,7 +1149,7 @@
     <!-- Credential bar -->
     <div class="spotlight-creds" style="display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(92,122,95,0.12); border-radius: var(--radius); overflow: hidden; margin-bottom: 48px;">
       <div style="background: var(--cream); padding: 20px; text-align: center;">
-        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--sage);">17</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--sage);">17+</div>
         <div style="font-size:0.78rem; color:var(--text-muted); margin-top:3px;">Years in operation</div>
       </div>
       <div style="background: var(--cream); padding: 20px; text-align: center;">
@@ -1206,7 +1209,7 @@
             <div style="width:36px;height:36px;background:var(--sage-pale);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🧠</div>
             <div>
               <div style="font-size:0.9rem;font-weight:600;color:var(--warm-dark);margin-bottom:3px;">Proprietary AI keeps quality accountable</div>
-              <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.6;">As a CareCircle Featured Partner, every Assisting Seniors client gets access to our proprietary AI care intelligence — continuously updated care logs, family portal, and AI care intelligence tools that no franchise chain offers their clients.</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.6;">As a CareCircle Featured Partner, every Assisting Seniors client gets access to our proprietary AI care intelligence — real-time care logs, family portal, and AI-driven quality monitoring that no franchise chain offers their clients.</div>
             </div>
           </div>
         </div>
@@ -1250,19 +1253,19 @@
   <h2 class="section-title" style="margin-bottom: 12px;">Senior care costs vary — here's how to get a real number</h2>
   <p>Every family's situation is different. Care costs depend on the type of care, hours needed, and the specific provider. The only accurate number is the one you get directly from the agency — and that call is free.</p>
   <div class="pricing-range">📞 Call us first — we'll tell you what to expect before you talk to anyone else</div>
-  <p style="margin-top: 16px; font-size: 0.82rem; color: var(--text-muted);">CareCircle charges for professional coordination services. We work within every family's budget — cost has never stopped us from helping someone find the right care. We also receive referral compensation from partner agencies. These relationships never influence our quality scores or who we recommend.</p>
+  <p style="margin-top: 16px; font-size: 0.82rem; color: var(--text-muted);">Most agencies in our network accept long-term care insurance. Our coordination service is always free for families. We are compensated by partner agencies — you are never charged.</p>
 </div>
 
-<!-- ═══ AI CARE INTELLIGENCE ═══ -->
+<!-- ═══ MEMORY MAGNET ═══ -->
 <section class="mm-section" id="memory-magnet">
   <div class="mm-inner">
     <div class="mm-content">
       <div class="section-label">Ongoing Care Intelligence · Proprietary CareCircle Technology</div>
       <h2 class="section-title">Most networks hand you a name and disappear. <em>We don't.</em></h2>
-      <p class="section-sub">CareCircle AI Care Intelligence is our proprietary care quality platform — available to partner providers and CareCircle Present families. It provides continuously updated care logs, trend detection, flagging tools, and family-visible documentation designed to support accountability and informed decision-making. Built for operators who take transparency seriously. Contact us to learn more.</p>
+      <p class="section-sub">CareCircle's proprietary AI care intelligence platform stays in the picture long after placement — continuously evaluating care quality and match fit based on real resident and family feedback.</p>
 
       <div class="mm-context-note">
-        <strong>What makes this different:</strong> Real feedback from residents and families feeds a continuous improvement loop that keeps match quality high long after day one. Independently maintained. Resident-driven. Continuously updated care intelligence. Available exclusively to CareCircle partners and through white-label licensing.
+        <strong>What makes this different:</strong> Our proprietary AI doesn't just log care — it learns from it. Real feedback from residents and families feeds a continuous improvement loop that keeps match quality high long after day one. Unbiased. Resident-driven. Never stops working. Available exclusively to CareCircle partners and through white-label licensing.
       </div>
 
       <div class="mm-features">
@@ -1270,14 +1273,14 @@
           <div class="mm-feature-icon">🤖</div>
           <div class="mm-feature-text">
             <h4>AI-Powered Ongoing Matching</h4>
-            <p>As care progresses, the AI evaluates fit based on real outcomes — and flags when a better match may be available. Continuously updated care intelligence. Your loved one's care improves.</p>
+            <p>As care progresses, the AI evaluates fit based on real outcomes — and flags when a better match may be available. The system learns. Your loved one's care improves.</p>
           </div>
         </div>
         <div class="mm-feature">
           <div class="mm-feature-icon">📝</div>
           <div class="mm-feature-text">
-            <h4>Continuously Documented Care Logs</h4>
-            <p>Every visit, every note, every medication reminder — logged and timestamped permanently. Accountability for everyone in the care circle. The same permanently logged AI record system powers CareCircle Present intelligence reports — every visit, every finding, timestamped and continuously documented.</p>
+            <h4>Immutable Care Logs</h4>
+            <p>Every visit, every note, every medication reminder — logged and timestamped permanently. Accountability for everyone in the care circle.</p>
           </div>
         </div>
         <div class="mm-feature">
@@ -1291,7 +1294,7 @@
           <div class="mm-feature-icon">👨‍👩‍👧</div>
           <div class="mm-feature-text">
             <h4>Family Portal — Anywhere, Anytime</h4>
-            <p>Out-of-state family gets read-only access. No more weekly calls. No more wondering if everything's okay.</p>
+            <p>Out-of-state family gets real-time read-only access. No more weekly calls. No more wondering if everything's okay.</p>
           </div>
         </div>
       </div>
@@ -1342,7 +1345,7 @@
       <div class="section-label">Our Network</div>
       <h2 class="section-title">Vetted providers across<br>Northwest Florida</h2>
     </div>
-    <button onclick="scrollToForm()" class="btn-primary">Start a Conversation →</button>
+    <button onclick="scrollToForm()" class="btn-primary">Get Matched Free →</button>
   </div>
 
   <div class="providers-grid">
@@ -1375,7 +1378,7 @@
           <div style="display:flex;gap:12px;align-items:flex-start;">
             <div style="width:32px;height:32px;background:var(--sage-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🏆</div>
             <div>
-              <div style="font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:2px;">17 Years of Proven Care</div>
+              <div style="font-size:0.88rem;font-weight:600;color:var(--warm-dark);margin-bottom:2px;">17+ Years of Proven Care</div>
               <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.55;">Founded in 2008 — before most of their competitors even opened. That's not marketing. That's a track record built one family at a time.</div>
             </div>
           </div>
@@ -1420,200 +1423,17 @@
   </div>
 </section>
 
-<!-- ═══ CARECIRCLE PRESENT ═══ -->
-<section style="padding: 90px 5%; background: white;">
-  <div style="max-width: 980px; margin: 0 auto;">
-    <div style="text-align: center; margin-bottom: 56px;">
-      <div style="font-size: 0.73rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--terracotta); margin-bottom: 14px;">CareCircle Present</div>
-      <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--warm-dark); line-height: 1.2; margin-bottom: 16px;">We show up when no one is expecting us.</h2>
-      <p style="font-size: 1rem; color: var(--text-muted); max-width: 660px; margin: 0 auto; line-height: 1.8;">Not a companion visit. Not a check-in call. A professional accountability and advocacy visit with a written report — because your family deserves to know what's actually happening. We don't just search online. We go in person. That's the difference.</p>
-    </div>
-
-    <!-- Single Services -->
-    <div style="font-size: 0.73rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 20px;">Single Services</div>
-    <div class="present-singles-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 40px;">
-
-      <div style="background: var(--sage-pale); border-radius: var(--radius-lg); padding: 28px; border: 1.5px solid rgba(92,122,95,0.15);">
-        <div style="font-size: 1.4rem; margin-bottom: 12px;">🔍</div>
-        <div style="font-weight: 700; color: var(--warm-dark); font-size: 0.95rem; margin-bottom: 6px;">Pre-Placement Assessment</div>
-        <div style="font-family: 'Playfair Display', serif; font-size: 1.9rem; color: var(--sage); font-weight: 700; margin-bottom: 10px;">Starting at $295 <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">/ facility</span></div>
-        <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 14px;">We visit before you commit. We assess environment, staffing interaction, and behavioral management practices — and flag observable changes in alertness or behavior for follow-up. Written report within 12 hours. Up to 2 facilities compared.</p>
-        <ul style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.9; padding-left: 16px; margin-bottom: 16px;">
-          <li>Unannounced companion visit</li>
-          <li>Full observation checklist</li>
-          <li>Written assessment report</li>
-          <li>Up to 2 facility comparisons</li>
-          <li>Consultation call with Chase</li>
-        </ul>
-        <a href="tel:8503414324" class="btn-primary" style="font-size:0.82rem;padding:10px 18px;display:inline-flex;">Book Assessment</a>
-      </div>
-
-      <div style="background: var(--sage-pale); border-radius: var(--radius-lg); padding: 28px; border: 1.5px solid rgba(92,122,95,0.15);">
-        <div style="font-size: 1.4rem; margin-bottom: 12px;">👁️</div>
-        <div style="font-weight: 700; color: var(--warm-dark); font-size: 0.95rem; margin-bottom: 6px;">Intelligence Visit</div>
-        <div style="font-family: 'Playfair Display', serif; font-size: 1.9rem; color: var(--sage); font-weight: 700; margin-bottom: 10px;">Starting at $175 <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">/ visit</span></div>
-        <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 14px;">One unannounced visit, any time of day. We go in, we observe, we document. You get a written report within 12 hours. If anything is flagged, you hear from us the same day.</p>
-        <ul style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.9; padding-left: 16px; margin-bottom: 16px;">
-          <li>90-minute observation visit</li>
-          <li>Full observation checklist</li>
-          <li>Written report within 12 hours</li>
-          <li>Direct call if anything flagged</li>
-        </ul>
-        <a href="tel:8503414324" class="btn-primary" style="font-size:0.82rem;padding:10px 18px;display:inline-flex;">Book a Visit</a>
-      </div>
-
-      <div style="background: var(--sage-pale); border-radius: var(--radius-lg); padding: 28px; border: 1.5px solid rgba(92,122,95,0.15);">
-        <div style="font-size: 1.4rem; margin-bottom: 12px;">🌙</div>
-        <div style="font-weight: 700; color: var(--warm-dark); font-size: 0.95rem; margin-bottom: 6px;">Overnight Intelligence Visit</div>
-        <div style="font-family: 'Playfair Display', serif; font-size: 1.9rem; color: var(--sage); font-weight: 700; margin-bottom: 10px;">Starting at $250 <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">/ visit</span></div>
-        <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 14px;">Most problems happen after the day shift leaves. We go at night, unannounced. Our overnight visits are unannounced visits within the 8pm–6am window — we arrive and document during the hours when staffing is thinnest. There is no requirement to remain the full night.</p>
-        <ul style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.9; padding-left: 16px; margin-bottom: 16px;">
-          <li>Evening (8pm–6am) or overnight</li>
-          <li>Staffing level observation</li>
-          <li>Call-for-response drill check</li>
-          <li>Sedation / early bedtime flags</li>
-          <li>Written report within 12 hours</li>
-        </ul>
-        <a href="tel:8503414324" class="btn-primary" style="font-size:0.82rem;padding:10px 18px;display:inline-flex;">Book Overnight</a>
-      </div>
-
-    </div>
-
-    <!-- Strategic Advocacy Retainer -->
-    <div style="font-size: 0.73rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 20px;">Ongoing Retained Advocacy</div>
-    <div style="margin-bottom: 40px;">
-      <div style="background: var(--warm-dark); border-radius: var(--radius-lg); padding: 36px; border: 2px solid var(--gold); max-width: 640px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-          <div style="font-size: 1.4rem;">🛡️</div>
-          <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;background:var(--gold);color:var(--warm-dark);padding:3px 10px;border-radius:100px;">Most Comprehensive</div>
-        </div>
-        <div style="font-weight: 700; color: white; font-size: 1rem; margin-bottom: 4px;">Guardian Plans — Retained Advocacy</div>
-        <div style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); font-weight: 700; margin-bottom: 4px;">Starting at $595 <span style="font-size:0.8rem;font-weight:400;color:rgba(255,255,255,0.5)">30-day intro</span></div>
-        <div style="font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-bottom: 16px;">Guardian Essential from $799/mo · Guardian from $1,500/mo · Guardian Elite from $2,500/mo</div>
-        <p style="font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.75; margin-bottom: 18px;">Ongoing retained advocacy with unpredictably timed visits across all shifts — mornings, evenings, overnights, and shift changes. 12-hour written intelligence reports every visit. Direct escalation call for red flags. Monthly strategy call with Chase. AI Care Intelligence access. Plans range from 4 visits/month (Essential) to 8 visits/month (Elite). Call to discuss which level fits your situation.</p>
-        <a href="tel:8503414324" class="btn-gold" style="font-size:0.85rem;padding:11px 22px;">Call to Schedule — 850-341-4324</a>
-      </div>
-    </div>
-
-    <!-- Service Guarantees -->
-    <div style="background: var(--sage-pale); border: 1.5px solid rgba(92,122,95,0.2); border-radius: var(--radius-lg); padding: 32px; margin-bottom: 32px;">
-      <div style="font-size: 0.73rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); margin-bottom: 16px;">Our Guarantees — In Writing</div>
-      <div class="present-guarantees-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="font-size:1.2rem;flex-shrink:0;">✓</div>
-          <div><strong style="color:var(--warm-dark);font-size:0.88rem;">Written report within 12 hours</strong><div style="font-size:0.8rem;color:var(--text-muted);margin-top:3px;line-height:1.6;">Every visit. No exceptions. If we visit and you don't have a report within 12 hours, that visit is free.</div></div>
-        </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="font-size:1.2rem;flex-shrink:0;">✓</div>
-          <div><strong style="color:var(--warm-dark);font-size:0.88rem;">Same-day contact on urgent findings</strong><div style="font-size:0.8rem;color:var(--text-muted);margin-top:3px;line-height:1.6;">If we observe something that warrants immediate family attention, you hear from us that day — not in the written report.</div></div>
-        </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="font-size:1.2rem;flex-shrink:0;">✓</div>
-          <div><strong style="color:var(--warm-dark);font-size:0.88rem;">Guardian Plan visit guarantee</strong><div style="font-size:0.8rem;color:var(--text-muted);margin-top:3px;line-height:1.6;">If we fail to complete your plan's committed visits in any calendar month, that month's plan fee is refunded in full.</div></div>
-        </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="font-size:1.2rem;flex-shrink:0;">✓</div>
-          <div><strong style="color:var(--warm-dark);font-size:0.88rem;">No-show refund</strong><div style="font-size:0.8rem;color:var(--text-muted);margin-top:3px;line-height:1.6;">If we schedule a visit and don't show up, that visit is fully refunded. Your time matters. Your trust matters more.</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Disclaimer note -->
-    <div style="background: rgba(196,113,74,0.08); border: 1.5px solid rgba(196,113,74,0.2); border-radius: var(--radius); padding: 22px 28px; display: flex; align-items: flex-start; gap: 14px;">
-      <div style="font-size: 1.2rem; flex-shrink: 0;">⚠️</div>
-      <div>
-        <div style="font-weight: 700; color: var(--warm-dark); margin-bottom: 5px; font-size: 0.88rem;">What this service is — and isn't</div>
-        <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.7;">CareCircle Present is a professional monitoring and advocacy service. Our staff observe, document, report, and advocate — we do not provide direct personal care. We are not a licensed home care agency and do not employ caregivers. All visits are conducted by trained professionals through our partner agency, Assisting Seniors LLC. For residents with complex behavioral presentations, we work alongside — not in place of — clinical care teams.</p>
-      </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 36px;">
-      <a href="tel:8503414324" class="btn-primary">📞 Book a Visit</a>
-      <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 12px;">Confirm availability in your area before booking.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ VETERANS & MEN ═══ -->
-<section style="padding: 70px 5%; background: var(--sage-pale); border-top: 1px solid rgba(92,122,95,0.12);">
-  <div class="veterans-grid" style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;">
-    <div>
-      <div style="font-size: 0.73rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); margin-bottom: 14px;">Veterans &amp; Men's Care</div>
-      <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 2.5vw, 2.2rem); color: var(--warm-dark); line-height: 1.25; margin-bottom: 18px;">Dad served. He deserves placement that understands that.</h2>
-      <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 16px;">Pensacola is one of the most military-dense metros in the country. We built a dedicated service for veterans and male care recipients — because the standard placement process ignores both.</p>
-      <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 24px;">We cover VA Aid &amp; Attendance benefit navigation, male caregiver matching, behavioral care review and advocacy questions for families to raise with facilities, and military-aware placement. We also show up in person — not just online.</p>
-      <a href="/care-advocacy-for-men" class="btn-primary" style="font-size:0.88rem;">Veterans &amp; Men's Care →</a>
-    </div>
-    <div style="display: flex; flex-direction: column; gap: 14px;">
-      <div style="background: white; border-radius: var(--radius); padding: 24px 22px; box-shadow: var(--shadow-card);">
-        <div style="font-weight: 700; color: var(--warm-dark); font-size: 0.88rem; margin-bottom: 8px;">VA Aid &amp; Attendance Navigation</div>
-        <div style="font-size: 0.76rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">Benefits coordination + written care match report. We walk the family through the A&amp;A application and find qualifying providers.</div>
-        <a href="tel:8503414324" style="font-size:0.82rem;font-weight:600;color:var(--sage);text-decoration:none;">Call to discuss →</a>
-      </div>
-      <div style="background: white; border-radius: var(--radius); padding: 24px 22px; box-shadow: var(--shadow-card);">
-        <div style="font-weight: 700; color: var(--warm-dark); font-size: 0.88rem; margin-bottom: 8px;">Military Pre-Placement Assessment</div>
-        <div style="font-size: 0.76rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">In-person facility visit + behavioral care review + male caregiver availability check + written intelligence report.</div>
-        <a href="tel:8503414324" style="font-size:0.82rem;font-weight:600;color:var(--sage);text-decoration:none;">Call to discuss →</a>
-      </div>
-      <div style="background: white; border-radius: var(--radius); padding: 24px 22px; box-shadow: var(--shadow-card);">
-        <div style="font-weight: 700; color: var(--warm-dark); font-size: 0.88rem; margin-bottom: 8px;">Veteran Care Bundle</div>
-        <div style="font-size: 0.76rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">VA Navigation + Military Pre-Placement Assessment + first unannounced monitoring visit. Everything in one engagement.</div>
-        <a href="tel:8503414324" style="font-size:0.82rem;font-weight:600;color:var(--sage);text-decoration:none;">Call to discuss →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ADVOCACY — DIFFICULT PATIENTS ═══ -->
-<section style="padding: 90px 5%; background: var(--warm-dark);">
-  <div style="max-width: 900px; margin: 0 auto;">
-    <div style="font-size: 0.73rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--terracotta); margin-bottom: 20px;">For the Ones They've Written Off</div>
-    <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); color: white; line-height: 1.2; margin-bottom: 28px; max-width: 720px;">Cancel culture is real in society. In a care facility, it can be deadly.</h2>
-
-    <div class="advocacy-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-bottom: 48px;">
-      <div>
-        <p style="font-size: 0.95rem; color: rgba(255,255,255,0.72); line-height: 1.85; margin-bottom: 18px;">When a facility labels a resident "combative," "aggressive," "difficult," or "a behavioral risk" — one of two things is true. Either there is a genuine clinical condition being managed appropriately. Or someone stopped listening to them and they ran out of other options.</p>
-        <p style="font-size: 0.95rem; color: rgba(255,255,255,0.72); line-height: 1.85; margin-bottom: 18px;">Sometimes behavioral labels reflect true clinical risk. Sometimes they reflect pain, fear, confusion, or poor environmental fit. Families deserve help asking which is which.</p>
-        <p style="font-size: 0.95rem; color: rgba(255,255,255,0.72); line-height: 1.85;">These labels follow residents. They affect medication decisions. They affect room assignments. They affect how every staff member on every shift treats that person — often for the rest of their life in that facility. And nobody on the outside knows it's happening.</p>
-      </div>
-      <div>
-        <p style="font-size: 0.95rem; color: rgba(255,255,255,0.72); line-height: 1.85; margin-bottom: 18px;">A 74-year-old retired Marine who refuses to participate in bingo isn't uncooperative. A woman who cries at night isn't a behavioral disorder — she's sad and nobody asked why. A veteran who doesn't want to be touched by strangers isn't physically aggressive. He's a person whose boundaries are being violated and he has no other way to say it.</p>
-        <p style="font-size: 0.95rem; color: rgba(255,255,255,0.72); line-height: 1.85; margin-bottom: 24px;">CareCircle advocates for the residents nobody else will advocate for. We show up, we read the reports, we sit with the resident, and we find out what's actually going on. <strong style="color:white;">Difficult isn't a diagnosis. It's usually a symptom of a system that stopped listening.</strong></p>
-        <a href="tel:8503414324" style="display:inline-flex;align-items:center;gap:8px;background:var(--terracotta);color:white;padding:13px 26px;border-radius:100px;font-size:0.9rem;font-weight:700;text-decoration:none;">Talk to Us About Your Situation →</a>
-      </div>
-    </div>
-
-    <div class="advocacy-cards-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-      <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 22px;">
-        <div style="font-size: 1.2rem; margin-bottom: 10px;">🚩</div>
-        <div style="font-weight: 700; color: white; font-size: 0.88rem; margin-bottom: 6px;">We flag observable changes in behavior and alertness</div>
-        <div style="font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.7;">We flag observable changes in alertness, behavior, or family-reported medication concerns and recommend follow-up with the clinical team. Behavioral changes are documented in every intelligence report.</div>
-      </div>
-      <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 22px;">
-        <div style="font-size: 1.2rem; margin-bottom: 10px;">📋</div>
-        <div style="font-weight: 700; color: white; font-size: 0.88rem; margin-bottom: 6px;">We review available documentation</div>
-        <div style="font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.7;">How an incident is documented matters as much as what happened. We review documentation patterns and flag language that may be pathologizing normal human behavior as a clinical problem.</div>
-      </div>
-      <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 22px;">
-        <div style="font-size: 1.2rem; margin-bottom: 10px;">🤝</div>
-        <div style="font-weight: 700; color: white; font-size: 0.88rem; margin-bottom: 6px;">We work with the facility — and push back when needed</div>
-        <div style="font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.7;">We don't come in as adversaries. We come in as advocates. But if something needs to be challenged — a label, a medication, a policy — we document our findings in writing and share them directly with your family.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ═══ FOR AGENCIES ═══ -->
 <section class="agencies-section" id="for-agencies">
   <div>
     <div class="section-label">For Care Providers</div>
     <h2 class="section-title">Join a care coordination network built on transparency</h2>
-    <p class="section-sub">CareCircle is a care coordination and advocacy network — and the agencies in it are here because they've earned the right to be. If that's you, let's talk.</p>
+    <p class="section-sub">CareCircle isn't a lead broker. We're a care coordination network — and the agencies in it are here because they've earned the right to be. If that's you, let's talk.</p>
 
     <div class="check-item">
       <div class="check-circle">✓</div>
       <div>
-        <div class="check-title">Vetted first. Paid tiers add visibility and tools — not favorable scoring.</div>
+        <div class="check-title">Vetted, not purchased</div>
         <div class="check-desc">Every agency in the CareCircle network is independently verified — FL license, insurance, reputation, and complaint history. Families trust our referrals because they know we've done the work.</div>
       </div>
     </div>
@@ -1621,7 +1441,7 @@
       <div class="check-circle">✓</div>
       <div>
         <div class="check-title">AI care intelligence platform included</div>
-        <div class="check-desc">Featured partners get CareCircle's proprietary AI Care Intelligence platform — continuously updated care logs, family portal, and flagging tools. White-label options available. Built for operators who take transparency seriously.</div>
+        <div class="check-desc">Featured partners get CareCircle's proprietary AI care intelligence platform — real-time care logs, family portal, AI-powered quality monitoring. White-label options available. It's the difference between placing a family and staying accountable to them.</div>
       </div>
     </div>
     <div class="check-item">
@@ -1652,28 +1472,28 @@
     <div class="pricing-card active">
       <div class="pricing-card-top">
         <div class="pricing-card-name">⭐ Featured Partner</div>
-        <div class="pricing-card-price" style="font-size:0.9rem;font-family:'DM Sans',sans-serif;font-weight:600;">Inquire for Pricing</div>
+        <div class="pricing-card-price" style="font-size:0.9rem;font-family:'DM Sans',sans-serif;font-weight:600;">By application</div>
       </div>
-      <div class="pricing-card-desc">Priority placement in all family matching. Curated scanner profile. Proprietary AI Care Intelligence platform — continuously updated care logs, family portal, and flagging tools. White-label options available. Dedicated coordination support. Reserved for agencies that meet our full vetting standard.</div>
+      <div class="pricing-card-desc">Priority placement in all family matching. Service area recognition. Proprietary AI care intelligence platform included — care logs, family portal, AI quality monitoring. White-label options available. Dedicated coordination support. Reserved for agencies that meet our full vetting standard.</div>
     </div>
 
     <div class="pricing-card">
       <div class="pricing-card-top">
         <div class="pricing-card-name">✓ Network Partner</div>
-        <div class="pricing-card-price" style="font-size:0.9rem;font-family:'DM Sans',sans-serif;font-weight:600;">Inquire for Pricing</div>
+        <div class="pricing-card-price" style="font-size:0.9rem;font-family:'DM Sans',sans-serif;font-weight:600;">By application</div>
       </div>
-      <div class="pricing-card-desc">Verified badge and standard scanner profile. Included in family matching for your service area. Standard coordination tools. FL licensed agencies that pass initial vetting.</div>
+      <div class="pricing-card-desc">Verified badge and directory listing. Included in family matching for your service area. Standard coordination tools. FL licensed agencies that pass initial vetting.</div>
     </div>
 
     <div class="pricing-card">
       <div class="pricing-card-top">
         <div class="pricing-card-name">📋 Directory Listing</div>
-        <div class="pricing-card-price" style="font-size:0.9rem;font-family:'DM Sans',sans-serif;font-weight:600;">Complimentary</div>
+        <div class="pricing-card-price" style="font-size:0.9rem;font-family:'DM Sans',sans-serif;font-weight:600;">Free</div>
       </div>
-      <div class="pricing-card-desc">Basic presence in the CareCircle directory. Families can find you — featured and network partners receive coordination and matching priority.</div>
+      <div class="pricing-card-desc">Basic presence in the CareCircle directory. Families can find you — featured and network partners receive coordination priority.</div>
     </div>
 
-    <div class="pricing-note">FL licensed agencies only · Independent vetting required · 30-day satisfaction guarantee on paid tiers · No long-term contracts</div>
+    <div class="pricing-note">FL licensed agencies only · Independent vetting required · Partnership terms discussed directly</div>
   </div>
 </section>
 
@@ -1712,11 +1532,10 @@
       <div class="agency-form-group full">
         <label>Tier You're Interested In</label>
         <select id="ag-tier">
-          <option value="">Select partnership level…</option>
-          <option>⭐ Featured Partner</option>
-          <option>✓ Network Partner</option>
-          <option>📋 Directory Listing — Complimentary</option>
-          <option>Just exploring — tell me more</option>
+          <option>Featured Partner</option>
+          <option>Network Partner</option>
+          <option>Directory Listing (Free)</option>
+          <option>Not sure — let's talk</option>
         </select>
       </div>
       <div class="agency-form-group full">
@@ -1800,11 +1619,11 @@
 
 <!-- ═══ CTA ═══ -->
 <section class="cta-section">
-  <h2>Ready to talk to someone who will actually help?</h2>
-  <p>Boutique care coordination for Gulf Coast families. Honest. In-person. On your side.</p>
+  <h2>Ready to find the right care?</h2>
+  <p>Free matching. No pressure. Real people helping real Gulf Coast families.</p>
   <a href="tel:8503414324" class="cta-phone">📞 Call Now</a>
   <div class="cta-buttons">
-    <button onclick="scrollToForm()" class="btn-white">Start a Conversation →</button>
+    <button onclick="scrollToForm()" class="btn-white">Find Care — It's Free →</button>
     <a href="#agency-contact" class="btn-outline-white">List Your Agency</a>
   </div>
 </section>
@@ -1817,7 +1636,7 @@
         <div class="nav-logo-mark">CC</div>
         CareCircle Network
       </div>
-      <p class="footer-desc">Northwest Florida's boutique senior care coordination and advocacy service. Honest. Independent. In person when it counts. Based in Pensacola, FL.</p>
+      <p class="footer-desc">Northwest Florida's independent senior care referral network. Free for families. Transparent for agencies. Based in Pensacola, FL.</p>
       <a href="tel:8503414324" class="footer-phone">📞 Call</a> &nbsp;<a href="sms:8503414324" class="footer-phone">💬 Text</a>
       <span class="footer-mm-link" style="cursor:default;">🧠 Proprietary AI Care Intelligence</span>
     </div>
@@ -1828,8 +1647,6 @@
         <li><a href="#how-it-works">How It Works</a></li>
         <li><a href="#providers">Browse Providers</a></li>
         <li><a href="/research">Research Providers</a></li>
-        <li><a href="/present">CareCircle Present</a></li>
-        <li><a href="/care-advocacy-for-men">Veterans &amp; Men's Care</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1855,7 +1672,7 @@
   </div>
   <div class="footer-bottom">
     <div class="footer-disclosure">
-      CareCircle Network is an independent senior care coordination and advocacy service. We charge families for professional coordination and monitoring services. We are also compensated by partner care providers for qualified referrals. These commercial relationships do not influence our quality scores, editorial content, or recommendations. We are not a licensed home care agency. All listed providers are independently licensed with the State of Florida. This service is not affiliated with Medicare, Medicaid, or any government program.
+      CareCircle Network is an independent referral and marketing service. We are compensated by care providers for qualified referrals. We are not a licensed home care agency. All listed providers are independently licensed with the State of Florida. This service is not affiliated with Medicare, Medicaid, or any government program.
     </div>
     <div class="footer-legal-links">
       © 2026 CareCircle Network &nbsp;·&nbsp;
@@ -1872,7 +1689,7 @@
     <h2>Privacy Policy</h2>
     <p class="modal-date">Effective: March 2026</p>
     <h3>Who We Are</h3>
-    <p>CareCircle Network is a senior care referral service owned and operated by Solana Solar Solutions (DBA CareCircle Network), based in Pensacola, Florida. CareCircle Network is an independent platform and is not owned by or affiliated with any care agency listed in our network.</p>
+    <p>CareCircle Network is a senior care referral service owned and operated by TransBid LLC (DBA CareCircle Network), based in Pensacola, Florida. CareCircle Network is an independent platform and is not owned by or affiliated with any care agency listed in our network.</p>
     <h3>Information We Collect</h3>
     <p>When you submit the care-finder form or the agency application form, we collect the information you provide — including name, phone number, email address, city/zip, and care preferences. We do not require account creation.</p>
     <h3>How We Use Your Information</h3>
@@ -1889,9 +1706,9 @@
       <li>We do not use your information for advertising or retargeting</li>
     </ul>
     <h3>Compensation Disclosure</h3>
-    <p>CareCircle charges families for coordination and monitoring services. CareCircle also receives compensation from partner agencies for qualified referrals. These commercial relationships do not influence scanner scores, written reports, or care recommendations.</p>
+    <p>CareCircle Network is compensated by care provider partners for qualified referrals. Families are never charged. This compensation may influence which providers appear as "Featured" in our network.</p>
     <h3>Contact</h3>
-    <p>Questions about your data: <a href="mailto:Care@CareCircle.Fit" style="color:var(--sage);">Care@CareCircle.Fit</a> or <a href="tel:8503414324" style="color:var(--sage);">call</a> / <a href="sms:8503414324" style="color:var(--sage);">text</a> us.</p>
+    <p>Questions about your data: <a href="mailto:campaigns@transbidlive.faith" style="color:var(--sage);">campaigns@transbidlive.faith</a> or <a href="tel:8503414324" style="color:var(--sage);">call</a> / <a href="sms:8503414324" style="color:var(--sage);">text</a> us.</p>
   </div>
 </div>
 
@@ -1904,15 +1721,15 @@
     <h3>Service Description</h3>
     <p>CareCircle Network is an independent referral service that connects families with licensed Florida senior home care agencies. We are not a home care agency and do not employ caregivers directly.</p>
     <h3>No Guarantee of Care Quality</h3>
-    <p>While we vet all partner agencies for Florida licensure and insurance, CareCircle Network does not guarantee the quality, safety, or outcomes of care provided by partner agencies. For CareCircle Present monitoring services, we guarantee written reports within 12 hours of every visit and same-day contact on any urgent finding. Families are encouraged to conduct their own due diligence before entering into a care agreement with any provider.</p>
+    <p>While we vet all partner agencies for Florida licensure and insurance, CareCircle Network does not guarantee the quality, safety, or outcomes of care provided by partner agencies. Families are encouraged to conduct their own due diligence before entering into a care agreement with any provider.</p>
     <h3>Compensation</h3>
-    <p>Families pay for CareCircle coordination and monitoring services. Partner agencies also compensate CareCircle for referrals. Both are disclosed clearly on our site.</p>
+    <p>Partner agencies compensate CareCircle Network for referrals and placement in our network. This is disclosed clearly on our site and in these terms. Families are never charged for our matching service.</p>
     <h3>Limitation of Liability</h3>
     <p>CareCircle Network is not liable for any damages arising from care provided by partner agencies, nor for any inaccuracies in provider information. Maximum liability to any party is limited to fees paid to CareCircle Network in the preceding 30 days.</p>
     <h3>Florida Law</h3>
     <p>These terms are governed by the laws of the State of Florida. Any disputes shall be resolved in Escambia County, Florida.</p>
     <h3>Contact</h3>
-    <p><a href="mailto:Care@CareCircle.Fit" style="color:var(--sage);">Care@CareCircle.Fit</a> · <a href="tel:8503414324" style="color:var(--sage);">Call</a> / <a href="sms:8503414324" style="color:var(--sage);">Text</a></p>
+    <p><a href="mailto:campaigns@transbidlive.faith" style="color:var(--sage);">campaigns@transbidlive.faith</a> · <a href="tel:8503414324" style="color:var(--sage);">Call</a> / <a href="sms:8503414324" style="color:var(--sage);">Text</a></p>
   </div>
 </div>
 
@@ -1973,42 +1790,35 @@
   async function showMatches() {
     const name  = document.getElementById('hero-name').value.trim();
     const phone = document.getElementById('hero-contact-phone').value.trim();
-    const zip   = document.getElementById('hero-zip').value.trim();
-    const care  = document.getElementById('hero-care-type').value;
-    const who   = document.getElementById('hero-who').value;
-    const when  = document.getElementById('hero-when').value;
+    const care  = document.getElementById('hero-care-type') ? document.getElementById('hero-care-type').value : 'Not specified';
 
     let valid = true;
     ['hero-name','hero-contact-phone'].forEach(id => {
       const el = document.getElementById(id);
-      if (!el.value.trim()) { el.style.border = '2px solid #a32d2d'; valid = false; }
+      if (!el || !el.value.trim()) { if(el) el.style.border = '2px solid #a32d2d'; valid = false; }
       else { el.style.border = ''; }
     });
     if (!valid) return;
 
     document.getElementById('hero-form').innerHTML = `
-      <div style="text-align:center;padding:12px 8px;">
-        <div style="font-size:2rem;margin-bottom:12px;">✅</div>
-        <h3 style="color:#2d6a4f;margin-bottom:8px;font-size:1.1rem;">We're on it, ${name}!</h3>
-        <p style="font-size:0.9rem;color:#555;line-height:1.6;margin-bottom:10px;">
-          A CareCircle advisor will reach out <strong>today</strong> at <strong>${phone}</strong> to learn more about your situation and find the right fit for your care circle.
+      <div style="text-align:center;padding:20px 12px;">
+        <div style="font-size:2.5rem;margin-bottom:14px;">✅</div>
+        <h3 style="color:#2d6a4f;margin-bottom:10px;font-size:1.15rem;font-family:'Playfair Display',serif;">Got it, ${name}!</h3>
+        <p style="font-size:0.92rem;color:#555;line-height:1.7;margin-bottom:10px;max-width:320px;margin-left:auto;margin-right:auto;">
+          A CareCircle advisor will call you back at <strong>${phone}</strong> today to talk through your options — no pressure, no scripts.
         </p>
-        <p style="font-size:0.85rem;color:#555;line-height:1.6;margin-bottom:16px;">
-          While we start matching, meet one of our vetted featured partners below.
-        </p>
-        <p style="font-size:0.82rem;color:#888;line-height:1.6;margin-bottom:16px;">
-          Can't wait? Call or text us directly.
+        <p style="font-size:0.82rem;color:#888;line-height:1.6;margin-bottom:18px;">
+          Can't wait? We're here right now.
         </p>
         <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-          <a href="tel:8503414324" style="background:#5C7A5F;color:white;padding:10px 20px;border-radius:100px;font-size:0.85rem;font-weight:600;text-decoration:none;">📞 Call Now</a>
-          <a href="sms:8503414324" style="background:white;color:#5C7A5F;border:2px solid #5C7A5F;padding:10px 20px;border-radius:100px;font-size:0.85rem;font-weight:600;text-decoration:none;">💬 Text Us</a>
+          <a href="tel:8503414324" style="background:#5C7A5F;color:white;padding:12px 22px;border-radius:100px;font-size:0.88rem;font-weight:700;text-decoration:none;">📞 Call Now</a>
+          <a href="sms:8503414324" style="background:white;color:#5C7A5F;border:2px solid #5C7A5F;padding:12px 22px;border-radius:100px;font-size:0.88rem;font-weight:700;text-decoration:none;">💬 Text Us</a>
         </div>
         <p style="font-size:0.72rem;color:#bbb;margin-top:16px;">We never sell your information. Ever.</p>
       </div>`;
 
-    const location = zip || 'your area';
     document.getElementById('match-subtitle').textContent =
-      `We're finding the best ${care.toLowerCase()} options ${location !== 'your area' ? 'near ' + location : 'in your area'}. In the meantime, meet one of our vetted partners.`;
+      `We're on it. In the meantime, meet one of our vetted partners.`;
     const results = document.getElementById('match-results');
     results.style.display = 'block';
     setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
@@ -2018,20 +1828,20 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name, phone, email: '', city: zip,
-          careType: care, forWhom: who, urgency: when
+          name, phone, email: '', city: '',
+          careType: care, forWhom: '', urgency: 'callback requested'
         })
       });
       const data = await res.json();
       if (!data.ok) {
         console.warn('submit-lead error:', data);
-        brevoSend(`🔔 Lead (fallback) — ${name} · ${zip} · ${care}`,
-          `<p>submit-lead failed. Lead: ${name}, ${phone}, ${zip}, ${care}, ${who}, ${when}</p>`);
+        brevoSend(`🔔 Callback Request — ${name}`,
+          `<p>submit-lead failed. Lead: ${name}, ${phone}, ${care}</p>`);
       }
     } catch (e) {
       console.warn('submit-lead fetch error:', e);
-      brevoSend(`🔔 Lead (fallback) — ${name} · ${zip} · ${care}`,
-        `<p>submit-lead errored. Lead: ${name}, ${phone}, ${zip}, ${care}, ${who}, ${when}</p>`);
+      brevoSend(`🔔 Callback Request — ${name}`,
+        `<p>submit-lead errored. Lead: ${name}, ${phone}, ${care}</p>`);
     }
   }
 
@@ -2129,6 +1939,12 @@
     }
   });
 </script>
+<!-- ═══ STICKY MOBILE CALL BAR ═══ -->
+<div class="mobile-call-bar">
+  <a href="tel:8503414324">📞 Call Now</a>
+  <span class="bar-divider">|</span>
+  <a href="sms:8503414324">💬 Text Us</a>
+</div>
 
 </body>
 </html>
