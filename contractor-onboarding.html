@@ -2377,6 +2377,10 @@
           <button class="btn btn-sm btn-outline" onclick="renderTrainingTable()">↻ Refresh</button>
         </div>
       </div>
+      <div style="display:flex;gap:0;margin-bottom:18px;border-bottom:2px solid var(--border)">
+        <button id="tTab-sales" onclick="setTrainingTab('sales')" style="padding:8px 20px;border:none;background:none;cursor:pointer;font-size:14px;font-weight:600;border-bottom:2px solid var(--accent);margin-bottom:-2px;color:var(--accent)">Sales &amp; Marketing</button>
+        <button id="tTab-guardians" onclick="setTrainingTab('guardians')" style="padding:8px 20px;border:none;background:none;cursor:pointer;font-size:14px;font-weight:600;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text-muted)">Guardians</button>
+      </div>
       <div id="trainingTableWrap">
         <p style="color:var(--text-muted);padding:20px 0">Loading…</p>
       </div>
@@ -2658,6 +2662,18 @@ const TRAINING_MODULE_LABELS = {
 const TRAINING_ROLE_LABELS = { b2b:'Field Rep (B2B)', b2c:'Family Outreach (B2C)', as:'Assisting Seniors BDR', rsm:'Regional Manager', guardian:'Guardian' };
 
 let allTrainingRows = [];
+let activeTrainingTab = 'sales';
+const SALES_ROLES = new Set(['b2b','b2c','as','rsm']);
+
+function setTrainingTab(tab) {
+  activeTrainingTab = tab;
+  ['sales','guardians'].forEach(t => {
+    const btn = document.getElementById('tTab-' + t);
+    btn.style.borderBottomColor = t === tab ? 'var(--accent)' : 'transparent';
+    btn.style.color = t === tab ? 'var(--accent)' : 'var(--text-muted)';
+  });
+  filterTrainingTable();
+}
 
 async function trainingLogin() {
   const pw = document.getElementById('trainingPwInput').value;
@@ -2693,7 +2709,10 @@ async function renderTrainingTable() {
 
 function filterTrainingTable() {
   const q = (document.getElementById('trainingSearch').value || '').toLowerCase();
-  const filtered = q ? allTrainingRows.filter(r => r.name.toLowerCase().includes(q) || r.email.toLowerCase().includes(q)) : allTrainingRows;
+  let filtered = allTrainingRows.filter(r =>
+    activeTrainingTab === 'sales' ? SALES_ROLES.has(r.role) : r.role === 'guardian'
+  );
+  if (q) filtered = filtered.filter(r => r.name.toLowerCase().includes(q) || r.email.toLowerCase().includes(q));
   buildTrainingTable(filtered);
 }
 
@@ -2737,7 +2756,8 @@ function buildTrainingTable(rows) {
   });
 
   html += '</tbody></table>';
-  html += `<p style="font-size:12px;color:var(--text-muted);margin-top:12px">${people.length} contractor${people.length !== 1 ? 's' : ''} · ${rows.length} total events</p>`;
+  const groupLabel = activeTrainingTab === 'guardians' ? 'guardian' : 'contractor';
+  html += `<p style="font-size:12px;color:var(--text-muted);margin-top:12px">${people.length} ${groupLabel}${people.length !== 1 ? 's' : ''} · ${rows.length} total events</p>`;
   wrap.innerHTML = html;
 }
 
