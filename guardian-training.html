@@ -593,9 +593,9 @@ function notif(msg,type){
 
 function buildOnboarding(){
   const qs=[
-    {q:"Your standard hourly rate as a CareCircle Guardian is:",opts:["$15/hr","$18/hr","$20/hr","$25/hr"],c:2},
-    {q:"Overnight visits (11pm–6am) are paid at:",opts:["$20/hr standard","$25/hr","$30/hr","$34/hr"],c:1},
-    {q:"Overtime (over 40 hours in a calendar week) is paid at:",opts:["1.5x — $30/hr","1.7x — $34/hr","2x — $40/hr","Same as standard"],c:1},
+    {q:"Your standard hourly rate as a CareCircle Guardian is:",opts:["$15/hr","$18/hr","$20/hr","$25/hr"],c:0},
+    {q:"Overnight visits (11pm–6am) are paid at:",opts:["$15/hr standard","$18/hr","$20/hr","$25/hr"],c:2},
+    {q:"Overtime (over 40 hours in a calendar week) is paid at:",opts:["1.5x — $22.50/hr","1.7x — $25.50/hr","2x — $30/hr","Same as standard"],c:0},
     {q:"Performance bonuses are:",opts:["Guaranteed after every visit","Awarded at corporate discretion based on report quality and engagement","Paid weekly automatically","A fixed monthly amount"],c:1},
     {q:"Which is a hard disqualifier for Guardian work?",opts:["A speeding ticket","A misdemeanor from 10 years ago","Any conviction involving elder abuse, neglect, or exploitation","Prior bankruptcy"],c:2}
   ];
@@ -607,9 +607,9 @@ function buildOnboarding(){
     <table class="data-table">
       <thead><tr><th>Rate Type</th><th>Amount</th><th>Condition</th></tr></thead>
       <tbody>
-        <tr><td>Standard</td><td style="font-weight:700;color:var(--green)">$20.00 / hr</td><td>All standard visits</td></tr>
-        <tr class="hl"><td>Overnight</td><td style="font-weight:700;color:var(--green)">$25.00 / hr</td><td>11pm – 6am visits</td></tr>
-        <tr><td>Overtime</td><td style="font-weight:700;color:var(--green)">$34.00 / hr (1.7x)</td><td>Hours over 40 in a calendar week</td></tr>
+        <tr><td>Standard</td><td style="font-weight:700;color:var(--green)">$15.00 / hr</td><td>All standard visits</td></tr>
+        <tr class="hl"><td>Overnight</td><td style="font-weight:700;color:var(--green)">$20.00 / hr</td><td>11pm – 6am visits</td></tr>
+        <tr><td>Overtime</td><td style="font-weight:700;color:var(--green)">$22.50 / hr (1.5x)</td><td>Hours over 40 in a calendar week</td></tr>
         <tr class="hl"><td>Performance Bonus</td><td style="font-weight:600">Corporate discretion</td><td>Report quality, engagement, escalation accuracy</td></tr>
       </tbody>
     </table>

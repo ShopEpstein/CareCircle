@@ -11,11 +11,11 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'https://carecircle.fit');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-admin-token');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== 'GET' && req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   // Validate admin password
   const token = req.headers['x-admin-token'];
@@ -83,5 +83,27 @@ module.exports = async function handler(req, res) {
     return res.status(200).json(data || []);
   }
 
-  return res.status(400).json({ error: 'Invalid action. Use: verify, list, record, or training' });
+  // ── Guardian pay rates (GET) ───────────────────────────
+  if (action === 'guardian-rates') {
+    const { data, error } = await supabase
+      .from('guardian_pay_rates')
+      .select('*')
+      .order('name', { ascending: true });
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json(data || []);
+  }
+
+  // ── Guardian pay rate (SET) ────────────────────────────
+  if (action === 'set-guardian-rate') {
+    if (req.method !== 'POST') return res.status(405).json({ error: 'POST required' });
+    const { email, name, base_rate, experience_level, location, notes } = req.body || {};
+    if (!email || base_rate == null) return res.status(400).json({ error: 'email and base_rate required' });
+    const { error } = await supabase
+      .from('guardian_pay_rates')
+      .upsert({ email: email.toLowerCase().trim(), name, base_rate, experience_level, location, notes, updated_at: new Date().toISOString() }, { onConflict: 'email' });
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json({ ok: true });
+  }
+
+  return res.status(400).json({ error: 'Invalid action.' });
 };
