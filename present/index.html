@@ -54,9 +54,9 @@
 
   /* HERO */
   .hero {
-    min-height: 90vh; display: flex; flex-direction: column;
+    min-height: max(580px, 85vh); display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    padding: 120px 5% 80px; text-align: center;
+    padding: clamp(80px, 10vw, 120px) 5% clamp(60px, 8vw, 100px); text-align: center;
     background: var(--cream); position: relative; overflow: hidden;
   }
   .hero::before {
@@ -258,6 +258,7 @@
   .vet-stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 6px; line-height: 1.4; }
 
   @media (max-width: 1024px) { .nav-center { display: none; } .hamburger { display: flex; } .usecase-grid { grid-template-columns: 1fr; } .hiw-steps { grid-template-columns: repeat(2, 1fr); gap: 32px; } .hiw-steps::before { display: none; } .observe-grid, .report-inner { grid-template-columns: 1fr; gap: 40px; } .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin-left: auto; margin-right: auto; } .who-grid { grid-template-columns: 1fr; } .reality-grid { grid-template-columns: 1fr; } .vet-stat-inner { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) { .hero { min-height: auto; grid-template-columns: 1fr; } }
   @media (max-width: 600px) { .nav-phone { display: none; } .hero h1 { font-size: 2.2rem; } .vet-stat-inner { grid-template-columns: 1fr 1fr; } }
 </style>
 </head>
