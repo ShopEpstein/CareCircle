@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <title>CareCircle Training Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0f1f2e;--navy-mid:#1a3248;--gold:#c8933a;--gold-light:#e8b05a;--cream:#f5f0e8;--cream-dark:#ede5d4;--green:#2e7d5a;--green-light:#3aa870;--red:#c0392b;--text:#1a1a1a;--text-muted:#5a6a78;--border:#ddd5c4;--white:#ffffff}
+:root{--navy:#0f1f2e;--navy-mid:#1a3248;--gold:#D4A017;--gold-light:#F0D870;--cream:#f5f0e8;--cream-dark:#ede5d4;--green:#2e7d5a;--green-light:#3aa870;--red:#c0392b;--text:#1a1a1a;--text-muted:#5a6a78;--border:#ddd5c4;--white:#ffffff}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--navy);min-height:100vh;color:var(--text)}
+body{font-family:'Open Sans',sans-serif;background:var(--navy);min-height:100vh;color:var(--text)}
 .screen{display:none;min-height:100vh}
 .screen.active{display:flex;flex-direction:column}
 
@@ -18,17 +18,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);min-height:100vh;co
 .login-wrap{width:100%;max-width:420px}
 .login-logo{text-align:center;margin-bottom:40px}
 .login-mark{width:56px;height:56px;background:var(--gold);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:26px}
-.login-logo h1{font-family:'Playfair Display',serif;color:#fff;font-size:26px;font-weight:600}
+.login-logo h1{font-family:'Montserrat',sans-serif;color:#fff;font-size:26px;font-weight:600}
 .login-logo p{color:rgba(255,255,255,.45);font-size:13px;margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
 .login-card{background:var(--cream);border-radius:18px;padding:36px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
-.login-card h2{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:6px}
+.login-card h2{font-family:'Montserrat',sans-serif;font-size:22px;color:var(--navy);margin-bottom:6px}
 .login-card .sub{font-size:13px;color:var(--text-muted);margin-bottom:28px}
 .form-group{margin-bottom:18px}
 label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:7px}
-input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
+input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'Open Sans',sans-serif;font-size:15px;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
 input:focus,select:focus,textarea:focus{border-color:var(--gold)}
 textarea{resize:vertical;min-height:90px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;border:none;transition:all .2s;text-decoration:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:10px;font-family:'Open Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;border:none;transition:all .2s;text-decoration:none}
 .btn-primary{background:var(--navy);color:#fff;width:100%}
 .btn-primary:hover{background:var(--navy-mid)}
 .btn-gold{background:var(--gold);color:#fff}
@@ -42,7 +42,7 @@ textarea{resize:vertical;min-height:90px}
 
 /* TOPBAR */
 .topbar{background:var(--navy);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.topbar-logo{font-family:'Playfair Display',serif;color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;gap:10px}
+.topbar-logo{font-family:'Montserrat',sans-serif;color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;gap:10px}
 .topbar-dot{width:8px;height:8px;background:var(--gold);border-radius:50%}
 .topbar-right{display:flex;align-items:center;gap:16px}
 .topbar-user{color:rgba(255,255,255,.7);font-size:13px}
@@ -52,7 +52,7 @@ textarea{resize:vertical;min-height:90px}
 #screen-dashboard{background:var(--cream)}
 .dash-body{flex:1;padding:36px 32px;max-width:1100px;margin:0 auto;width:100%}
 .dash-header{margin-bottom:32px}
-.dash-header h2{font-family:'Playfair Display',serif;font-size:30px;color:var(--navy);font-weight:700}
+.dash-header h2{font-family:'Montserrat',sans-serif;font-size:30px;color:var(--navy);font-weight:700}
 .dash-header p{color:var(--text-muted);font-size:15px;margin-top:6px}
 .role-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:.3px;margin-top:10px}
 .badge-b2b{background:#dbeafe;color:#1e40af}
@@ -66,7 +66,7 @@ textarea{resize:vertical;min-height:90px}
 .progress-info h4{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px}
 .progress-bar-track{width:100%;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden}
 .progress-bar-fill{height:100%;background:var(--gold);border-radius:4px;transition:width .5s ease}
-.progress-pct{font-size:22px;font-family:'Playfair Display',serif;font-weight:700;color:var(--gold);flex-shrink:0}
+.progress-pct{font-size:22px;font-family:'Montserrat',sans-serif;font-weight:700;color:var(--gold);flex-shrink:0}
 
 /* MODULE CARDS */
 .section-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px}
@@ -78,7 +78,7 @@ textarea{resize:vertical;min-height:90px}
 .module-card.completed{border-color:var(--green);background:#f0faf5}
 .module-card.completed::after{content:'✓';position:absolute;top:14px;right:14px;width:24px;height:24px;background:var(--green);color:#fff;border-radius:50%;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .module-num{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.module-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.3}
+.module-title{font-family:'Montserrat',sans-serif;font-size:17px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.3}
 .module-desc{font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
 .module-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--text-muted)}
 .module-meta .pill{background:var(--cream);padding:3px 9px;border-radius:20px;font-weight:500}
@@ -86,22 +86,22 @@ textarea{resize:vertical;min-height:90px}
 /* SCHEDULE CARD */
 .schedule-card{background:var(--navy);border-radius:14px;padding:28px;color:#fff;display:flex;align-items:center;gap:24px;margin-bottom:36px}
 .schedule-icon{font-size:36px;flex-shrink:0}
-.schedule-info h3{font-family:'Playfair Display',serif;font-size:20px;color:#fff;margin-bottom:6px}
+.schedule-info h3{font-family:'Montserrat',sans-serif;font-size:20px;color:#fff;margin-bottom:6px}
 .schedule-info p{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:16px}
 
 /* MODULE SCREEN */
 #screen-module{background:var(--cream)}
 .module-topbar{background:var(--navy);padding:0 32px;height:60px;display:flex;align-items:center;gap:16px;flex-shrink:0}
-.back-btn{background:none;border:none;color:rgba(255,255,255,.6);font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px;padding:0;transition:color .2s}
+.back-btn{background:none;border:none;color:rgba(255,255,255,.6);font-size:14px;cursor:pointer;font-family:'Open Sans',sans-serif;display:flex;align-items:center;gap:6px;padding:0;transition:color .2s}
 .back-btn:hover{color:#fff}
 .module-topbar-title{color:#fff;font-size:15px;font-weight:600;flex:1}
 .module-content-wrap{flex:1;overflow-y:auto;padding:40px 32px}
 .module-content{max-width:760px;margin:0 auto}
-.module-content h1{font-family:'Playfair Display',serif;font-size:32px;color:var(--navy);margin-bottom:8px}
+.module-content h1{font-family:'Montserrat',sans-serif;font-size:32px;color:var(--navy);margin-bottom:8px}
 .eyebrow{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 .intro{font-size:16px;color:var(--text-muted);line-height:1.7;margin-bottom:32px;padding-bottom:32px;border-bottom:1.5px solid var(--border)}
 .content-section{margin-bottom:32px}
-.content-section h2{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:14px}
+.content-section h2{font-family:'Montserrat',sans-serif;font-size:22px;color:var(--navy);margin-bottom:14px}
 .content-section h3{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:10px;margin-top:20px}
 .content-section p{font-size:15px;line-height:1.75;color:#333;margin-bottom:12px}
 .content-section ul{margin-left:20px;margin-bottom:16px}
@@ -112,7 +112,7 @@ textarea{resize:vertical;min-height:90px}
 .callout.navy{border-color:var(--navy);background:#f0f4f8}
 .callout strong{display:block;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;color:var(--navy)}
 .callout p{margin:0;font-size:14px;line-height:1.6}
-.script-block{background:var(--navy);color:#fff;border-radius:12px;padding:24px;margin:20px 0;font-size:14px;line-height:1.85;white-space:pre-wrap;font-family:'DM Sans',sans-serif}
+.script-block{background:var(--navy);color:#fff;border-radius:12px;padding:24px;margin:20px 0;font-size:14px;line-height:1.85;white-space:pre-wrap;font-family:'Open Sans',sans-serif}
 .script-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:block}
 .price-table{width:100%;border-collapse:collapse;margin:16px 0;border-radius:10px;overflow:hidden;border:1.5px solid var(--border)}
 .price-table th{background:var(--navy);color:#fff;padding:11px 16px;font-size:12px;font-weight:600;text-align:left}
@@ -123,12 +123,12 @@ textarea{resize:vertical;min-height:90px}
 
 /* QUIZ */
 .quiz-wrap{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:32px;margin-top:32px}
-.quiz-wrap h2{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:6px}
+.quiz-wrap h2{font-family:'Montserrat',sans-serif;font-size:22px;color:var(--navy);margin-bottom:6px}
 .quiz-wrap .sub{font-size:14px;color:var(--text-muted);margin-bottom:28px}
 .quiz-question{margin-bottom:28px}
 .q-num{font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:700;color:var(--gold);margin-bottom:6px}
 .q-text{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:14px;line-height:1.5}
-.option-btn{display:block;width:100%;text-align:left;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;margin-bottom:8px;transition:all .18s;color:var(--text)}
+.option-btn{display:block;width:100%;text-align:left;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--cream);font-family:'Open Sans',sans-serif;font-size:14px;cursor:pointer;margin-bottom:8px;transition:all .18s;color:var(--text)}
 .option-btn:hover{border-color:var(--gold);background:#fffbf3}
 .option-btn.selected{border-color:var(--navy);background:var(--navy);color:#fff}
 .option-btn.correct{border-color:var(--green);background:#f0faf5;color:var(--green);pointer-events:none;font-weight:600}
@@ -146,7 +146,7 @@ textarea{resize:vertical;min-height:90px}
 .schedule-body{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
 .schedule-modal{background:#fff;border-radius:20px;padding:48px;max-width:560px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.1);text-align:center}
 .schedule-modal .big-icon{font-size:52px;margin-bottom:20px}
-.schedule-modal h2{font-family:'Playfair Display',serif;font-size:28px;color:var(--navy);margin-bottom:10px}
+.schedule-modal h2{font-family:'Montserrat',sans-serif;font-size:28px;color:var(--navy);margin-bottom:10px}
 .schedule-modal p{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:28px}
 .sched-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .sched-option{border:1.5px solid var(--border);border-radius:12px;padding:18px 16px;cursor:pointer;transition:all .2s;text-align:center}
@@ -160,7 +160,7 @@ textarea{resize:vertical;min-height:90px}
 .form-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .sent-confirm{text-align:center;padding:20px 0}
 .big-check{width:64px;height:64px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:28px;color:#fff}
-.sent-confirm h3{font-family:'Playfair Display',serif;font-size:24px;color:var(--navy);margin-bottom:8px}
+.sent-confirm h3{font-family:'Montserrat',sans-serif;font-size:24px;color:var(--navy);margin-bottom:8px}
 .sent-confirm p{font-size:14px;color:var(--text-muted);line-height:1.7}
 
 /* NOTIF */
@@ -966,7 +966,7 @@ function buildRoleplay(){
   </div>
   <div style="margin-top:32px;text-align:center;padding:28px;background:var(--navy);border-radius:14px;color:#fff">
     <div style="font-size:32px;margin-bottom:12px">✅</div>
-    <h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:8px">Ready to Mark Complete?</h3>
+    <h3 style="font-family:'Montserrat',sans-serif;font-size:22px;margin-bottom:8px">Ready to Mark Complete?</h3>
     <p style="font-size:14px;color:rgba(255,255,255,.6);margin-bottom:20px">Confirm you've completed role-plays with a real person before proceeding.</p>
     <button class="btn btn-gold" style="width:auto;padding:12px 28px" onclick="markDone('roleplay');setTimeout(goBack,1400)">I've Completed My Role-Plays →</button>
   </div>`;

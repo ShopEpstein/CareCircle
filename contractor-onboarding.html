@@ -6,23 +6,23 @@
 <meta name="robots" content="noindex">
 <title>CareCircle Network — Contractor Onboarding Portal</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap');
 
   :root {
-    --sage: #6B8C7A;
-    --sage-light: #E8F0EC;
-    --sage-dark: #3D5449;
-    --warm-dark: #1C1C1A;
-    --gold: #C4963A;
-    --gold-light: #FDF3E0;
-    --cream: #FAF8F4;
+    --sage: #2A8C9E;
+    --sage-light: #E8F4F7;
+    --sage-dark: #2A4A5A;
+    --warm-dark: #1A2B35;
+    --gold: #D4A017;
+    --gold-light: #F0D870;
+    --cream: #F6FAFC;
     --terracotta: #C4633A;
     --terra-light: #FDF0EB;
-    --navy: #1A2B3C;
-    --navy-light: #E8EEF5;
-    --border: rgba(28,28,26,0.12);
-    --border-strong: rgba(28,28,26,0.25);
-    --text-muted: #6B6860;
+    --navy: #2A4A5A;
+    --navy-light: #E8F4F7;
+    --border: rgba(26,43,53,0.12);
+    --border-strong: rgba(26,43,53,0.25);
+    --text-muted: #5A7080;
     --success: #3B6D11;
     --success-bg: #EAF3DE;
     --warning: #854F0B;
@@ -34,7 +34,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background: var(--cream);
     color: var(--warm-dark);
     line-height: 1.6;
@@ -83,7 +83,7 @@
     margin-bottom: 8px;
   }
   .header-title {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 28px;
     font-weight: 400;
     line-height: 1.2;
@@ -124,7 +124,7 @@
     gap: 6px;
   }
   .mode-btn {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.04em;
@@ -141,7 +141,7 @@
     color: white;
     border-color: rgba(255,255,255,0.25);
   }
-  .mode-btn.active { color: var(--gold); border-color: var(--gold); background: rgba(196,150,58,0.1); }
+  .mode-btn.active { color: var(--gold); border-color: var(--gold); background: rgba(212,160,23,0.1); }
 
   /* ── PROGRESS BAR ── */
   .progress-wrap {
@@ -268,7 +268,7 @@
   }
   .card-header-text { flex: 1; }
   .card-title {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 17px;
     font-weight: 400;
     color: white;
@@ -295,16 +295,16 @@
     margin-bottom: 20px;
     font-family: Georgia, serif;
   }
-  .doc-scroll h2 { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; margin: 18px 0 6px; letter-spacing: 0.03em; }
-  .doc-scroll h3 { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; margin: 14px 0 4px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+  .doc-scroll h2 { font-family: 'Open Sans', sans-serif; font-size: 14px; font-weight: 700; margin: 18px 0 6px; letter-spacing: 0.03em; }
+  .doc-scroll h3 { font-family: 'Open Sans', sans-serif; font-size: 12px; font-weight: 700; margin: 14px 0 4px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
   .doc-scroll p { margin-bottom: 10px; }
-  .doc-scroll table { width: 100%; border-collapse: collapse; margin: 10px 0; font-family: 'DM Sans', sans-serif; font-size: 12px; }
+  .doc-scroll table { width: 100%; border-collapse: collapse; margin: 10px 0; font-family: 'Open Sans', sans-serif; font-size: 12px; }
   .doc-scroll th { background: var(--warm-dark); color: white; padding: 6px 10px; text-align: left; font-weight: 600; font-size: 11px; }
   .doc-scroll td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
   .doc-scroll tr:last-child td { border-bottom: none; }
   .doc-scroll strong { font-weight: 700; }
-  .doc-scroll .article-header { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage-dark); margin: 22px 0 6px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
-  .doc-scroll .legal-note { background: var(--warning-bg); border: 1px solid rgba(133,79,11,0.2); border-radius: 6px; padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--warning); margin: 12px 0; font-style: normal; }
+  .doc-scroll .article-header { font-family: 'Open Sans', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage-dark); margin: 22px 0 6px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  .doc-scroll .legal-note { background: var(--warning-bg); border: 1px solid rgba(133,79,11,0.2); border-radius: 6px; padding: 10px 14px; font-family: 'Open Sans', sans-serif; font-size: 12px; color: var(--warning); margin: 12px 0; font-style: normal; }
   .doc-scroll::-webkit-scrollbar { width: 6px; }
   .doc-scroll::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 3px; }
   .doc-scroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
@@ -316,7 +316,7 @@
     padding: 8px;
     background: var(--gold-light);
     border-radius: 6px;
-    border: 1px solid rgba(196,150,58,0.2);
+    border: 1px solid rgba(212,160,23,0.2);
   }
 
   /* ── FORM ELEMENTS ── */
@@ -348,7 +348,7 @@
     font-style: normal;
   }
   .form-input {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     padding: 10px 14px;
     border: 1.5px solid var(--border-strong);
@@ -361,7 +361,7 @@
   }
   .form-input:focus {
     border-color: var(--sage);
-    box-shadow: 0 0 0 3px rgba(107,140,122,0.12);
+    box-shadow: 0 0 0 3px rgba(42,140,158,0.12);
   }
   .form-input.prefilled {
     background: var(--sage-light);
@@ -371,7 +371,7 @@
   }
   .form-input::placeholder { color: #bbb; }
   .form-select {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     padding: 10px 14px;
     border: 1.5px solid var(--border-strong);
@@ -383,7 +383,7 @@
     width: 100%;
     cursor: pointer;
   }
-  .form-select:focus { border-color: var(--sage); box-shadow: 0 0 0 3px rgba(107,140,122,0.12); }
+  .form-select:focus { border-color: var(--sage); box-shadow: 0 0 0 3px rgba(42,140,158,0.12); }
   .form-hint { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
   .form-hint.warn { color: var(--warning); background: var(--warning-bg); padding: 8px 12px; border-radius: 6px; }
   .form-hint.secure { color: var(--sage-dark); background: var(--sage-light); padding: 8px 12px; border-radius: 6px; }
@@ -461,7 +461,7 @@
   /* ── SIGNATURE BOX ── */
   .signature-box {
     background: var(--gold-light);
-    border: 2px solid rgba(196,150,58,0.35);
+    border: 2px solid rgba(212,160,23,0.35);
     border-radius: 10px;
     padding: 20px 24px;
     margin-top: 20px;
@@ -502,14 +502,14 @@
   }
   .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
   .alert.warn { background: var(--warning-bg); border: 1px solid rgba(133,79,11,0.2); color: var(--warning); }
-  .alert.secure { background: var(--sage-light); border: 1px solid rgba(107,140,122,0.25); color: var(--sage-dark); }
+  .alert.secure { background: var(--sage-light); border: 1px solid rgba(42,140,158,0.25); color: var(--sage-dark); }
   .alert.info { background: var(--navy-light); border: 1px solid rgba(26,43,60,0.15); color: var(--navy); }
   .alert.error { background: var(--error-bg); border: 1px solid rgba(139,26,26,0.2); color: var(--error); }
   .alert.success { background: var(--success-bg); border: 1px solid rgba(59,109,17,0.2); color: var(--success); }
 
   /* ── BUTTONS ── */
   .btn {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     font-weight: 600;
     padding: 12px 28px;
@@ -581,7 +581,7 @@
     border: 3px solid rgba(59,109,17,0.2);
   }
   .confirm-title {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 26px;
     color: var(--warm-dark);
     margin-bottom: 10px;
@@ -713,7 +713,7 @@
     gap: 10px;
   }
   .prefill-panel-header h3 {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: 400;
   }
@@ -748,7 +748,7 @@
     justify-content: space-between;
     align-items: center;
   }
-  .modal-head h2 { font-family: 'DM Serif Display', serif; font-size: 18px; font-weight: 400; }
+  .modal-head h2 { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 400; }
   .modal-close { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 22px; cursor: pointer; padding: 0 4px; }
   .modal-body { padding: 28px; }
   .modal-field { margin-bottom: 14px; }
@@ -763,7 +763,7 @@
     padding: 36px 40px 60px;
   }
   .matrix-intro {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 22px;
     color: var(--warm-dark);
     margin-bottom: 6px;
@@ -792,7 +792,7 @@
     color: white;
     text-align: center;
   }
-  .tier-name { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 2px; }
+  .tier-name { font-family: 'Montserrat', sans-serif; font-size: 20px; margin-bottom: 2px; }
   .tier-thresh { font-size: 11px; opacity: 0.75; font-weight: 500; }
   .tier-body { padding: 18px 20px; background: white; }
   .tier-rate-row {
@@ -824,7 +824,7 @@
     align-items: center;
     gap: 10px;
   }
-  .matrix-section-head h3 { font-family: 'DM Serif Display', serif; font-size: 16px; font-weight: 400; }
+  .matrix-section-head h3 { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; }
   .matrix-section-body { padding: 0; }
   .matrix-table {
     width: 100%;
@@ -851,35 +851,35 @@
   .matrix-table .highlight { font-weight: 700; color: var(--sage-dark); }
   .matrix-table .gold-text { color: var(--gold); font-weight: 700; }
   .matrix-table .tier-s { background: rgba(120,120,120,0.06); }
-  .matrix-table .tier-g { background: rgba(196,150,58,0.06); }
-  .matrix-table .tier-e { background: rgba(28,28,26,0.04); }
+  .matrix-table .tier-g { background: rgba(212,160,23,0.06); }
+  .matrix-table .tier-e { background: rgba(26,43,53,0.04); }
   .earnings-calc {
     background: var(--gold-light);
-    border: 2px solid rgba(196,150,58,0.3);
+    border: 2px solid rgba(212,160,23,0.3);
     border-radius: 12px;
     padding: 24px;
     margin-bottom: 20px;
   }
-  .earnings-calc h3 { font-family: 'DM Serif Display', serif; font-size: 18px; margin-bottom: 16px; }
+  .earnings-calc h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; margin-bottom: 16px; }
   .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
   .calc-input-wrap { display: flex; flex-direction: column; gap: 5px; }
   .calc-input-wrap label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
   .calc-input {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     padding: 9px 12px;
-    border: 1.5px solid rgba(196,150,58,0.35);
+    border: 1.5px solid rgba(212,160,23,0.35);
     border-radius: 7px;
     background: white;
     width: 100%;
     outline: none;
   }
-  .calc-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(196,150,58,0.12); }
+  .calc-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,160,23,0.12); }
   .calc-results {
     background: white;
     border-radius: 8px;
     padding: 16px 20px;
-    border: 1px solid rgba(196,150,58,0.2);
+    border: 1px solid rgba(212,160,23,0.2);
   }
   .calc-result-row {
     display: flex;
@@ -1925,7 +1925,7 @@
   <div id="adminGate" class="admin-gate">
     <div class="admin-gate-card">
       <div style="font-size:36px;margin-bottom:12px">🔐</div>
-      <h2 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:8px">Admin Access</h2>
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:22px;margin-bottom:8px">Admin Access</h2>
       <p style="color:var(--text-muted);margin-bottom:20px;font-size:14px">This area is restricted to CareCircle administrators.</p>
       <input type="password" id="adminPwInput" class="form-input" placeholder="Admin password"
         onkeydown="if(event.key==='Enter')adminLogin()">
@@ -1991,7 +1991,7 @@
 
     <!-- SUBMISSIONS TABLE -->
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
-      <h2 style="font-family:'DM Serif Display',serif; font-size:22px">Submitted Onboarding Records</h2>
+      <h2 style="font-family:'Montserrat',sans-serif; font-size:22px">Submitted Onboarding Records</h2>
       <button class="btn btn-sm btn-danger" onclick="clearAllRecords()">🗑 Clear All</button>
     </div>
 
@@ -2358,7 +2358,7 @@
     <div id="trainingGate" class="admin-gate">
       <div class="admin-gate-card">
         <div style="font-size:36px;margin-bottom:12px">📊</div>
-        <h2 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:8px">Training Progress</h2>
+        <h2 style="font-family:'Montserrat',sans-serif;font-size:22px;margin-bottom:8px">Training Progress</h2>
         <p style="color:var(--text-muted);margin-bottom:20px;font-size:14px">Admin access required.</p>
         <input type="password" id="trainingPwInput" class="form-input" placeholder="Admin password"
           onkeydown="if(event.key==='Enter')trainingLogin()">
@@ -2370,7 +2370,7 @@
     <!-- Training content — shown after auth -->
     <div id="trainingContent" style="display:none">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-        <h2 style="font-family:'DM Serif Display',serif;font-size:22px">Training Progress</h2>
+        <h2 style="font-family:'Montserrat',sans-serif;font-size:22px">Training Progress</h2>
         <div style="display:flex;gap:8px;align-items:center">
           <input type="text" class="form-input" id="trainingSearch" placeholder="Search by name or email…"
             oninput="filterTrainingTable()" style="width:220px">
@@ -2386,7 +2386,7 @@
       </div>
       <div id="guardianPayWrap" style="display:none;margin-top:32px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <h3 style="font-family:'DM Serif Display',serif;font-size:18px;margin:0">Pay Rates</h3>
+          <h3 style="font-family:'Montserrat',sans-serif;font-size:18px;margin:0">Pay Rates</h3>
           <span style="font-size:12px;color:var(--text-muted)">Base: $15.00/hr · Overnight: $20.00/hr · OT: 1.5x</span>
         </div>
         <div id="payRatesTableWrap"><p style="color:var(--text-muted);font-size:14px">Loading pay rates…</p></div>

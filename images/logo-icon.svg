@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 230" fill="none" role="img" aria-label="CareCircle Guardian Angel Shield">
+  <defs>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9ECDD6"/>
+      <stop offset="45%" stop-color="#5E9EAA"/>
+      <stop offset="100%" stop-color="#1E6878"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F2CC40"/>
+      <stop offset="100%" stop-color="#C89018"/>
+    </linearGradient>
+    <linearGradient id="shieldFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9ECDD6" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#1E6878" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Shield background -->
+  <path d="M18 58 L18 138 Q18 190 100 218 Q182 190 182 138 L182 58 L100 28 Z"
+    fill="url(#shieldFill)" stroke="url(#tealGrad)" stroke-width="4.5" stroke-linejoin="round"/>
+
+  <!-- Halo ring — positioned above and right, partially over shield top -->
+  <ellipse cx="148" cy="62" rx="38" ry="15"
+    stroke="url(#goldGrad)" stroke-width="9" fill="none"
+    transform="rotate(-6 148 62)"/>
+
+  <!-- Left wing — large sweeping arc -->
+  <path d="M98 132
+    C88 115 65 98 32 68
+    C42 80 46 100 50 115
+    C62 103 76 106 84 114
+    C70 106 60 120 64 134
+    C74 123 89 126 96 135 Z"
+    fill="url(#tealGrad)"/>
+
+  <!-- Bird body -->
+  <path d="M96 135
+    Q106 150 124 153
+    Q144 154 158 143
+    Q168 133 163 120
+    Q155 108 140 106
+    Q124 104 112 114
+    Q102 122 96 135 Z"
+    fill="url(#tealGrad)"/>
+
+  <!-- Bird head -->
+  <circle cx="132" cy="100" r="20" fill="url(#tealGrad)"/>
+
+  <!-- Beak -->
+  <path d="M148 103 L166 109 L148 114 Z" fill="url(#tealGrad)"/>
+
+  <!-- Eye -->
+  <circle cx="140" cy="97" r="5.5" fill="white"/>
+  <circle cx="141" cy="97" r="2.8" fill="#1A5060"/>
+  <circle cx="139.5" cy="95.5" r="1" fill="white"/>
+
+  <!-- Tail sweep -->
+  <path d="M94 148 Q80 168 66 180 Q82 165 98 152 Z" fill="url(#tealGrad)"/>
+
+  <!-- Right shield edge accent -->
+  <path d="M155 80 C168 98 176 120 176 140" stroke="url(#tealGrad)" stroke-width="3.5" stroke-linecap="round"/>
+</svg>
