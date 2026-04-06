@@ -8,7 +8,7 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1E6878">
 <title>Senior Care for Men — Veterans & Retired Professionals | CareCircle Network</title>
-<meta name="description" content="The senior care system wasn't built for him. We help families find providers who understand military service, professional identity, and the difference between resistance and aggression. Northwest Florida.">
+<meta name="description" content="The senior care system wasn't built for him. We help families find providers who understand military service, professional identity, and the difference between resistance and aggression. Proudly Serving All of Florida.">
 <link rel="canonical" href="https://carecircle.fit/care-advocacy-for-men">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
   body { font-family: 'Open Sans', sans-serif; background: var(--cream); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
 
   /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(246,250,252,0.95); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(42,140,158,0.12); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  nav { position: fixed; top: 44px; left: 0; right: 0; z-index: 200; background: rgba(246,250,252,0.95); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(42,140,158,0.12); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 68px; }
   .nav-logo { font-family: 'Montserrat', sans-serif; font-size: 1.25rem; color: var(--warm-dark); text-decoration: none; display: flex; align-items: center; gap: 10px; }
   .nav-logo-mark { width: 36px; height: 36px; flex-shrink: 0; display: block; }
   .nav-center { display: flex; align-items: center; gap: 28px; }
@@ -50,7 +50,7 @@
   .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
   .hamburger.open span:nth-child(2) { opacity: 0; }
   .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 199; background: rgba(246,250,252,0.98); backdrop-filter: blur(14px); padding: 24px 5% 32px; border-bottom: 1px solid rgba(42,140,158,0.12); flex-direction: column; gap: 0; }
+  .mobile-menu { display: none; position: fixed; top: 112px; left: 0; right: 0; z-index: 199; background: rgba(246,250,252,0.98); backdrop-filter: blur(14px); padding: 24px 5% 32px; border-bottom: 1px solid rgba(42,140,158,0.12); flex-direction: column; gap: 0; }
   .mobile-menu.open { display: flex; }
   .mobile-menu a { padding: 14px 0; font-size: 1rem; font-weight: 500; color: var(--text-body); text-decoration: none; border-bottom: 1px solid rgba(42,140,158,0.08); transition: color 0.2s; }
   .mobile-menu a:hover { color: var(--sage); }
@@ -212,12 +212,41 @@
   @media (max-width: 1024px) { .nav-center { display: none; } .hamburger { display: flex; } .two-col, .florida-grid { grid-template-columns: 1fr; gap: 40px; } .two-col.reverse { direction: ltr; } }
   @media (max-width: 768px) { .stat-bar-inner { grid-template-columns: repeat(2, 1fr); } .reality-grid, .what-grid { grid-template-columns: 1fr; } .pullquote { padding: 28px 24px; } .pullquote p { font-size: 1.15rem; } }
   @media (max-width: 600px) { .nav-phone { display: none; } .stat-bar-inner { grid-template-columns: 1fr 1fr; } }
+
+  /* ─── CONTACT BAR ─── */
+  .contact-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 210;
+    background: linear-gradient(90deg, #1E6878 0%, #2A8C9E 60%, #1E6878 100%);
+    color: white; text-align: center;
+    padding: 0 16px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  .contact-bar a { color: #F2CC40; text-decoration: none; font-weight: 700; white-space: nowrap; }
+  .contact-bar a:hover { text-decoration: underline; }
+  .contact-bar .cb-sep { opacity: 0.5; margin: 0 4px; }
+  .contact-bar .cb-label { opacity: 0.9; }
+  @media (max-width: 600px) {
+    .contact-bar { font-size: 0.72rem; gap: 6px; padding: 0 8px; flex-wrap: nowrap; }
+    .contact-bar .cb-hide-sm { display: none; }
+  }
 </style>
 </head>
 <body>
+<!-- ═══ CONTACT BAR ═══ -->
+<div class="contact-bar">
+  <span class="cb-label">Call or text 24/7</span>
+  <a href="tel:18559600110">1-855-960-0110</a>
+  <span class="cb-sep">·</span>
+  <span class="cb-label cb-hide-sm">Email us</span>
+  <a href="mailto:Care@CareCircle.Fit">Care@CareCircle.Fit</a>
+</div>
+
+
 
 <nav>
-  <a href="/" class="nav-logo"><img src="/images/logo-icon.svg" class="nav-logo-mark" alt="CareCircle" width="36" height="36">CareCircle</a>
+  <a href="/" class="nav-logo"><img src="/images/logo-main.svg" alt="CareCircle" style="height:50px;width:auto;display:block;"></a>
   <div class="nav-center">
     <a href="/#how-it-works">How It Works</a>
     <a href="/present">CareCircle Present</a>
@@ -226,8 +255,8 @@
     <a href="/blog">Blog</a>
   </div>
   <div class="nav-right">
-    <a href="tel:8503414324" class="nav-phone">📞 Call Now</a>
-    <a href="/#find-care" class="nav-cta">Get Matched Free</a>
+    <a href="tel:18559600110" class="nav-phone">📞 Call Now</a>
+    <a href="/#find-care" class="nav-cta">Schedule Free Consult</a>
     <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -238,18 +267,18 @@
   <a href="/research" onclick="closeMobile()">Research Providers</a>
   <a href="/partners" onclick="closeMobile()">For Partners</a>
   <a href="/blog" onclick="closeMobile()">Blog</a>
-  <a href="tel:8503414324" class="mobile-phone">📞 Call Now</a>
-  <a href="/#find-care" class="mobile-cta" onclick="closeMobile()">Get Matched Free →</a>
+  <a href="tel:18559600110" class="mobile-phone">📞 Call Now</a>
+  <a href="/#find-care" class="mobile-cta" onclick="closeMobile()">Schedule Free Consult →</a>
 </div>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-eyebrow">Veterans · Retired Professionals · Northwest Florida</div>
+  <div class="hero-eyebrow">Veterans · Retired Professionals · All of Florida</div>
   <h1>He spent his life in command.<br><em>The last thing he needs is to be handled.</em></h1>
   <p class="hero-sub">The senior care system was built for a different kind of patient. If your father, grandfather, or husband spent 30 years leading — in uniform or in a boardroom — we know what he needs. And we know what to watch for.</p>
   <div class="hero-actions">
-    <a href="tel:8503414324" class="btn-gold">📞 Call Now</a>
-    <a href="/#find-care" class="btn-outline-white">Get Matched Free →</a>
+    <a href="tel:18559600110" class="btn-gold">📞 Call Now</a>
+    <a href="/#find-care" class="btn-outline-white">Schedule Free Consult →</a>
   </div>
   <div class="hero-scroll">Scroll</div>
 </div>
@@ -471,7 +500,7 @@
     <div class="question-block">
       <div class="question-label">On military experience</div>
       <div class="question-text">Do any of your staff members have military service backgrounds, and how does your team approach care for veterans specifically?</div>
-      <div class="question-why">Why it matters: A facility that has thought about this will have an answer. A facility that hasn't thought about it — in a market like Northwest Florida — should prompt you to keep looking.</div>
+      <div class="question-why">Why it matters: A facility that has thought about this will have an answer. A facility that hasn't thought about it — in the Florida market — should prompt you to keep looking.</div>
     </div>
 
     <p class="source-note">CareCircle can walk you through these questions on any facility in our database before you schedule a tour. Call Now — it's free.</p>
@@ -483,7 +512,7 @@
   <div class="florida-inner">
     <div class="two-col">
       <div>
-        <div class="section-label">Northwest Florida Context</div>
+        <div class="section-label">Florida Statewide Context</div>
         <h2 class="section-title">This market has more veterans than almost anywhere in the country.</h2>
         <div class="section-body">
           <p>Pensacola is home to NAS Pensacola — the oldest naval air station in the United States. Eglin Air Force Base, Hurlburt Field, and Whiting Field surround it. The percentage of senior men in this market who are veterans is significantly higher than the national average.</p>
@@ -491,7 +520,7 @@
           <p>CareCircle was built here. We know which providers have staff with military backgrounds. We know which facilities have a genuine culture of respect for residents who push back. And we know which ones reach for a sedative when a resident gives them a hard time.</p>
           <p>That knowledge is what we offer. It doesn't cost your family anything to access it.</p>
         </div>
-        <a href="tel:8503414324" style="display:inline-flex; align-items:center; gap:8px; margin-top:28px; font-size:0.95rem; font-weight:700; color:var(--sage); text-decoration:none;">📞 Call Now →</a>
+        <a href="tel:18559600110" style="display:inline-flex; align-items:center; gap:8px; margin-top:28px; font-size:0.95rem; font-weight:700; color:var(--sage); text-decoration:none;">📞 Call Now →</a>
       </div>
       <div class="florida-stat-stack">
         <div class="florida-stat">
@@ -519,9 +548,9 @@
 <div class="cta-section">
   <h2>He earned better than this.<br>Let's make sure he gets it.</h2>
   <p>Free matching. No pressure. One real person who knows this market and will be straight with you about what we know.</p>
-  <a href="tel:8503414324" class="cta-phone">📞 Call Now</a>
+  <a href="tel:18559600110" class="cta-phone">📞 Call Now</a>
   <div class="cta-buttons">
-    <a href="/#find-care" class="btn-white">Get Matched Free →</a>
+    <a href="/#find-care" class="btn-white">Schedule Free Consult →</a>
     <a href="/research" class="btn-outline-gold">Research a Provider</a>
   </div>
 </div>
@@ -538,7 +567,7 @@
       <a href="/care-advocacy-for-men" style="font-size:0.8rem;color:rgba(255,255,255,0.45);text-decoration:none;">For Veterans &amp; Men</a>
       <a href="/research" style="font-size:0.8rem;color:rgba(255,255,255,0.45);text-decoration:none;">Research Providers</a>
       <a href="/blog" style="font-size:0.8rem;color:rgba(255,255,255,0.45);text-decoration:none;">Blog</a>
-      <a href="tel:8503414324" style="font-size:0.8rem;color:rgba(255,255,255,0.45);text-decoration:none;">Call Now</a>
+      <a href="tel:18559600110" style="font-size:0.8rem;color:rgba(255,255,255,0.45);text-decoration:none;">Call Now</a>
     </div>
   </div>
   <div style="font-size:0.72rem;color:rgba(255,255,255,0.25);line-height:1.8;">© 2026 CareCircle Network, a Solana Solar Solutions service. All rights reserved. CareCircle is a boutique care coordination and strategic advocacy service. We are not a licensed healthcare provider. All provider data is compiled from publicly available sources.</div>

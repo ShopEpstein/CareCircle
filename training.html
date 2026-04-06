@@ -182,9 +182,38 @@ textarea{resize:vertical;min-height:90px}
   .topbar,.module-topbar{padding:0 16px}
   .module-content-wrap{padding:28px 16px}
 }
+
+  /* ─── CONTACT BAR ─── */
+  .contact-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 210;
+    background: linear-gradient(90deg, #1E6878 0%, #2A8C9E 60%, #1E6878 100%);
+    color: white; text-align: center;
+    padding: 0 16px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  .contact-bar a { color: #F2CC40; text-decoration: none; font-weight: 700; white-space: nowrap; }
+  .contact-bar a:hover { text-decoration: underline; }
+  .contact-bar .cb-sep { opacity: 0.5; margin: 0 4px; }
+  .contact-bar .cb-label { opacity: 0.9; }
+  @media (max-width: 600px) {
+    .contact-bar { font-size: 0.72rem; gap: 6px; padding: 0 8px; flex-wrap: nowrap; }
+    .contact-bar .cb-hide-sm { display: none; }
+  }
 </style>
 </head>
 <body>
+<!-- ═══ CONTACT BAR ═══ -->
+<div class="contact-bar">
+  <span class="cb-label">Call or text 24/7</span>
+  <a href="tel:18559600110">1-855-960-0110</a>
+  <span class="cb-sep">·</span>
+  <span class="cb-label cb-hide-sm">Email us</span>
+  <a href="mailto:Care@CareCircle.Fit">Care@CareCircle.Fit</a>
+</div>
+
+
 
 <!-- LOGIN -->
 <div id="screen-login" class="screen active">
@@ -213,7 +242,7 @@ textarea{resize:vertical;min-height:90px}
       <button id="login-btn" class="btn btn-primary" onclick="doLogin()" style="margin-top:8px">Access My Training →</button>
       <div id="login-err" style="display:none;margin-top:14px;padding:12px 16px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:8px;font-size:13px;color:#fca5a5;line-height:1.5"></div>
     </div>
-    <p class="login-note">Questions? Text Chase · <span style="color:var(--gold-light)">850-341-4324</span></p>
+    <p class="login-note">Questions? Text Chase · <span style="color:var(--gold-light)">1-855-960-0110</span></p>
   </div>
   </div>
 </div>

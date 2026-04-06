@@ -241,9 +241,38 @@ textarea{resize:vertical;min-height:90px}
   .score-grid{grid-template-columns:1fr}
   .rank-track{flex-wrap:wrap;gap:12px}
 }
+
+  /* ─── CONTACT BAR ─── */
+  .contact-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 210;
+    background: linear-gradient(90deg, #1E6878 0%, #2A8C9E 60%, #1E6878 100%);
+    color: white; text-align: center;
+    padding: 0 16px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  .contact-bar a { color: #F2CC40; text-decoration: none; font-weight: 700; white-space: nowrap; }
+  .contact-bar a:hover { text-decoration: underline; }
+  .contact-bar .cb-sep { opacity: 0.5; margin: 0 4px; }
+  .contact-bar .cb-label { opacity: 0.9; }
+  @media (max-width: 600px) {
+    .contact-bar { font-size: 0.72rem; gap: 6px; padding: 0 8px; flex-wrap: nowrap; }
+    .contact-bar .cb-hide-sm { display: none; }
+  }
 </style>
 </head>
 <body>
+<!-- ═══ CONTACT BAR ═══ -->
+<div class="contact-bar">
+  <span class="cb-label">Call or text 24/7</span>
+  <a href="tel:18559600110">1-855-960-0110</a>
+  <span class="cb-sep">·</span>
+  <span class="cb-label cb-hide-sm">Email us</span>
+  <a href="mailto:Care@CareCircle.Fit">Care@CareCircle.Fit</a>
+</div>
+
+
 
 <!-- LOGIN -->
 <div id="screen-login" class="screen active">
@@ -270,7 +299,7 @@ textarea{resize:vertical;min-height:90px}
       </div>
       <button class="btn btn-teal" onclick="doLogin()" style="margin-top:8px">Begin Training →</button>
     </div>
-    <p class="login-note">Questions? Text Chase · <span style="color:rgba(44,196,176,.7)">850-341-4324</span></p>
+    <p class="login-note">Questions? Text Chase · <span style="color:rgba(44,196,176,.7)">1-855-960-0110</span></p>
   </div>
 </div>
 
