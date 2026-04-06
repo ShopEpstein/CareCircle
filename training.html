@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1E6878">
 <meta name="robots" content="noindex">
 <title>CareCircle Training Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0f1f2e;--navy-mid:#1a3248;--gold:#D4A017;--gold-light:#F0D870;--cream:#f5f0e8;--cream-dark:#ede5d4;--green:#2e7d5a;--green-light:#3aa870;--red:#c0392b;--text:#1a1a1a;--text-muted:#5a6a78;--border:#ddd5c4;--white:#ffffff}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -200,6 +201,43 @@ textarea{resize:vertical;min-height:90px}
   @media (max-width: 600px) {
     .contact-bar { font-size: 0.72rem; gap: 6px; padding: 0 8px; flex-wrap: nowrap; }
     .contact-bar .cb-hide-sm { display: none; }
+  }
+
+  /* ─── MOBILE PERFORMANCE & TOUCH OPTIMIZATIONS ─── */
+  * { -webkit-tap-highlight-color: transparent; }
+  button, a, [role="button"], .btn-primary, .btn-secondary, .btn-white,
+  .btn-outline-white, .nav-cta, .mobile-cta, .pricing-cta, .cta-phone,
+  .footer-phone, .scfr-btn, .find-care-btn, .simple-form-btn {
+    touch-action: manipulation;
+  }
+  .hamburger {
+    padding: 10px !important;
+    min-width: 44px; min-height: 44px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  nav, .contact-bar, .mobile-menu, .mobile-call-bar {
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  img { max-width: 100%; height: auto; }
+  @media (max-width: 480px) {
+    .contact-bar {
+      font-size: 0.7rem !important;
+      height: 38px !important;
+      gap: 6px !important;
+    }
+    .contact-bar .cb-sep { display: none; }
+    nav { top: 38px !important; }
+    .mobile-menu { top: 106px !important; }
+    body { padding-bottom: 56px; }
+    h1 { font-size: 1.85rem !important; }
+    h2 { font-size: 1.4rem !important; }
+    .hero { padding-left: 4% !important; padding-right: 4% !important; }
+    .btn-primary, .btn-secondary, .nav-cta, .mobile-cta {
+      font-size: 0.9rem !important;
+      padding: 14px 22px !important;
+    }
   }
 </style>
 </head>

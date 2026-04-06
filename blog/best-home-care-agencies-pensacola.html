@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
@@ -11,7 +12,8 @@
 <meta name="description" content="We analyzed Google Reviews, FL AHCA records, employee ratings, and complaint histories for every home care agency in Pensacola. Here's what families should know before choosing.">
 <link rel="canonical" href="https://carecircle.fit/blog/best-home-care-agencies-pensacola">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --sage: #2A8C9E;
@@ -816,6 +818,43 @@
     .contact-bar { font-size: 0.72rem; gap: 6px; padding: 0 8px; flex-wrap: nowrap; }
     .contact-bar .cb-hide-sm { display: none; }
   }
+
+  /* ─── MOBILE PERFORMANCE & TOUCH OPTIMIZATIONS ─── */
+  * { -webkit-tap-highlight-color: transparent; }
+  button, a, [role="button"], .btn-primary, .btn-secondary, .btn-white,
+  .btn-outline-white, .nav-cta, .mobile-cta, .pricing-cta, .cta-phone,
+  .footer-phone, .scfr-btn, .find-care-btn, .simple-form-btn {
+    touch-action: manipulation;
+  }
+  .hamburger {
+    padding: 10px !important;
+    min-width: 44px; min-height: 44px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  nav, .contact-bar, .mobile-menu, .mobile-call-bar {
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  img { max-width: 100%; height: auto; }
+  @media (max-width: 480px) {
+    .contact-bar {
+      font-size: 0.7rem !important;
+      height: 38px !important;
+      gap: 6px !important;
+    }
+    .contact-bar .cb-sep { display: none; }
+    nav { top: 38px !important; }
+    .mobile-menu { top: 106px !important; }
+    body { padding-bottom: 56px; }
+    h1 { font-size: 1.85rem !important; }
+    h2 { font-size: 1.4rem !important; }
+    .hero { padding-left: 4% !important; padding-right: 4% !important; }
+    .btn-primary, .btn-secondary, .nav-cta, .mobile-cta {
+      font-size: 0.9rem !important;
+      padding: 14px 22px !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -831,7 +870,7 @@
 
 
 <nav>
-  <a href="/" class="nav-logo"><img src="/images/logo-main.svg" alt="CareCircle" style="height:50px;width:auto;display:block;"></a>
+  <a href="/" class="nav-logo"><img src="/images/logo-main.svg" alt="CareCircle" width="83" height="50" style="height:50px;width:auto;display:block;" decoding="async"></a>
   <div class="nav-center">
     <a href="/#how-it-works">How It Works</a>
     <a href="/present">CareCircle Present</a>

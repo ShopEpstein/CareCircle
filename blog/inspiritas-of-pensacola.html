@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
@@ -11,7 +12,8 @@
 <meta name="description" content="Inspiritas scores 6.9 on CareCircle's Intelligence Scanner. Some platforms rate it near-perfect. Others document serious care concerns. Here's what every data source actually shows.">
 <link rel="canonical" href="https://carecircle.fit/blog/inspiritas-of-pensacola">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root { --sage: #2A8C9E; --sage-light: #5E9ED6; --sage-pale: #E8F4F7; --cream: #F6FAFC; --warm-dark: #1A2B35; --warm-mid: #2A4A5A; --gold: #D4A017; --gold-light: #F0D870; --terracotta: #C4714A; --text-body: #2A3A48; --text-muted: #5A7080; --shadow-soft: 0 4px 24px rgba(26,43,53,0.10); --shadow-card: 0 2px 16px rgba(26,43,53,0.06); --radius: 12px; --radius-lg: 20px; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -84,6 +86,43 @@
     .contact-bar { font-size: 0.72rem; gap: 6px; padding: 0 8px; flex-wrap: nowrap; }
     .contact-bar .cb-hide-sm { display: none; }
   }
+
+  /* ─── MOBILE PERFORMANCE & TOUCH OPTIMIZATIONS ─── */
+  * { -webkit-tap-highlight-color: transparent; }
+  button, a, [role="button"], .btn-primary, .btn-secondary, .btn-white,
+  .btn-outline-white, .nav-cta, .mobile-cta, .pricing-cta, .cta-phone,
+  .footer-phone, .scfr-btn, .find-care-btn, .simple-form-btn {
+    touch-action: manipulation;
+  }
+  .hamburger {
+    padding: 10px !important;
+    min-width: 44px; min-height: 44px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  nav, .contact-bar, .mobile-menu, .mobile-call-bar {
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  img { max-width: 100%; height: auto; }
+  @media (max-width: 480px) {
+    .contact-bar {
+      font-size: 0.7rem !important;
+      height: 38px !important;
+      gap: 6px !important;
+    }
+    .contact-bar .cb-sep { display: none; }
+    nav { top: 38px !important; }
+    .mobile-menu { top: 106px !important; }
+    body { padding-bottom: 56px; }
+    h1 { font-size: 1.85rem !important; }
+    h2 { font-size: 1.4rem !important; }
+    .hero { padding-left: 4% !important; padding-right: 4% !important; }
+    .btn-primary, .btn-secondary, .nav-cta, .mobile-cta {
+      font-size: 0.9rem !important;
+      padding: 14px 22px !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -99,7 +138,7 @@
 
 
 <nav>
-  <a href="/" class="nav-logo"><img src="/images/logo-main.svg" alt="CareCircle" style="height:50px;width:auto;display:block;"></a>
+  <a href="/" class="nav-logo"><img src="/images/logo-main.svg" alt="CareCircle" width="83" height="50" style="height:50px;width:auto;display:block;" decoding="async"></a>
   <div class="nav-center">
     <a href="/#how-it-works">How It Works</a>
     <a href="/present">CareCircle Present</a>
@@ -125,7 +164,7 @@
 
 <div class="post-hero" style="padding-bottom:0;">
   <div style="max-width:760px; margin:0 auto 32px; border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(26,43,53,0.10);">
-    <img src="/images/pexels-kampus-7551646.jpg" alt="Senior care across Florida" style="width:100%; height:240px; object-fit:cover; display:block; object-position: center 40%;">
+    <img src="/images/pexels-kampus-7551646.jpg" alt="Senior care across Florida" style="width:100%; height:240px; object-fit:cover; display:block; object-position: center 40%;" loading="lazy" decoding="async">
   </div>
   <div style="font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:var(--sage); margin-bottom:12px;">Memory Care · Assisted Living · Pensacola · March 2026</div>
   <h1 style="font-family:'Montserrat',sans-serif; font-size:2.2rem; font-weight:700; color:var(--warm-dark); line-height:1.2; max-width:640px; margin:0 auto 16px;">Inspiritas of Pensacola: What Every Data Source Actually Shows</h1>
