@@ -83,6 +83,33 @@ module.exports = async function handler(req, res) {
     return res.status(200).json(data || []);
   }
 
+  // ── All people: contractors + guardians ───────────────
+  if (action === 'people') {
+    const [r1, r2] = await Promise.all([
+      supabase.from('contractor_submissions')
+        .select('legal_name, email, phone, assigned_role_label, submitted_at')
+        .order('submitted_at', { ascending: false }),
+      supabase.from('training_progress')
+        .select('name, email, role, completed_at')
+        .eq('role', 'guardian')
+        .order('completed_at', { ascending: false })
+    ]);
+
+    const contractors = (r1.data || []).map(r => ({
+      name: r.legal_name, email: r.email, phone: r.phone,
+      role: r.assigned_role_label || 'Contractor', type: 'contractor'
+    }));
+
+    // Dedupe guardians by email, no phone (not collected in guardian training)
+    const seen = new Set();
+    const guardians = (r2.data || []).filter(r => {
+      if (seen.has(r.email)) return false;
+      seen.add(r.email); return true;
+    }).map(r => ({ name: r.name, email: r.email, phone: '—', role: 'Guardian', type: 'guardian' }));
+
+    return res.status(200).json({ contractors, guardians });
+  }
+
   // ── Guardian pay rates (GET) ───────────────────────────
   if (action === 'guardian-rates') {
     const { data, error } = await supabase
