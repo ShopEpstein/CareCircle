@@ -132,5 +132,27 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
+  // ── Create addendum ───────────────────────────────────
+  if (action === 'create-addendum') {
+    if (req.method !== 'POST') return res.status(405).json({ error: 'POST required' });
+    const { addendum_id, contractor_name, contractor_email, addendum_title, terms_json } = req.body || {};
+    if (!addendum_id || !contractor_name || !contractor_email) return res.status(400).json({ error: 'Missing fields' });
+    const { error } = await supabase.from('contractor_addendums').upsert({
+      addendum_id, contractor_name, contractor_email,
+      addendum_title: addendum_title || 'Contract Addendum',
+      terms_json: terms_json || {}
+    }, { onConflict: 'addendum_id' });
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json({ ok: true });
+  }
+
+  // ── List addendums ────────────────────────────────────
+  if (action === 'addendums') {
+    const { data, error } = await supabase.from('contractor_addendums')
+      .select('*').order('created_at', { ascending: false });
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json(data || []);
+  }
+
   return res.status(400).json({ error: 'Invalid action.' });
 };
