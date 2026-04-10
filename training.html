@@ -14,6 +14,7 @@
 <style>
 :root{--navy:#0f1f2e;--navy-mid:#1a3248;--gold:#D4A017;--gold-light:#F0D870;--cream:#f5f0e8;--cream-dark:#ede5d4;--green:#2e7d5a;--green-light:#3aa870;--red:#c0392b;--text:#1a1a1a;--text-muted:#5a6a78;--border:#ddd5c4;--white:#ffffff}
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
 body{font-family:'Open Sans',sans-serif;background:var(--navy);min-height:100vh;color:var(--text)}
 .screen{display:none;min-height:100vh}
 .screen.active{display:flex;flex-direction:column}
@@ -221,6 +222,9 @@ textarea{resize:vertical;min-height:90px}
     backface-visibility: hidden;
   }
   img { max-width: 100%; height: auto; }
+  @media (max-width: 768px) {
+    .nav-cta { padding: 9px 14px !important; font-size: 0.8rem !important; }
+  }
   @media (max-width: 480px) {
     .contact-bar {
       font-size: 0.7rem !important;
@@ -233,11 +237,12 @@ textarea{resize:vertical;min-height:90px}
     body { padding-bottom: 56px; }
     h1 { font-size: 1.85rem !important; }
     h2 { font-size: 1.4rem !important; }
-    .hero { padding-left: 4% !important; padding-right: 4% !important; }
-    .btn-primary, .btn-secondary, .nav-cta, .mobile-cta {
+    .hero { padding-left: 4% !important; padding-right: 4% !important; padding-top: 115px !important; }
+    .btn-primary, .btn-secondary, .mobile-cta {
       font-size: 0.9rem !important;
       padding: 14px 22px !important;
     }
+    .nav-cta { display: none; }
   }
 </style>
 </head>

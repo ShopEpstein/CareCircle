@@ -34,7 +34,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 120px; }
   body { font-family: 'Open Sans', sans-serif; background: var(--cream); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
 
   /* ─── NAV ─── */
@@ -754,7 +754,7 @@
     .spotlight-creds { grid-template-columns: repeat(2,1fr) !important; }
     .spotlight-two-col { grid-template-columns: 1fr !important; gap: 28px !important; }
     .spotlight-services { grid-template-columns: repeat(2,1fr) !important; }
-    .hero { grid-template-columns: 1fr; padding-top: 100px; }
+    .hero { grid-template-columns: 1fr; padding-top: 128px; }
     .hero-visual { display: none; }
     .stats-bar { grid-template-columns: repeat(2,1fr); }
     .steps-grid, .providers-grid, .testimonials-grid { grid-template-columns: 1fr; }
@@ -1112,6 +1112,9 @@
     backface-visibility: hidden;
   }
   img { max-width: 100%; height: auto; }
+  @media (max-width: 768px) {
+    .nav-cta { padding: 9px 14px !important; font-size: 0.8rem !important; }
+  }
   @media (max-width: 480px) {
     .contact-bar {
       font-size: 0.7rem !important;
@@ -1124,11 +1127,12 @@
     body { padding-bottom: 56px; }
     h1 { font-size: 1.85rem !important; }
     h2 { font-size: 1.4rem !important; }
-    .hero { padding-left: 4% !important; padding-right: 4% !important; }
-    .btn-primary, .btn-secondary, .nav-cta, .mobile-cta {
+    .hero { padding-left: 4% !important; padding-right: 4% !important; padding-top: 115px !important; }
+    .btn-primary, .btn-secondary, .mobile-cta {
       font-size: 0.9rem !important;
       padding: 14px 22px !important;
     }
+    .nav-cta { display: none; }
   }
 </style>
 </head>
