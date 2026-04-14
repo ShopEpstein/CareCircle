@@ -20,6 +20,7 @@
     { "source": "/men", "destination": "/care-advocacy-for-men", "permanent": true }
   ],
   "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/blog/:slug", "destination": "/blog/:slug.html" }
   ],
   "headers": [
