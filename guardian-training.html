@@ -342,7 +342,7 @@ textarea{resize:vertical;min-height:90px}
       </div>
       <button class="btn btn-teal" onclick="doLogin()" style="margin-top:8px">Begin Training →</button>
     </div>
-    <p class="login-note">Questions? Text Chase · <span style="color:rgba(44,196,176,.7)">850-341-4324</span></p>
+    <p class="login-note">Questions? Text Us · <span style="color:rgba(44,196,176,.7)">850-341-4324</span></p>
   </div>
 </div>
 
@@ -406,7 +406,7 @@ textarea{resize:vertical;min-height:90px}
       <div class="cert-icon">🎖</div>
       <div class="cert-info">
         <h3>Ready for Guardian Certification</h3>
-        <p>You've completed all training modules. The final step is a shadow visit with Chase or a certified Beacon. Schedule yours below to earn your Guardian rank and be cleared for solo visits.</p>
+        <p>You've completed all training modules. The final step is a shadow visit with a certified team lead. Schedule yours below to earn your Guardian rank and be cleared for solo visits.</p>
         <button class="btn btn-teal" style="width:auto;padding:12px 28px" onclick="showScreen('screen-schedule')">Schedule My Shadow Visit →</button>
       </div>
     </div>
@@ -435,9 +435,9 @@ textarea{resize:vertical;min-height:90px}
     <div class="schedule-modal" id="sched-modal">
       <div class="big-icon">🛡</div>
       <h2>Schedule Your Shadow Visit</h2>
-      <p>Your shadow visit is the final step before Guardian certification. You'll accompany Chase or a certified Beacon on a live visit. Chase will confirm within 24 hours.</p>
+      <p>Your shadow visit is the final step before Guardian certification. You'll accompany a certified team lead on a live visit. Your team lead will confirm within 24 hours.</p>
       <div class="sched-options">
-        <div class="sched-option" onclick="selSched(this,'Shadow with Chase')"><div class="sched-icon">👤</div><div class="sched-label">Shadow Chase</div><div class="sched-desc">Directly with the founder</div></div>
+        <div class="sched-option" onclick="selSched(this,'Shadow Visit')"><div class="sched-icon">👤</div><div class="sched-label">Shadow Team Lead</div><div class="sched-desc">With team leadership</div></div>
         <div class="sched-option" onclick="selSched(this,'Shadow a Beacon')"><div class="sched-icon">💡</div><div class="sched-label">Shadow a Beacon</div><div class="sched-desc">Certified senior guardian</div></div>
       </div>
       <div class="form-2col" style="margin-bottom:14px">
@@ -650,7 +650,7 @@ function submitSched(){
   document.getElementById('sched-modal').innerHTML=`<div class="sent-confirm">
     <div class="big-check">🛡</div>
     <h3>Shadow Visit Requested</h3>
-    <p>Chase will confirm your shadow visit within 24 hours. Once you complete it, you will be officially certified as a CareCircle Guardian.</p>
+    <p>Your team lead will confirm your shadow visit within 24 hours. Once you complete it, you will be officially certified as a CareCircle Guardian.</p>
     <p style="margin-top:12px"><strong>Session type:</strong> ${schedType}</p>
     <p style="margin-top:16px;font-size:13px;color:var(--text-muted)">Review your modules one more time before the visit. You will be observed applying the algorithm live.</p>
     <button class="btn btn-outline" style="width:auto;padding:10px 24px;margin-top:24px" onclick="goBack()">Back to Dashboard</button>
@@ -694,13 +694,13 @@ function buildOnboarding(){
   <div class="content-section">
     <h2>Your Contractor Status</h2>
     <ul>
-      <li>You are a <strong>1099 independent contractor</strong> — not an employee of CareCircle or TransBid LLC.</li>
+      <li>You are a <strong>1099 independent contractor</strong> — not an employee of CareCircle or Chase AI Services.</li>
       <li>CareCircle does not withhold taxes. You are responsible for all self-employment taxes.</li>
       <li>No employee benefits, workers compensation, or unemployment insurance.</li>
       <li>You set your own schedule within assignments you accept.</li>
       <li>1099-NEC issued for all earnings of $600+ in a calendar year.</li>
     </ul>
-    <div class="callout red"><strong>Required before your first visit</strong><p>Signed Independent Contractor Agreement + W9 must be submitted to Chase. No payment can be issued without both on file.</p></div>
+    <div class="callout red"><strong>Required before your first visit</strong><p>Signed Independent Contractor Agreement + W9 must be submit to our team. No payment can be issued without both on file.</p></div>
   </div>
   <div class="content-section">
     <h2>Background Screening</h2>
@@ -731,7 +731,7 @@ function buildOnboarding(){
       <div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">
         <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:14px;font-weight:400;color:var(--text)">
           <input type="checkbox" id="ob-contract" onchange="S.contractAck=this.checked;save()" style="width:18px;height:18px;margin-top:2px;flex-shrink:0">
-          I confirm I have signed my Independent Contractor Agreement and submitted my W9 to Chase.
+          I confirm I have signed my Independent Contractor Agreement and submit to our team.
         </label>
         <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:14px;font-weight:400;color:var(--text)">
           <input type="checkbox" id="ob-bg" onchange="S.bgAck=this.checked;save()" style="width:18px;height:18px;margin-top:2px;flex-shrink:0">
@@ -801,7 +801,7 @@ function buildLegal(){
   const qs=[
     {q:"Your legal basis for entering a facility is:",opts:["A CareCircle business license","Florida's essential caregiver and authorized visitor designation","A court order","The facility's permission"],c:1},
     {q:"When staff challenge your presence, you say:",opts:["'I'm from CareCircle and I have a right to be here'","'I'm here visiting [resident name] as their designated essential caregiver. I have the family's written authorization.'","'Call your administrator'","'I don't have to explain myself'"],c:1},
-    {q:"If a facility physically blocks your access, you should:",opts:["Force entry","Argue with staff until they comply","Do not escalate on-site. Leave, document the incident, and contact Chase immediately.","Call the police immediately"],c:2},
+    {q:"If a facility physically blocks your access, you should:",opts:["Force entry","Argue with staff until they comply","Do not escalate on-site. Leave, document the incident, and contact our team immediately.","Call the police immediately"],c:2},
     {q:"Repeated access challenges from a facility are:",opts:["Normal and expected","A reportable pattern that belongs in your documentation","A reason to stop visiting","A sign you should change your approach"],c:1}
   ];
   return `<div class="eyebrow">Module 2 · Legal Framework</div>
@@ -837,7 +837,7 @@ That is the complete statement. Do not elaborate. Do not argue. Do not explain C
       <li>You cannot access private resident records without facility cooperation and family authorization.</li>
       <li>You cannot demand that staff stop what they're doing to speak with you.</li>
       <li>You cannot remove any documentation from the facility.</li>
-      <li>You cannot make any statements on behalf of CareCircle to facility administration without Chase's authorization.</li>
+      <li>You cannot make any statements on behalf of CareCircle to facility administration without management authorization.</li>
     </ul>
   </div>
   ${buildQuizHTML(qs,'legal')}`;
@@ -1014,7 +1014,7 @@ function buildEscalation(){
   const qs=[
     {q:"A Yellow rating requires family notification within:",opts:["24 hours","12 hours — with a phone call within 4 hours","1 hour","48 hours"],c:1},
     {q:"A Red rating requires family notification within:",opts:["24 hours","12 hours","4 hours","1 hour of visit completion"],c:3},
-    {q:"An AHCA complaint referral is triggered when:",opts:["Any concern is observed","A Yellow finding persists across two visits","A Red finding meets threshold — Chase makes this determination","The family requests it"],c:2},
+    {q:"An AHCA complaint referral is triggered when:",opts:["Any concern is observed","A Yellow finding persists across two visits","A Red finding meets threshold — Management makes this determination","The family requests it"],c:2},
     {q:"If you observe a resident with a new unexplained injury showing signs they are at risk of immediate harm, you:",opts:["Document and file a standard report","Wait for the written report process","Immediately notify Chase by phone — this is a Red finding requiring same-day response","Ask staff what happened"],c:2}
   ];
   return `<div class="eyebrow">Module 6 · Escalation</div>
@@ -1050,11 +1050,11 @@ function buildEscalation(){
     <h2>Red — Immediate Escalation Protocol</h2>
     <div class="callout red"><strong>These are your exact steps in order</strong>
     <p>1. Family notification by phone within <strong>1 hour</strong> of leaving the facility.<br>
-    2. Call Chase immediately after the family call.<br>
+    2. Call us immediately after the family call.<br>
     3. Begin written documentation immediately — do not wait until morning.<br>
     4. Return visit within 24 hours.<br>
-    5. Chase initiates advocacy communication to facility administration within 48 hours.<br>
-    6. AHCA complaint referral if findings meet threshold — Chase determines this, not you.</p></div>
+    5. Management initiates advocacy communication to facility administration within 48 hours.<br>
+    6. AHCA complaint referral if findings meet threshold — Management determines this, not you.</p></div>
     <div class="callout red"><strong>Red examples</strong><p>Resident showing signs of physical abuse. New unexplained injury. Evidence of chemical restraint (behavioral change consistent with sedation, undocumented PRN). Resident expressing fear of specific staff member. Active neglect — unanswered calls, unaddressed incontinence, hydration failure. Fewer staff present than legally required minimum.</p></div>
   </div>
   <div class="content-section">
@@ -1113,14 +1113,14 @@ function buildReporting(){
 function buildShadow(){
   return `<div class="eyebrow">Module 8 · Certification</div>
   <h1>Shadow Visit Prep</h1>
-  <p class="intro">Your shadow visit is the final step before Guardian certification. You will accompany Chase or a certified Beacon on a live visit and be observed applying the algorithm in a real facility.</p>
+  <p class="intro">Your shadow visit is the final step before Guardian certification. You will accompany a certified team lead on a live visit and be observed applying the algorithm in a real facility.</p>
   <div class="content-section">
     <h2>What Happens on the Shadow Visit</h2>
     <ul>
       <li>You observe the full visit alongside a certified Guardian or Beacon.</li>
       <li>You run the observation checklist mentally and independently — do not compare notes during the visit.</li>
       <li>After the visit, you and your shadow debrief. You share your observations first. They share theirs. Discrepancies are discussed.</li>
-      <li>Your shadow assesses your readiness for solo visits and reports to Chase.</li>
+      <li>Your shadow assesses your readiness for solo visits and reports to management.</li>
     </ul>
     <div class="callout"><strong>What you're being assessed on</strong><p>Do you move naturally through the facility without drawing attention? Do you observe the right things? Do you know the checklist without looking it up? Do you maintain neutrality? Do you correctly identify the visit rating?</p></div>
   </div>
@@ -1136,7 +1136,7 @@ function buildShadow(){
   </div>
   <div class="content-section">
     <h2>After Your Shadow Visit</h2>
-    <p>If your shadow clears you: Chase is notified, your rank updates to <strong>Guardian</strong>, and you are added to the active dispatch pool. You will receive your first solo assignment within the week.</p>
+    <p>If your shadow clears you: Management is notified, your rank updates to <strong>Guardian</strong>, and you are added to the active dispatch pool. You will receive your first solo assignment within the week.</p>
     <p>If your shadow recommends additional preparation: you'll get specific feedback and a second shadow visit. This is not a failure — it's the system working correctly. The standard exists to protect the residents you'll be visiting.</p>
     <div class="callout green"><strong>Guardian rank means:</strong><p>You are trusted to walk into a facility alone, observe without bias, document with precision, and tell a family the truth about their loved one's care. That is not a small thing. Earn it fully.</p></div>
   </div>

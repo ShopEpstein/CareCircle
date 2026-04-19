@@ -285,7 +285,7 @@ textarea{resize:vertical;min-height:90px}
       <button id="login-btn" class="btn btn-primary" onclick="doLogin()" style="margin-top:8px">Access My Training →</button>
       <div id="login-err" style="display:none;margin-top:14px;padding:12px 16px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:8px;font-size:13px;color:#fca5a5;line-height:1.5"></div>
     </div>
-    <p class="login-note">Questions? Text Chase · <span style="color:var(--gold-light)">850-341-4324</span></p>
+    <p class="login-note">Questions? Text Us · <span style="color:var(--gold-light)">850-341-4324</span></p>
   </div>
   </div>
 </div>
@@ -319,7 +319,7 @@ textarea{resize:vertical;min-height:90px}
       <div class="schedule-icon">🎯</div>
       <div class="schedule-info">
         <h3>You're Ready for Live Training</h3>
-        <p>All modules complete. Schedule your live session with Chase or a Team Lead — role-plays, Q&amp;A, and go-live approval.</p>
+        <p>All modules complete. Schedule your live session with a Team Lead — role-plays, Q&amp;A, and go-live approval.</p>
         <button class="btn btn-gold" style="width:auto;padding:12px 28px" onclick="showScreen('screen-schedule')">Schedule My Session →</button>
       </div>
     </div>
@@ -350,16 +350,16 @@ textarea{resize:vertical;min-height:90px}
       <h2>Schedule Your Live Session</h2>
       <p>Pick the format that works best. Chase or a Team Lead will confirm within 24 hours with a calendar invite.</p>
       <div class="sched-options">
-        <div class="sched-option" onclick="selSched(this,'1:1 with Chase')"><div class="sched-icon">👤</div><div class="sched-label">1:1 with Chase</div><div class="sched-desc">Personal coaching, 30–45 min</div></div>
+        <div class="sched-option" onclick="selSched(this,'1:1 with Team Lead')"><div class="sched-icon">👤</div><div class="sched-label">1:1 with Team Lead</div><div class="sched-desc">Personal coaching, 30–45 min</div></div>
         <div class="sched-option" onclick="selSched(this,'Team Lead Session')"><div class="sched-icon">👥</div><div class="sched-label">Team Lead Session</div><div class="sched-desc">With your assigned team lead</div></div>
         <div class="sched-option" onclick="selSched(this,'Group Zoom Training')"><div class="sched-icon">🖥️</div><div class="sched-label">Group Zoom</div><div class="sched-desc">Next scheduled group session</div></div>
-        <div class="sched-option" onclick="selSched(this,'No Preference')"><div class="sched-icon">🤷</div><div class="sched-label">No Preference</div><div class="sched-desc">Chase assigns best fit</div></div>
+        <div class="sched-option" onclick="selSched(this,'No Preference')"><div class="sched-icon">🤷</div><div class="sched-label">No Preference</div><div class="sched-desc">Team assigns best fit</div></div>
       </div>
       <div class="form-2col" style="margin-bottom:14px">
         <div class="form-group"><label>Best Day(s)</label><input type="text" id="s-day" placeholder="Mon, Tue, Wed…"></div>
         <div class="form-group"><label>Best Time</label><input type="text" id="s-time" placeholder="Mornings, 2–4pm…"></div>
       </div>
-      <div class="form-group"><label>Anything Chase should know coming in?</label><textarea id="s-notes" placeholder="e.g. I've done role-plays with a friend. Struggling with objection 4. Ready to go live."></textarea></div>
+      <div class="form-group"><label>Anything the team should know coming in?</label><textarea id="s-notes" placeholder="e.g. I've done role-plays with a friend. Struggling with objection 4. Ready to go live."></textarea></div>
       <button class="btn btn-gold" style="width:100%;margin-top:8px" onclick="submitSched()">Submit Request →</button>
     </div>
   </div>
@@ -397,7 +397,7 @@ async function doLogin(){
       errEl.style.display='block';
       btn.disabled=false;btn.textContent='Access My Training →';return;
     }
-  }catch(err){notif('Unable to verify account. Try again or contact Chase.');btn.disabled=false;btn.textContent='Access My Training →';return;}
+  }catch(err){notif('Unable to verify account. Try again or contact us.');btn.disabled=false;btn.textContent='Access My Training →';return;}
   btn.disabled=false;btn.textContent='Access My Training →';
   document.getElementById('login-err').style.display='none';
   if(!load(e)){S={name:n,email:e,role:r,done:[],scheduled:false};save()}
@@ -574,7 +574,7 @@ function submitSched(){
   document.getElementById('sched-modal').innerHTML=`<div class="sent-confirm">
     <div class="big-check">✓</div>
     <h3>Request Submitted</h3>
-    <p>Your session request has been logged. Chase will reach out within 24 hours with a calendar invite.</p>
+    <p>Your session request has been logged. Your team lead will reach out within 24 hours with a calendar invite.</p>
     <p style="margin-top:12px"><strong>Session type:</strong> ${schedType}</p>
     <p style="margin-top:16px;font-size:13px;color:var(--text-muted)">Keep running role-plays. You'll be on live calls soon.</p>
     <button class="btn btn-outline" style="width:auto;padding:10px 24px;margin-top:24px" onclick="goBack()">Back to Dashboard</button>
@@ -628,7 +628,7 @@ function buildProducts(){
     {q:"The Network Partner setup fee is:",opts:["$299","$499","$999","$179/mo"],c:1},
     {q:"The Featured Partner setup fee is:",opts:["$499","$699","$999","$1,499"],c:2},
     {q:"To close a B2B deal, you CAN:",opts:["Reduce the monthly rate","Waive or reduce the setup fee","Promise a guaranteed family inquiry count","Make HIPAA compliance claims"],c:1},
-    {q:"When quoting Guardian plan prices, you must:",opts:["Give exact figures","Say 'starting at' or 'from' — Chase scopes each engagement","Give the full range $799–$2,500","Wait for Chase to quote"],c:1},
+    {q:"When quoting Guardian plan prices, you must:",opts:["Give exact figures","Say 'starting at' or 'from' — Our team scopes each engagement","Give the full range $799–$2,500","Wait for Chase to quote"],c:1},
     {q:"CareCircle Present is:",opts:["Billable to Medicare","Covered by most LTC insurance","100% private pay by design","Medicaid waiver eligible"],c:2}
   ];
   return `<div class="eyebrow">Module 2 · Universal</div>
@@ -663,7 +663,7 @@ function buildProducts(){
         <tr class="hl"><td><strong>Guardian Elite (monthly)</strong></td><td><strong>from $2,500/mo</strong></td></tr>
       </tbody>
     </table>
-    <div class="callout"><strong>Pricing rules — no exceptions</strong><p>Always say "from" or "starting at." Never quote a ceiling. Never discount without Chase's approval. Chase scopes every Guardian engagement personally.</p></div>
+    <div class="callout"><strong>Pricing rules — no exceptions</strong><p>Always say "from" or "starting at." Never quote a ceiling. Never discount without management approval. Our team scopes every Guardian engagement.</p></div>
   </div>
   <div class="content-section">
     <h2>Product 3 — Assisting Seniors Warm Handoff</h2>
@@ -851,7 +851,7 @@ function buildB2CPitch(){
   const qs=[
     {q:"After a B2C prospect engages, your most important discovery question is:",opts:["What's your budget?","What's the thing you worry about most — the thing you can't check on?","How long has your loved one been there?","Have you heard of CareCircle?"],c:1},
     {q:"A family hesitates at Guardian plan pricing. Your move:",opts:["Discount the plan","Push harder on value","Pivot to the $175 single visit as a risk-free first step","End the call and follow up later"],c:2},
-    {q:"The key to closing a warm/inbound lead is:",opts:["Send pricing page","Listen to their situation, find the fear, connect it to our service","Pitch all three Guardian tiers","Ask Chase to do the call"],c:1},
+    {q:"The key to closing a warm/inbound lead is:",opts:["Send pricing page","Listen to their situation, find the fear, connect it to our service","Pitch all three Guardian tiers","Ask a consultant to do the call"],c:1},
     {q:"Post-visit follow-up should happen:",opts:["One week later","Within 48 hours","After the next billing cycle","Next month"],c:1}
   ];
   return `<div class="eyebrow">Module 4 · B2C Track</div>
@@ -876,7 +876,7 @@ function buildB2CPitch(){
 [They will tell you. That answer is your close.]</div>
     <div class="script-block"><span class="script-label">Connecting to the Service</span>"That's exactly what we show up for. We go in unannounced — day shift, evening, overnight. We observe, document, and report. If we see something that needs your attention, you hear from us that day."
 
-"Can I ask Chase to give you a call? He's the founder, he does discovery conversations personally. 15 minutes — no pressure, just to understand your situation and tell you honestly if we can help."</div>
+"Can I have someone from our team give you a call? They do discovery conversations personally. 15 minutes — no pressure, just to understand your situation and tell you honestly if we can help."</div>
   </div>
   <div class="content-section">
     <h2>The Single Visit Bridge</h2>
@@ -1009,7 +1009,7 @@ function buildRoleplay(){
   <div class="content-section">
     <h2>Your Assignment Before the Live Session</h2>
     <p>Find a friend, family member, or fellow contractor. They play the prospect. You run the full call — twice per scenario. Once with a cooperative prospect, once with a skeptical one.</p>
-    <div class="callout"><strong>What Chase will test in your live session</strong><p>At least one full role-play. You won't know which scenario in advance. You do not get on live calls until you've passed the live session.</p></div>
+    <div class="callout"><strong>What your evaluator will test in your live session</strong><p>At least one full role-play. You won't know which scenario in advance. You do not get on live calls until you've passed the live session.</p></div>
   </div>
   <div class="content-section">
     <h2>B2B Rep Scenarios</h2>
@@ -1023,7 +1023,7 @@ function buildRoleplay(){
   <div class="content-section">
     <h2>B2C Rep Scenarios</h2>
     <h3>Scenario 1 — Family Opens Up</h3>
-    <p>Parent in a facility, hasn't visited in 3 weeks. Ask discovery questions, find the fear, bridge to the service. Book the call with Chase.</p>
+    <p>Parent in a facility, hasn't visited in 3 weeks. Ask discovery questions, find the fear, bridge to the service. Book the call with a consultant.</p>
     <h3>Scenario 2 — Guardian Plan Objection</h3>
     <p>"$799 is too much." Pivot to $175 single visit. Explain the visit as a product demo. Close on the visit.</p>
     <h3>Scenario 3 — "We trust the facility"</h3>
