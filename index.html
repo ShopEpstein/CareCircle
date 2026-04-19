@@ -965,7 +965,7 @@
     <img src="/images/logo-carecircle.jpg" alt="CareCircle" width="83" height="50" style="height:50px;width:auto;display:block;border-radius:6px;" decoding="async"></a>
   <div class="nav-center">
     <a href="#how-it-works">How It Works</a>
-    <a href="#providers">Find Care</a>
+    <a href="#" onclick="openFindCareModal();return false;">Find Care</a>
     <div class="nav-dropdown">
       <button class="nav-dropdown-trigger">Services</button>
       <div class="nav-dropdown-menu">
@@ -1002,7 +1002,7 @@
 <!-- Mobile menu -->
 <div class="mobile-menu" id="mobile-menu">
   <a href="#how-it-works" onclick="closeMobile()">How It Works</a>
-  <a href="#providers" onclick="closeMobile()">Find Care</a>
+  <a href="#" onclick="closeMobile();openFindCareModal();return false;">Find Care</a>
   <a href="/present" onclick="closeMobile()" style="font-weight:600; color:var(--sage);">👁️ CareCircle Present</a>
   <a href="/research" onclick="closeMobile()">Research Providers</a>
   <a href="/partners" onclick="closeMobile()">For Partners</a>
@@ -1692,8 +1692,46 @@
 
   // ─── SCROLL TO FORM ───
   function scrollToForm() {
-    document.getElementById('find-care').scrollIntoView({ behavior: 'smooth' });
+    openFindCareModal();
   }
+
+  // ─── FIND CARE MODAL ───
+  function openFindCareModal() {
+    const m = document.getElementById('find-care-modal');
+    m.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => { document.getElementById('fc-name').focus(); }, 100);
+  }
+  function closeFindCareModal() {
+    document.getElementById('find-care-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  document.getElementById('find-care-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeFindCareModal();
+  });
+  async function submitFindCareModal() {
+    const name  = document.getElementById('fc-name').value.trim();
+    const phone = document.getElementById('fc-phone').value.trim();
+    const care  = document.getElementById('fc-care-type').value;
+    if (!name || !phone) {
+      ['fc-name','fc-phone'].forEach(id => {
+        if (!document.getElementById(id).value.trim())
+          document.getElementById(id).style.borderColor = '#e05c5c';
+      });
+      return;
+    }
+    const btn = document.getElementById('fc-btn');
+    btn.textContent = 'Sending…'; btn.disabled = true;
+    try {
+      await fetch('/api/submit-lead', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ name, phone, careType: care, source: 'find-care-modal' })
+      });
+    } catch(e) {}
+    btn.closest('div').parentElement.innerHTML = '<div style="text-align:center;padding:20px 0;"><div style="font-size:2rem;margin-bottom:12px;">✅</div><h3 style="font-family:Montserrat,sans-serif;color:var(--warm-dark);margin-bottom:8px;">Got it, ' + name.split(' ')[0] + '.</h3><p style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;">A consultant will reach out to ' + phone + ' shortly. In the meantime, feel free to call or text us directly at <a href="tel:8503414324" style="color:var(--sage);font-weight:600;">850-341-4324</a>.</p></div>';
+  }
+
 
   // ─── FORM → SHOW MATCHES ───
   // ─── EMAIL VIA VERCEL FUNCTION (key lives in Vercel env, never in HTML) ───
@@ -1871,6 +1909,48 @@
   <span class="bar-divider">|</span>
   <a href="sms:8503414324">💬 Text</a>
 </div>
+
+
+<!-- ═══ FIND CARE MODAL ═══ -->
+<div id="find-care-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(26,43,53,0.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;">
+  <div style="background:white;border-radius:20px;padding:40px 36px 32px;max-width:480px;width:100%;position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.25);animation:fcModalIn 0.22s ease;">
+    <button onclick="closeFindCareModal()" style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:1.4rem;color:#999;cursor:pointer;line-height:1;">✕</button>
+    <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--sage);margin-bottom:10px;">Find Care</div>
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:1.55rem;color:var(--warm-dark);margin-bottom:6px;line-height:1.25;">Start the Conversation</h2>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:22px;line-height:1.6;">Tell us about your situation — a consultant will reach out personally. No pressure, no scripts.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+      <div>
+        <label style="font-size:0.75rem;font-weight:600;color:var(--warm-dark);display:block;margin-bottom:5px;">Your Name</label>
+        <input id="fc-name" type="text" placeholder="First name" style="width:100%;padding:10px 12px;border:1.5px solid #e0e0da;border-radius:8px;font-size:0.88rem;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='#e0e0da'">
+      </div>
+      <div>
+        <label style="font-size:0.75rem;font-weight:600;color:var(--warm-dark);display:block;margin-bottom:5px;">Best Phone / Text</label>
+        <input id="fc-phone" type="tel" placeholder="(850) 555-0100" style="width:100%;padding:10px 12px;border:1.5px solid #e0e0da;border-radius:8px;font-size:0.88rem;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='#e0e0da'">
+      </div>
+    </div>
+    <div style="margin-bottom:18px;">
+      <label style="font-size:0.75rem;font-weight:600;color:var(--warm-dark);display:block;margin-bottom:5px;">Type of Care Needed</label>
+      <select id="fc-care-type" style="width:100%;padding:10px 12px;border:1.5px solid #e0e0da;border-radius:8px;font-size:0.88rem;outline:none;background:white;box-sizing:border-box;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='#e0e0da'">
+        <option>Companion Care</option>
+        <option>Homemaker Services</option>
+        <option>Respite / Relief</option>
+        <option>Memory Care Support</option>
+        <option>24/7 Care</option>
+        <option>Facility Monitoring (CareCircle Present)</option>
+        <option>Not sure — help me figure it out</option>
+      </select>
+    </div>
+    <button onclick="submitFindCareModal()" id="fc-btn" style="width:100%;padding:14px;background:var(--sage);color:white;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Open Sans',sans-serif;transition:background 0.2s;">Start the Conversation →</button>
+    <p style="font-size:0.72rem;color:var(--text-muted);text-align:center;margin-top:10px;">🔒 Complimentary consult · No spam · We never sell your info</p>
+    <div style="display:flex;gap:10px;margin-top:14px;">
+      <a href="tel:8503414324" style="flex:1;text-align:center;padding:10px;background:#f4f6f5;border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--sage);text-decoration:none;">📞 Call</a>
+      <a href="sms:8503414324" style="flex:1;text-align:center;padding:10px;background:#f4f6f5;border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--sage);text-decoration:none;">💬 Text</a>
+    </div>
+  </div>
+</div>
+<style>
+  @keyframes fcModalIn { from { opacity:0; transform:translateY(12px) scale(0.97); } to { opacity:1; transform:none; } }
+</style>
 
 </body>
 </html>
