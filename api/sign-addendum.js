@@ -85,7 +85,7 @@ module.exports = async function handler(req, res) {
           <tr><td style="padding:8px 12px;background:#f5f5f0;font-weight:600">Signed As</td><td style="padding:8px 12px;border-bottom:1px solid #eee">${signer_legal_name}</td></tr>
           <tr><td style="padding:8px 12px;background:#f5f5f0;font-weight:600">Timestamp</td><td style="padding:8px 12px">${display}</td></tr>
         </table>
-        <p style="margin-top:20px;color:#888;font-size:12px">CareCircle Contracts · TransBid LLC</p>
+        <p style="margin-top:20px;color:#888;font-size:12px">CareCircle Contracts · CareCircle AI Network</p>
       </div>`
     ).catch(() => {});
 
