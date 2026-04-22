@@ -34,12 +34,12 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
   body { font-family: 'Open Sans', sans-serif; background: var(--cream); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
 
   /* ─── NAV ─── */
   nav {
-    position: fixed; top: 44px; left: 0; right: 0; z-index: 200;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
     background: rgba(246,250,252,0.95);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(42,140,158,0.12);
@@ -141,7 +141,7 @@
   .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
   .mobile-menu {
-    display: none; position: fixed; top: 112px; left: 0; right: 0; z-index: 199;
+    display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 199;
     background: rgba(246,250,252,0.98); backdrop-filter: blur(14px);
     padding: 24px 5% 32px;
     border-bottom: 1px solid rgba(42,140,158,0.12);
@@ -886,24 +886,6 @@
   }
 
 
-  /* ─── CONTACT BAR ─── */
-  .contact-bar {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 210;
-    background: linear-gradient(90deg, #1E6878 0%, #2A8C9E 60%, #1E6878 100%);
-    color: white; text-align: center;
-    padding: 0 16px; height: 44px;
-    display: flex; align-items: center; justify-content: center;
-    gap: 10px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-  }
-  .contact-bar a { color: #F2CC40; text-decoration: none; font-weight: 700; white-space: nowrap; }
-  .contact-bar a:hover { text-decoration: underline; }
-  .contact-bar .cb-sep { opacity: 0.5; margin: 0 4px; }
-  .contact-bar .cb-label { opacity: 0.9; }
-  @media (max-width: 600px) {
-    .contact-bar { font-size: 0.72rem; gap: 6px; padding: 0 8px; flex-wrap: nowrap; }
-    .contact-bar .cb-hide-sm { display: none; }
-  }
 
   /* ─── MOBILE PERFORMANCE & TOUCH OPTIMIZATIONS ─── */
   * { -webkit-tap-highlight-color: transparent; }
@@ -917,7 +899,7 @@
     min-width: 44px; min-height: 44px;
     display: flex; align-items: center; justify-content: center;
   }
-  nav, .contact-bar, .mobile-menu, .mobile-call-bar {
+  nav, .mobile-menu, .mobile-call-bar {
     will-change: transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -927,18 +909,10 @@
     .nav-cta { padding: 9px 14px !important; font-size: 0.8rem !important; }
   }
   @media (max-width: 480px) {
-    .contact-bar {
-      font-size: 0.7rem !important;
-      height: 38px !important;
-      gap: 6px !important;
-    }
-    .contact-bar .cb-sep { display: none; }
-    nav { top: 38px !important; }
-    .mobile-menu { top: 106px !important; }
     body { padding-bottom: 56px; }
     h1 { font-size: 1.85rem !important; }
     h2 { font-size: 1.4rem !important; }
-    .hero { padding-left: 4% !important; padding-right: 4% !important; padding-top: 115px !important; }
+    .hero { padding-left: 4% !important; padding-right: 4% !important; padding-top: 82px !important; }
     .btn-primary, .btn-secondary, .mobile-cta {
       font-size: 0.9rem !important;
       padding: 14px 22px !important;
@@ -948,15 +922,6 @@
 </style>
 </head>
 <body>
-<!-- ═══ CONTACT BAR ═══ -->
-<div class="contact-bar">
-  <span class="cb-label">Call or text 24/7</span>
-  <a href="tel:8503414324">850-341-4324</a>
-  <span class="cb-sep">·</span>
-  <span class="cb-label cb-hide-sm">Email us</span>
-  <a href="mailto:Care@CareCircle.Fit">Care@CareCircle.Fit</a>
-</div>
-
 
 
 <!-- ═══ NAV ═══ -->
@@ -1072,21 +1037,27 @@
           <input type="text" id="hero-name" placeholder="First name">
         </div>
         <div class="form-group" style="margin-bottom:0;">
-          <label>Best Phone / Text</label>
-          <input type="tel" id="hero-contact-phone" placeholder="(850) 555-0100">
+          <label>Email Address</label>
+          <input type="email" id="hero-email" placeholder="you@email.com">
         </div>
       </div>
       <div class="form-group" style="margin-top:12px;">
-        <label>Type of Care Needed</label>
-        <select id="hero-care-type">
-          <option>Companion Care</option>
-          <option>Homemaker Services</option>
-          <option>Respite / Relief</option>
-          <option>Memory Care Support</option>
-          <option>24/7 Care</option>
-          <option>Facility Monitoring (CareCircle Present)</option>
-          <option>Not sure — help me figure it out</option>
+        <label>Best Phone / Text</label>
+        <input type="tel" id="hero-contact-phone" placeholder="(850) 555-0100" style="width:100%;">
+      </div>
+      <div class="form-group" style="margin-top:12px;">
+        <label>I am reaching out as a</label>
+        <select id="hero-inquiry-type">
+          <option value="Family seeking care">Family seeking care for a loved one</option>
+          <option value="Individual seeking care">Individual seeking care for myself</option>
+          <option value="Care agency">Care agency or facility</option>
+          <option value="Healthcare provider">Healthcare provider or referral partner</option>
+          <option value="Other business">Other business inquiry</option>
         </select>
+      </div>
+      <div class="form-group" style="margin-top:12px;">
+        <label>Tell us what's going on</label>
+        <textarea id="hero-message" placeholder="Brief description of your situation or question — we'll take it from here." style="width:100%; padding:10px 12px; border:1.5px solid rgba(42,140,158,0.2); border-radius:10px; font-size:0.88rem; font-family:'Open Sans',sans-serif; color:var(--warm-dark); background:var(--cream); resize:vertical; min-height:80px; outline:none;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='rgba(42,140,158,0.2)'"></textarea>
       </div>
       <button class="simple-form-btn" onclick="showMatches()" style="margin-top:4px;">
         <span>Start the Conversation</span><span> →</span>
@@ -1360,14 +1331,14 @@
     if (e.target === this) closeFindCareModal();
   });
   async function submitFindCareModal() {
-    const name  = document.getElementById('fc-name').value.trim();
-    const phone = document.getElementById('fc-phone').value.trim();
-    const care  = document.getElementById('fc-care-type').value;
+    const name    = document.getElementById('fc-name').value.trim();
+    const email   = document.getElementById('fc-email').value.trim();
+    const phone   = document.getElementById('fc-phone').value.trim();
+    const inquiry = document.getElementById('fc-inquiry-type').value;
+    const message = document.getElementById('fc-message').value.trim();
     if (!name || !phone) {
-      ['fc-name','fc-phone'].forEach(id => {
-        if (!document.getElementById(id).value.trim())
-          document.getElementById(id).style.borderColor = '#e05c5c';
-      });
+      if (!name) document.getElementById('fc-name').style.borderColor = '#e05c5c';
+      if (!phone) document.getElementById('fc-phone').style.borderColor = '#e05c5c';
       return;
     }
     const btn = document.getElementById('fc-btn');
@@ -1376,10 +1347,10 @@
       await fetch('/api/submit-lead', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name, phone, careType: care, source: 'find-care-modal' })
+        body: JSON.stringify({ name, email, phone, careType: inquiry, message, source: 'find-care-modal' })
       });
     } catch(e) {}
-    btn.closest('div').parentElement.innerHTML = '<div style="text-align:center;padding:20px 0;"><div style="font-size:2rem;margin-bottom:12px;">✅</div><h3 style="font-family:Montserrat,sans-serif;color:var(--warm-dark);margin-bottom:8px;">Got it, ' + name.split(' ')[0] + '.</h3><p style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;">A consultant will reach out to ' + phone + ' shortly. In the meantime, feel free to call or text us directly at <a href="tel:8503414324" style="color:var(--sage);font-weight:600;">850-341-4324</a>.</p></div>';
+    btn.closest('div').parentElement.innerHTML = '<div style="text-align:center;padding:20px 0;"><div style="font-size:2rem;margin-bottom:12px;">✅</div><h3 style="font-family:Montserrat,sans-serif;color:var(--warm-dark);margin-bottom:8px;">Got it, ' + name.split(' ')[0] + '.</h3><p style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;">A real person will reach out to ' + (email || phone) + ' shortly. You can also call or text us directly at <a href="tel:8503414324" style="color:var(--sage);font-weight:600;">850-341-4324</a>.</p></div>';
   }
 
 
@@ -1402,9 +1373,11 @@
 
   // ─── FAMILY FORM → calls /api/submit-lead ───
   async function showMatches() {
-    const name  = document.getElementById('hero-name').value.trim();
-    const phone = document.getElementById('hero-contact-phone').value.trim();
-    const care  = document.getElementById('hero-care-type') ? document.getElementById('hero-care-type').value : 'Not specified';
+    const name    = document.getElementById('hero-name').value.trim();
+    const email   = document.getElementById('hero-email') ? document.getElementById('hero-email').value.trim() : '';
+    const phone   = document.getElementById('hero-contact-phone').value.trim();
+    const inquiry = document.getElementById('hero-inquiry-type') ? document.getElementById('hero-inquiry-type').value : 'Not specified';
+    const message = document.getElementById('hero-message') ? document.getElementById('hero-message').value.trim() : '';
 
     let valid = true;
     ['hero-name','hero-contact-phone'].forEach(id => {
@@ -1442,20 +1415,20 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name, phone, email: '', city: '',
-          careType: care, forWhom: '', urgency: 'callback requested'
+          name, email, phone, city: '',
+          careType: inquiry, message, forWhom: '', urgency: 'callback requested'
         })
       });
       const data = await res.json();
       if (!data.ok) {
         console.warn('submit-lead error:', data);
         brevoSend(`🔔 Consult Request — ${name}`,
-          `<p>submit-lead failed. Lead: ${name}, ${phone}, ${care}</p>`);
+          `<p>submit-lead failed. Lead: ${name}, ${email}, ${phone}, ${inquiry}, ${message}</p>`);
       }
     } catch (e) {
       console.warn('submit-lead fetch error:', e);
       brevoSend(`🔔 Consult Request — ${name}`,
-        `<p>submit-lead errored. Lead: ${name}, ${phone}, ${care}</p>`);
+        `<p>submit-lead errored. Lead: ${name}, ${email}, ${phone}, ${inquiry}, ${message}</p>`);
     }
   }
 
@@ -1563,36 +1536,42 @@
 
 <!-- ═══ FIND CARE MODAL ═══ -->
 <div id="find-care-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(26,43,53,0.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;">
-  <div style="background:white;border-radius:20px;padding:40px 36px 32px;max-width:480px;width:100%;position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.25);animation:fcModalIn 0.22s ease;">
+  <div style="background:white;border-radius:20px;padding:40px 36px 32px;max-width:540px;width:100%;position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.25);animation:fcModalIn 0.22s ease;">
     <button onclick="closeFindCareModal()" style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:1.4rem;color:#999;cursor:pointer;line-height:1;">✕</button>
-    <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--sage);margin-bottom:10px;">Find Care</div>
-    <h2 style="font-family:'Montserrat',sans-serif;font-size:1.55rem;color:var(--warm-dark);margin-bottom:6px;line-height:1.25;">Start the Conversation</h2>
-    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:22px;line-height:1.6;">Tell us about your situation — a consultant will reach out personally. No pressure, no scripts.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+    <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--sage);margin-bottom:10px;">Start the Conversation</div>
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:1.45rem;color:var(--warm-dark);margin-bottom:6px;line-height:1.25;">Tell us what's going on.</h2>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:18px;line-height:1.6;">A real person will reach out. No pressure, no scripts.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
       <div>
         <label style="font-size:0.75rem;font-weight:600;color:var(--warm-dark);display:block;margin-bottom:5px;">Your Name</label>
         <input id="fc-name" type="text" placeholder="First name" style="width:100%;padding:10px 12px;border:1.5px solid #e0e0da;border-radius:8px;font-size:0.88rem;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='#e0e0da'">
       </div>
       <div>
-        <label style="font-size:0.75rem;font-weight:600;color:var(--warm-dark);display:block;margin-bottom:5px;">Best Phone / Text</label>
-        <input id="fc-phone" type="tel" placeholder="(850) 555-0100" style="width:100%;padding:10px 12px;border:1.5px solid #e0e0da;border-radius:8px;font-size:0.88rem;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='#e0e0da'">
+        <label style="font-size:0.75rem;font-weight:600;color:var(--warm-dark);display:block;margin-bottom:5px;">Email Address</label>
+        <input id="fc-email" type="email" placeholder="you@email.com" style="width:100%;padding:10px 12px;border:1.5px solid #e0e0da;border-radius:8px;font-size:0.88rem;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='#e0e0da'">
       </div>
     </div>
-    <div style="margin-bottom:18px;">
-      <label style="font-size:0.75rem;font-weight:600;color:var(--warm-dark);display:block;margin-bottom:5px;">Type of Care Needed</label>
-      <select id="fc-care-type" style="width:100%;padding:10px 12px;border:1.5px solid #e0e0da;border-radius:8px;font-size:0.88rem;outline:none;background:white;box-sizing:border-box;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='#e0e0da'">
-        <option>Companion Care</option>
-        <option>Homemaker Services</option>
-        <option>Respite / Relief</option>
-        <option>Memory Care Support</option>
-        <option>24/7 Care</option>
-        <option>Facility Monitoring (CareCircle Present)</option>
-        <option>Not sure — help me figure it out</option>
+    <div style="margin-bottom:10px;">
+      <label style="font-size:0.75rem;font-weight:600;color:var(--warm-dark);display:block;margin-bottom:5px;">Best Phone / Text</label>
+      <input id="fc-phone" type="tel" placeholder="(850) 555-0100" style="width:100%;padding:10px 12px;border:1.5px solid #e0e0da;border-radius:8px;font-size:0.88rem;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='#e0e0da'">
+    </div>
+    <div style="margin-bottom:10px;">
+      <label style="font-size:0.75rem;font-weight:600;color:var(--warm-dark);display:block;margin-bottom:5px;">I am reaching out as a</label>
+      <select id="fc-inquiry-type" style="width:100%;padding:10px 12px;border:1.5px solid #e0e0da;border-radius:8px;font-size:0.88rem;outline:none;background:white;box-sizing:border-box;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='#e0e0da'">
+        <option value="Family seeking care">Family seeking care for a loved one</option>
+        <option value="Individual seeking care">Individual seeking care for myself</option>
+        <option value="Care agency">Care agency or facility</option>
+        <option value="Healthcare provider">Healthcare provider or referral partner</option>
+        <option value="Other business">Other business inquiry</option>
       </select>
     </div>
+    <div style="margin-bottom:14px;">
+      <label style="font-size:0.75rem;font-weight:600;color:var(--warm-dark);display:block;margin-bottom:5px;">Tell us what's going on <span style="font-weight:400;color:var(--text-muted);">(optional)</span></label>
+      <textarea id="fc-message" placeholder="Brief description of your situation or question — we'll take it from here." style="width:100%;padding:10px 12px;border:1.5px solid #e0e0da;border-radius:8px;font-size:0.85rem;font-family:'Open Sans',sans-serif;outline:none;box-sizing:border-box;resize:vertical;min-height:72px;" onfocus="this.style.borderColor='var(--sage)'" onblur="this.style.borderColor='#e0e0da'"></textarea>
+    </div>
     <button onclick="submitFindCareModal()" id="fc-btn" style="width:100%;padding:14px;background:var(--sage);color:white;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Open Sans',sans-serif;transition:background 0.2s;">Start the Conversation →</button>
-    <p style="font-size:0.72rem;color:var(--text-muted);text-align:center;margin-top:10px;">🔒 Complimentary consult · No spam · We never sell your info</p>
-    <div style="display:flex;gap:10px;margin-top:14px;">
+    <p style="font-size:0.72rem;color:var(--text-muted);text-align:center;margin-top:10px;">🔒 No spam · We never sell your information · Complimentary consult</p>
+    <div style="display:flex;gap:10px;margin-top:12px;">
       <a href="tel:8503414324" style="flex:1;text-align:center;padding:10px;background:#f4f6f5;border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--sage);text-decoration:none;">📞 Call</a>
       <a href="sms:8503414324" style="flex:1;text-align:center;padding:10px;background:#f4f6f5;border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--sage);text-decoration:none;">💬 Text</a>
     </div>
