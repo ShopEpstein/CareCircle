@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Unannounced Visits Work — The Science Behind CareCircle Present</title>
+  <meta name="description" content="Peer-reviewed research confirms that unpredictable observation changes facility behavior around the clock — not just during visits. Here's the science behind why CareCircle Present protects your loved one even when we're not there.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1a2744;
+      --navy-dark: #111c33;
+      --teal: #2a8a8a;
+      --teal-light: #3aa8a8;
+      --teal-pale: #e8f4f4;
+      --gold: #c9a84c;
+      --gold-light: #e8c96a;
+      --white: #ffffff;
+      --off-white: #f8f9fb;
+      --gray-light: #f0f2f5;
+      --gray-mid: #9aa3b0;
+      --gray-dark: #4a5568;
+      --text: #1a2744;
+      --text-body: #2d3748;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      color: var(--text-body);
+      background: var(--white);
+      line-height: 1.7;
+    }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      background: var(--navy);
+      color: var(--white);
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-family: 'Source Serif 4', serif;
+      letter-spacing: 0.02em;
+    }
+    .top-bar a { color: var(--gold); text-decoration: none; }
+    .top-bar a:hover { text-decoration: underline; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid #e8ecf2;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(26,39,68,0.07);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo img { height: 40px; width: auto; }
+    .nav-logo-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--gray-dark);
+      text-decoration: none;
+      font-family: 'Source Serif 4', serif;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    .nav-cta {
+      background: var(--teal);
+      color: var(--white) !important;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      font-size: 14px !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--teal-light) !important; }
+
+    .nav-call {
+      color: var(--navy) !important;
+      font-weight: 500 !important;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, #1e3a5f 100%);
+      padding: 90px 40px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42,138,138,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold-light);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      font-family: 'Source Serif 4', serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 32px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.15;
+      max-width: 800px;
+      margin: 0 auto 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--teal-light);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 19px);
+      color: rgba(255,255,255,0.78);
+      max-width: 680px;
+      margin: 0 auto 44px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Source Serif 4', serif;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+    .btn-secondary {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 15px;
+      font-family: 'Source Serif 4', serif;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--white); border-color: var(--white); }
+
+    /* ── SECTION WRAPPER ── */
+    .section { padding: 80px 40px; }
+    .section-inner { max-width: 820px; margin: 0 auto; }
+    .section-wide { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-family: 'Source Serif 4', serif;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+
+    .section h2 em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    .section p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--text-body);
+      margin-bottom: 20px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    .section p strong {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    /* ── ALT SECTION ── */
+    .section-alt { background: var(--off-white); }
+    .section-dark {
+      background: var(--navy);
+    }
+    .section-dark .section-label { color: var(--gold-light); }
+    .section-dark h2 { color: var(--white); }
+    .section-dark h2 em { color: var(--teal-light); }
+    .section-dark p { color: rgba(255,255,255,0.82); }
+    .section-dark p strong { color: var(--white); }
+
+    /* ── STAT CARDS ── */
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    }
+
+    .stat-card .big-stat {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-card .stat-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--teal);
+      margin-bottom: 12px;
+      line-height: 1.4;
+      font-family: 'Source Serif 4', serif;
+    }
+
+    .stat-card .stat-source {
+      font-size: 11px;
+      color: var(--gray-mid);
+      font-family: 'Source Serif 4', serif;
+      font-style: italic;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .stat-card .stat-context {
+      font-size: 14.5px;
+      color: var(--gray-dark);
+      line-height: 1.75;
+      border-top: 1px solid #f0f2f5;
+      padding-top: 16px;
+    }
+
+    /* ── PULL QUOTE ── */
+    .pull-quote {
+      background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%);
+      border-radius: 12px;
+      padding: 48px 52px;
+      margin: 48px 0;
+      position: relative;
+    }
+
+    .pull-quote::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 120px;
+      color: rgba(42,138,138,0.25);
+      position: absolute;
+      top: -20px;
+      left: 28px;
+      line-height: 1;
+    }
+
+    .pull-quote p {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pull-quote cite {
+      font-size: 13px;
+      color: var(--gold-light);
+      font-style: normal;
+      font-family: 'Source Serif 4', serif;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── NUMBERED STEPS ── */
+    .steps { margin-top: 48px; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 28px;
+      margin-bottom: 40px;
+      align-items: start;
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .step-content h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .step-content p {
+      font-size: 16px;
+      color: var(--gray-dark);
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    /* ── NIGHT SHIFT CALLOUT ── */
+    .callout-box {
+      background: #fff8e8;
+      border: 1px solid rgba(201,168,76,0.35);
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin: 32px 0;
+    }
+
+    .callout-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .callout-box p {
+      font-size: 15.5px;
+      color: var(--text-body);
+      margin-bottom: 10px;
+      line-height: 1.75;
+    }
+
+    .callout-box p:last-child { margin-bottom: 0; }
+
+    /* ── REALITY BOX ── */
+    .reality-box {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 40px 44px;
+      margin: 48px 0;
+    }
+
+    .reality-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .reality-list {
+      list-style: none;
+    }
+
+    .reality-list li {
+      font-size: 16px;
+      color: rgba(255,255,255,0.82);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-left: 24px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .reality-list li:last-child { border-bottom: none; }
+
+    .reality-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--teal-light);
+      font-weight: 600;
+    }
+
+    /* ── SOURCES ── */
+    .sources-section {
+      background: var(--gray-light);
+      padding: 60px 40px;
+    }
+
+    .sources-section .section-inner { max-width: 820px; margin: 0 auto; }
+
+    .sources-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .sources-section p.intro {
+      font-size: 15px;
+      color: var(--gray-dark);
+      margin-bottom: 28px;
+    }
+
+    .source-list {
+      list-style: none;
+    }
+
+    .source-list li {
+      font-size: 13.5px;
+      color: var(--gray-dark);
+      padding: 10px 0;
+      border-bottom: 1px solid #e2e8f0;
+      line-height: 1.6;
+      font-family: 'Source Serif 4', serif;
+    }
+
+    .source-list li:last-child { border-bottom: none; }
+
+    .source-list li strong {
+      color: var(--navy);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+      padding: 90px 40px;
+      text-align: center;
+    }
+
+    .final-cta .section-label { color: var(--gold-light); margin-bottom: 20px; }
+
+    .final-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      color: var(--white);
+      max-width: 680px;
+      margin: 0 auto 20px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .final-cta h2 em { color: var(--teal-light); }
+
+    .final-cta p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.75);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .final-cta .cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .final-cta .call-line {
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+      font-family: 'Source Serif 4', serif;
+    }
+
+    .final-cta .call-line a {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-dark);
+      padding: 48px 40px 32px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 28px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    .footer-col a, .footer-col p {
+      display: block;
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      margin-bottom: 8px;
+      font-family: 'Source Serif 4', serif;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: var(--teal-light); }
+
+    .footer-bottom {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+    }
+
+    /* ── STICKY MOBILE BAR ── */
+    .sticky-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--navy);
+      padding: 12px 20px;
+      z-index: 200;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sticky-bar-inner {
+      display: flex;
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .sticky-bar a {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      font-family: 'Source Serif 4', serif;
+    }
+
+    .sticky-bar .s-call {
+      background: var(--teal);
+      color: var(--white);
+    }
+
+    .sticky-bar .s-text {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .section { padding: 60px 24px; }
+      .hero { padding: 70px 24px 60px; }
+      .stat-cards { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 48px 1fr; gap: 16px; }
+      .pull-quote { padding: 36px 28px; }
+      .pull-quote::before { font-size: 80px; }
+      .reality-box { padding: 28px 24px; }
+      .final-cta { padding: 70px 24px; }
+      footer { padding: 40px 24px 100px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .sticky-bar { display: block; }
+      .sources-section { padding: 48px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    Call or text 24/7 &nbsp;·&nbsp;
+    <a href="tel:8503414324">850-341-4324</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:Care@CareCircle.Fit">Care@CareCircle.Fit</a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="/images/logo-carecircle.jpg" alt="CareCircle" onerror="this.style.display='none'">
+      <span class="nav-logo-text">CareCircle</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/present">CareCircle Present</a></li>
+      <li><a href="/research">Research Providers</a></li>
+      <li><a href="/partners">For Partners</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="tel:8503414324" class="nav-call">📞 Call</a></li>
+      <li><a href="/#find-care" class="nav-cta">Get Started →</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">THE DETERRENCE DOCTRINE</div>
+    <h1>We are not just catching problems.<br><em>We are preventing them.</em></h1>
+    <p class="hero-sub">Most families assume the value of oversight is what gets discovered during a visit. The research tells a different story. Unpredictable presence changes how facilities behave on every shift — including the ones nobody witnesses. Here is the science behind why that is true, and why it matters for your loved one right now.</p>
+    <div class="hero-ctas">
+      <a href="/#find-care" class="btn-primary">Request a Consultation →</a>
+      <a href="tel:8503414324" class="btn-secondary">or call us directly</a>
+    </div>
+  </section>
+
+  <!-- SECTION 1: CORE ARGUMENT -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-label">The Core Argument</div>
+      <h2>The question is not whether observation works as a deterrent.<br><em>The research settled that decades ago.</em></h2>
+
+      <p>When CareCircle Present visits a facility, we go unannounced. We go at night. We go on weekends. We go during shift changes. We go when no one expects us.</p>
+
+      <p>This is not merely a detection strategy. It is a deterrence strategy — and the science behind it is decades old, extensively studied, and unambiguous in its implications for care quality.</p>
+
+      <p>The principle is called the Hawthorne Effect. Named after experiments conducted in the 1920s at Western Electric's Hawthorne Works in Chicago, researchers discovered something unexpected: worker productivity improved regardless of what environmental changes were made — simply because workers knew they were being observed. <strong>The act of observation itself was the intervention.</strong></p>
+
+      <p>Healthcare researchers have studied this phenomenon extensively in clinical settings. The findings are consistent. And they are directly applicable to what CareCircle Present does inside nursing homes and care facilities every week.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: THE RESEARCH -->
+  <section class="section section-alt">
+    <div class="section-wide">
+      <div class="section-inner">
+        <div class="section-label">The Research</div>
+        <h2>What peer-reviewed science says about observation in healthcare settings.</h2>
+        <p>Every study cited below is real, published, and independently verifiable. We cite sources because our methodology depends on evidence — not marketing.</p>
+      </div>
+
+      <div class="stat-cards">
+
+        <div class="stat-card">
+          <div class="big-stat">55%</div>
+          <div class="stat-label">Improvement in hand hygiene compliance when staff knew they were being observed</div>
+          <div class="stat-source">Eckmanns T, et al. Infection Control & Hospital Epidemiology. 2006;27(9):931–4.</div>
+          <div class="stat-context">Hand hygiene is one of the most studied care behaviors in clinical settings — because it is simple, measurable, and directly tied to patient outcomes. When staff knew an observer was present, compliance jumped by more than half. The behavior was not changed by training, policy, or incentives. It was changed by the presence of an observer.</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="big-stat">61%</div>
+          <div class="stat-label">Of the variability in care behavior explained solely by whether an observer was present</div>
+          <div class="stat-source">Hagel S, et al. Infection Control & Hospital Epidemiology. 2015;36(8):957–62.</div>
+          <div class="stat-context">Five hand hygiene events per patient per hour were observed during observation periods versus two events per hour without. Sixty-one percent of that entire gap was explained by one variable: whether someone was watching. Not staffing ratios. Not shift timing. Not facility ratings. The observer.</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="big-stat">12.2%</div>
+          <div class="stat-label">Estimated reduction in patient mortality from unpredictable inspection timing alone — with zero additional inspections</div>
+          <div class="stat-source">Gandhi, Ashvin. National Bureau of Economic Research Working Paper. UCLA, 2025.</div>
+          <div class="stat-context">A UCLA economist analyzed nursing home inspection data nationwide and found that simply making inspection timing unpredictable produced a 12.2% reduction in patient mortality at no additional cost. The facilities did not receive more oversight — they received less predictable oversight. <strong>Predictable visits produce temporary performance. Unpredictable visits produce behavioral change.</strong></div>
+        </div>
+
+        <div class="stat-card">
+          <div class="big-stat">64%</div>
+          <div class="stat-label">Of nursing home staff who admitted to committing some form of abuse or neglect in anonymous surveys</div>
+          <div class="stat-source">Ballard Brief, Brigham Young University. May 2025.</div>
+          <div class="stat-context">This figure does not describe a broken system at the margins. It describes the majority. In anonymous conditions — where there is no observer, no consequence, no accountability — the majority of nursing home staff report crossing the line. The Hawthorne research explains why: without observation, the behavioral baseline drops. With consistent, unpredictable observation, it rises.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: UNPREDICTABILITY -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-label">The Critical Insight</div>
+      <h2>Unpredictability amplifies the deterrence effect.<br><em>Here is why that changes everything.</em></h2>
+
+      <p>Most families understand that a visit is valuable while it is happening. What most families do not understand is that the value of a visit extends far beyond the visit itself — if the visit is unpredictable.</p>
+
+      <p>Here is the mechanism. A facility that receives a scheduled annual inspection cleans up for that inspection. Staff know the date. Management prepares the floor. The facility performs. Then the inspector leaves, and the baseline resumes.</p>
+
+      <div class="pull-quote">
+        <p>A facility that knows an independent advocate might walk through the door at 2am on a Tuesday — and again at 6pm on a Saturday, and again the following Wednesday morning — cannot selectively perform. There is no date to prepare for. There is no pattern to anticipate. The only rational response to genuinely unpredictable observation is consistent care.</p>
+        <cite>— The Guardian Visit Protocol, CareCircle Present</cite>
+      </div>
+
+      <p>The NBER research on inspection unpredictability confirmed this directly. The U-shaped care pattern around predictable inspections — where quality spikes before a visit, declines immediately after, then falls to a low until the next inspection becomes imminent — collapses when inspection timing becomes erratic.</p>
+
+      <p>CareCircle Present deliberately varies visit timing, day, and shift. We do not build predictable patterns because predictable patterns allow facilities to prepare rather than consistently improve. <strong>Our visits protect your loved one not just on the days we are present. They change the baseline of care on every day we are not.</strong></p>
+    </div>
+  </section>
+
+  <!-- SECTION 4: NIGHT SHIFT -->
+  <section class="section section-dark">
+    <div class="section-inner">
+      <div class="section-label">The Night Shift Problem</div>
+      <h2>The hours families never see are the hours that matter most.</h2>
+
+      <p>The research on evening and overnight care in nursing facilities is damning. It is also almost entirely invisible to families — because families almost never see the night shift.</p>
+
+      <p>Nursing home corporations deliberately understaff night shifts. The reason is straightforward: it is cheaper, and visitors are not present to observe what happens. The recommended staffing ratio at night is one caregiver to fifteen residents — three times fewer staff per resident than during the day. Many facilities fall short of even that reduced standard.</p>
+
+      <div class="reality-box" style="background: rgba(255,255,255,0.06); border-radius: 12px; padding: 32px 36px; margin: 32px 0;">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 18px; color: #fff; margin-bottom: 16px;">What happens when nobody is watching:</h3>
+        <ul class="reality-list">
+          <li>Residents put to bed at 5:30pm — not because they are tired, but because the evening shift wants to clear the floor before the skeleton crew takes over</li>
+          <li>Call buttons going unanswered for 45 minutes to over two hours on overnight shifts</li>
+          <li>Sedatives given at shift change — not for the resident's comfort, but for staff convenience</li>
+          <li>Repositioning skipped between midnight and 4am — when bed-bound residents are at highest risk for pressure wounds</li>
+          <li>Residents lying in soiled briefs for hours — one aide covering twenty rooms</li>
+        </ul>
+      </div>
+
+      <p>One overnight intelligence visit routinely reveals more about a facility's actual standard of care than months of daytime observation. The gap between what a facility presents during the day and what happens after the last supervisor leaves is, in many facilities, enormous.</p>
+
+      <p>CareCircle Present's overnight and evening visits are not a premium add-on. <strong>They are the most important visits we make.</strong></p>
+    </div>
+  </section>
+
+  <!-- SECTION 5: CHEMICAL RESTRAINT -->
+  <section class="section section-alt">
+    <div class="section-inner">
+      <div class="section-label">Chemical Restraint and Staffing</div>
+      <h2>When facilities are understaffed,<br><em>sedation becomes a staffing solution.</em></h2>
+
+      <p>The connection between staffing shortages and chemical restraint is now documented in the peer-reviewed literature. It is not a theory. It is a causal chain confirmed by federal investigators.</p>
+
+      <div class="callout-box">
+        <h3>March 2026 — Federal Findings</h3>
+        <p>The U.S. Department of Health and Human Services Office of Inspector General released findings confirming that nursing homes are inappropriately diagnosing residents with conditions — including schizophrenia — to justify antipsychotic drug use as chemical restraints. These drugs are not approved to treat dementia. The FDA has required a black box warning on them since 2008 noting an increased risk of death in elderly patients.</p>
+      </div>
+
+      <p>A peer-reviewed study published in November 2024 using nationwide CMS data found that every additional 15 minutes of daily nurse staffing per resident reduces antipsychotic drug use by approximately 1.5 residents per facility. <strong>The correlation is direct: less staff, more chemical management.</strong></p>
+
+      <p>The mechanism is straightforward. An understaffed night shift cannot manage a resident who is distressed, agitated, or expressing needs in difficult ways. The fastest, least labor-intensive solution is sedation. The paperwork calls it a clinical intervention. The family sees a resident who is quieter and more compliant. Nobody connects the dots.</p>
+
+      <p>CareCircle Present addresses this from two directions. First, our unannounced overnight visits make the cost-benefit calculation for chemical restraint less favorable. Staff who know an independent advocate may appear at any point in the evening are less likely to manage behavior through sedation that would be visible and documentable.</p>
+
+      <p>Second, at the Guardian level, we build an identity-based profile of the resident — who they are as a person, what their history is, what calms them, what agitates them, how their behavioral presentation relates to their identity rather than their diagnosis. We give facility staff an alternative to sedation. We make the person legible. We reduce the friction that drives the chemical response.</p>
+
+      <p><strong>Observation deters. Documentation protects. Presence is the strategy.</strong></p>
+    </div>
+  </section>
+
+  <!-- SECTION 6: CULTURE CHANGE -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-label">Beyond Individual Behavior</div>
+      <h2>Observation does not just improve individual behavior.<br><em>It changes how staff think about their work.</em></h2>
+
+      <p>A structured observation study conducted at VA nursing homes — involving 1,490 discrete observations — found something beyond the expected compliance improvements. Staff who participated in structured observation programs reported changed self-awareness about their own behavior. They increased physical touch, brief acknowledgments, and genuine conversation during care activities.</p>
+
+      <p>One staff member in the study described it directly: the observation made people more conscious of their behavior and got staff more engaged with residents rather than clustering at the nursing station.</p>
+
+      <p>This matters because it means the benefit of consistent observation extends beyond deterrence. It is not just that staff perform better because they might be watched. It is that staff who experience structured observation begin to see their own work differently. <strong>The care culture shifts.</strong></p>
+
+      <div class="pull-quote">
+        <p>When a family enrolls in CareCircle Present, they are not buying a set of visits. They are changing the environment their loved one lives in.</p>
+        <cite>— CareCircle Present Methodology</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: FULL MECHANISM -->
+  <section class="section section-alt">
+    <div class="section-inner">
+      <div class="section-label">The Full Mechanism</div>
+      <h2>How CareCircle Present improves care around the clock — <em>not just during visits.</em></h2>
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Unpredictable presence creates facility-wide behavioral change.</h3>
+            <p>When staff know that an independent, trained advocate may arrive at any shift — day, evening, or overnight — their baseline behavior changes. They cannot selectively perform. Research on the Hawthorne Effect in healthcare settings consistently shows that awareness of possible observation improves compliance, reduces distraction, and elevates care standards beyond the observation window itself.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Night shift and evening presence closes the highest-risk gap.</h3>
+            <p>Nursing homes are deliberately understaffed at night because visitors are not present to observe. Evening and overnight visits by CareCircle Present specifically target the highest-risk care environment — the one families never see and facilities have the least incentive to staff adequately.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Documented observation changes staff culture, not just individual behavior.</h3>
+            <p>Research on structured observation in VA nursing homes found that after an observation-based quality intervention, staff reported changed self-awareness about their own behavior and increased engagement with residents. Observation does not just catch bad behavior. It builds a different relationship between staff and the people in their care.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>The identity framework provides a non-pharmacological alternative to chemical restraint.</h3>
+            <p>By building a detailed, AI-structured understanding of who the resident is as a person — before their diagnosis, beyond their behavioral labels — CareCircle Present gives facility staff an alternative to sedation. The behavior that looks combative to an unfamiliar evening aide is legible in the context of a veteran's history, or a retired professional's need for autonomy. That context changes the care response.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h3>Documentation creates accountability that persists beyond any individual visit.</h3>
+            <p>Only 1 in 24 elder abuse cases are ever reported. The gap between what happens and what is documented is enormous. CareCircle Present's written reports, structured checklists, and AI-documented observations create a record that families do not know they need until they need it. They establish a baseline that makes deterioration undeniable. They are the evidence that exists when no one else was watching.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="section-label">READY TO GET STARTED</div>
+    <h2>You are not buying a set of visits.<br><em>You are changing the environment your loved one lives in.</em></h2>
+    <p>One consultation. One real person. We will tell you exactly what makes sense for your family's situation — no pressure, no scripts. If we can help, we'll tell you how. If we can't, we'll tell you that too.</p>
+    <div class="cta-group">
+      <a href="/#find-care" class="btn-primary">Request a Consultation →</a>
+      <p class="call-line">or call us directly — <a href="tel:8503414324">850-341-4324</a></p>
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section class="sources-section">
+    <div class="section-inner">
+      <div class="section-label">Sources</div>
+      <h2>Every claim on this page is sourced.</h2>
+      <p class="intro">We cite sources because our methodology depends on evidence. Every study below is real, published, and independently verifiable.</p>
+      <ul class="source-list">
+        <li><strong>Hand hygiene compliance 55% improvement with observation</strong>Eckmanns T, et al. Infection Control & Hospital Epidemiology. 2006;27(9):931–4. Cited in Catalog of Bias, catalogofbias.org/biases/hawthorne-effect</li>
+        <li><strong>61% of care behavior variability explained by observer presence</strong>Hagel S, et al. Infection Control & Hospital Epidemiology. 2015;36(8):957–62. Cited in Catalog of Bias, catalogofbias.org/biases/hawthorne-effect</li>
+        <li><strong>12.2% reduction in patient mortality from unpredictable inspection timing</strong>Gandhi, Ashvin. National Bureau of Economic Research Working Paper. UCLA, 2025.</li>
+        <li><strong>VA nursing home observation-based care improvement — 1,490 discrete observations</strong>PMC6455946, pmc.ncbi.nlm.nih.gov/articles/PMC6455946</li>
+        <li><strong>Staff culture change through structured observation</strong>PMC11702084, pmc.ncbi.nlm.nih.gov/articles/PMC11702084</li>
+        <li><strong>Night shift understaffing — deliberate policy</strong>Senior Justice Law Firm, seniorjustice.com; Gray and White Law, grayandwhitelaw.com</li>
+        <li><strong>Chemical restraint — antipsychotic use reduction per additional staffing</strong>Lim, Moon, Park. SSRN Working Paper, November 2024. papers.ssrn.com/sol3/papers.cfm?abstract_id=5028515</li>
+        <li><strong>OIG chemical restraint and false diagnosis findings</strong>U.S. Department of Health and Human Services, Office of Inspector General. March 2026. oig.hhs.gov</li>
+        <li><strong>FDA black box warning on antipsychotics and dementia</strong>OIG Report citing FDA, March 2026</li>
+        <li><strong>64% of nursing home staff admitted abuse or neglect</strong>Ballard Brief, Brigham Young University, May 2025</li>
+        <li><strong>1 in 24 elder abuse cases ever reported</strong>National Council on Aging, cited by Kohn Law</li>
+        <li><strong>A Place for Mom Senate investigation</strong>Senate Special Committee on Aging, June 2024; NBC News; Washington Post</li>
+        <li><strong>37.5% of APFM award winners cited for abuse or neglect violations</strong>Washington Post investigation cited in Senate Special Committee on Aging probe, June 2024</li>
+        <li><strong>Ohio patient dumping — medically fragile residents discharged to homeless shelters</strong>Signal Ohio; CMS Federal Inspection Records; April 2026</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-col">
+          <h4>CareCircle</h4>
+          <p>Serving families and facilities nationwide. Accountability visits, care intelligence, and quality monitoring — available everywhere.</p>
+          <a href="tel:8503414324">📞 850-341-4324</a>
+          <a href="sms:8503414324">💬 Text us 24/7</a>
+        </div>
+        <div class="footer-col">
+          <h4>For Families</h4>
+          <a href="/">Find Care</a>
+          <a href="/present">CareCircle Present</a>
+          <a href="/research">Research Providers</a>
+          <a href="/why-unannounced-visits-work">Why It Works</a>
+          <a href="/blog">Blog</a>
+        </div>
+        <div class="footer-col">
+          <h4>For Partners</h4>
+          <a href="/partners">How It Works</a>
+          <a href="/partners#apply">Apply Now</a>
+          <a href="/partners#ai">AI Care Intelligence</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="mailto:Care@CareCircle.Fit">Care@CareCircle.Fit</a>
+          <a href="mailto:Billing@CareCircle.Fit">Billing@CareCircle.Fit</a>
+          <a href="mailto:Help@CareCircle.Fit">Help@CareCircle.Fit</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 CareCircle Network, a CareCircle AI Network service. All rights reserved. CareCircle Network is an independent care coordination and advocacy service. We are not a licensed home care agency. All listed providers are independently licensed in their respective states. This service is not affiliated with Medicare, Medicaid, or any government program.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- STICKY MOBILE BAR -->
+  <div class="sticky-bar">
+    <div class="sticky-bar-inner">
+      <a href="tel:8503414324" class="s-call">📞 Call</a>
+      <a href="sms:8503414324" class="s-text">💬 Text</a>
+    </div>
+  </div>
+
+</body>
+</html>
