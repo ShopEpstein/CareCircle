@@ -1413,24 +1413,23 @@
     setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
 
     try {
-      const res = await fetch('/api/submit-lead', {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('inquiry_type', inquiry);
+      formData.append('message', message);
+      const res = await fetch('https://formspree.io/f/mjgloeoj', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name, email, phone, city: '',
-          careType: inquiry, message, forWhom: '', urgency: 'callback requested'
-        })
+        headers: { 'Accept': 'application/json' },
+        body: formData
       });
-      const data = await res.json();
-      if (!data.ok) {
-        console.warn('submit-lead error:', data);
-        brevoSend(`🔔 Consult Request — ${name}`,
-          `<p>submit-lead failed. Lead: ${name}, ${email}, ${phone}, ${inquiry}, ${message}</p>`);
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        console.warn('Formspree error:', data);
       }
     } catch (e) {
-      console.warn('submit-lead fetch error:', e);
-      brevoSend(`🔔 Consult Request — ${name}`,
-        `<p>submit-lead errored. Lead: ${name}, ${email}, ${phone}, ${inquiry}, ${message}</p>`);
+      console.warn('Formspree fetch error:', e);
     }
   }
 
